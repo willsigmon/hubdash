@@ -10,7 +10,16 @@ export async function GET() {
 
     const totalCollected = devices.length
     const presented = devices.filter((d: any) => d.field_73_raw === true).length
-    const countiesSet = new Set(organizations.map((org: any) => org.field_613_raw).filter(Boolean))
+
+    // Extract counties - Knack returns connection objects
+    const countiesSet = new Set();
+    organizations.forEach((org: any) => {
+      if (org.field_613_raw && Array.isArray(org.field_613_raw) && org.field_613_raw.length > 0) {
+        countiesSet.add(org.field_613_raw[0].identifier || org.field_613_raw[0].id);
+      } else if (typeof org.field_613_raw === 'string') {
+        countiesSet.add(org.field_613_raw);
+      }
+    })
 
     const statusCounts: any = {}
     devices.forEach((device: any) => {
