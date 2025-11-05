@@ -155,6 +155,26 @@ export default function ApplicationGrouping({
     </div>
   );
 
+  const getGroupIcon = (group: string) => {
+    const statusIcons: Record<string, string> = {
+      'Pending': '⏳',
+      'In Review': '👀',
+      'Approved': '✅',
+      'Rejected': '❌'
+    };
+    return statusIcons[group] || '📁';
+  };
+
+  const getGroupColor = (group: string) => {
+    const statusColors: Record<string, string> = {
+      'Pending': 'from-yellow-100 to-yellow-50 border-yellow-200',
+      'In Review': 'from-blue-100 to-blue-50 border-blue-200',
+      'Approved': 'from-green-100 to-green-50 border-green-200',
+      'Rejected': 'from-red-100 to-red-50 border-red-200'
+    };
+    return statusColors[group] || 'from-gray-100 to-gray-50 border-gray-200';
+  };
+
   return (
     <div className="space-y-6">
       {/* Group By Selector */}
@@ -183,27 +203,37 @@ export default function ApplicationGrouping({
           const isCollapsed = collapsedGroups.has(groupKey);
 
           return (
-            <div key={groupKey} className="bg-white rounded-xl shadow-lg overflow-hidden">
-              {/* Group Header */}
+            <div key={groupKey} className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all">
+              {/* Group Header with pizzazz */}
               <button
                 onClick={() => toggleGroup(groupKey)}
-                className="w-full px-6 py-4 flex items-center justify-between bg-gradient-to-r from-gray-50 to-gray-100 hover:from-gray-100 hover:to-gray-200 transition-all border-b border-gray-200"
+                className={`w-full px-6 py-5 flex items-center justify-between bg-gradient-to-r ${getGroupColor(groupKey)} hover:shadow-md transition-all border-b group cursor-pointer`}
               >
-                <div className="flex items-center gap-3">
-                  <div className={`px-3 py-1 rounded-lg font-semibold text-sm ${
-                    groupBy === 'status' ? getStatusColor(groupKey) : 'bg-hti-navy text-white'
-                  }`}>
-                    {groupKey}
+                <div className="flex items-center gap-4 flex-1">
+                  <span className="text-2xl">{getGroupIcon(groupKey)}</span>
+                  <div>
+                    <div className={`px-3 py-1.5 rounded-full font-bold text-sm ${
+                      groupBy === 'status' ? getStatusColor(groupKey) : 'bg-hti-navy text-white'
+                    }`}>
+                      {groupKey}
+                    </div>
                   </div>
-                  <span className="text-gray-600 text-sm">
-                    {groupApps.length} {groupApps.length === 1 ? 'application' : 'applications'}
-                  </span>
+                  <div className="ml-4 px-3 py-1 bg-white/70 rounded-full">
+                    <span className="text-sm font-semibold text-gray-700">
+                      {groupApps.length}
+                    </span>
+                  </div>
                 </div>
-                {isCollapsed ? (
-                  <ChevronDown className="w-5 h-5 text-gray-500" />
-                ) : (
-                  <ChevronUp className="w-5 h-5 text-gray-500" />
-                )}
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-gray-500 font-medium">
+                    {isCollapsed ? 'Show' : 'Hide'}
+                  </span>
+                  {isCollapsed ? (
+                    <ChevronDown className="w-5 h-5 text-gray-600 group-hover:translate-y-1 transition-transform" />
+                  ) : (
+                    <ChevronUp className="w-5 h-5 text-gray-600 group-hover:-translate-y-1 transition-transform" />
+                  )}
+                </div>
               </button>
 
               {/* Group Content */}
