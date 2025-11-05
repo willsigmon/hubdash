@@ -8,8 +8,33 @@ export async function GET() {
     const devices = await knack.getRecords(process.env.KNACK_DEVICES_OBJECT || 'object_7', { rows_per_page: 10000 })
     const organizations = await knack.getRecords(process.env.KNACK_ORGANIZATIONS_OBJECT || 'object_22', { rows_per_page: 1000 })
 
+    // Grant start date: September 9, 2024
+    const GRANT_START_DATE = new Date('2024-09-09T00:00:00.000Z');
+
     const totalCollected = devices.length
-    const presented = devices.filter((d: any) => d.field_73_raw === true).length
+    const totalPresented = devices.filter((d: any) => d.field_73_raw === true).length
+
+    // Grant-specific: Only count devices presented since Sept 9, 2024
+    const grantPresented = devices.filter((d: any) => {
+      if (d.field_73_raw !== true) return false; // Must be presented
+
+      // Check date presented (field_75)
+      const datePresentedRaw = d.field_75_raw || d.field_75;
+      if (!datePresentedRaw) return false;
+
+      let presentedDate;
+      if (typeof datePresentedRaw === 'string') {
+        presentedDate = new Date(datePresentedRaw);
+      } else if (datePresentedRaw.iso_timestamp) {
+        presentedDate = new Date(datePresentedRaw.iso_timestamp);
+      } else if (datePresentedRaw.date) {
+        presentedDate = new Date(datePresentedRaw.date);
+      } else {
+        return false;
+      }
+
+      return presentedDate >= GRANT_START_DATE;
+    }).length
 
     // Extract counties - Knack returns connection objects
     const countiesSet = new Set();
@@ -28,12 +53,21 @@ export async function GET() {
     })
 
     const metrics = {
-      laptopsCollected: totalCollected,
-      chromebooksDistributed: presented,
+      // GRANT METRICS (Primary - Sept 9, 2024 onwards)
+      grantLaptopsPresented: grantPresented,
+      grantLaptopGoal: 1500, // Updated Nov 5, 2025 (was 2,500)
+      grantLaptopProgress: Math.round((grantPresented / 1500) * 100),
+      grantTrainingHoursGoal: 125, // Cut in half (was 250)
+
+      // OVERALL METRICS (All-time - shown as subsidiary)
+      totalLaptopsCollected: totalCollected,
+      totalChromebooksDistributed: totalPresented,
       countiesServed: countiesSet.size,
       peopleTrained: 450, // Static for now
       eWasteTons: Math.round((totalCollected * 5) / 2000),
       partnerOrganizations: organizations.length,
+
+      // Pipeline
       pipeline: {
         donated: statusCounts['Donated'] || 0,
         received: statusCounts['Received'] || 0,
@@ -41,9 +75,9 @@ export async function GET() {
         refurbishing: statusCounts['Refurbishing'] || 0,
         qaTesting: statusCounts['QA Testing'] || 0,
         ready: statusCounts['Ready'] || 0,
-        distributed: presented,
+        distributed: totalPresented,
       },
-      inPipeline: totalCollected - presented,
+      inPipeline: totalCollected - totalPresented,
       readyToShip: statusCounts['Ready'] || 0,
     }
 
