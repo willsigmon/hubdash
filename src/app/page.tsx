@@ -16,7 +16,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
           {/* Board Dashboard Card */}
           <Link
             href="/board"
@@ -61,6 +61,37 @@ export default function Home() {
               </p>
               <div className="flex items-center text-sm font-medium">
                 <span>Launch Hub</span>
+                <svg
+                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </Link>
+
+          {/* Reports Dashboard Card */}
+          <Link
+            href="/reports"
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-600 to-purple-400 p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105"
+          >
+            <div className="relative z-10">
+              <div className="text-4xl mb-4">📊</div>
+              <h2 className="text-2xl font-bold mb-3">Grant Reports</h2>
+              <p className="text-white/90 mb-4">
+                Generate quarterly reports, track grant goals, and export data for NCDIT compliance.
+              </p>
+              <div className="flex items-center text-sm font-medium">
+                <span>Generate Reports</span>
                 <svg
                   className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
                   fill="none"
