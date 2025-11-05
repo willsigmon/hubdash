@@ -30,22 +30,29 @@ HubDash provides two specialized dashboards for HTI's operations:
 ### Prerequisites
 - Node.js 18.18+ or 20.0+
 - npm 9+ or yarn 1.22+
+- **Supabase account** (free tier) - [Sign up here](https://supabase.com)
 
 ### Installation
 
 ```bash
-# Install dependencies
+# 1. Install dependencies
 npm install
 
-# Run development server
+# 2. Set up Supabase backend (REQUIRED for real data)
+# Follow the step-by-step guide in SUPABASE_SETUP.md
+# Takes ~5 minutes to complete
+
+# 3. Run development server
 npm run dev
 
-# Build for production
+# 4. Build for production
 npm run build
 
-# Start production server
+# 5. Start production server
 npm start
 ```
+
+**Important**: Without Supabase setup, the dashboards will show loading states. See [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) for the complete backend setup guide.
 
 Open [http://localhost:3000](http://localhost:3000) to view the dashboard hub.
 
@@ -55,10 +62,12 @@ Open [http://localhost:3000](http://localhost:3000) to view the dashboard hub.
 
 - **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript
+- **Database**: Supabase (PostgreSQL)
 - **Styling**: Tailwind CSS 4.1
 - **Charts**: Recharts
 - **Icons**: Lucide React
 - **Deployment**: Vercel
+- **Auth** (coming soon): Supabase Auth
 
 ---
 
