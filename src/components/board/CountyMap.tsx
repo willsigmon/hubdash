@@ -32,8 +32,9 @@ export default function CountyMap() {
         // Group by county and sum devices
         const countyMap = new Map<string, number>();
         data.forEach((partner: any) => {
-          const current = countyMap.get(partner.county) || 0;
-          countyMap.set(partner.county, current + (partner.devices_received || 0));
+          const county = partner.county || 'Unknown';
+          const current = countyMap.get(county) || 0;
+          countyMap.set(county, current + (partner.devices_received || 0));
         });
 
         // Convert to array and determine status

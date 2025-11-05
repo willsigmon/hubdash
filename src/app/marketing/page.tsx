@@ -1,61 +1,170 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-
-interface Partnership {
-  id: string;
-  organizationName: string;
-  status: string;
-  contactPerson: string;
-  email: string;
-  county: string;
-  chromebooksNeeded: number;
-  howWillUse: string;
-  positiveImpact: string;
-  clientStruggles: string[];
-  timestamp: string;
-  quote: string;
-  is501c3: boolean;
-}
-
-interface Recipient {
-  id: string;
-  name: string;
-  county: string;
-  occupation: string;
-  status: string;
-  datePresented: string | null;
-  quote: string;
-  reasonForApplication: string;
-}
+import { Partnership, FilterOptions, GroupingOption } from "@/types/partnership";
+import ApplicationSearch from "@/components/marketing/ApplicationSearch";
+import ApplicationFilters from "@/components/marketing/ApplicationFilters";
+import ApplicationGrouping from "@/components/marketing/ApplicationGrouping";
+import ApplicationDetailPanel from "@/components/marketing/ApplicationDetailPanel";
+import { BarChart3, Users, CheckCircle, Clock, XCircle, Eye } from "lucide-react";
 
 export default function MarketingPage() {
-  const [filter, setFilter] = useState<'pending' | 'recent' | 'all'>('pending');
   const [partnerships, setPartnerships] = useState<Partnership[]>([]);
-  const [recipients, setRecipients] = useState<Recipient[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedStory, setSelectedStory] = useState<any | null>(null);
+  const [selectedApplication, setSelectedApplication] = useState<Partnership | null>(null);
+  const [groupBy, setGroupBy] = useState<GroupingOption['value']>('status');
 
+  const [filters, setFilters] = useState<FilterOptions>({
+    counties: [],
+    statuses: [],
+    chromebooksRange: { min: 0, max: 999999 },
+    dateRange: { start: null, end: null },
+    organizationTypes: [],
+    firstTimeOnly: null,
+    searchQuery: ''
+  });
+
+  // Fetch data
   useEffect(() => {
     setLoading(true);
-    Promise.all([
-      fetch(`/api/partnerships?filter=${filter}`).then(r => r.json()),
-      fetch(`/api/recipients?filter=${filter === 'pending' ? 'all' : filter}`).then(r => r.json())
-    ])
-      .then(([partData, recData]) => {
-        setPartnerships(partData);
-        setRecipients(recData);
+    fetch('/api/partnerships?filter=all')
+      .then(r => r.json())
+      .then(data => {
+        setPartnerships(data);
         setLoading(false);
       })
       .catch(error => {
-        console.error('Error loading marketing data:', error);
+        console.error('Error loading partnerships:', error);
         setLoading(false);
       });
-  }, [filter]);
+  }, []);
+
+  // Extract available filter options
+  const availableCounties = useMemo(() => {
+    const counties = new Set<string>();
+    partnerships.forEach(p => {
+      if (p.county && p.county !== 'Unknown') {
+        counties.add(p.county);
+      }
+    });
+    return Array.from(counties);
+  }, [partnerships]);
+
+  const availableOrgTypes = useMemo(() => {
+    const types = new Set<string>();
+    partnerships.forEach(p => {
+      if (p.organizationType) {
+        types.add(p.organizationType);
+      }
+    });
+    return Array.from(types);
+  }, [partnerships]);
+
+  // Apply filters and search
+  const filteredApplications = useMemo(() => {
+    return partnerships.filter(app => {
+      // Status filter
+      if (filters.statuses.length > 0 && !filters.statuses.includes(app.status)) {
+        return false;
+      }
+
+      // County filter
+      if (filters.counties.length > 0 && !filters.counties.includes(app.county)) {
+        return false;
+      }
+
+      // Chromebooks range filter
+      if (app.chromebooksNeeded < filters.chromebooksRange.min ||
+          app.chromebooksNeeded > filters.chromebooksRange.max) {
+        return false;
+      }
+
+      // Date range filter
+      if (filters.dateRange.start || filters.dateRange.end) {
+        const appDate = new Date(app.timestamp);
+        if (filters.dateRange.start && appDate < filters.dateRange.start) {
+          return false;
+        }
+        if (filters.dateRange.end && appDate > filters.dateRange.end) {
+          return false;
+        }
+      }
+
+      // Organization type filter
+      if (filters.organizationTypes.length > 0 &&
+          !filters.organizationTypes.includes(app.organizationType || '')) {
+        return false;
+      }
+
+      // First-time filter
+      if (filters.firstTimeOnly !== null && app.firstTime !== filters.firstTimeOnly) {
+        return false;
+      }
+
+      // Search query
+      if (filters.searchQuery) {
+        const query = filters.searchQuery.toLowerCase();
+        const searchableFields = [
+          app.organizationName,
+          app.contactPerson,
+          app.county,
+          app.email,
+          app.howWillUse,
+          app.positiveImpact,
+          app.clientGoals,
+          ...(app.workssWith || []),
+          ...(app.clientStruggles || [])
+        ].join(' ').toLowerCase();
+
+        if (!searchableFields.includes(query)) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  }, [partnerships, filters]);
+
+  // Calculate statistics
+  const stats = useMemo(() => {
+    const total = filteredApplications.length;
+    const pending = filteredApplications.filter(a => a.status === 'Pending').length;
+    const approved = filteredApplications.filter(a => a.status === 'Approved').length;
+    const inReview = filteredApplications.filter(a => a.status === 'In Review').length;
+    const rejected = filteredApplications.filter(a => a.status === 'Rejected').length;
+    const totalChromebooks = filteredApplications.reduce((sum, a) => sum + a.chromebooksNeeded, 0);
+
+    return { total, pending, approved, inReview, rejected, totalChromebooks };
+  }, [filteredApplications]);
+
+  const handleAction = (action: string, applicationId: string) => {
+    console.log(`Action: ${action} for application ${applicationId}`);
+    // TODO: Implement action handlers
+    switch (action) {
+      case 'approve':
+        alert(`Approve application ${applicationId}`);
+        break;
+      case 'request-info':
+        alert(`Request more info for ${applicationId}`);
+        break;
+      case 'schedule':
+        alert(`Schedule delivery for ${applicationId}`);
+        break;
+      case 'contact':
+        alert(`Mark ${applicationId} as contacted`);
+        break;
+      case 'quote-card':
+        alert(`Generate quote card for ${applicationId}`);
+        break;
+      case 'export':
+        alert(`Export ${applicationId} to PDF`);
+        break;
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-hti-navy/5">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
       <header className="bg-gradient-to-r from-hti-navy to-hti-teal text-white shadow-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -63,7 +172,7 @@ export default function MarketingPage() {
             <div>
               <h1 className="text-4xl font-bold mb-2">Marketing Hub</h1>
               <p className="text-white/90 text-lg">
-                Recipient stories and partnership applications for impact marketing
+                Partnership application management for HTI's marketing team
               </p>
             </div>
             <Link
@@ -76,224 +185,111 @@ export default function MarketingPage() {
         </div>
       </header>
 
-      {/* Filters */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="bg-white rounded-lg shadow-md p-4 flex gap-4">
-          <button
-            onClick={() => setFilter('pending')}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              filter === 'pending'
-                ? 'bg-hti-navy text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
-            📋 Pending Applications
-          </button>
-          <button
-            onClick={() => setFilter('recent')}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              filter === 'recent'
-                ? 'bg-hti-navy text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
-            🕐 Last 30 Days
-          </button>
-          <button
-            onClick={() => setFilter('all')}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              filter === 'all'
-                ? 'bg-hti-navy text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
-            📚 All Stories
-          </button>
+      {/* Statistics Dashboard */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="bg-white rounded-xl shadow-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <BarChart3 className="w-5 h-5 text-hti-navy" />
+              <div className="text-xs font-medium text-gray-600">Total</div>
+            </div>
+            <div className="text-2xl font-bold text-hti-navy">{stats.total}</div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Clock className="w-5 h-5 text-yellow-600" />
+              <div className="text-xs font-medium text-gray-600">Pending</div>
+            </div>
+            <div className="text-2xl font-bold text-yellow-600">{stats.pending}</div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Eye className="w-5 h-5 text-blue-600" />
+              <div className="text-xs font-medium text-gray-600">In Review</div>
+            </div>
+            <div className="text-2xl font-bold text-blue-600">{stats.inReview}</div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <CheckCircle className="w-5 h-5 text-green-600" />
+              <div className="text-xs font-medium text-gray-600">Approved</div>
+            </div>
+            <div className="text-2xl font-bold text-green-600">{stats.approved}</div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <XCircle className="w-5 h-5 text-red-600" />
+              <div className="text-xs font-medium text-gray-600">Rejected</div>
+            </div>
+            <div className="text-2xl font-bold text-red-600">{stats.rejected}</div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Users className="w-5 h-5 text-hti-teal" />
+              <div className="text-xs font-medium text-gray-600">Chromebooks</div>
+            </div>
+            <div className="text-2xl font-bold text-hti-teal">{stats.totalChromebooks}</div>
+          </div>
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        {loading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="bg-white rounded-xl h-64 animate-pulse" />
-            ))}
-          </div>
-        ) : (
-          <div className="space-y-12">
-            {/* Partnership Applications */}
-            {partnerships.length > 0 && (
-              <section>
-                <h2 className="text-2xl font-bold text-hti-navy mb-6">
-                  Partnership Applications ({partnerships.length})
-                </h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {partnerships.map(partnership => (
-                    <div
-                      key={partnership.id}
-                      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer"
-                      onClick={() => setSelectedStory(partnership)}
-                    >
-                      {/* Status Badge */}
-                      <div className={`px-4 py-2 text-sm font-semibold ${
-                        partnership.status === 'Pending'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : partnership.status === 'Approved'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-gray-100 text-gray-800'
-                      }`}>
-                        {partnership.status}
-                      </div>
-
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-hti-navy mb-2">
-                          {partnership.organizationName}
-                        </h3>
-                        <p className="text-sm text-gray-600 mb-4">
-                          {partnership.contactPerson} • {partnership.county} County
-                        </p>
-
-                        <div className="space-y-2 text-sm">
-                          <div className="flex items-center gap-2">
-                            <span className="font-medium text-gray-700">Chromebooks Needed:</span>
-                            <span className="text-hti-navy font-bold">{partnership.chromebooksNeeded}</span>
-                          </div>
-                          {partnership.is501c3 && (
-                            <div className="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
-                              501(c)(3)
-                            </div>
-                          )}
-                        </div>
-
-                        {partnership.quote && (
-                          <div className="mt-4 p-3 bg-hti-navy/5 rounded-lg border-l-4 border-hti-teal">
-                            <p className="text-sm text-gray-700 italic line-clamp-3">
-                              "{partnership.quote.substring(0, 150)}..."
-                            </p>
-                          </div>
-                        )}
-
-                        <button className="mt-4 w-full px-4 py-2 bg-hti-navy hover:bg-hti-navy/90 text-white rounded-lg text-sm font-medium transition-colors">
-                          View Full Application
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* Individual Recipients */}
-            {recipients.length > 0 && (
-              <section>
-                <h2 className="text-2xl font-bold text-hti-navy mb-6">
-                  Individual Recipients ({recipients.length})
-                </h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {recipients.map(recipient => (
-                    <div
-                      key={recipient.id}
-                      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow cursor-pointer"
-                      onClick={() => setSelectedStory(recipient)}
-                    >
-                      <div className={`h-2 ${
-                        recipient.status === 'Approved' ? 'bg-green-500' :
-                        recipient.status === 'Pending' ? 'bg-yellow-500' :
-                        'bg-gray-500'
-                      }`} />
-
-                      <div className="p-6">
-                        <h3 className="text-lg font-bold text-hti-navy mb-1">
-                          {recipient.name}
-                        </h3>
-                        <p className="text-xs text-gray-600 mb-3">
-                          {recipient.occupation} • {recipient.county}
-                        </p>
-
-                        {recipient.quote && (
-                          <div className="bg-gradient-to-br from-orange-50 to-yellow-50 p-3 rounded-lg">
-                            <p className="text-xs text-gray-700 italic line-clamp-4">
-                              "{recipient.quote.substring(0, 120)}..."
-                            </p>
-                          </div>
-                        )}
-
-                        <div className="mt-4 flex gap-2">
-                          <button className="flex-1 px-3 py-2 bg-hti-navy hover:bg-hti-navy/90 text-white rounded-lg text-xs font-medium transition-colors">
-                            Generate Quote
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-          </div>
-        )}
-      </main>
-
-      {/* Modal for full details */}
-      {selectedStory && (
-        <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
-          onClick={() => setSelectedStory(null)}
-        >
-          <div
-            className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-8">
-              <div className="flex justify-between items-start mb-6">
-                <h2 className="text-3xl font-bold text-hti-navy">
-                  {selectedStory.organizationName || selectedStory.name}
-                </h2>
-                <button
-                  onClick={() => setSelectedStory(null)}
-                  className="text-gray-400 hover:text-gray-600 text-2xl"
-                >
-                  ×
-                </button>
-              </div>
-
-              {/* Full application details */}
-              <div className="space-y-4 text-sm">
-                {selectedStory.contactPerson && (
-                  <div>
-                    <span className="font-semibold">Contact:</span> {selectedStory.contactPerson}
-                  </div>
-                )}
-                {selectedStory.email && (
-                  <div>
-                    <span className="font-semibold">Email:</span> {selectedStory.email}
-                  </div>
-                )}
-                {selectedStory.howWillUse && (
-                  <div>
-                    <span className="font-semibold block mb-2">How they'll use Chromebooks:</span>
-                    <p className="text-gray-700 bg-gray-50 p-4 rounded-lg">{selectedStory.howWillUse}</p>
-                  </div>
-                )}
-                {selectedStory.positiveImpact && (
-                  <div>
-                    <span className="font-semibold block mb-2">Expected positive impact:</span>
-                    <p className="text-gray-700 bg-hti-navy/5 p-4 rounded-lg">{selectedStory.positiveImpact}</p>
-                  </div>
-                )}
-              </div>
-
-              <div className="mt-8 flex gap-4">
-                <button className="flex-1 px-6 py-3 bg-gradient-to-r from-hti-navy to-hti-teal text-white rounded-lg font-semibold hover:opacity-90 transition-opacity">
-                  Generate Social Quote Card
-                </button>
-                <button className="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg font-semibold transition-colors">
-                  Export Data
-                </button>
-              </div>
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Sidebar - Filters */}
+          <aside className="lg:w-80 shrink-0">
+            <div className="sticky top-6 space-y-6">
+              <ApplicationFilters
+                filters={filters}
+                onFiltersChange={setFilters}
+                availableCounties={availableCounties}
+                availableOrgTypes={availableOrgTypes}
+              />
             </div>
+          </aside>
+
+          {/* Main Content - Search and Applications */}
+          <div className="flex-1 space-y-6">
+            {/* Search Bar */}
+            <ApplicationSearch
+              searchQuery={filters.searchQuery}
+              onSearchChange={(query) => setFilters({ ...filters, searchQuery: query })}
+              resultCount={filteredApplications.length}
+              totalCount={partnerships.length}
+            />
+
+            {/* Loading State */}
+            {loading ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="bg-white rounded-xl h-64 animate-pulse shadow-lg" />
+                ))}
+              </div>
+            ) : (
+              /* Applications Grid/List */
+              <ApplicationGrouping
+                applications={filteredApplications}
+                groupBy={groupBy}
+                onGroupByChange={setGroupBy}
+                onApplicationClick={setSelectedApplication}
+              />
+            )}
           </div>
         </div>
+      </main>
+
+      {/* Detail Panel Modal */}
+      {selectedApplication && (
+        <ApplicationDetailPanel
+          application={selectedApplication}
+          onClose={() => setSelectedApplication(null)}
+          onAction={handleAction}
+        />
       )}
     </div>
   );

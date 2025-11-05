@@ -13,6 +13,12 @@ export async function GET(request: Request) {
     const objectKey = process.env.KNACK_LAPTOP_APPLICATIONS_OBJECT || 'object_62'
     const knackRecords = await knack.getRecords(objectKey, { rows_per_page: 1000 })
 
+    // Validate API response
+    if (!Array.isArray(knackRecords)) {
+      console.error('Invalid Knack response - expected array:', knackRecords)
+      return NextResponse.json({ error: 'Invalid data format from database' }, { status: 500 })
+    }
+
     const recipients = knackRecords.map((r: any) => {
       const email = typeof r.field_522_raw === 'string' ? r.field_522_raw : (r.field_522_raw?.email || '');
       const phone = typeof r.field_523_raw === 'string' ? r.field_523_raw : (r.field_523_raw?.full || '');
@@ -20,6 +26,21 @@ export async function GET(request: Request) {
       const county = r.field_581_raw && Array.isArray(r.field_581_raw) && r.field_581_raw.length > 0
         ? (r.field_581_raw[0].identifier || r.field_581_raw[0].id)
         : 'Unknown';
+
+      // Validate dates to prevent Invalid Date
+      const datePresented = r.field_557_raw
+        ? (() => {
+            const date = new Date(typeof r.field_557_raw === 'string' ? r.field_557_raw : r.field_557_raw.iso_timestamp);
+            return !isNaN(date.getTime()) ? date.toISOString() : null;
+          })()
+        : null;
+
+      const timestamp = r.field_521_raw
+        ? (() => {
+            const date = new Date(typeof r.field_521_raw === 'string' ? r.field_521_raw : r.field_521_raw.iso_timestamp);
+            return !isNaN(date.getTime()) ? date.toISOString() : new Date().toISOString();
+          })()
+        : new Date().toISOString();
 
       return {
         id: r.id,
@@ -30,8 +51,8 @@ export async function GET(request: Request) {
         county,
         occupation: r.field_524_raw || r.field_525_raw || 'Unknown',
         status: r.field_556_raw || 'Pending',
-        datePresented: r.field_557_raw?.iso_timestamp || r.field_557_raw || null,
-        timestamp: r.field_521_raw?.iso_timestamp || r.field_521_raw || new Date().toISOString(),
+        datePresented,
+        timestamp,
         interestedInTraining: r.field_668_raw === true,
         // Marketing data for quotes
         reasonForApplication: r.field_528_raw || '',
@@ -49,21 +70,26 @@ export async function GET(request: Request) {
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-      filteredRecipients = recipients.filter(r =>
-        r.datePresented ? new Date(r.datePresented) >= thirtyDaysAgo : false
-      );
+      filteredRecipients = recipients.filter(r => {
+        if (!r.datePresented) return false;
+        const date = new Date(r.datePresented);
+        return !isNaN(date.getTime()) && date >= thirtyDaysAgo;
+      });
     }
 
     // Sort by most recent first
-    filteredRecipients.sort((a, b) =>
-      new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-    );
+    filteredRecipients.sort((a, b) => {
+      const dateA = new Date(b.timestamp);
+      const dateB = new Date(a.timestamp);
+      return dateA.getTime() - dateB.getTime();
+    });
 
     return NextResponse.json(filteredRecipients, {
       headers: { 'Cache-Control': 'public, s-maxage=300' },
     })
   } catch (error: any) {
-    console.error('Error:', error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    console.error('Recipients API Error:', error)
+    const message = error?.message || error?.toString() || 'Unknown error occurred'
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

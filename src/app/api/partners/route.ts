@@ -7,6 +7,12 @@ export async function GET() {
     const objectKey = process.env.KNACK_ORGANIZATIONS_OBJECT || 'object_22'
     const knackRecords = await knack.getRecords(objectKey, { rows_per_page: 1000 })
 
+    // Validate API response
+    if (!Array.isArray(knackRecords)) {
+      console.error('Invalid Knack response - expected array:', knackRecords)
+      return NextResponse.json({ error: 'Invalid data format from database' }, { status: 500 })
+    }
+
     const partners = knackRecords.map((r: any) => {
       // Extract county - Knack returns arrays with {id, identifier} objects for connection fields
       let county = 'Unknown';
@@ -47,7 +53,8 @@ export async function GET() {
       headers: { 'Cache-Control': 'public, s-maxage=600' },
     })
   } catch (error: any) {
-    console.error('Error:', error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    console.error('Partners API Error:', error)
+    const message = error?.message || error?.toString() || 'Unknown error occurred'
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }
