@@ -34,7 +34,7 @@ export default function ImpactMetrics() {
             value: data.grantLaptopsPresented || 0,
             suffix: ` / 1,500`,
             icon: "🎯",
-            color: "from-hti-red to-orange-500",
+            color: "from-hti-red to-hti-orange",
             description: "Since Sept 9, 2024 (Grant Period)",
             isFeatured: true,
             progress: grantProgress,
@@ -44,7 +44,7 @@ export default function ImpactMetrics() {
             value: data.totalLaptopsCollected || 0,
             suffix: "+",
             icon: "💻",
-            color: "from-gray-600 to-gray-400",
+            color: "from-hti-navy to-hti-gray",
             description: "Overall collection since inception",
           },
           {
@@ -52,7 +52,7 @@ export default function ImpactMetrics() {
             value: data.countiesServed || 0,
             suffix: "",
             icon: "📍",
-            color: "from-hti-red to-orange-400",
+            color: "from-hti-red to-hti-red/60",
             description: "Through Digital Champion Grant",
           },
           {
@@ -60,7 +60,7 @@ export default function ImpactMetrics() {
             value: data.peopleTrained || 0,
             suffix: "+",
             icon: "👥",
-            color: "from-hti-yellow to-yellow-300",
+            color: "from-hti-yellow to-hti-yellow-bright",
             description: "Digital literacy participants",
           },
           {
@@ -76,7 +76,7 @@ export default function ImpactMetrics() {
             value: data.partnerOrganizations || 0,
             suffix: "",
             icon: "🤝",
-            color: "from-purple-600 to-purple-400",
+            color: "from-hti-orange to-hti-yellow",
             description: "Community collaborations",
           },
         ];
@@ -162,44 +162,44 @@ export default function ImpactMetrics() {
       {/* Featured Grant Metrics Card */}
       {featuredMetric && (
         <div
-          className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50 shadow-2xl hover:shadow-3xl transition-all duration-300 border border-gray-100"
+          className="group relative overflow-hidden rounded-2xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-hti-red"
         >
           {/* Animated background gradient */}
-          <div className={`absolute inset-0 bg-gradient-to-br ${featuredMetric.color} opacity-3 group-hover:opacity-5 transition-opacity duration-300`} />
+          <div className={`absolute inset-0 bg-gradient-to-br ${featuredMetric.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`} />
 
           {/* Top accent bar */}
-          <div className={`h-2 bg-gradient-to-r ${featuredMetric.color}`} />
+          <div className={`h-3 bg-gradient-to-r ${featuredMetric.color}`} />
 
           <div className="relative p-8 md:p-10">
             {/* Header with icon and badge */}
-            <div className="flex items-start justify-between mb-6">
+            <div className="flex items-start justify-between mb-6 flex-wrap gap-4">
               <div className="flex items-center gap-4">
                 <div className="text-6xl">{featuredMetric.icon}</div>
                 <div>
                   <h3 className="text-2xl md:text-3xl font-bold text-hti-navy">
                     {featuredMetric.label}
                   </h3>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-sm text-hti-gray mt-1 font-medium">
                     {featuredMetric.description}
                   </p>
                 </div>
               </div>
-              <div className={`px-4 py-2 rounded-full bg-gradient-to-br ${featuredMetric.color} text-white text-sm font-semibold shadow-lg`}>
+              <div className={`px-4 py-2 rounded-full bg-gradient-to-br ${featuredMetric.color} text-white text-sm font-bold shadow-lg whitespace-nowrap`}>
                 {animatedProgress}% Complete
               </div>
             </div>
 
             {/* Main metrics display */}
-            <div className="bg-white rounded-xl p-6 mb-6 border border-gray-200">
+            <div className="bg-hti-gray-light rounded-xl p-6 mb-6 border-2 border-hti-yellow/20">
               <div className="flex items-baseline gap-2 mb-2">
                 <div className="text-5xl md:text-6xl font-bold text-hti-navy">
                   {animatedValues[0]?.toLocaleString() || 0}
                 </div>
-                <span className="text-2xl font-semibold text-gray-600">
+                <span className="text-2xl font-bold text-hti-red">
                   {featuredMetric.suffix}
                 </span>
               </div>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-hti-gray font-medium">
                 Goal: 1,500 laptops by end of grant period
               </p>
             </div>
@@ -207,14 +207,14 @@ export default function ImpactMetrics() {
             {/* Progress bar section */}
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-sm font-semibold text-gray-700">Grant Progress</span>
-                <span className="text-sm font-bold text-hti-navy">
+                <span className="text-sm font-bold text-hti-navy">Grant Progress</span>
+                <span className="text-sm font-bold text-hti-red">
                   {animatedProgress}%
                 </span>
               </div>
 
               {/* Animated progress bar */}
-              <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+              <div className="w-full h-4 bg-gray-300 rounded-full overflow-hidden shadow-inner border border-hti-yellow/20">
                 <div
                   className={`h-full bg-gradient-to-r ${featuredMetric.color} rounded-full transition-all duration-500 ease-out shadow-md`}
                   style={{ width: `${animatedProgress}%` }}
@@ -222,7 +222,7 @@ export default function ImpactMetrics() {
               </div>
 
               {/* Progress milestones */}
-              <div className="flex justify-between text-xs text-gray-700 font-semibold mt-4 pt-2">
+              <div className="flex justify-between text-xs text-hti-navy font-bold mt-4 pt-2">
                 <span>0%</span>
                 <span>25%</span>
                 <span>50%</span>
@@ -242,16 +242,19 @@ export default function ImpactMetrics() {
         {otherMetrics.map((metric, index) => (
           <div
             key={metric.label}
-            className="group relative overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-gray-100"
+            className="group relative overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border-2 border-hti-yellow/20"
           >
             {/* Background gradient */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${metric.color} opacity-3 group-hover:opacity-5 transition-opacity`} />
+            <div className={`absolute inset-0 bg-gradient-to-br ${metric.color} opacity-3 group-hover:opacity-8 transition-opacity`} />
+
+            {/* Top accent */}
+            <div className={`h-2 bg-gradient-to-r ${metric.color}`} />
 
             <div className="relative p-6 space-y-4">
               {/* Header */}
               <div className="flex items-start justify-between">
                 <div className="text-5xl">{metric.icon}</div>
-                <div className={`px-2 py-1 rounded-full bg-gradient-to-br ${metric.color} text-white text-xs font-medium shadow-sm`}>
+                <div className={`px-2 py-1 rounded-full bg-gradient-to-br ${metric.color} text-white text-xs font-bold shadow-sm`}>
                   Live
                 </div>
               </div>
@@ -260,17 +263,17 @@ export default function ImpactMetrics() {
               <div>
                 <div className="text-4xl font-bold text-hti-navy mb-1">
                   {animatedValues[index + 1]?.toLocaleString() || 0}
-                  <span className="text-2xl font-semibold text-gray-600">
+                  <span className="text-2xl font-bold text-hti-red ml-1">
                     {metric.suffix}
                   </span>
                 </div>
-                <h4 className="text-sm font-semibold text-gray-700">
+                <h4 className="text-sm font-bold text-hti-navy">
                   {metric.label}
                 </h4>
               </div>
 
               {/* Description */}
-              <div className="text-xs text-gray-500 leading-relaxed">
+              <div className="text-xs text-hti-gray leading-relaxed font-medium">
                 {metric.description}
               </div>
             </div>

@@ -30,39 +30,39 @@ export default function RecentActivity() {
   }, []);
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-      <div className="p-6 bg-gradient-to-r from-hti-navy/5 to-hti-teal/5 border-b border-hti-teal/20">
+    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-hti-yellow/20">
+      <div className="p-6 bg-gradient-to-r from-hti-navy/5 to-hti-red/5 border-b-2 border-hti-yellow/30">
         <h3 className="text-xl font-bold text-hti-navy flex items-center gap-2 mb-1">
           🚀 Recent Activity
         </h3>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-hti-gray font-medium">
           Real-time updates from HTI operations
         </p>
       </div>
 
-      <div className="divide-y divide-gray-100">
+      <div className="divide-y divide-hti-yellow/10">
         {loading ? (
           <div className="p-6 space-y-4 animate-pulse">
             {[...Array(5)].map((_, i) => (
               <div key={i} className="flex gap-4">
-                <div className="w-12 h-12 bg-gray-200 rounded-lg" />
+                <div className="w-12 h-12 bg-hti-gray-light rounded-lg" />
                 <div className="flex-1">
-                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
-                  <div className="h-3 bg-gray-100 rounded w-full" />
+                  <div className="h-4 bg-hti-gray-light rounded w-3/4 mb-2" />
+                  <div className="h-3 bg-hti-gray-light rounded w-full" />
                 </div>
               </div>
             ))}
           </div>
         ) : activities.length === 0 ? (
-          <div className="p-8 text-center text-gray-400">
+          <div className="p-8 text-center text-hti-gray/50">
             <div className="text-4xl mb-3">📭</div>
-            <p>No recent activity yet</p>
+            <p className="font-medium">No recent activity yet</p>
           </div>
         ) : (
           activities.map((activity) => (
             <div
               key={activity.id}
-              className="p-6 hover:bg-gradient-to-r hover:from-hti-teal/5 hover:to-transparent transition-all group"
+              className="p-6 hover:bg-gradient-to-r hover:from-hti-yellow/5 hover:to-hti-red/5 transition-all group"
             >
               <div className="flex items-start gap-4">
                 {/* Icon with better styling */}
@@ -74,14 +74,14 @@ export default function RecentActivity() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h3 className="text-base font-bold text-gray-900 mb-1 group-hover:text-hti-navy transition-colors">
+                      <h3 className="text-base font-bold text-hti-navy mb-1 group-hover:text-hti-red transition-colors">
                         {activity.title}
                       </h3>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-hti-gray">
                         {activity.description}
                       </p>
                     </div>
-                    <div className="text-xs font-medium text-gray-700 whitespace-nowrap px-2.5 py-1 bg-gray-100 rounded-full group-hover:bg-hti-teal/10 transition-colors">
+                    <div className="text-xs font-bold text-hti-navy whitespace-nowrap px-3 py-1.5 bg-hti-yellow/20 rounded-full border border-hti-yellow/40 group-hover:bg-hti-red/20 group-hover:border-hti-red/40 transition-all">
                       {activity.timestamp}
                     </div>
                   </div>
@@ -93,8 +93,8 @@ export default function RecentActivity() {
       </div>
 
       {/* Footer */}
-      <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 border-t border-gray-200">
-        <button className="w-full text-center text-sm font-semibold text-hti-teal hover:text-hti-navy transition-colors flex items-center justify-center gap-2">
+      <div className="p-4 bg-hti-gray-light border-t-2 border-hti-yellow/20">
+        <button className="w-full text-center text-sm font-bold text-hti-red hover:text-hti-orange transition-colors flex items-center justify-center gap-2">
           <span>View All Activity</span>
           <span>→</span>
         </button>

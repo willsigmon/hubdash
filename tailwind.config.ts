@@ -9,14 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // HTI Brand Colors
+        // HTI Brand Colors - Official Palette
         hti: {
-          navy: '#1e3a5f',
-          teal: '#4a9b9f',
-          'teal-light': '#6db3b7',
-          red: '#ff6b6b',
-          yellow: '#ffeb3b',
-          'yellow-light': '#fff9c4',
+          navy: '#191347',        // Primary dark navy
+          red: '#E45927',         // Power button red
+          orange: '#F58420',      // Orange accent
+          yellow: '#FDB715',      // Primary yellow
+          'yellow-bright': '#FAD506', // Bright yellow
+          gray: '#282829',        // Dark gray
+          'gray-light': '#f5f5f5', // Light gray
         },
       },
       animation: {

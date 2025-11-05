@@ -7,30 +7,30 @@ import ActivityFeed from "@/components/ops/ActivityFeed";
 
 export default function OpsPage() {
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-hti-navy via-hti-gray to-hti-navy/90">
       {/* Header */}
-      <header className="bg-gradient-to-r from-hti-red to-hti-yellow text-white shadow-2xl border-b border-white/10">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
+      <header className="bg-gradient-to-r from-hti-navy via-hti-gray to-hti-navy shadow-2xl border-b-4 border-hti-red">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <h1 className="text-4xl font-bold flex items-center gap-3">
+              <h1 className="text-4xl font-bold flex items-center gap-3 text-white">
                 ⚡ HTI Operations Hub
               </h1>
-              <p className="text-white/90 mt-2 text-lg">
+              <p className="text-hti-yellow mt-2 text-lg font-medium">
                 Mission Control • Real-Time Device Management
               </p>
             </div>
             <div className="flex items-center gap-4">
-              <div className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
-                <div className="text-xs text-white/70">System Status</div>
-                <div className="text-sm font-bold flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              <div className="px-4 py-2 bg-hti-red/20 backdrop-blur-sm rounded-lg border-2 border-hti-red">
+                <div className="text-xs text-hti-yellow font-medium">System Status</div>
+                <div className="text-sm font-bold flex items-center gap-2 text-white">
+                  <span className="w-2 h-2 bg-hti-yellow rounded-full animate-pulse" />
                   All Systems Operational
                 </div>
               </div>
               <Link
                 href="/"
-                className="px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-lg transition-colors text-sm font-medium border border-white/30"
+                className="px-4 py-2 bg-hti-red hover:bg-hti-orange backdrop-blur-sm rounded-lg transition-all text-sm font-bold border-2 border-hti-red text-white shadow-lg"
               >
                 ← Back to Hub
               </Link>
@@ -40,10 +40,10 @@ export default function OpsPage() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
         {/* Quick Stats Section */}
         <section>
-          <h2 className="text-xl md:text-2xl font-bold text-white mb-5 flex items-center gap-2">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 flex items-center gap-3">
             <span>⚡</span>
             Key Metrics
           </h2>
@@ -56,7 +56,7 @@ export default function OpsPage() {
         </section>
 
         {/* Two Column Layout - Donation Requests & Activity Feed */}
-        <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
+        <div className="grid lg:grid-cols-2 gap-8">
           {/* Donation Requests */}
           <section className="h-full">
             <DonationRequests />

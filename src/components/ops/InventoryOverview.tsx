@@ -41,12 +41,12 @@ export default function InventoryOverview() {
 
   if (loading) {
     return (
-      <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-xl overflow-hidden">
+      <div className="bg-white/5 backdrop-blur-sm rounded-xl border-2 border-hti-yellow/20 shadow-xl overflow-hidden">
         <div className="p-6 animate-pulse">
-          <div className="bg-gray-700 h-10 rounded mb-4" />
+          <div className="bg-white/10 h-10 rounded mb-4" />
           <div className="space-y-3">
             {[...Array(5)].map((_, i) => (
-              <div key={i} className="bg-gray-700 h-16 rounded" />
+              <div key={i} className="bg-white/10 h-16 rounded" />
             ))}
           </div>
         </div>
@@ -55,16 +55,16 @@ export default function InventoryOverview() {
   }
 
   return (
-    <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-xl overflow-hidden flex flex-col h-full">
+    <div className="bg-white/5 backdrop-blur-sm rounded-xl border-2 border-hti-yellow/20 shadow-xl overflow-hidden flex flex-col h-full">
       {/* Header with Search */}
-      <div className="p-4 md:p-6 bg-gray-900/50 border-b border-gray-700">
+      <div className="p-4 md:p-6 bg-hti-red/10 border-b-2 border-hti-yellow/20">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-4">
-          <h3 className="text-lg font-semibold text-white">Device Inventory</h3>
+          <h3 className="text-lg font-bold text-white">💾 Device Inventory</h3>
           <div className="flex gap-2 w-full md:w-auto">
-            <button className="flex-1 md:flex-none px-3 md:px-4 py-2 bg-hti-teal hover:bg-hti-teal-light rounded-lg text-white text-xs md:text-sm font-medium transition-colors">
+            <button className="flex-1 md:flex-none px-3 md:px-4 py-2 bg-gradient-to-r from-hti-red to-hti-orange hover:shadow-lg rounded-lg text-white text-xs md:text-sm font-bold transition-all hover:scale-105">
               + Add Device
             </button>
-            <button className="flex-1 md:flex-none px-3 md:px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white text-xs md:text-sm font-medium transition-colors">
+            <button className="flex-1 md:flex-none px-3 md:px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-hti-yellow text-xs md:text-sm font-bold transition-all border border-hti-yellow/30">
               Export
             </button>
           </div>
@@ -76,9 +76,9 @@ export default function InventoryOverview() {
             placeholder="Search serial, model, status..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 px-3 md:px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 text-sm focus:outline-none focus:border-hti-teal transition-colors"
+            className="flex-1 px-3 md:px-4 py-2 bg-hti-navy/30 border-2 border-hti-yellow/30 rounded-lg text-white placeholder-hti-yellow/50 text-sm focus:outline-none focus:border-hti-yellow transition-all focus:bg-hti-navy/50"
           />
-          <button className="px-3 md:px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white text-xs md:text-sm font-medium transition-colors whitespace-nowrap">
+          <button className="px-3 md:px-4 py-2 bg-hti-orange hover:bg-hti-red rounded-lg text-white text-xs md:text-sm font-bold transition-all whitespace-nowrap">
             Search
           </button>
         </div>
@@ -87,8 +87,8 @@ export default function InventoryOverview() {
       {/* Table Container */}
       <div className="flex-1 overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-900/50 sticky top-0">
-            <tr className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider border-b border-gray-700">
+          <thead className="bg-hti-navy/50 sticky top-0">
+            <tr className="text-left text-xs font-bold text-hti-yellow uppercase tracking-wider border-b-2 border-hti-yellow/30">
               <th className="px-3 md:px-6 py-3">Serial Number</th>
               <th className="px-3 md:px-6 py-3">Device Info</th>
               <th className="px-3 md:px-6 py-3">Status</th>
