@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-hti-navy to-hti-teal flex items-center justify-center p-4">
-      <div className="max-w-7xl w-full bg-white rounded-2xl shadow-2xl p-8 md:p-12">
+      <div className="max-w-6xl w-full bg-white rounded-2xl shadow-2xl p-8 md:p-12">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-hti-navy mb-4">
             HubDash
@@ -16,11 +16,11 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Board Dashboard Card */}
           <Link
             href="/board"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-navy to-hti-teal-light p-6 lg:p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[280px] flex flex-col"
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-navy to-hti-teal-light p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col"
           >
             <div className="relative z-10">
               <div className="text-4xl mb-4">📊</div>
@@ -51,7 +51,7 @@ export default function Home() {
           {/* Ops Dashboard Card */}
           <Link
             href="/ops"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-red to-hti-yellow p-6 lg:p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[280px] flex flex-col"
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-red to-hti-yellow p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col"
           >
             <div className="relative z-10">
               <div className="text-4xl mb-4">⚡</div>
@@ -82,7 +82,7 @@ export default function Home() {
           {/* Reports Dashboard Card */}
           <Link
             href="/reports"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-navy to-hti-teal p-6 lg:p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[280px] flex flex-col"
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-navy to-hti-teal p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col"
           >
             <div className="relative z-10">
               <div className="text-4xl mb-4">📊</div>
@@ -113,7 +113,7 @@ export default function Home() {
           {/* Marketing Hub Card */}
           <Link
             href="/marketing"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-pink-600 to-rose-500 p-6 lg:p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[280px] flex flex-col"
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-pink-600 to-rose-500 p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col"
           >
             <div className="relative z-10">
               <div className="text-4xl mb-4">📣</div>
