@@ -1,19 +1,36 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function ReportsPage() {
   const [selectedQuarter, setSelectedQuarter] = useState('Q2 2025');
   const [reportType, setReportType] = useState('quarterly');
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold text-hti-navy">Report Generator</h1>
-        <p className="text-gray-600 mt-1">
-          Generate NCDIT-compliant grant reports and stakeholder summaries
-        </p>
-      </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-gradient-to-r from-hti-navy to-hti-teal text-white shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold">Grant Reports</h1>
+              <p className="text-hti-teal-light mt-1">
+                NCDIT compliance reporting and grant tracking
+              </p>
+            </div>
+            <Link
+              href="/"
+              className="px-4 py-2 bg-hti-teal hover:bg-hti-teal-light rounded-lg transition-colors text-sm font-medium"
+            >
+              ← Back to Hub
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
       {/* Report Configuration */}
       <section className="bg-white rounded-lg shadow-md p-6">
@@ -27,7 +44,7 @@ export default function ReportsPage() {
             <select
               value={reportType}
               onChange={(e) => setReportType(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hti-blue focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hti-navy focus:border-transparent"
             >
               <option value="quarterly">Quarterly Accountability Report</option>
               <option value="annual">Annual Summary</option>
@@ -44,7 +61,7 @@ export default function ReportsPage() {
             <select
               value={selectedQuarter}
               onChange={(e) => setSelectedQuarter(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hti-blue focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hti-navy focus:border-transparent"
             >
               <option value="Q1 2025">Q1 2025 (Jan-Mar)</option>
               <option value="Q2 2025">Q2 2025 (Apr-Jun)</option>
@@ -69,7 +86,7 @@ export default function ReportsPage() {
 
       {/* Report Preview */}
       <section className="bg-white rounded-lg shadow-md p-8">
-        <div className="border-l-4 border-hti-blue pl-6">
+        <div className="border-l-4 border-hti-navy pl-6">
           <h2 className="text-2xl font-bold text-hti-navy mb-2">
             HTI Quarterly Accountability Report
           </h2>
@@ -236,6 +253,7 @@ export default function ReportsPage() {
           </div>
         </div>
       </section>
+      </main>
     </div>
   );
 }

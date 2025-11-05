@@ -82,7 +82,7 @@ export default function Home() {
           {/* Reports Dashboard Card */}
           <Link
             href="/reports"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-600 to-purple-400 p-6 lg:p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[280px] flex flex-col"
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-navy to-hti-teal p-6 lg:p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[280px] flex flex-col"
           >
             <div className="relative z-10">
               <div className="text-4xl mb-4">📊</div>
