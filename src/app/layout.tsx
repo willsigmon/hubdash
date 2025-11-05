@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import AppNav from "@/components/layout/AppNav";
 
 export const metadata: Metadata = {
   title: "HubDash - HTI Dashboard",
@@ -17,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <AppNav />
         {children}
       </body>
     </html>
