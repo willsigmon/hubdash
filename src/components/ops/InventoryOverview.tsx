@@ -1,78 +1,78 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 interface Device {
   id: string;
-  serialNumber: string;
+  serial_number: string;
   model: string;
   manufacturer: string;
   status: string;
   location: string;
-  assignedTo: string;
-  receivedDate: string;
+  assigned_to: string | null;
+  received_date: string;
 }
 
-const devices: Device[] = [
-  {
-    id: "1",
-    serialNumber: "HTI-2024-1523",
-    model: "ThinkPad X1 Carbon",
-    manufacturer: "Lenovo",
-    status: "Ready to Ship",
-    location: "Henderson Warehouse",
-    assignedTo: "Vance County Schools",
-    receivedDate: "2024-11-01",
-  },
-  {
-    id: "2",
-    serialNumber: "HTI-2024-1524",
-    model: "Latitude 7420",
-    manufacturer: "Dell",
-    status: "QA Testing",
-    location: "Henderson Warehouse",
-    assignedTo: "Unassigned",
-    receivedDate: "2024-11-02",
-  },
-  {
-    id: "3",
-    serialNumber: "HTI-2024-1525",
-    model: "EliteBook 840",
-    manufacturer: "HP",
-    status: "Refurbishing",
-    location: "Henderson Warehouse",
-    assignedTo: "Unassigned",
-    receivedDate: "2024-10-28",
-  },
-  {
-    id: "4",
-    serialNumber: "HTI-2024-1526",
-    model: "MacBook Pro 2019",
-    manufacturer: "Apple",
-    status: "Data Wipe",
-    location: "Henderson Warehouse",
-    assignedTo: "Unassigned",
-    receivedDate: "2024-11-03",
-  },
-  {
-    id: "5",
-    serialNumber: "HTI-2024-1527",
-    model: "ThinkPad T480",
-    manufacturer: "Lenovo",
-    status: "Ready to Ship",
-    location: "Henderson Warehouse",
-    assignedTo: "Warren County Library",
-    receivedDate: "2024-10-30",
-  },
-];
-
 const statusColors: Record<string, string> = {
-  "Ready to Ship": "bg-green-500/20 text-green-400 border-green-500/30",
-  "QA Testing": "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-  "Refurbishing": "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  "Data Wipe": "bg-purple-500/20 text-purple-400 border-purple-500/30",
-  "Received": "bg-gray-500/20 text-gray-400 border-gray-500/30",
+  "ready": "bg-green-500/20 text-green-400 border-green-500/30",
+  "qa_testing": "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
+  "refurbishing": "bg-blue-500/20 text-blue-400 border-blue-500/30",
+  "data_wipe": "bg-purple-500/20 text-purple-400 border-purple-500/30",
+  "received": "bg-gray-500/20 text-gray-400 border-gray-500/30",
+  "donated": "bg-gray-500/20 text-gray-400 border-gray-500/30",
+  "distributed": "bg-hti-teal/20 text-hti-teal border-hti-teal/30",
+};
+
+const statusLabels: Record<string, string> = {
+  "ready": "Ready to Ship",
+  "qa_testing": "QA Testing",
+  "refurbishing": "Refurbishing",
+  "data_wipe": "Data Wipe",
+  "received": "Received",
+  "donated": "Donated",
+  "distributed": "Distributed",
 };
 
 export default function InventoryOverview() {
+  const [devices, setDevices] = useState<Device[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    fetch('/api/devices')
+      .then(res => res.json())
+      .then(data => {
+        setDevices(data.slice(0, 10)); // Show first 10
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching devices:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  const filteredDevices = devices.filter(device =>
+    device.serial_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    device.model.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    device.manufacturer.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    statusLabels[device.status]?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  if (loading) {
+    return (
+      <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-xl overflow-hidden">
+        <div className="p-6 animate-pulse">
+          <div className="bg-gray-700 h-10 rounded mb-4" />
+          <div className="space-y-3">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="bg-gray-700 h-16 rounded" />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-xl overflow-hidden">
       {/* Header with Search */}
@@ -93,6 +93,8 @@ export default function InventoryOverview() {
           <input
             type="text"
             placeholder="Search by serial number, model, or status..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-1 px-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-hti-teal transition-colors"
           />
           <button className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white text-sm font-medium transition-colors">
@@ -115,36 +117,46 @@ export default function InventoryOverview() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
-            {devices.map((device) => (
-              <tr key={device.id} className="hover:bg-gray-750 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-mono text-white">{device.serialNumber}</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="text-sm font-medium text-white">{device.model}</div>
-                  <div className="text-xs text-gray-400">{device.manufacturer}</div>
-                </td>
-                <td className="px-6 py-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium border ${statusColors[device.status]}`}>
-                    {device.status}
-                  </span>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="text-sm text-gray-300">{device.assignedTo}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-400">{device.receivedDate}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <button className="text-hti-teal hover:text-hti-teal-light mr-3">
-                    Edit
-                  </button>
-                  <button className="text-gray-400 hover:text-white">
-                    View
-                  </button>
+            {filteredDevices.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="px-6 py-12 text-center text-gray-400">
+                  No devices found
                 </td>
               </tr>
-            ))}
+            ) : (
+              filteredDevices.map((device) => (
+                <tr key={device.id} className="hover:bg-gray-750 transition-colors">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-mono text-white">{device.serial_number}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="text-sm font-medium text-white">{device.model}</div>
+                    <div className="text-xs text-gray-400">{device.manufacturer}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium border ${statusColors[device.status] || statusColors.received}`}>
+                      {statusLabels[device.status] || device.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="text-sm text-gray-300">{device.assigned_to || "Unassigned"}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-400">
+                      {new Date(device.received_date).toLocaleDateString()}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button className="text-hti-teal hover:text-hti-teal-light mr-3">
+                      Edit
+                    </button>
+                    <button className="text-gray-400 hover:text-white">
+                      View
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
@@ -152,7 +164,7 @@ export default function InventoryOverview() {
       {/* Footer Pagination */}
       <div className="p-4 bg-gray-900/50 border-t border-gray-700 flex items-center justify-between">
         <div className="text-sm text-gray-400">
-          Showing 1-5 of 127 devices
+          Showing {filteredDevices.length} of {devices.length} devices
         </div>
         <div className="flex gap-2">
           <button className="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm text-white transition-colors">

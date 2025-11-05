@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 interface Stat {
   label: string;
   value: string;
@@ -9,42 +11,68 @@ interface Stat {
   color: string;
 }
 
-const stats: Stat[] = [
-  {
-    label: "In Pipeline",
-    value: "127",
-    change: "+12 today",
-    trend: "up",
-    icon: "🔄",
-    color: "from-blue-600 to-blue-400",
-  },
-  {
-    label: "Ready to Ship",
-    value: "43",
-    change: "8 scheduled",
-    trend: "neutral",
-    icon: "✅",
-    color: "from-green-600 to-green-400",
-  },
-  {
-    label: "Pending Pickup",
-    value: "18",
-    change: "5 urgent",
-    trend: "up",
-    icon: "📍",
-    color: "from-orange-600 to-orange-400",
-  },
-  {
-    label: "Avg Turnaround",
-    value: "4.2d",
-    change: "-0.8d vs last week",
-    trend: "down",
-    icon: "⚡",
-    color: "from-purple-600 to-purple-400",
-  },
-];
-
 export default function QuickStats() {
+  const [stats, setStats] = useState<Stat[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/metrics')
+      .then(res => res.json())
+      .then(data => {
+        const statsData: Stat[] = [
+          {
+            label: "In Pipeline",
+            value: String(data.inPipeline || 0),
+            change: "+12 today", // TODO: Calculate from actual data
+            trend: "up",
+            icon: "🔄",
+            color: "from-blue-600 to-blue-400",
+          },
+          {
+            label: "Ready to Ship",
+            value: String(data.readyToShip || 0),
+            change: "8 scheduled",
+            trend: "neutral",
+            icon: "✅",
+            color: "from-green-600 to-green-400",
+          },
+          {
+            label: "Pending Pickup",
+            value: String(data.pendingPickups || 0),
+            change: "5 urgent",
+            trend: "up",
+            icon: "📍",
+            color: "from-orange-600 to-orange-400",
+          },
+          {
+            label: "Avg Turnaround",
+            value: "4.2d", // TODO: Calculate from actual data
+            change: "-0.8d vs last week",
+            trend: "down",
+            icon: "⚡",
+            color: "from-purple-600 to-purple-400",
+          },
+        ];
+
+        setStats(statsData);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching stats:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="bg-gray-800 rounded-xl h-32 animate-pulse" />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {stats.map((stat) => (

@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 interface PipelineStage {
   name: string;
   count: number;
@@ -7,18 +9,67 @@ interface PipelineStage {
   icon: string;
 }
 
-const stages: PipelineStage[] = [
-  { name: "Donated", count: 28, color: "bg-gray-600", icon: "📥" },
-  { name: "Received", count: 23, color: "bg-blue-600", icon: "✓" },
-  { name: "Data Wipe", count: 19, color: "bg-purple-600", icon: "🔒" },
-  { name: "Refurbishing", count: 34, color: "bg-orange-600", icon: "🔧" },
-  { name: "QA Testing", count: 12, color: "bg-yellow-600", icon: "🧪" },
-  { name: "Ready", count: 43, color: "bg-green-600", icon: "✅" },
-  { name: "Distributed", count: 8, color: "bg-hti-teal", icon: "🎯" },
-];
-
 export default function DevicePipeline() {
-  const totalDevices = stages.reduce((sum, stage) => sum + stage.count, 0);
+  const [stages, setStages] = useState<PipelineStage[]>([]);
+  const [stats, setStats] = useState({ total: 0, completionRate: 0, avgCycleTime: "0d", bottleneck: 0 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/metrics')
+      .then(res => res.json())
+      .then(data => {
+        const pipeline = data.pipeline || {};
+
+        const stagesData: PipelineStage[] = [
+          { name: "Donated", count: pipeline.donated || 0, color: "bg-gray-600", icon: "📥" },
+          { name: "Received", count: pipeline.received || 0, color: "bg-blue-600", icon: "✓" },
+          { name: "Data Wipe", count: pipeline.dataWipe || 0, color: "bg-purple-600", icon: "🔒" },
+          { name: "Refurbishing", count: pipeline.refurbishing || 0, color: "bg-orange-600", icon: "🔧" },
+          { name: "QA Testing", count: pipeline.qaTesting || 0, color: "bg-yellow-600", icon: "🧪" },
+          { name: "Ready", count: pipeline.ready || 0, color: "bg-green-600", icon: "✅" },
+          { name: "Distributed", count: pipeline.distributed || 0, color: "bg-hti-teal", icon: "🎯" },
+        ];
+
+        const total = stagesData.reduce((sum, stage) => sum + stage.count, 0);
+        const distributed = pipeline.distributed || 0;
+        const completionRate = total > 0 ? Math.round((distributed / total) * 100) : 0;
+
+        // Find bottleneck (highest count excluding distributed)
+        const bottleneck = Math.max(...stagesData.slice(0, -1).map(s => s.count));
+
+        setStages(stagesData);
+        setStats({
+          total,
+          completionRate,
+          avgCycleTime: "4.2d", // TODO: Calculate from actual data
+          bottleneck
+        });
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching pipeline data:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-xl p-6">
+        <div className="animate-pulse space-y-4">
+          <div className="grid grid-cols-7 gap-2">
+            {[...Array(7)].map((_, i) => (
+              <div key={i} className="bg-gray-700 rounded-lg h-24" />
+            ))}
+          </div>
+          <div className="grid grid-cols-4 gap-4 pt-6 border-t border-gray-700">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="bg-gray-700 rounded h-16" />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-xl p-6">
@@ -48,20 +99,20 @@ export default function DevicePipeline() {
       {/* Pipeline Stats */}
       <div className="grid grid-cols-4 gap-4 pt-6 border-t border-gray-700">
         <div className="text-center">
-          <div className="text-2xl font-bold text-white">{totalDevices}</div>
+          <div className="text-2xl font-bold text-white">{stats.total}</div>
           <div className="text-xs text-gray-400">Total in Pipeline</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold text-green-400">87%</div>
+          <div className="text-2xl font-bold text-green-400">{stats.completionRate}%</div>
           <div className="text-xs text-gray-400">Completion Rate</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold text-blue-400">4.2d</div>
+          <div className="text-2xl font-bold text-blue-400">{stats.avgCycleTime}</div>
           <div className="text-xs text-gray-400">Avg Cycle Time</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold text-orange-400">34</div>
-          <div className="text-xs text-gray-400">Bottleneck (Refurb)</div>
+          <div className="text-2xl font-bold text-orange-400">{stats.bottleneck}</div>
+          <div className="text-xs text-gray-400">Bottleneck</div>
         </div>
       </div>
     </div>
