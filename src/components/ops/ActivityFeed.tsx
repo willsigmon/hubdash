@@ -80,12 +80,12 @@ export default function ActivityFeed() {
   }
 
   return (
-    <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-xl overflow-hidden">
+    <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-xl overflow-hidden flex flex-col h-full">
       {/* Header */}
-      <div className="p-4 bg-gray-900/50 border-b border-gray-700 flex items-center justify-between">
+      <div className="p-4 md:p-5 bg-gray-900/50 border-b border-gray-700 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-          <span className="text-sm font-medium text-gray-300">Live Updates</span>
+          <span className="text-xs md:text-sm font-medium text-gray-300">Live Updates</span>
         </div>
         <button className="text-xs text-gray-400 hover:text-white transition-colors">
           Clear All
@@ -93,27 +93,29 @@ export default function ActivityFeed() {
       </div>
 
       {/* Activity List */}
-      <div className="divide-y divide-gray-700 max-h-[600px] overflow-y-auto">
+      <div className="flex-1 overflow-y-auto divide-y divide-gray-700">
         {activities.length === 0 ? (
-          <div className="p-12 text-center text-gray-400">
-            <div className="text-4xl mb-3">📭</div>
-            <p>No recent activity</p>
+          <div className="flex items-center justify-center h-full min-h-[300px]">
+            <div className="text-center text-gray-400 py-8">
+              <div className="text-4xl md:text-5xl mb-3">📭</div>
+              <p className="text-xs md:text-sm">No recent activity</p>
+            </div>
           </div>
         ) : (
           activities.map((activity) => (
             <div
               key={activity.id}
-              className={`p-4 border-l-2 ${typeColors[activity.type]} hover:bg-gray-750 transition-colors`}
+              className={`p-4 md:p-5 border-l-4 transition-all hover:bg-gray-750 ${typeColors[activity.type]}`}
             >
               <div className="flex items-start gap-3">
-                <div className="text-xl flex-shrink-0">{activity.icon}</div>
+                <div className="text-lg md:text-xl flex-shrink-0">{activity.icon}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-gray-300">
+                  <p className="text-xs md:text-sm text-gray-300 leading-relaxed">
                     <span className="font-semibold text-white">{activity.user_name}</span>
-                    {' '}{activity.action}{' '}
-                    <span className="text-hti-teal">{activity.target}</span>
+                    <span className="text-gray-400"> {activity.action} </span>
+                    <span className="text-hti-teal font-medium break-words">{activity.target}</span>
                   </p>
-                  <p className="text-xs text-gray-500 mt-1">{formatTimeAgo(activity.created_at)}</p>
+                  <p className="text-xs text-gray-500 mt-2">{formatTimeAgo(activity.created_at)}</p>
                 </div>
               </div>
             </div>

@@ -40,48 +40,36 @@ export default function OpsPage() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Quick Stats */}
-        <section className="mb-8">
+      <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        {/* Quick Stats Section */}
+        <section>
+          <h2 className="text-xl md:text-2xl font-bold text-white mb-5 flex items-center gap-2">
+            <span>⚡</span>
+            Key Metrics
+          </h2>
           <QuickStats />
         </section>
 
-        {/* Device Pipeline */}
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-3xl">🔄</span>
-            Device Pipeline
-          </h2>
+        {/* Device Pipeline Section */}
+        <section>
           <DevicePipeline />
         </section>
 
-        {/* Two Column Layout */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-8">
+        {/* Two Column Layout - Donation Requests & Activity Feed */}
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
           {/* Donation Requests */}
-          <section>
-            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-              <span className="text-3xl">📬</span>
-              Pending Donations
-            </h2>
+          <section className="h-full">
             <DonationRequests />
           </section>
 
           {/* Activity Feed */}
-          <section>
-            <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-              <span className="text-3xl">🔔</span>
-              Live Activity
-            </h2>
+          <section className="h-full">
             <ActivityFeed />
           </section>
         </div>
 
-        {/* Inventory Overview */}
+        {/* Inventory Overview Section */}
         <section>
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-3xl">📦</span>
-            Inventory Overview
-          </h2>
           <InventoryOverview />
         </section>
       </main>

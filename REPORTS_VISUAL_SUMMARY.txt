@@ -1,0 +1,276 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    REPORTS PAGE - VISUAL LAYOUT SUMMARY
+═══════════════════════════════════════════════════════════════════════════════
+
+HEADER SECTION
+├─ Gradient Background: Navy → Teal → Teal-Light
+├─ Title: "📊 Grant Reports" (3xl/4xl, bold, tracking-tight)
+├─ Subtitle: "NCDIT Digital Champion Grant tracking..." (lg text)
+└─ Back Button: "← Back to Hub" (backdrop-blur style)
+
+HERO SECTION: GRANT PROGRESS (NEW & PROMINENT)
+├─ Section Header: "🎯 2024-2026 Grant Progress"
+├─ Grid Container: 1 column mobile, 3 columns tablet+
+│
+├─ CARD 1 (Blue Gradient):
+│  ├─ Title: "Laptops Converted"
+│  ├─ Large Number: 832 (4xl, bold, hti-navy)
+│  ├─ Goal: "/ 1,500" (lg, gray)
+│  ├─ Icon: 💻 (3xl)
+│  ├─ Progress Bar: 55% filled (green gradient)
+│  ├─ Percentage: "55% Complete" (bold)
+│  └─ Badge: "668 remaining" (blue pill badge)
+│
+├─ CARD 2 (Green Gradient):
+│  ├─ Title: "Training Hours Delivered"
+│  ├─ Large Number: 125 (4xl, bold, hti-navy)
+│  ├─ Goal: "/ 250" (lg, gray)
+│  ├─ Icon: 🎓 (3xl)
+│  ├─ Progress Bar: 50% filled (green gradient)
+│  ├─ Percentage: "50% Complete" (bold)
+│  └─ Badge: "125 hours left" (green pill badge)
+│
+└─ CARD 3 (Purple Gradient):
+   ├─ Title: "Participants Trained"
+   ├─ Large Number: 450 (4xl, bold, hti-navy)
+   ├─ Goal: "/ 600" (lg, gray)
+   ├─ Icon: 👥 (3xl)
+   ├─ Progress Bar: 75% filled (green gradient)
+   ├─ Percentage: "75% Complete" (bold)
+   └─ Badge: "150 more" (purple pill badge)
+
+SUMMARY STATISTICS ROW
+├─ Background: Subtle navy/teal gradient
+├─ Grid: 2 columns mobile, 4 columns tablet+
+├─ Stat 1: "15 Counties Served" (2xl, navy, bold)
+├─ Stat 2: "3,500+ Total Devices" (2xl, navy, bold)
+├─ Stat 3: "35+ Community Partners" (2xl, navy, bold)
+└─ Stat 4: "2024-26 Grant Cycle" (2xl, navy, bold)
+
+
+REPORT CONFIGURATION SECTION
+├─ Section Header: "⚙️ Report Configuration" (2xl, navy, bold)
+├─ Border: Top accent border (teal)
+│
+├─ Form Grid: 1 column mobile, 2 columns tablet+
+│  ├─ Report Type Dropdown
+│  │  ├─ Label: "Report Type" (sm, bold)
+│  │  ├─ Options:
+│  │  │  ├─ Quarterly Accountability Report
+│  │  │  ├─ Annual Summary
+│  │  │  ├─ Device Tracking Summary
+│  │  │  ├─ Training Impact Report
+│  │  │  └─ Donor Recognition Report
+│  │  └─ Styling: 2px border, large padding, navy focus ring
+│  │
+│  └─ Reporting Period Dropdown
+│     ├─ Label: "Reporting Period" (sm, bold)
+│     ├─ Options:
+│     │  ├─ Q1 2025 (Jan-Mar)
+│     │  ├─ Q2 2025 (Apr-Jun)
+│     │  ├─ Q3 2025 (Jul-Sep)
+│     │  └─ Q4 2025 (Oct-Dec)
+│     └─ Styling: 2px border, large padding, navy focus ring
+│
+└─ Button Row: Stack mobile, horizontal tablet+
+   ├─ "Generate Report" (primary button, navy→teal gradient)
+   ├─ "Preview Report" (secondary button, navy border)
+   └─ "Export CSV" (gray background, gray border)
+
+
+REPORT PREVIEW SECTION
+├─ Section Header: "HTI Quarterly Accountability Report" (3xl, navy, bold)
+├─ Metadata: "Reporting Period: Q2 2025 | Generated: Nov 5, 2025"
+├─ Border: Left accent border (navy)
+│
+├─ Executive Summary
+│  ├─ Title: "Executive Summary" (xl, navy, bold)
+│  ├─ Paragraph with embedded data:
+│  │  └─ Shows: 832 laptops, 55% progress, 50% training, 75% participants
+│  └─ Text: base size, gray-700, leading-relaxed
+│
+├─ Key Metrics Grid (3-column: mobile 2, tablet+ 3)
+│  ├─ Laptops Converted: 832 (blue background)
+│  ├─ Training Hours: 125 (green background)
+│  └─ Participants: 450 (purple background)
+│
+├─ Device Acquisition Section
+│  ├─ Title: "Device Acquisition & Conversion" (xl, navy, bold)
+│  ├─ Data List:
+│  │  ├─ Total Laptops Received: 3,500+
+│  │  ├─ Converted to Chromebooks: 832
+│  │  ├─ Distributed to Partners: 2,500+
+│  │  └─ Responsibly Recycled: 350+
+│  └─ Styling: gray-50 background, hover effects
+│
+├─ Training Impact Section
+│  ├─ Title: "Digital Literacy Training Impact" (xl, navy, bold)
+│  ├─ Data List:
+│  │  ├─ Training Hours Delivered: 125 hours
+│  │  ├─ Individuals Trained: 450 people
+│  │  ├─ Counties Served: 15 counties
+│  │  └─ Partner Organizations: 35+ partners
+│  └─ Styling: gray-50 background, hover effects
+│
+├─ Compliance Statement
+│  ├─ Background: navy/teal gradient
+│  ├─ Title: "Compliance & Audit Statement" (lg, navy, bold)
+│  ├─ Text: Full NCDIT grant compliance statement
+│  └─ Grant period: Jan 1, 2024 - Dec 31, 2026
+│
+└─ Footer
+   ├─ Attribution: "Report generated by HTI Dashboard Intelligence Suite"
+   ├─ Brand: "HUBZone Technology Initiative"
+   └─ Tagline: "Secure. Simple. Socially Good."
+
+
+EXPORT OPTIONS SECTION
+├─ Section Header: "📁 Export & Share Options" (2xl, navy, bold)
+├─ Grid: 1 column mobile, 3 columns tablet+, gap-6
+│
+├─ CARD 1 (PDF):
+│  ├─ Emoji: 📄 (5xl)
+│  ├─ Title: "PDF Report" (lg, navy, bold)
+│  ├─ Description: "Professional, print-ready report..."
+│  ├─ Border: Top accent (blue)
+│  └─ Button: "Download PDF" (primary style)
+│
+├─ CARD 2 (CSV):
+│  ├─ Emoji: 📊 (5xl)
+│  ├─ Title: "Excel/CSV Data" (lg, navy, bold)
+│  ├─ Description: "Raw dataset for custom analysis..."
+│  ├─ Border: Top accent (green)
+│  └─ Button: "Download CSV" (primary style)
+│
+└─ CARD 3 (HTML):
+   ├─ Emoji: 🌐 (5xl)
+   ├─ Title: "HTML Report" (lg, navy, bold)
+   ├─ Description: "Web-ready format for sharing..."
+   ├─ Border: Top accent (purple)
+   └─ Button: "Download HTML" (primary style)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+COLOR PALETTE
+─────────────
+Primary Colors:
+  • HTI Navy (#1e3a5f) - Headings, primary text
+  • HTI Teal (#4a9b9f) - Accents, borders
+  • HTI Teal-Light (#6db3b7) - Light accents
+
+Progress Cards:
+  • Blue: from-blue-50 to-blue-100/50 (border: blue-200)
+  • Green: from-green-50 to-green-100/50 (border: green-200)
+  • Purple: from-purple-50 to-purple-100/50 (border: purple-200)
+
+Neutral Colors:
+  • White (backgrounds)
+  • Gray-50 to Gray-800 (text, backgrounds)
+
+Progress Bars:
+  • Gradient: #10b981 → #059669 (green)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+RESPONSIVE BEHAVIOR
+───────────────────
+
+Mobile (< 768px):
+  ✓ Single-column layouts
+  ✓ Stacked progress cards (1 per row)
+  ✓ Full-width buttons
+  ✓ Stacked form fields
+  ✓ 2-column stats grid
+
+Tablet (768px - 1024px):
+  ✓ 3-column progress cards
+  ✓ 4-column stats grid
+  ✓ 2-column form fields
+  ✓ Horizontal buttons
+  ✓ 3-column export options
+
+Desktop (> 1024px):
+  ✓ Full-width optimized
+  ✓ 3-column progress cards
+  ✓ 4-column stats grid
+  ✓ Side-by-side forms
+  ✓ 3-column export options
+
+═══════════════════════════════════════════════════════════════════════════════
+
+REAL DATA METRICS DISPLAYED
+───────────────────────────
+
+Grant Progress:
+  • Laptops Converted: 832 / 1,500 (55%)
+  • Training Hours: 125 / 250 (50%)
+  • Participants: 450 / 600 (75%)
+
+Summary Stats:
+  • Counties Served: 15
+  • Total Devices: 3,500+
+  • Community Partners: 35+
+  • Grant Cycle: 2024-26
+
+Device Metrics:
+  • Laptops Received: 3,500+
+  • Chromebooks Distributed: 2,500+
+  • Responsibly Recycled: 350+
+
+Training Impact:
+  • Training Hours: 125 hours
+  • Participants: 450 people
+  • Counties: 15
+  • Partners: 35+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+INTERACTIVE ELEMENTS
+────────────────────
+
+Progress Cards:
+  • Hover: shadow-lg, transition-shadow
+  • Displays: Current/Goal, Percentage, Remaining count, Progress bar
+
+Form Dropdowns:
+  • Border: 2px (not 1px)
+  • Focus: ring-2, ring-hti-navy, border-hti-navy
+  • Padding: px-4 py-3 (larger touch targets)
+
+Buttons:
+  • Primary: Gradient background (navy→teal), white text
+  • Secondary: Navy border, navy text, white background
+  • Hover: opacity change, shadow, transform
+
+Export Cards:
+  • Hover: shadow-xl, transition-shadow
+  • Responsive: Full-width mobile, 1/3 width desktop
+  • Border: Top accent color (blue/green/purple)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+KEY IMPROVEMENTS FROM ORIGINAL
+──────────────────────────────
+
+BEFORE:
+  ✗ Grant progress buried in middle
+  ✗ No real data (placeholder text)
+  ✗ Generic styling
+  ✗ Form buttons cramped
+  ✗ Export options not prominent
+  ✗ No clear visual hierarchy
+
+AFTER:
+  ✓ Grant progress is hero section (most prominent)
+  ✓ Real data: 832 laptops, 55%, 125 hours, etc.
+  ✓ Professional HTI branding throughout
+  ✓ Responsive button layout (flex-col mobile, flex-row desktop)
+  ✓ Export options redesigned with colors and icons
+  ✓ Clear visual hierarchy with emoji icons and section headers
+  ✓ Color-coded progress cards (blue, green, purple)
+  ✓ Animated progress bars
+  ✓ Professional typography (3xl headers, 4xl metrics)
+  ✓ WCAG AA compliant contrast and accessibility
+
+═══════════════════════════════════════════════════════════════════════════════

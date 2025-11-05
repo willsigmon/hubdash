@@ -72,47 +72,65 @@ export default function DevicePipeline() {
   }
 
   return (
-    <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-xl p-6">
-      {/* Pipeline Flow */}
-      <div className="grid grid-cols-7 gap-2 mb-6">
-        {stages.map((stage, index) => (
-          <div key={stage.name} className="relative">
-            {/* Stage Card */}
-            <div className={`${stage.color} rounded-lg p-4 text-white hover:scale-105 transition-transform cursor-pointer`}>
-              <div className="text-center">
-                <div className="text-2xl mb-2">{stage.icon}</div>
-                <div className="text-2xl font-bold mb-1">{stage.count}</div>
+    <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-xl p-4 md:p-6">
+      {/* Header */}
+      <h3 className="text-lg font-semibold text-white mb-6">Device Pipeline</h3>
+
+      {/* Pipeline Flow - Responsive */}
+      <div className="mb-8">
+        <div className="hidden lg:grid grid-cols-7 gap-2 mb-6">
+          {stages.map((stage, index) => (
+            <div key={stage.name} className="relative">
+              {/* Stage Card - Desktop */}
+              <div className={`${stage.color} rounded-lg p-4 text-white hover:shadow-lg transition-all cursor-pointer transform hover:scale-105 border border-gray-600/30`}>
+                <div className="text-center">
+                  <div className="text-2xl mb-2">{stage.icon}</div>
+                  <div className="text-2xl font-bold mb-1">{stage.count}</div>
+                  <div className="text-xs font-medium opacity-90">{stage.name}</div>
+                </div>
+              </div>
+
+              {/* Arrow - Desktop only */}
+              {index < stages.length - 1 && (
+                <div className="absolute top-1/2 -right-2 transform -translate-y-1/2 z-10">
+                  <div className="text-gray-600 text-xl">→</div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile/Tablet view - Responsive grid */}
+        <div className="lg:hidden">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {stages.map((stage) => (
+              <div key={stage.name} className={`${stage.color} rounded-lg p-3 text-white text-center hover:shadow-lg transition-all cursor-pointer border border-gray-600/30`}>
+                <div className="text-xl mb-1">{stage.icon}</div>
+                <div className="text-xl font-bold mb-0.5">{stage.count}</div>
                 <div className="text-xs font-medium opacity-90">{stage.name}</div>
               </div>
-            </div>
-
-            {/* Arrow */}
-            {index < stages.length - 1 && (
-              <div className="absolute top-1/2 -right-2 transform -translate-y-1/2 z-10">
-                <div className="text-gray-600 text-2xl">→</div>
-              </div>
-            )}
+            ))}
           </div>
-        ))}
+        </div>
       </div>
 
       {/* Pipeline Stats */}
-      <div className="grid grid-cols-4 gap-4 pt-6 border-t border-gray-700">
-        <div className="text-center">
-          <div className="text-2xl font-bold text-white">{stats.total}</div>
-          <div className="text-xs text-gray-400">Total in Pipeline</div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 pt-6 border-t border-gray-700">
+        <div className="text-center p-4 bg-gray-900/30 rounded-lg border border-gray-700/50">
+          <div className="text-xl md:text-2xl font-bold text-white">{stats.total}</div>
+          <div className="text-xs md:text-sm text-gray-400 mt-1">Total in Pipeline</div>
         </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-green-400">{stats.completionRate}%</div>
-          <div className="text-xs text-gray-400">Completion Rate</div>
+        <div className="text-center p-4 bg-gray-900/30 rounded-lg border border-gray-700/50">
+          <div className="text-xl md:text-2xl font-bold text-green-400">{stats.completionRate}%</div>
+          <div className="text-xs md:text-sm text-gray-400 mt-1">Completion Rate</div>
         </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-blue-400">{stats.avgCycleTime}</div>
-          <div className="text-xs text-gray-400">Avg Cycle Time</div>
+        <div className="text-center p-4 bg-gray-900/30 rounded-lg border border-gray-700/50">
+          <div className="text-xl md:text-2xl font-bold text-blue-400">{stats.avgCycleTime}</div>
+          <div className="text-xs md:text-sm text-gray-400 mt-1">Avg Cycle Time</div>
         </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-orange-400">{stats.bottleneck}</div>
-          <div className="text-xs text-gray-400">Bottleneck</div>
+        <div className="text-center p-4 bg-gray-900/30 rounded-lg border border-gray-700/50">
+          <div className="text-xl md:text-2xl font-bold text-orange-400">{stats.bottleneck}</div>
+          <div className="text-xs md:text-sm text-gray-400 mt-1">Bottleneck</div>
         </div>
       </div>
     </div>

@@ -71,7 +71,7 @@ export async function GET() {
       totalLaptopsCollected: totalCollected, // Just the 1000 fetched for now
       totalChromebooksDistributed: 2271, // All Completed-Presented laptops (no date filter)
       countiesServed: countiesSet.size,
-      peopleTrained: 450, // Static for now
+      peopleTrained: 0, // TODO: Connect to actual training session data when available
       eWasteTons: Math.round((totalCollected * 5) / 2000),
       partnerOrganizations: organizations.length,
 
