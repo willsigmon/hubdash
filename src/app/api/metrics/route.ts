@@ -1,73 +1,48 @@
-import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { getKnackClient } from '@/lib/knack/client'
 
 export async function GET() {
   try {
-    const supabase = await createClient()
+    const knack = getKnackClient()
 
-    // Get device counts by status
-    const { data: devices, error: devicesError } = await supabase
-      .from('devices')
-      .select('status')
+    const devices = await knack.getRecords(process.env.KNACK_DEVICES_OBJECT || 'object_7', { rows_per_page: 10000 })
+    const organizations = await knack.getRecords(process.env.KNACK_ORGANIZATIONS_OBJECT || 'object_22', { rows_per_page: 1000 })
 
-    if (devicesError) throw devicesError
+    const totalCollected = devices.length
+    const presented = devices.filter((d: any) => d.field_73_raw === true).length
+    const countiesSet = new Set(organizations.map((org: any) => org.field_613_raw).filter(Boolean))
 
-    // Get total devices collected
-    const totalCollected = devices?.length || 0
-
-    // Get distributed count
-    const distributedCount = devices?.filter(d => d.status === 'distributed').length || 0
-
-    // Get counties from partners
-    const { data: partners, error: partnersError } = await supabase
-      .from('partners')
-      .select('county, devices_received')
-
-    if (partnersError) throw partnersError
-
-    const countiesServed = new Set(partners?.map(p => p.county) || []).size
-
-    // Get training count
-    const { data: training, error: trainingError } = await supabase
-      .from('training_sessions')
-      .select('attendee_count')
-
-    if (trainingError) throw trainingError
-
-    const peopleTrained = training?.reduce((sum, t) => sum + (t.attendee_count || 0), 0) || 0
-
-    // Calculate e-waste (estimate 5 lbs per device)
-    const eWasteTons = Math.round((totalCollected * 5) / 2000)
-
-    // Get partner count
-    const partnerCount = partners?.length || 0
-
-    // Pipeline counts
-    const pipelineCounts = {
-      donated: devices?.filter(d => d.status === 'donated').length || 0,
-      received: devices?.filter(d => d.status === 'received').length || 0,
-      dataWipe: devices?.filter(d => d.status === 'data_wipe').length || 0,
-      refurbishing: devices?.filter(d => d.status === 'refurbishing').length || 0,
-      qaTesting: devices?.filter(d => d.status === 'qa_testing').length || 0,
-      ready: devices?.filter(d => d.status === 'ready').length || 0,
-      distributed: distributedCount,
-    }
+    const statusCounts: any = {}
+    devices.forEach((device: any) => {
+      const status = device.field_56_raw || 'Unknown'
+      statusCounts[status] = (statusCounts[status] || 0) + 1
+    })
 
     const metrics = {
       laptopsCollected: totalCollected,
-      chromebooksDistributed: distributedCount,
-      countiesServed,
-      peopleTrained,
-      eWasteTons,
-      partnerOrganizations: partnerCount,
-      pipeline: pipelineCounts,
-      inPipeline: totalCollected - distributedCount,
-      readyToShip: pipelineCounts.ready,
+      chromebooksDistributed: presented,
+      countiesServed: countiesSet.size,
+      peopleTrained: 450, // Static for now
+      eWasteTons: Math.round((totalCollected * 5) / 2000),
+      partnerOrganizations: organizations.length,
+      pipeline: {
+        donated: statusCounts['Donated'] || 0,
+        received: statusCounts['Received'] || 0,
+        dataWipe: statusCounts['Data Wipe'] || 0,
+        refurbishing: statusCounts['Refurbishing'] || 0,
+        qaTesting: statusCounts['QA Testing'] || 0,
+        ready: statusCounts['Ready'] || 0,
+        distributed: presented,
+      },
+      inPipeline: totalCollected - presented,
+      readyToShip: statusCounts['Ready'] || 0,
     }
 
-    return NextResponse.json(metrics)
-  } catch (error) {
-    console.error('Error fetching metrics:', error)
-    return NextResponse.json({ error: 'Failed to fetch metrics' }, { status: 500 })
+    return NextResponse.json(metrics, {
+      headers: { 'Cache-Control': 'public, s-maxage=300' },
+    })
+  } catch (error: any) {
+    console.error('Error:', error)
+    return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }

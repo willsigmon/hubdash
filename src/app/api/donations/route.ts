@@ -1,41 +1,29 @@
-import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { getKnackClient } from '@/lib/knack/client'
 
 export async function GET() {
   try {
-    const supabase = await createClient()
+    const knack = getKnackClient()
+    const objectKey = process.env.KNACK_DONATION_INFO_OBJECT || 'object_63'
+    const knackRecords = await knack.getRecords(objectKey, { rows_per_page: 1000 })
 
-    const { data, error } = await supabase
-      .from('donations')
-      .select('*')
-      .order('requested_date', { ascending: false })
-      .limit(100)
+    const donations = knackRecords.map((r: any) => ({
+      id: r.id,
+      company: r.field_565_raw || 'Unknown',
+      contact_name: r.field_538_raw || 'Unknown',
+      contact_email: r.field_537_raw || '',
+      device_count: parseInt(r.field_542_raw || '0'),
+      location: r.field_566_raw || 'Unknown',
+      priority: 'normal',
+      status: 'pending',
+      requested_date: r.field_536_raw || new Date().toISOString(),
+    }))
 
-    if (error) throw error
-
-    return NextResponse.json(data)
-  } catch (error) {
-    console.error('Error fetching donations:', error)
-    return NextResponse.json({ error: 'Failed to fetch donations' }, { status: 500 })
-  }
-}
-
-export async function POST(request: Request) {
-  try {
-    const supabase = await createClient()
-    const body = await request.json()
-
-    const { data, error } = await supabase
-      .from('donations')
-      .insert(body)
-      .select()
-      .single()
-
-    if (error) throw error
-
-    return NextResponse.json(data, { status: 201 })
-  } catch (error) {
-    console.error('Error creating donation:', error)
-    return NextResponse.json({ error: 'Failed to create donation' }, { status: 500 })
+    return NextResponse.json(donations, {
+      headers: { 'Cache-Control': 'public, s-maxage=300' },
+    })
+  } catch (error: any) {
+    console.error('Error:', error)
+    return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }

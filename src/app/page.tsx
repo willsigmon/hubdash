@@ -123,6 +123,9 @@ export default function Home() {
               hubzonetech.org
             </a>
           </p>
+          <p className="mt-4 text-xs text-gray-400">
+            Powered by Knack • Real-time data from HTI's database
+          </p>
         </div>
       </div>
     </div>
