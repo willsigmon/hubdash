@@ -13,23 +13,25 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Approved':
-        return 'bg-green-100 text-green-800 border-green-300';
+        return 'bg-green-500 text-white border-green-400';
       case 'Pending':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-300';
+        return 'bg-yellow-500 text-white border-yellow-400';
       case 'In Review':
-        return 'bg-blue-100 text-blue-800 border-blue-300';
+        return 'bg-blue-500 text-white border-blue-400';
       case 'Rejected':
-        return 'bg-red-100 text-red-800 border-red-300';
+        return 'bg-red-500 text-white border-red-400';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-300';
+        return 'bg-gray-600 text-white border-gray-500';
     }
   };
 
   const InfoSection = ({ icon: Icon, title, children }: { icon: any, title: string, children: React.ReactNode }) => (
-    <div className="border border-gray-200 rounded-lg p-6">
-      <div className="flex items-center gap-2 mb-4">
-        <Icon className="w-5 h-5 text-hti-teal" />
-        <h3 className="font-semibold text-hti-navy text-lg">{title}</h3>
+    <div className="border-l-4 border-hti-teal bg-gradient-to-br from-hti-teal/5 to-hti-navy/5 rounded-lg p-6">
+      <div className="flex items-center gap-3 mb-5 pb-3 border-b-2 border-hti-teal/30">
+        <div className="p-2 bg-hti-teal/20 rounded-lg">
+          <Icon className="w-5 h-5 text-hti-teal" />
+        </div>
+        <h3 className="font-bold text-hti-navy text-lg">{title}</h3>
       </div>
       <div className="space-y-3">
         {children}
@@ -42,12 +44,12 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
 
     return (
       <div className={fullWidth ? "col-span-2" : ""}>
-        <dt className="text-sm font-medium text-gray-600 mb-1">{label}</dt>
-        <dd className="text-sm text-gray-900">
+        <dt className="text-sm font-semibold text-hti-navy mb-2">{label}</dt>
+        <dd className="text-sm text-gray-800">
           {Array.isArray(value) ? (
             <div className="flex flex-wrap gap-2">
               {value.map((item, idx) => (
-                <span key={idx} className="px-2 py-1 bg-hti-teal/10 text-hti-teal rounded-md text-xs">
+                <span key={idx} className="px-3 py-1.5 bg-hti-teal/20 text-hti-navy border border-hti-teal/40 rounded-md text-xs font-medium">
                   {item}
                 </span>
               ))}
@@ -73,7 +75,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
                   {application.status}
                 </span>
                 {application.is501c3 && (
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-500/20 text-green-100 border border-green-400">
+                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-400 text-green-900 border border-green-300">
                     501(c)(3)
                   </span>
                 )}
@@ -159,8 +161,8 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
             <InfoSection icon={Target} title="Marketing Assets">
               <dl className="grid grid-cols-1 gap-4">
                 {application.quote && (
-                  <div className="bg-gradient-to-br from-hti-teal/10 to-hti-navy/10 p-6 rounded-lg border-l-4 border-hti-teal">
-                    <p className="text-gray-700 italic text-lg leading-relaxed">
+                  <div className="bg-gradient-to-br from-hti-teal/15 to-hti-navy/10 p-6 rounded-lg border-l-4 border-hti-teal border border-hti-teal/30">
+                    <p className="text-hti-navy italic text-lg leading-relaxed font-medium">
                       "{application.quote}"
                     </p>
                   </div>
@@ -172,10 +174,12 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
 
           {/* Internal Notes */}
           {(application.notes || application.internalComments) && (
-            <div className="border border-yellow-200 bg-yellow-50 rounded-lg p-6">
-              <div className="flex items-center gap-2 mb-4">
-                <AlertCircle className="w-5 h-5 text-yellow-600" />
-                <h3 className="font-semibold text-yellow-900 text-lg">Internal Notes</h3>
+            <div className="border-l-4 border-yellow-500 bg-gradient-to-br from-yellow-50 to-yellow-100/50 rounded-lg p-6">
+              <div className="flex items-center gap-3 mb-5 pb-3 border-b-2 border-yellow-200">
+                <div className="p-2 bg-yellow-200 rounded-lg">
+                  <AlertCircle className="w-5 h-5 text-yellow-700" />
+                </div>
+                <h3 className="font-bold text-yellow-900 text-lg">Internal Notes</h3>
               </div>
               <dl className="grid grid-cols-1 gap-4">
                 <InfoRow label="Notes" value={application.notes} fullWidth />

@@ -124,7 +124,7 @@ export default function QuickStats() {
             </div>
 
             {/* Change Indicator */}
-            <div className="text-xs md:text-xs text-gray-500 bg-gray-900/30 rounded px-2 py-1 inline-block">
+            <div className="text-xs md:text-xs text-gray-300 bg-gray-700/50 rounded px-3 py-1.5 inline-block font-medium border border-gray-600">
               {stat.change}
             </div>
           </div>

@@ -222,7 +222,7 @@ export default function ImpactMetrics() {
               </div>
 
               {/* Progress milestones */}
-              <div className="flex justify-between text-xs text-gray-500 font-medium mt-4 pt-2">
+              <div className="flex justify-between text-xs text-gray-700 font-semibold mt-4 pt-2">
                 <span>0%</span>
                 <span>25%</span>
                 <span>50%</span>
