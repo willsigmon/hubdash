@@ -2,7 +2,7 @@ import Link from "next/link";
 import ImpactMetrics from "@/components/board/ImpactMetrics";
 import RecentActivity from "@/components/board/RecentActivity";
 import CountyMap from "@/components/board/CountyMap";
-import TrendChart from "@/components/board/TrendChart";
+// import TrendChart from "@/components/board/TrendChart"; // Temporarily disabled
 
 export default function BoardDashboard() {
   return (
@@ -35,18 +35,11 @@ export default function BoardDashboard() {
           <ImpactMetrics />
         </section>
 
-        {/* Trends and Map Grid */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-8">
-          <section>
-            <h2 className="text-2xl font-bold text-hti-navy mb-4">Growth Trends</h2>
-            <TrendChart />
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold text-hti-navy mb-4">Counties Served</h2>
-            <CountyMap />
-          </section>
-        </div>
+        {/* County Map */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-bold text-hti-navy mb-4">Counties Served</h2>
+          <CountyMap />
+        </section>
 
         {/* Recent Activity */}
         <section>
