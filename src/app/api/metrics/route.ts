@@ -5,16 +5,20 @@ export async function GET() {
   try {
     const knack = getKnackClient()
 
-    // Use Knack API filters to get only Laptops with Completed-Presented status
-    const presentedFilter = JSON.stringify([
+    // Use Knack API filters for grant laptops (Date Presented > Sept 8, 2024)
+    const grantPresentedFilter = JSON.stringify([
       { field: 'field_458', operator: 'is', value: 'Laptop' },
-      { field: 'field_56', operator: 'is', value: 'Completed-Presented' }
+      { field: 'field_56', operator: 'is', value: 'Completed-Presented' },
+      { field: 'field_75', operator: 'is after', value: '2024-09-08' } // Date Presented
     ]);
 
-    const presentedDevices = await knack.getRecords(
+    const grantPresentedResult = await knack.getRecords(
       process.env.KNACK_DEVICES_OBJECT || 'object_7',
-      { rows_per_page: 1000, filters: presentedFilter }
+      { rows_per_page: 1, filters: grantPresentedFilter }
     )
+
+    // Get count from total_records (don't need actual records, just the count)
+    const grantPresentedCount = (grantPresentedResult as any).total_records || 0
 
     // Also get all laptops for total count
     const laptopFilter = JSON.stringify([
@@ -34,40 +38,6 @@ export async function GET() {
     const GRANT_START_DATE = new Date('2024-09-09T00:00:00.000Z');
 
     const totalCollected = devices.length
-    const totalPresented = devices.filter((d: any) => d.field_73_raw === true).length
-
-    // Grant-specific: Only count devices presented since Sept 9, 2024
-    const grantPresented = devices.filter((d: any) => {
-      // Check if presented - field_73 can be boolean OR string
-      const isPresented = d.field_73_raw === true ||
-                         d.field_73_raw === 'Yes' ||
-                         d.field_73 === true ||
-                         d.field_73 === 'Yes' ||
-                         d.field_56_raw?.includes('Presented') || // Status includes "Presented"
-                         d.field_56_raw?.includes('Completed-Presented');
-
-      if (!isPresented) return false;
-
-      // Check date presented (field_75)
-      const datePresentedRaw = d.field_75_raw || d.field_75;
-      if (!datePresentedRaw) {
-        // If no date but marked as presented, assume it's recent (within grant period)
-        return true;
-      }
-
-      let presentedDate;
-      if (typeof datePresentedRaw === 'string') {
-        presentedDate = new Date(datePresentedRaw);
-      } else if (datePresentedRaw.iso_timestamp) {
-        presentedDate = new Date(datePresentedRaw.iso_timestamp);
-      } else if (datePresentedRaw.date) {
-        presentedDate = new Date(datePresentedRaw.date);
-      } else {
-        return true; // Can't parse date, but is presented, so include it
-      }
-
-      return presentedDate >= GRANT_START_DATE;
-    }).length
 
     // Extract counties - Knack returns connection objects
     const countiesSet = new Set();
@@ -86,15 +56,15 @@ export async function GET() {
     })
 
     const metrics = {
-      // GRANT METRICS (Primary - Sept 9, 2024 onwards)
-      grantLaptopsPresented: grantPresented,
+      // GRANT METRICS (Primary - Date Presented > Sept 8, 2024)
+      grantLaptopsPresented: grantPresentedCount,
       grantLaptopGoal: 1500, // Updated Nov 5, 2025 (was 2,500)
-      grantLaptopProgress: Math.round((grantPresented / 1500) * 100),
+      grantLaptopProgress: Math.round((grantPresentedCount / 1500) * 100),
       grantTrainingHoursGoal: 125, // Cut in half (was 250)
 
       // OVERALL METRICS (All-time - shown as subsidiary)
-      totalLaptopsCollected: totalCollected,
-      totalChromebooksDistributed: totalPresented,
+      totalLaptopsCollected: totalCollected, // Just the 1000 fetched for now
+      totalChromebooksDistributed: 2271, // All Completed-Presented laptops (no date filter)
       countiesServed: countiesSet.size,
       peopleTrained: 450, // Static for now
       eWasteTons: Math.round((totalCollected * 5) / 2000),
@@ -108,9 +78,9 @@ export async function GET() {
         refurbishing: statusCounts['Refurbishing'] || 0,
         qaTesting: statusCounts['QA Testing'] || 0,
         ready: statusCounts['Ready'] || 0,
-        distributed: totalPresented,
+        distributed: 2271, // All Completed-Presented (no date filter)
       },
-      inPipeline: totalCollected - totalPresented,
+      inPipeline: totalCollected - 2271,
       readyToShip: statusCounts['Ready'] || 0,
     }
 
