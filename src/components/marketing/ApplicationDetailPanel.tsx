@@ -13,23 +13,23 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Approved':
-        return 'bg-green-500 text-white border-green-400';
+        return 'bg-green-500/20 text-green-600 border-green-500/40';
       case 'Pending':
-        return 'bg-yellow-500 text-white border-yellow-400';
+        return 'bg-hti-yellow/20 text-hti-navy border-hti-yellow/40';
       case 'In Review':
-        return 'bg-blue-500 text-white border-blue-400';
+        return 'bg-hti-orange/20 text-hti-orange border-hti-orange/40';
       case 'Rejected':
-        return 'bg-red-500 text-white border-red-400';
+        return 'bg-hti-red/20 text-hti-red border-hti-red/40';
       default:
-        return 'bg-gray-600 text-white border-gray-500';
+        return 'bg-hti-gray/20 text-hti-gray border-hti-gray/40';
     }
   };
 
   const InfoSection = ({ icon: Icon, title, children }: { icon: any, title: string, children: React.ReactNode }) => (
-    <div className="border-l-4 border-hti-teal bg-gradient-to-br from-hti-teal/5 to-hti-navy/5 rounded-lg p-6">
-      <div className="flex items-center gap-3 mb-5 pb-3 border-b-2 border-hti-teal/30">
-        <div className="p-2 bg-hti-teal/20 rounded-lg">
-          <Icon className="w-5 h-5 text-hti-teal" />
+    <div className="bg-white/50 backdrop-blur-xl border-2 border-hti-orange/20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all hover:border-hti-orange/40">
+      <div className="flex items-center gap-3 mb-5 pb-4 border-b-2 border-hti-orange/20">
+        <div className="p-3 bg-gradient-to-br from-hti-orange to-hti-red rounded-lg">
+          <Icon className="w-5 h-5 text-white" />
         </div>
         <h3 className="font-bold text-hti-navy text-lg">{title}</h3>
       </div>
@@ -44,12 +44,12 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
 
     return (
       <div className={fullWidth ? "col-span-2" : ""}>
-        <dt className="text-sm font-semibold text-hti-navy mb-2">{label}</dt>
-        <dd className="text-sm text-gray-800">
+        <dt className="text-xs font-bold text-hti-orange/70 uppercase tracking-wider mb-2">{label}</dt>
+        <dd className="text-sm text-hti-navy font-medium">
           {Array.isArray(value) ? (
             <div className="flex flex-wrap gap-2">
               {value.map((item, idx) => (
-                <span key={idx} className="px-3 py-1.5 bg-hti-teal/20 text-hti-navy border border-hti-teal/40 rounded-md text-xs font-medium">
+                <span key={idx} className="px-3 py-1 bg-hti-orange/10 text-hti-navy border border-hti-orange/40 rounded-lg text-xs font-bold">
                   {item}
                 </span>
               ))}
@@ -63,53 +63,58 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto backdrop-blur-sm">
-      <div className="bg-white rounded-3xl max-w-5xl w-full my-8 shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50 overflow-y-auto backdrop-blur-md">
+      <div className="bg-gradient-to-br from-white via-hti-yellow/3 to-hti-orange/5 rounded-3xl max-w-4xl w-full my-8 shadow-2xl overflow-hidden border-2 border-hti-yellow/30">
         {/* Premium Header */}
-        <div className="sticky top-0 bg-gradient-to-br from-hti-navy via-hti-teal to-hti-navy text-white px-8 py-8 rounded-t-3xl">
+        <div className="sticky top-0 bg-gradient-to-r from-hti-orange via-hti-red to-hti-orange text-white px-8 py-8 border-b-4 border-hti-yellow">
           <div className="flex justify-between items-start mb-6">
             <div className="flex-1">
               <h2 className="text-4xl font-bold mb-4 leading-tight">{application.organizationName}</h2>
               <div className="flex flex-wrap items-center gap-2">
-                <span className={`px-4 py-2 rounded-full text-xs font-bold border ${getStatusColor(application.status)}`}>
+                <span className={`px-4 py-2 rounded-full text-xs font-bold border-2 ${getStatusColor(application.status)}`}>
                   {application.status}
                 </span>
                 {application.is501c3 && (
-                  <span className="px-4 py-2 rounded-full text-xs font-bold bg-green-400 text-green-900 border border-green-300">
+                  <span className="px-4 py-2 rounded-full text-xs font-bold bg-green-500/20 text-green-600 border border-green-500/40">
                     ✓ 501(c)(3) Status
+                  </span>
+                )}
+                {application.firstTime && (
+                  <span className="px-4 py-2 rounded-full text-xs font-bold bg-white/20 text-white border border-white/40">
+                    🆕 First-time Applicant
                   </span>
                 )}
               </div>
             </div>
             <button
               onClick={onClose}
-              className="text-white/70 hover:text-white transition-colors p-3 hover:bg-white/10 rounded-xl"
+              className="text-white/80 hover:text-white transition-all p-3 hover:bg-white/20 rounded-xl"
             >
               <X className="w-7 h-7" />
             </button>
           </div>
 
-          {/* Quick Stats */}
+          {/* Quick Stats Grid */}
           <div className="grid grid-cols-3 gap-4">
-            <div className="bg-white/15 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-              <div className="text-white/80 text-xs font-medium mb-1">Submitted</div>
-              <div className="text-white font-semibold">{new Date(application.timestamp).toLocaleDateString()}</div>
+            <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/30 hover:border-white/50 transition-all">
+              <div className="text-white/80 text-xs font-bold uppercase tracking-wider mb-2">Submitted</div>
+              <div className="text-xl font-bold text-hti-yellow">{new Date(application.timestamp).toLocaleDateString()}</div>
             </div>
-            <div className="bg-white/15 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-              <div className="text-white/80 text-xs font-medium mb-1">Location</div>
-              <div className="text-white font-semibold">{application.county || 'Unknown'} County</div>
+            <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/30 hover:border-white/50 transition-all">
+              <div className="text-white/80 text-xs font-bold uppercase tracking-wider mb-2">Location</div>
+              <div className="text-xl font-bold text-hti-yellow">{application.county || 'Unknown'}</div>
             </div>
-            <div className="bg-white/15 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-              <div className="text-white/80 text-xs font-medium mb-1">Chromebooks</div>
-              <div className="text-2xl font-bold text-hti-yellow">{application.chromebooksNeeded}</div>
+            <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/30 hover:border-white/50 transition-all">
+              <div className="text-white/80 text-xs font-bold uppercase tracking-wider mb-2">Chromebooks</div>
+              <div className="text-3xl font-bold text-hti-yellow-bright">{application.chromebooksNeeded}</div>
             </div>
           </div>
         </div>
 
-        {/* Content */}
-        <div className="p-8 space-y-6 max-h-[calc(100vh-300px)] overflow-y-auto">
+        {/* Content - Grid Layout */}
+        <div className="p-8 space-y-6 max-h-[calc(100vh-340px)] overflow-y-auto scrollbar-hide">
           {/* Contact Information */}
-          <InfoSection icon={Mail} title="Contact Information">
+          <InfoSection icon={Mail} title="📧 Contact Information">
             <dl className="grid grid-cols-2 gap-4">
               <InfoRow label="Contact Person" value={application.contactPerson} />
               <InfoRow label="Email" value={application.email} />
@@ -121,18 +126,18 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
           </InfoSection>
 
           {/* Organization Details */}
-          <InfoSection icon={Building2} title="Organization Details">
+          <InfoSection icon={Building2} title="🏢 Organization Details">
             <dl className="grid grid-cols-2 gap-4">
               <InfoRow label="Organization Type" value={application.organizationType} />
               <InfoRow label="County" value={application.county} />
-              <InfoRow label="501(c)(3) Status" value={application.is501c3 ? "Yes" : "No"} />
+              <InfoRow label="501(c)(3) Status" value={application.is501c3 ? "Yes ✓" : "No"} />
               <InfoRow label="First-time Applicant" value={application.firstTime ? "Yes" : "Returning"} />
               <InfoRow label="How They Heard About HTI" value={application.howHeard} fullWidth />
             </dl>
           </InfoSection>
 
           {/* Client Population */}
-          <InfoSection icon={Users} title="Client Population & Needs">
+          <InfoSection icon={Users} title="👥 Client Population & Needs">
             <dl className="grid grid-cols-1 gap-4">
               <InfoRow label="Works With" value={application.workssWith} fullWidth />
               <InfoRow label="Client Struggles Being Addressed" value={application.clientStruggles} fullWidth />
@@ -141,7 +146,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
           </InfoSection>
 
           {/* How They'll Use Chromebooks */}
-          <InfoSection icon={Lightbulb} title="How They'll Use Chromebooks">
+          <InfoSection icon={Lightbulb} title="💡 How They'll Use Chromebooks">
             <dl className="grid grid-cols-1 gap-4">
               <InfoRow label="Chromebooks Requested" value={application.chromebooksNeeded} />
               <InfoRow label="How They'll Use Them" value={application.howWillUse} fullWidth />
@@ -150,7 +155,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
           </InfoSection>
 
           {/* Expected Impact */}
-          <InfoSection icon={TrendingUp} title="Expected Impact">
+          <InfoSection icon={TrendingUp} title="📈 Expected Impact">
             <dl className="grid grid-cols-1 gap-4">
               <InfoRow label="Positive Impact Expected" value={application.positiveImpact} fullWidth />
               <InfoRow label="What Clients Will Achieve" value={application.whatClientsAchieve} fullWidth />
@@ -160,11 +165,11 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
 
           {/* Marketing Assets */}
           {(application.quote || application.oneWord) && (
-            <InfoSection icon={Target} title="Marketing Assets">
+            <InfoSection icon={Target} title="🎯 Marketing Assets">
               <dl className="grid grid-cols-1 gap-4">
                 {application.quote && (
-                  <div className="bg-gradient-to-br from-hti-teal/15 to-hti-navy/10 p-6 rounded-lg border-l-4 border-hti-teal border border-hti-teal/30">
-                    <p className="text-hti-navy italic text-lg leading-relaxed font-medium">
+                  <div className="bg-gradient-to-br from-hti-yellow/15 to-hti-orange/10 p-6 rounded-xl border-l-4 border-hti-yellow">
+                    <p className="text-hti-navy italic text-lg leading-relaxed font-semibold">
                       "{application.quote}"
                     </p>
                   </div>
@@ -176,12 +181,12 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
 
           {/* Internal Notes */}
           {(application.notes || application.internalComments) && (
-            <div className="border-l-4 border-yellow-500 bg-gradient-to-br from-yellow-50 to-yellow-100/50 rounded-lg p-6">
-              <div className="flex items-center gap-3 mb-5 pb-3 border-b-2 border-yellow-200">
-                <div className="p-2 bg-yellow-200 rounded-lg">
-                  <AlertCircle className="w-5 h-5 text-yellow-700" />
+            <div className="bg-white/50 backdrop-blur-xl border-l-4 border-hti-red bg-gradient-to-br from-hti-red/5 to-hti-orange/5 rounded-2xl p-6 border-2 border-hti-red/20">
+              <div className="flex items-center gap-3 mb-5 pb-4 border-b-2 border-hti-red/30">
+                <div className="p-3 bg-hti-red/20 rounded-lg">
+                  <AlertCircle className="w-5 h-5 text-hti-red" />
                 </div>
-                <h3 className="font-bold text-yellow-900 text-lg">Internal Notes</h3>
+                <h3 className="font-bold text-hti-navy text-lg">Internal Notes</h3>
               </div>
               <dl className="grid grid-cols-1 gap-4">
                 <InfoRow label="Notes" value={application.notes} fullWidth />
@@ -192,21 +197,21 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
         </div>
 
         {/* Action Footer */}
-        <div className="sticky bottom-0 bg-gradient-to-r from-gray-50 to-white px-8 py-8 border-t-2 border-gray-100">
+        <div className="sticky bottom-0 bg-gradient-to-r from-hti-orange/10 via-hti-yellow/10 to-hti-orange/10 backdrop-blur-xl px-8 py-6 border-t-2 border-hti-orange/20">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             {/* Primary Action - Approve */}
             <button
               onClick={() => onAction?.('approve', application.id)}
-              className="col-span-1 px-6 py-4 bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-2xl hover:scale-105 transform flex items-center justify-center gap-2 group"
+              className="col-span-1 px-4 py-3 bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-2xl hover:scale-110 transform flex items-center justify-center gap-2 group"
             >
-              <CheckCircle2 className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              <span className="hidden md:inline">Approve</span>
+              <CheckCircle2 className="w-4 h-4 group-hover:scale-125 transition-transform" />
+              <span className="hidden md:inline text-sm">Approve</span>
             </button>
 
             {/* Request Info */}
             <button
               onClick={() => onAction?.('request-info', application.id)}
-              className="col-span-1 px-6 py-4 bg-gradient-to-br from-hti-navy to-hti-teal hover:from-hti-teal hover:to-hti-navy text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-2xl hover:scale-105 transform"
+              className="col-span-1 px-4 py-3 bg-gradient-to-br from-hti-orange to-hti-red hover:from-hti-red hover:to-hti-orange text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-2xl hover:scale-110 transform text-sm"
             >
               More Info
             </button>
@@ -214,7 +219,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
             {/* Schedule */}
             <button
               onClick={() => onAction?.('schedule', application.id)}
-              className="col-span-1 px-6 py-4 bg-white hover:bg-gray-50 text-hti-navy rounded-xl font-bold transition-all border-2 border-hti-teal shadow-md hover:shadow-lg hover:scale-105 transform"
+              className="col-span-1 px-4 py-3 bg-white hover:bg-hti-gray-light text-hti-navy rounded-xl font-bold transition-all border-2 border-hti-orange/40 shadow-md hover:shadow-lg hover:scale-110 transform text-sm"
             >
               Schedule
             </button>
@@ -222,7 +227,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
             {/* Contact */}
             <button
               onClick={() => onAction?.('contact', application.id)}
-              className="col-span-1 px-6 py-4 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl font-bold transition-all border-2 border-blue-300 shadow-md hover:shadow-lg hover:scale-105 transform"
+              className="col-span-1 px-4 py-3 bg-hti-yellow/20 hover:bg-hti-yellow/40 text-hti-navy rounded-xl font-bold transition-all border-2 border-hti-yellow/40 shadow-md hover:shadow-lg hover:scale-110 transform text-sm"
             >
               Contacted
             </button>
@@ -230,7 +235,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
             {/* Quote Card */}
             <button
               onClick={() => onAction?.('quote-card', application.id)}
-              className="col-span-1 px-6 py-4 bg-gradient-to-br from-hti-yellow to-yellow-400 hover:from-yellow-400 hover:to-hti-yellow text-gray-900 rounded-xl font-bold transition-all shadow-lg hover:shadow-2xl hover:scale-105 transform"
+              className="col-span-1 px-4 py-3 bg-gradient-to-br from-hti-yellow to-hti-yellow-bright hover:from-hti-yellow-bright hover:to-hti-yellow text-hti-navy rounded-xl font-bold transition-all shadow-lg hover:shadow-2xl hover:scale-110 transform text-sm"
             >
               Quote Card
             </button>
@@ -238,7 +243,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
             {/* Export */}
             <button
               onClick={() => onAction?.('export', application.id)}
-              className="col-span-1 px-6 py-4 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-xl font-bold transition-all border-2 border-purple-300 shadow-md hover:shadow-lg hover:scale-105 transform"
+              className="col-span-1 px-4 py-3 bg-hti-red/20 hover:bg-hti-red/40 text-hti-red rounded-xl font-bold transition-all border-2 border-hti-red/40 shadow-md hover:shadow-lg hover:scale-110 transform text-sm"
             >
               PDF
             </button>
