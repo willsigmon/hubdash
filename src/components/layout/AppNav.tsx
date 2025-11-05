@@ -28,14 +28,19 @@ export default function AppNav() {
 
   const isActive = (href: string) => pathname?.startsWith(href);
   const isHome = pathname === "/";
+  const isDarkTheme = pathname?.startsWith("/ops"); // Ops page uses dark theme
 
   // Don't show nav on home page
   if (isHome) return null;
 
   return (
     <>
-      {/* Desktop Navigation */}
-      <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+      {/* Desktop Navigation - Theme Aware */}
+      <nav className={`sticky top-0 z-50 shadow-sm ${
+        isDarkTheme
+          ? 'bg-gray-900 border-b border-gray-700'
+          : 'bg-white border-b border-gray-200'
+      }`}>
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -43,7 +48,9 @@ export default function AppNav() {
               <div className="w-8 h-8 bg-gradient-to-br from-hti-navy to-hti-teal rounded-lg flex items-center justify-center text-white font-bold text-sm">
                 HTI
               </div>
-              <span className="font-bold text-lg text-hti-navy hidden sm:inline">HubDash</span>
+              <span className={`font-bold text-lg hidden sm:inline ${
+                isDarkTheme ? 'text-white' : 'text-hti-navy'
+              }`}>HubDash</span>
             </Link>
 
             {/* Desktop Nav Items */}
@@ -57,8 +64,12 @@ export default function AppNav() {
                     href={item.href}
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all ${
                       active
-                        ? `bg-${item.color}/10 text-${item.color} border border-${item.color}/20`
-                        : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                        ? isDarkTheme
+                          ? 'bg-hti-teal/20 text-hti-teal-light border border-hti-teal/40'
+                          : `bg-${item.color}/10 text-${item.color} border border-${item.color}/20`
+                        : isDarkTheme
+                          ? "text-gray-300 hover:bg-gray-800 hover:text-white"
+                          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -73,7 +84,11 @@ export default function AppNav() {
               {/* Search Button */}
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
-                className="p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors"
+                className={`p-2 rounded-lg transition-colors ${
+                  isDarkTheme
+                    ? 'hover:bg-gray-800 text-gray-300'
+                    : 'hover:bg-gray-100 text-gray-600'
+                }`}
                 aria-label="Global search"
               >
                 <Search className="w-5 h-5" />
@@ -82,7 +97,11 @@ export default function AppNav() {
               {/* Mobile Menu Toggle */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg hover:bg-gray-100 text-gray-600 transition-colors"
+                className={`md:hidden p-2 rounded-lg transition-colors ${
+                  isDarkTheme
+                    ? 'hover:bg-gray-800 text-gray-300'
+                    : 'hover:bg-gray-100 text-gray-600'
+                }`}
                 aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -151,15 +170,15 @@ export default function AppNav() {
         )}
       </nav>
 
-      {/* Breadcrumb Trail */}
-      <div className="bg-gray-50 border-b border-gray-200">
+      {/* Breadcrumb Trail - Theme Aware */}
+      <div className={isDarkTheme ? 'bg-gray-800 border-b border-gray-700' : 'bg-gray-50 border-b border-gray-200'}>
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-2">
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <Link href="/" className="hover:text-hti-teal transition-colors">
+          <div className={`flex items-center gap-2 text-sm ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>
+            <Link href="/" className={isDarkTheme ? 'hover:text-hti-teal-light' : 'hover:text-hti-teal'}>
               Home
             </Link>
             <span>/</span>
-            <span className="text-gray-900 font-medium">
+            <span className={isDarkTheme ? 'text-gray-200 font-medium' : 'text-gray-900 font-medium'}>
               {navItems.find(item => isActive(item.href))?.label || "Dashboard"}
             </span>
           </div>
