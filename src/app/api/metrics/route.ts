@@ -81,7 +81,7 @@ export async function GET() {
       grantTrainingHoursGoal: 125, // Cut in half (was 250)
 
       // OVERALL METRICS (All-time - shown as subsidiary)
-      totalLaptopsCollected: totalCollected, // Just the 1000 fetched for now
+      totalLaptopsCollected: totalDevices, // All devices in Knack (5,464)
       totalChromebooksDistributed: 2271, // All Completed-Presented laptops (no date filter)
       countiesServed: countiesSet.size,
       peopleTrained: 0, // TODO: Connect to actual training session data when available
