@@ -16,11 +16,22 @@ export async function GET() {
 
     // Grant-specific: Only count devices presented since Sept 9, 2024
     const grantPresented = devices.filter((d: any) => {
-      if (d.field_73_raw !== true) return false; // Must be presented
+      // Check if presented - field_73 can be boolean OR string
+      const isPresented = d.field_73_raw === true ||
+                         d.field_73_raw === 'Yes' ||
+                         d.field_73 === true ||
+                         d.field_73 === 'Yes' ||
+                         d.field_56_raw?.includes('Presented') || // Status includes "Presented"
+                         d.field_56_raw?.includes('Completed-Presented');
+
+      if (!isPresented) return false;
 
       // Check date presented (field_75)
       const datePresentedRaw = d.field_75_raw || d.field_75;
-      if (!datePresentedRaw) return false;
+      if (!datePresentedRaw) {
+        // If no date but marked as presented, assume it's recent (within grant period)
+        return true;
+      }
 
       let presentedDate;
       if (typeof datePresentedRaw === 'string') {
@@ -30,7 +41,7 @@ export async function GET() {
       } else if (datePresentedRaw.date) {
         presentedDate = new Date(datePresentedRaw.date);
       } else {
-        return false;
+        return true; // Can't parse date, but is presented, so include it
       }
 
       return presentedDate >= GRANT_START_DATE;
