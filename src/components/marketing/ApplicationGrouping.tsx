@@ -111,49 +111,93 @@ export default function ApplicationGrouping({
     }
   };
 
-  const ApplicationCard = ({ app }: { app: Partnership }) => (
-    <div
-      onClick={() => onApplicationClick(app)}
-      className="bg-white rounded-lg shadow hover:shadow-lg transition-all cursor-pointer border border-gray-200 hover:border-hti-teal p-4"
-    >
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex-1">
-          <h4 className="font-semibold text-hti-navy text-lg mb-1">
-            {app.organizationName}
-          </h4>
-          <p className="text-sm text-gray-600">
-            {app.contactPerson} • {app.county}
-          </p>
-        </div>
-        <span className={`px-2 py-1 rounded text-xs font-semibold border shrink-0 ${getStatusColor(app.status)}`}>
-          {app.status}
-        </span>
-      </div>
+  const ApplicationCard = ({ app }: { app: Partnership }) => {
+    // Determine accent color based on status
+    const getCardAccentColor = (status: string) => {
+      switch (status) {
+        case 'Pending':
+          return 'from-yellow-400 to-yellow-500';
+        case 'In Review':
+          return 'from-blue-500 to-blue-600';
+        case 'Approved':
+          return 'from-green-500 to-green-600';
+        case 'Rejected':
+          return 'from-red-500 to-red-600';
+        default:
+          return 'from-hti-teal to-hti-navy';
+      }
+    };
 
-      <div className="flex items-center gap-4 text-sm mb-3">
-        <div className="flex items-center gap-1">
-          <span className="text-gray-600">Chromebooks:</span>
-          <span className="font-semibold text-hti-navy">{app.chromebooksNeeded}</span>
-        </div>
-        {app.is501c3 && (
-          <span className="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded">
-            501(c)(3)
-          </span>
-        )}
-        <span className="text-gray-500 text-xs ml-auto">
-          {new Date(app.timestamp).toLocaleDateString()}
-        </span>
-      </div>
+    return (
+      <div
+        onClick={() => onApplicationClick(app)}
+        className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-gray-200 overflow-hidden hover:scale-105 transform"
+      >
+        {/* Top Accent Bar */}
+        <div className={`h-1.5 bg-gradient-to-r ${getCardAccentColor(app.status)}`} />
 
-      {app.quote && (
-        <div className="bg-gradient-to-br from-hti-teal/5 to-hti-navy/5 p-3 rounded-lg border-l-2 border-hti-teal">
-          <p className="text-xs text-gray-700 italic line-clamp-2">
-            "{app.quote.substring(0, 120)}..."
-          </p>
+        {/* Card Content */}
+        <div className="p-6">
+          {/* Header with Status Badge */}
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex-1 min-w-0">
+              <h4 className="font-bold text-hti-navy text-lg mb-2 leading-snug group-hover:text-hti-teal transition-colors truncate">
+                {app.organizationName}
+              </h4>
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getStatusColor(app.status)}`}>
+                  {app.status}
+                </span>
+                {app.is501c3 && (
+                  <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700 border border-green-300">
+                    ✓ 501(c)(3)
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Organization & Contact Info */}
+          <div className="space-y-2 mb-4 pb-4 border-b border-gray-100">
+            <p className="text-sm text-gray-700 font-medium">
+              <span className="text-gray-500">Contact:</span> {app.contactPerson}
+            </p>
+            <p className="text-sm text-gray-600">
+              <span className="text-gray-500">Location:</span> {app.county || 'Unknown County'}
+            </p>
+          </div>
+
+          {/* Key Stats - Chromebooks & Date */}
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="bg-gradient-to-br from-hti-teal/10 to-hti-navy/5 p-3 rounded-lg">
+              <div className="text-xs text-gray-600 font-medium mb-1">Chromebooks</div>
+              <div className="text-2xl font-bold text-hti-navy">{app.chromebooksNeeded}</div>
+            </div>
+            <div className="bg-gray-50 p-3 rounded-lg">
+              <div className="text-xs text-gray-600 font-medium mb-1">Submitted</div>
+              <div className="text-sm font-semibold text-gray-700">
+                {new Date(app.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+              </div>
+            </div>
+          </div>
+
+          {/* Quote Section - if available */}
+          {app.quote && (
+            <div className="bg-gradient-to-br from-hti-teal/5 via-hti-navy/5 to-transparent p-4 rounded-xl border-l-4 border-hti-teal">
+              <p className="text-sm text-hti-navy italic font-medium line-clamp-3 leading-relaxed">
+                "{app.quote.substring(0, 140)}..."
+              </p>
+            </div>
+          )}
+
+          {/* Click Indicator */}
+          <div className="mt-4 text-center text-xs text-gray-500 font-medium group-hover:text-hti-teal transition-colors">
+            Click to view details →
+          </div>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    );
+  };
 
   const getGroupIcon = (group: string) => {
     const statusIcons: Record<string, string> = {

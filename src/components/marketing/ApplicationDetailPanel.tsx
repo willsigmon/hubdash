@@ -63,44 +63,46 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-6xl w-full my-8 shadow-2xl">
-        {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-hti-navy to-hti-teal text-white px-8 py-6 rounded-t-2xl">
-          <div className="flex justify-between items-start">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 overflow-y-auto backdrop-blur-sm">
+      <div className="bg-white rounded-3xl max-w-5xl w-full my-8 shadow-2xl overflow-hidden">
+        {/* Premium Header */}
+        <div className="sticky top-0 bg-gradient-to-br from-hti-navy via-hti-teal to-hti-navy text-white px-8 py-8 rounded-t-3xl">
+          <div className="flex justify-between items-start mb-6">
             <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <h2 className="text-3xl font-bold">{application.organizationName}</h2>
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(application.status)}`}>
+              <h2 className="text-4xl font-bold mb-4 leading-tight">{application.organizationName}</h2>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className={`px-4 py-2 rounded-full text-xs font-bold border ${getStatusColor(application.status)}`}>
                   {application.status}
                 </span>
                 {application.is501c3 && (
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-400 text-green-900 border border-green-300">
-                    501(c)(3)
+                  <span className="px-4 py-2 rounded-full text-xs font-bold bg-green-400 text-green-900 border border-green-300">
+                    ✓ 501(c)(3) Status
                   </span>
                 )}
-              </div>
-              <div className="flex items-center gap-4 text-white/80 text-sm">
-                <div className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4" />
-                  <span>Submitted: {new Date(application.timestamp).toLocaleDateString()}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <MapPin className="w-4 h-4" />
-                  <span>{application.county} County</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Users className="w-4 h-4" />
-                  <span>{application.chromebooksNeeded} Chromebooks Needed</span>
-                </div>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="text-white/80 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
+              className="text-white/70 hover:text-white transition-colors p-3 hover:bg-white/10 rounded-xl"
             >
-              <X className="w-6 h-6" />
+              <X className="w-7 h-7" />
             </button>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="grid grid-cols-3 gap-4">
+            <div className="bg-white/15 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+              <div className="text-white/80 text-xs font-medium mb-1">Submitted</div>
+              <div className="text-white font-semibold">{new Date(application.timestamp).toLocaleDateString()}</div>
+            </div>
+            <div className="bg-white/15 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+              <div className="text-white/80 text-xs font-medium mb-1">Location</div>
+              <div className="text-white font-semibold">{application.county || 'Unknown'} County</div>
+            </div>
+            <div className="bg-white/15 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+              <div className="text-white/80 text-xs font-medium mb-1">Chromebooks</div>
+              <div className="text-2xl font-bold text-hti-yellow">{application.chromebooksNeeded}</div>
+            </div>
           </div>
         </div>
 
@@ -190,44 +192,55 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
         </div>
 
         {/* Action Footer */}
-        <div className="sticky bottom-0 bg-gray-50 px-8 py-6 rounded-b-2xl border-t border-gray-200">
-          <div className="flex flex-wrap gap-3">
+        <div className="sticky bottom-0 bg-gradient-to-r from-gray-50 to-white px-8 py-8 border-t-2 border-gray-100">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            {/* Primary Action - Approve */}
             <button
               onClick={() => onAction?.('approve', application.id)}
-              className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
+              className="col-span-1 px-6 py-4 bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-2xl hover:scale-105 transform flex items-center justify-center gap-2 group"
             >
-              <CheckCircle2 className="w-5 h-5" />
-              Approve Application
+              <CheckCircle2 className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              <span className="hidden md:inline">Approve</span>
             </button>
+
+            {/* Request Info */}
             <button
               onClick={() => onAction?.('request-info', application.id)}
-              className="px-6 py-3 bg-gradient-to-r from-hti-navy to-hti-teal hover:opacity-90 text-white rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl"
+              className="col-span-1 px-6 py-4 bg-gradient-to-br from-hti-navy to-hti-teal hover:from-hti-teal hover:to-hti-navy text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-2xl hover:scale-105 transform"
             >
-              Request More Info
+              More Info
             </button>
+
+            {/* Schedule */}
             <button
               onClick={() => onAction?.('schedule', application.id)}
-              className="px-6 py-3 bg-white hover:bg-gray-100 text-gray-800 rounded-lg font-semibold transition-colors border border-gray-300"
+              className="col-span-1 px-6 py-4 bg-white hover:bg-gray-50 text-hti-navy rounded-xl font-bold transition-all border-2 border-hti-teal shadow-md hover:shadow-lg hover:scale-105 transform"
             >
-              Schedule Delivery
+              Schedule
             </button>
+
+            {/* Contact */}
             <button
               onClick={() => onAction?.('contact', application.id)}
-              className="px-6 py-3 bg-white hover:bg-gray-100 text-gray-800 rounded-lg font-semibold transition-colors border border-gray-300"
+              className="col-span-1 px-6 py-4 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl font-bold transition-all border-2 border-blue-300 shadow-md hover:shadow-lg hover:scale-105 transform"
             >
-              Mark as Contacted
+              Contacted
             </button>
+
+            {/* Quote Card */}
             <button
               onClick={() => onAction?.('quote-card', application.id)}
-              className="px-6 py-3 bg-gradient-to-r from-hti-yellow to-yellow-400 hover:opacity-90 text-gray-900 rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl"
+              className="col-span-1 px-6 py-4 bg-gradient-to-br from-hti-yellow to-yellow-400 hover:from-yellow-400 hover:to-hti-yellow text-gray-900 rounded-xl font-bold transition-all shadow-lg hover:shadow-2xl hover:scale-105 transform"
             >
-              Generate Quote Card
+              Quote Card
             </button>
+
+            {/* Export */}
             <button
               onClick={() => onAction?.('export', application.id)}
-              className="px-6 py-3 bg-white hover:bg-gray-100 text-gray-800 rounded-lg font-semibold transition-colors border border-gray-300"
+              className="col-span-1 px-6 py-4 bg-purple-50 hover:bg-purple-100 text-purple-700 rounded-xl font-bold transition-all border-2 border-purple-300 shadow-md hover:shadow-lg hover:scale-105 transform"
             >
-              Export to PDF
+              PDF
             </button>
           </div>
         </div>
