@@ -5,8 +5,30 @@ export async function GET() {
   try {
     const knack = getKnackClient()
 
-    const devices = await knack.getRecords(process.env.KNACK_DEVICES_OBJECT || 'object_7', { rows_per_page: 10000 })
+    // Use Knack API filters to get only Laptops with Completed-Presented status
+    const presentedFilter = JSON.stringify([
+      { field: 'field_458', operator: 'is', value: 'Laptop' },
+      { field: 'field_56', operator: 'is', value: 'Completed-Presented' }
+    ]);
+
+    const presentedDevices = await knack.getRecords(
+      process.env.KNACK_DEVICES_OBJECT || 'object_7',
+      { rows_per_page: 1000, filters: presentedFilter }
+    )
+
+    // Also get all laptops for total count
+    const laptopFilter = JSON.stringify([
+      { field: 'field_458', operator: 'is', value: 'Laptop' }
+    ]);
+
+    const allLaptops = await knack.getRecords(
+      process.env.KNACK_DEVICES_OBJECT || 'object_7',
+      { rows_per_page: 1000, filters: laptopFilter }
+    )
+
     const organizations = await knack.getRecords(process.env.KNACK_ORGANIZATIONS_OBJECT || 'object_22', { rows_per_page: 1000 })
+
+    const devices = allLaptops
 
     // Grant start date: September 9, 2024
     const GRANT_START_DATE = new Date('2024-09-09T00:00:00.000Z');
