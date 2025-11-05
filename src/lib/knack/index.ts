@@ -14,5 +14,6 @@ export * from './reporting';
 export * from './data-cleaner';
 export * from './exporter';
 export * from './client';
+export * from './field-extractors';
 
 export { KnackClient, getKnackClient } from './client';

@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatTimeAgo } from "@/lib/utils/date-formatters";
+import { getActivityTypeColor } from "@/lib/utils/status-colors";
 
 interface Activity {
   id: string;
@@ -10,26 +12,6 @@ interface Activity {
   type: "success" | "warning" | "info";
   icon: string;
   created_at: string;
-}
-
-const typeColors = {
-  success: "border-green-500/30 bg-green-500/5",
-  warning: "border-orange-500/30 bg-orange-500/5",
-  info: "border-blue-500/30 bg-blue-500/5",
-};
-
-function formatTimeAgo(dateString: string) {
-  const date = new Date(dateString);
-  const now = new Date();
-  const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-
-  if (seconds < 60) return `${seconds} sec ago`;
-  const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes} min ago`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.floor(hours / 24);
-  return `${days}d ago`;
 }
 
 export default function ActivityFeed() {
@@ -105,7 +87,7 @@ export default function ActivityFeed() {
           activities.map((activity) => (
             <div
               key={activity.id}
-              className={`p-4 md:p-5 border-l-4 transition-all hover:bg-gray-750 ${typeColors[activity.type]}`}
+              className={`p-4 md:p-5 border-l-4 transition-all hover:bg-gray-750 ${getActivityTypeColor(activity.type)}`}
             >
               <div className="flex items-start gap-3">
                 <div className="text-lg md:text-xl flex-shrink-0">{activity.icon}</div>

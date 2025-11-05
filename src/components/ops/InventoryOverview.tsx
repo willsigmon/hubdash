@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getDeviceStatusColor, getDeviceStatusLabel } from "@/lib/utils/status-colors";
 
 interface Device {
   id: string;
@@ -12,26 +13,6 @@ interface Device {
   assigned_to: string | null;
   received_date: string;
 }
-
-const statusColors: Record<string, string> = {
-  "ready": "bg-green-500/20 text-green-400 border-green-500/30",
-  "qa_testing": "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-  "refurbishing": "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  "data_wipe": "bg-purple-500/20 text-purple-400 border-purple-500/30",
-  "received": "bg-gray-500/20 text-gray-400 border-gray-500/30",
-  "donated": "bg-gray-500/20 text-gray-400 border-gray-500/30",
-  "distributed": "bg-hti-teal/20 text-hti-teal border-hti-teal/30",
-};
-
-const statusLabels: Record<string, string> = {
-  "ready": "Ready to Ship",
-  "qa_testing": "QA Testing",
-  "refurbishing": "Refurbishing",
-  "data_wipe": "Data Wipe",
-  "received": "Received",
-  "donated": "Donated",
-  "distributed": "Distributed",
-};
 
 export default function InventoryOverview() {
   const [devices, setDevices] = useState<Device[]>([]);
@@ -52,10 +33,10 @@ export default function InventoryOverview() {
   }, []);
 
   const filteredDevices = devices.filter(device =>
-    device.serial_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    device.model.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    device.manufacturer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    statusLabels[device.status]?.toLowerCase().includes(searchQuery.toLowerCase())
+    (device.serial_number || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (device.model || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (device.manufacturer || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (getDeviceStatusLabel(device.status) || '').toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (loading) {
@@ -135,8 +116,8 @@ export default function InventoryOverview() {
                     <div className="text-xs text-gray-500">{device.manufacturer}</div>
                   </td>
                   <td className="px-3 md:px-6 py-4">
-                    <span className={`px-2 md:px-3 py-1 rounded-full text-xs font-medium border inline-block ${statusColors[device.status] || statusColors.received}`}>
-                      {statusLabels[device.status] || device.status}
+                    <span className={`px-2 md:px-3 py-1 rounded-full text-xs font-medium border inline-block ${getDeviceStatusColor(device.status)}`}>
+                      {getDeviceStatusLabel(device.status)}
                     </span>
                   </td>
                   <td className="px-3 md:px-6 py-4 hidden sm:table-cell">

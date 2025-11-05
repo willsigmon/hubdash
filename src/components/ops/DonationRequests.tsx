@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { formatDate } from "@/lib/utils/date-formatters";
+import { getPriorityColor, getRequestStatusColor } from "@/lib/utils/status-colors";
 
 interface DonationRequest {
   id: string;
@@ -11,30 +13,6 @@ interface DonationRequest {
   priority: "urgent" | "high" | "normal";
   status: "pending" | "scheduled" | "in_progress" | "completed";
   requested_date: string;
-}
-
-const priorityColors = {
-  urgent: "bg-red-500",
-  high: "bg-orange-500",
-  normal: "bg-blue-500",
-};
-
-const statusColors = {
-  pending: "text-yellow-400",
-  scheduled: "text-green-400",
-  in_progress: "text-blue-400",
-  completed: "text-gray-400",
-};
-
-function formatDate(dateString: string) {
-  const date = new Date(dateString);
-  const now = new Date();
-  const diff = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
-
-  if (diff === 0) return "Today";
-  if (diff === 1) return "Yesterday";
-  if (diff < 7) return `${diff} days ago`;
-  return date.toLocaleDateString();
 }
 
 export default function DonationRequests() {
@@ -97,7 +75,7 @@ export default function DonationRequests() {
                 {/* Header Row */}
                 <div className="flex items-start justify-between mb-3 gap-4">
                   <div className="flex items-start gap-3 flex-1 min-w-0">
-                    <div className={`w-3 h-3 rounded-full flex-shrink-0 mt-1 ${priorityColors[request.priority]}`} />
+                    <div className={`w-3 h-3 rounded-full flex-shrink-0 mt-1 ${getPriorityColor(request.priority)}`} />
                     <div className="flex-1 min-w-0">
                       <h4 className="text-base md:text-lg font-semibold text-white truncate">
                         {request.company}
@@ -107,7 +85,7 @@ export default function DonationRequests() {
                   </div>
                   <div className="text-right flex-shrink-0">
                     <div className="text-xs text-gray-500">{formatDate(request.requested_date)}</div>
-                    <div className={`text-xs font-medium ${statusColors[request.status]} capitalize mt-1`}>
+                    <div className={`text-xs font-medium ${getRequestStatusColor(request.status)} capitalize mt-1`}>
                       {request.status.replace('_', ' ')}
                     </div>
                   </div>

@@ -55,9 +55,9 @@ export default function MarketingPage() {
   }, [filter]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-hti-navy/5">
       {/* Header */}
-      <header className="bg-gradient-to-r from-pink-600 to-rose-500 text-white shadow-xl">
+      <header className="bg-gradient-to-r from-hti-navy to-hti-teal text-white shadow-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-between">
             <div>
@@ -83,7 +83,7 @@ export default function MarketingPage() {
             onClick={() => setFilter('pending')}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               filter === 'pending'
-                ? 'bg-pink-600 text-white'
+                ? 'bg-hti-navy text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
@@ -93,7 +93,7 @@ export default function MarketingPage() {
             onClick={() => setFilter('recent')}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               filter === 'recent'
-                ? 'bg-pink-600 text-white'
+                ? 'bg-hti-navy text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
@@ -103,7 +103,7 @@ export default function MarketingPage() {
             onClick={() => setFilter('all')}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               filter === 'all'
-                ? 'bg-pink-600 text-white'
+                ? 'bg-hti-navy text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
@@ -167,14 +167,14 @@ export default function MarketingPage() {
                         </div>
 
                         {partnership.quote && (
-                          <div className="mt-4 p-3 bg-pink-50 rounded-lg border-l-4 border-pink-600">
+                          <div className="mt-4 p-3 bg-hti-navy/5 rounded-lg border-l-4 border-hti-teal">
                             <p className="text-sm text-gray-700 italic line-clamp-3">
                               "{partnership.quote.substring(0, 150)}..."
                             </p>
                           </div>
                         )}
 
-                        <button className="mt-4 w-full px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-lg text-sm font-medium transition-colors">
+                        <button className="mt-4 w-full px-4 py-2 bg-hti-navy hover:bg-hti-navy/90 text-white rounded-lg text-sm font-medium transition-colors">
                           View Full Application
                         </button>
                       </div>
@@ -220,7 +220,7 @@ export default function MarketingPage() {
                         )}
 
                         <div className="mt-4 flex gap-2">
-                          <button className="flex-1 px-3 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-lg text-xs font-medium transition-colors">
+                          <button className="flex-1 px-3 py-2 bg-hti-navy hover:bg-hti-navy/90 text-white rounded-lg text-xs font-medium transition-colors">
                             Generate Quote
                           </button>
                         </div>
@@ -278,7 +278,7 @@ export default function MarketingPage() {
                 {selectedStory.positiveImpact && (
                   <div>
                     <span className="font-semibold block mb-2">Expected positive impact:</span>
-                    <p className="text-gray-700 bg-pink-50 p-4 rounded-lg">{selectedStory.positiveImpact}</p>
+                    <p className="text-gray-700 bg-hti-navy/5 p-4 rounded-lg">{selectedStory.positiveImpact}</p>
                   </div>
                 )}
               </div>
