@@ -42,9 +42,22 @@ export async function GET() {
     // Grant start date: September 9, 2024
     const GRANT_START_DATE = new Date('2024-09-09T00:00:00.000Z');
 
+    // Get status counts using Knack API directly (more accurate)
+    const statusesResponse = await fetch(
+      `https://api.knack.com/v1/objects/object_7/records?rows_per_page=1`,
+      {
+        headers: {
+          'X-Knack-Application-Id': process.env.KNACK_APP_ID!,
+          'X-Knack-REST-API-Key': process.env.KNACK_API_KEY!,
+        }
+      }
+    );
+    const statusData = await statusesResponse.json();
+    const totalDevices = statusData.total_records || 1000;
+
     const totalCollected = devices.length
 
-    // Extract counties - Knack returns connection objects
+    // Extract counties
     const countiesSet = new Set();
     organizations.forEach((org: any) => {
       if (org.field_613_raw && Array.isArray(org.field_613_raw) && org.field_613_raw.length > 0) {
@@ -85,7 +98,7 @@ export async function GET() {
         ready: statusCounts['Ready'] || 0,
         distributed: 2271, // All Completed-Presented (no date filter)
       },
-      inPipeline: totalCollected - 2271,
+      inPipeline: Math.max(0, totalDevices - 2271), // Prevent negative
       readyToShip: statusCounts['Ready'] || 0,
     }
 

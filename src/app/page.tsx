@@ -22,13 +22,13 @@ export default function Home() {
             href="/board"
             className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-navy to-hti-teal-light p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col"
           >
-            <div className="relative z-10">
+            <div className="relative z-10 text-white">
               <div className="text-4xl mb-4">📊</div>
-              <h2 className="text-2xl font-bold mb-3">Board Dashboard</h2>
-              <p className="text-white/90 mb-4">
+              <h2 className="text-2xl font-bold mb-3 text-white">Board Dashboard</h2>
+              <p className="text-white opacity-90 mb-4">
                 Executive summary with impact metrics, trends, and key insights for board members.
               </p>
-              <div className="flex items-center text-sm font-medium">
+              <div className="flex items-center text-sm font-medium text-white">
                 <span>View Dashboard</span>
                 <svg
                   className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
@@ -53,13 +53,13 @@ export default function Home() {
             href="/ops"
             className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-red to-hti-yellow p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col"
           >
-            <div className="relative z-10">
+            <div className="relative z-10 text-white">
               <div className="text-4xl mb-4">⚡</div>
-              <h2 className="text-2xl font-bold mb-3">Operations Hub</h2>
-              <p className="text-white/90 mb-4">
+              <h2 className="text-2xl font-bold mb-3 text-white">Operations Hub</h2>
+              <p className="text-white opacity-90 mb-4">
                 Mission control for inventory, donations, distributions, and training management.
               </p>
-              <div className="flex items-center text-sm font-medium">
+              <div className="flex items-center text-sm font-medium text-white">
                 <span>Launch Hub</span>
                 <svg
                   className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
@@ -84,13 +84,13 @@ export default function Home() {
             href="/reports"
             className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-navy to-hti-teal p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col"
           >
-            <div className="relative z-10">
-              <div className="text-4xl mb-4">📊</div>
-              <h2 className="text-2xl font-bold mb-3">Grant Reports</h2>
-              <p className="text-white/90 mb-4">
+            <div className="relative z-10 text-white">
+              <div className="text-4xl mb-4">📄</div>
+              <h2 className="text-2xl font-bold mb-3 text-white">Grant Reports</h2>
+              <p className="text-white opacity-90 mb-4">
                 Generate quarterly reports, track grant goals, and export data for NCDIT compliance.
               </p>
-              <div className="flex items-center text-sm font-medium">
+              <div className="flex items-center text-sm font-medium text-white">
                 <span>Generate Reports</span>
                 <svg
                   className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
@@ -115,13 +115,13 @@ export default function Home() {
             href="/marketing"
             className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-pink-600 to-rose-500 p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col"
           >
-            <div className="relative z-10">
+            <div className="relative z-10 text-white">
               <div className="text-4xl mb-4">📣</div>
-              <h2 className="text-2xl font-bold mb-3">Marketing Hub</h2>
-              <p className="text-white/90 mb-4">
+              <h2 className="text-2xl font-bold mb-3 text-white">Marketing Hub</h2>
+              <p className="text-white opacity-90 mb-4">
                 Recipient stories, impact quotes, and partnership applications for marketing campaigns.
               </p>
-              <div className="flex items-center text-sm font-medium">
+              <div className="flex items-center text-sm font-medium text-white">
                 <span>View Stories</span>
                 <svg
                   className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
