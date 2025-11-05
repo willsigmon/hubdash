@@ -85,7 +85,7 @@ export default function ApplicationGrouping({
   const groupKeys = Object.keys(grouped).sort((a, b) => {
     // Custom sort order for status
     if (groupBy === 'status') {
-      const statusOrder = { 'Pending': 0, 'In Review': 1, 'Approved': 2, 'Rejected': 3 };
+      const statusOrder = { 'In Review': 0, 'Pending': 1, 'Approved': 2, 'Rejected': 3 };
       return (statusOrder[a as keyof typeof statusOrder] || 999) - (statusOrder[b as keyof typeof statusOrder] || 999);
     }
     // Custom sort order for date
@@ -225,13 +225,13 @@ export default function ApplicationGrouping({
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-gray-500 font-medium">
+                  <span className="text-xs text-gray-700 font-medium">
                     {isCollapsed ? 'Show' : 'Hide'}
                   </span>
                   {isCollapsed ? (
-                    <ChevronDown className="w-5 h-5 text-gray-600 group-hover:translate-y-1 transition-transform" />
+                    <ChevronDown className="w-5 h-5 text-gray-700 group-hover:translate-y-1 transition-transform" />
                   ) : (
-                    <ChevronUp className="w-5 h-5 text-gray-600 group-hover:-translate-y-1 transition-transform" />
+                    <ChevronUp className="w-5 h-5 text-gray-700 group-hover:-translate-y-1 transition-transform" />
                   )}
                 </div>
               </button>
