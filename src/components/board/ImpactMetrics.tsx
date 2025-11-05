@@ -11,63 +11,80 @@ interface Metric {
   description: string;
 }
 
-const metrics: Metric[] = [
-  {
-    label: "Laptops Collected",
-    value: 3500,
-    suffix: "+",
-    icon: "💻",
-    color: "from-hti-navy to-hti-teal",
-    description: "Total devices donated to HTI",
-  },
-  {
-    label: "Chromebooks Distributed",
-    value: 2500,
-    suffix: "+",
-    icon: "🎯",
-    color: "from-hti-teal to-hti-teal-light",
-    description: "Refurbished devices delivered",
-  },
-  {
-    label: "Counties Served",
-    value: 15,
-    suffix: "",
-    icon: "📍",
-    color: "from-hti-red to-orange-400",
-    description: "Through Digital Champion Grant",
-  },
-  {
-    label: "People Trained",
-    value: 450,
-    suffix: "+",
-    icon: "👥",
-    color: "from-hti-yellow to-yellow-300",
-    description: "Digital literacy participants",
-  },
-  {
-    label: "E-Waste Diverted",
-    value: 12,
-    suffix: " tons",
-    icon: "♻️",
-    color: "from-green-600 to-green-400",
-    description: "Kept out of landfills",
-  },
-  {
-    label: "Partner Organizations",
-    value: 28,
-    suffix: "",
-    icon: "🤝",
-    color: "from-purple-600 to-purple-400",
-    description: "Community collaborations",
-  },
-];
-
 export default function ImpactMetrics() {
-  const [animatedValues, setAnimatedValues] = useState<number[]>(
-    metrics.map(() => 0)
-  );
+  const [metrics, setMetrics] = useState<Metric[]>([]);
+  const [animatedValues, setAnimatedValues] = useState<number[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Fetch metrics from API
+    fetch('/api/metrics')
+      .then(res => res.json())
+      .then(data => {
+        const metricsData: Metric[] = [
+          {
+            label: "Laptops Collected",
+            value: data.laptopsCollected || 0,
+            suffix: "+",
+            icon: "💻",
+            color: "from-hti-navy to-hti-teal",
+            description: "Total devices donated to HTI",
+          },
+          {
+            label: "Chromebooks Distributed",
+            value: data.chromebooksDistributed || 0,
+            suffix: "+",
+            icon: "🎯",
+            color: "from-hti-teal to-hti-teal-light",
+            description: "Refurbished devices delivered",
+          },
+          {
+            label: "Counties Served",
+            value: data.countiesServed || 0,
+            suffix: "",
+            icon: "📍",
+            color: "from-hti-red to-orange-400",
+            description: "Through Digital Champion Grant",
+          },
+          {
+            label: "People Trained",
+            value: data.peopleTrained || 0,
+            suffix: "+",
+            icon: "👥",
+            color: "from-hti-yellow to-yellow-300",
+            description: "Digital literacy participants",
+          },
+          {
+            label: "E-Waste Diverted",
+            value: data.eWasteTons || 0,
+            suffix: " tons",
+            icon: "♻️",
+            color: "from-green-600 to-green-400",
+            description: "Kept out of landfills",
+          },
+          {
+            label: "Partner Organizations",
+            value: data.partnerOrganizations || 0,
+            suffix: "",
+            icon: "🤝",
+            color: "from-purple-600 to-purple-400",
+            description: "Community collaborations",
+          },
+        ];
+
+        setMetrics(metricsData);
+        setAnimatedValues(metricsData.map(() => 0));
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching metrics:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (metrics.length === 0) return;
+
     const duration = 2000; // 2 seconds
     const steps = 60;
     const interval = duration / steps;
@@ -92,7 +109,17 @@ export default function ImpactMetrics() {
         }
       }, interval);
     });
-  }, []);
+  }, [metrics]);
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[...Array(6)].map((_, i) => (
+          <div key={i} className="rounded-xl bg-gray-200 animate-pulse h-40" />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -113,7 +140,7 @@ export default function ImpactMetrics() {
 
             <div className="mb-2">
               <div className="text-4xl font-bold text-gray-900 mb-1">
-                {animatedValues[index].toLocaleString()}
+                {animatedValues[index]?.toLocaleString() || 0}
                 <span className="text-2xl">{metric.suffix}</span>
               </div>
               <div className="text-sm font-medium text-gray-700">
