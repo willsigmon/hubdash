@@ -16,7 +16,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {/* Board Dashboard Card */}
           <Link
             href="/board"
@@ -92,6 +92,37 @@ export default function Home() {
               </p>
               <div className="flex items-center text-sm font-medium">
                 <span>Generate Reports</span>
+                <svg
+                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </Link>
+
+          {/* Marketing Hub Card */}
+          <Link
+            href="/marketing"
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-pink-600 to-rose-500 p-6 lg:p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[280px] flex flex-col"
+          >
+            <div className="relative z-10">
+              <div className="text-4xl mb-4">📣</div>
+              <h2 className="text-2xl font-bold mb-3">Marketing Hub</h2>
+              <p className="text-white/90 mb-4">
+                Recipient stories, impact quotes, and partnership applications for marketing campaigns.
+              </p>
+              <div className="flex items-center text-sm font-medium">
+                <span>View Stories</span>
                 <svg
                   className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
                   fill="none"
