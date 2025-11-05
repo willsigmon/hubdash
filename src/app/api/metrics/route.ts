@@ -5,20 +5,25 @@ export async function GET() {
   try {
     const knack = getKnackClient()
 
-    // Use Knack API filters for grant laptops (Date Presented > Sept 8, 2024)
-    const grantPresentedFilter = JSON.stringify([
+    // Use Knack API directly to get grant count (Date Presented > Sept 8, 2024)
+    const grantPresentedFilter = encodeURIComponent(JSON.stringify([
       { field: 'field_458', operator: 'is', value: 'Laptop' },
       { field: 'field_56', operator: 'is', value: 'Completed-Presented' },
-      { field: 'field_75', operator: 'is after', value: '2024-09-08' } // Date Presented
-    ]);
+      { field: 'field_75', operator: 'is after', value: '2024-09-08' }
+    ]));
 
-    const grantPresentedResult = await knack.getRecords(
-      process.env.KNACK_DEVICES_OBJECT || 'object_7',
-      { rows_per_page: 1, filters: grantPresentedFilter }
-    )
+    const grantResponse = await fetch(
+      `https://api.knack.com/v1/objects/object_7/records?rows_per_page=1&filters=${grantPresentedFilter}`,
+      {
+        headers: {
+          'X-Knack-Application-Id': process.env.KNACK_APP_ID!,
+          'X-Knack-REST-API-Key': process.env.KNACK_API_KEY!,
+        }
+      }
+    );
 
-    // Get count from total_records (don't need actual records, just the count)
-    const grantPresentedCount = (grantPresentedResult as any).total_records || 0
+    const grantData = await grantResponse.json();
+    const grantPresentedCount = grantData.total_records || 0
 
     // Also get all laptops for total count
     const laptopFilter = JSON.stringify([
