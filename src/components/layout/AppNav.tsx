@@ -66,7 +66,13 @@ export default function AppNav() {
                       active
                         ? isDarkTheme
                           ? 'bg-hti-teal/20 text-hti-teal-light border border-hti-teal/40'
-                          : `bg-${item.color}/10 text-${item.color} border border-${item.color}/20`
+                          : item.href === '/board'
+                          ? 'bg-blue-900/10 text-hti-navy border border-hti-navy/20'
+                          : item.href === '/ops'
+                          ? 'bg-red-600/10 text-hti-red border border-hti-red/20'
+                          : item.href === '/reports'
+                          ? 'bg-teal-600/10 text-hti-teal border border-hti-teal/20'
+                          : 'bg-pink-600/10 text-pink-600 border border-pink-600/20'
                         : isDarkTheme
                           ? "text-gray-300 hover:bg-gray-800 hover:text-white"
                           : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
@@ -118,7 +124,11 @@ export default function AppNav() {
                   placeholder="Search devices, donations, partners, quotes..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-teal focus:border-transparent"
+                  className={`w-full px-4 py-3 pl-12 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-teal focus:border-transparent ${
+                    isDarkTheme
+                      ? 'bg-gray-800 border border-gray-600 text-white placeholder-gray-400'
+                      : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500'
+                  }`}
                   autoFocus
                 />
                 <Search className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
@@ -132,8 +142,12 @@ export default function AppNav() {
                 )}
               </div>
               {searchQuery && (
-                <div className="mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-2">
-                  <div className="text-sm text-gray-500 p-2">
+                <div className={`mt-2 rounded-lg shadow-lg p-2 ${
+                  isDarkTheme
+                    ? 'bg-gray-800 border border-gray-700'
+                    : 'bg-white border border-gray-200'
+                }`}>
+                  <div className={`text-sm p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'}`}>
                     Press Enter to search across all data...
                   </div>
                 </div>
@@ -144,7 +158,11 @@ export default function AppNav() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 pb-4">
+          <div className={`md:hidden pb-4 ${
+            isDarkTheme
+              ? 'border-t border-gray-700 bg-gray-900'
+              : 'border-t border-gray-200 bg-white'
+          }`}>
             <div className="px-4 pt-2 space-y-1">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -156,8 +174,16 @@ export default function AppNav() {
                     onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all ${
                       active
-                        ? `bg-${item.color}/10 text-${item.color}`
-                        : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                        ? item.href === '/board'
+                          ? 'bg-blue-900/10 text-hti-navy'
+                          : item.href === '/ops'
+                          ? 'bg-red-600/10 text-hti-red'
+                          : item.href === '/reports'
+                          ? 'bg-teal-600/10 text-hti-teal'
+                          : 'bg-pink-600/10 text-pink-600'
+                        : isDarkTheme
+                          ? "text-gray-300 hover:bg-gray-800 hover:text-white"
+                          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                     }`}
                   >
                     <Icon className="w-5 h-5" />
