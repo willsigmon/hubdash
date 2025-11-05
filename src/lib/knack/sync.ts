@@ -34,25 +34,24 @@ export async function syncDevices(): Promise<SyncResult> {
       return result;
     }
 
-    const objectKey = process.env.KNACK_DEVICES_OBJECT || 'object_1'; // Default, user can override
+    const objectKey = process.env.KNACK_DEVICES_OBJECT || 'object_7'; // HTI Devices object
     const knackRecords = await knack.getRecords(objectKey);
 
     // Transform Knack records to Supabase schema
+    // Using HTI's actual Knack field names from object_7 (Devices)
     const devices = knackRecords.map(record => ({
-      // Map Knack fields to Supabase fields
-      // This will need to be customized based on HTI's actual Knack field names
       id: record.id,
-      serial_number: record.field_serial || record.serial_number || `KNACK-${record.id}`,
-      model: record.field_model || record.model || 'Unknown',
-      manufacturer: record.field_manufacturer || record.manufacturer || 'Unknown',
-      status: mapKnackStatus(record.field_status || record.status),
-      location: record.field_location || record.location || 'Unknown',
-      assigned_to: record.field_assigned_to || record.assigned_to || null,
-      received_date: record.field_received_date || record.received_date || new Date().toISOString(),
-      distributed_date: record.field_distributed_date || record.distributed_date || null,
-      partner_id: record.field_partner_id || record.partner_id || null,
-      tech_id: record.field_tech_id || record.tech_id || null,
-      notes: record.field_notes || record.notes || null,
+      serial_number: record.field_201 || record.field_201_raw || `HTI-${record.field_142}`, // Laptop S/N or Inventory #
+      model: record.field_58 || record.field_58_raw || 'Unknown', // Model
+      manufacturer: record.field_57 || record.field_57_raw || 'Unknown', // Brand
+      status: mapKnackStatus(record.field_56 || record.field_56_raw), // Status
+      location: record.field_66 || record.field_66_raw || 'Unknown', // Location
+      assigned_to: record.field_147 || record.field_147_raw || null, // Recipient Organization (connection)
+      received_date: record.field_60 || record.field_60_raw || new Date().toISOString(), // HTI Rcvd Date
+      distributed_date: record.field_75 || record.field_75_raw || null, // Date Presented
+      partner_id: null, // Will map from Recipient Organization connection
+      tech_id: record.field_99 || record.field_99_raw || null, // Technician Name (connection)
+      notes: record.field_40 || record.field_40_raw || null, // Device Notes
       created_at: record.created_at || new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }));
@@ -101,7 +100,7 @@ export async function syncDonations(): Promise<SyncResult> {
       return result;
     }
 
-    const objectKey = process.env.KNACK_DONATIONS_OBJECT || 'object_2';
+    const objectKey = process.env.KNACK_DONATION_INFO_OBJECT || 'object_63'; // Device Donation Information
     const knackRecords = await knack.getRecords(objectKey);
 
     const donations = knackRecords.map(record => ({
