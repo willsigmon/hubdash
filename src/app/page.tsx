@@ -82,15 +82,15 @@ export default function Home() {
           {/* Reports Dashboard Card */}
           <Link
             href="/reports"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-navy to-hti-teal p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col"
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-orange to-hti-red p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col border-2 border-hti-yellow/30"
           >
             <div className="relative z-10 text-white">
               <div className="text-4xl mb-4">📄</div>
               <h2 className="text-2xl font-bold mb-3 text-white">Grant Reports</h2>
-              <p className="text-white mb-4">
+              <p className="text-hti-yellow mb-4 font-medium">
                 Generate quarterly reports, track grant goals, and export data for NCDIT compliance.
               </p>
-              <div className="flex items-center text-sm font-medium text-white">
+              <div className="flex items-center text-sm font-bold text-hti-yellow">
                 <span>Generate Reports</span>
                 <svg
                   className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
