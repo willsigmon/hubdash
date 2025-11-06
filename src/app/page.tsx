@@ -20,15 +20,15 @@ export default function Home() {
           {/* Board Dashboard Card */}
           <Link
             href="/board"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-navy to-hti-gray p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col border-2 border-hti-yellow/30"
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br bg-blue-900 p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col "
           >
             <div className="relative z-10 text-white">
               <div className="text-5xl mb-4">📊</div>
               <h2 className="text-3xl font-bold mb-3 text-white">Board Dashboard</h2>
-              <p className="text-hti-yellow mb-4 font-medium">
+              <p className="text-yellow-300 mb-4 font-medium">
                 Executive summary with impact metrics, trends, and key insights for board members.
               </p>
-              <div className="flex items-center text-sm font-bold text-hti-yellow">
+              <div className="flex items-center text-sm font-bold text-yellow-300">
                 <span>View Dashboard</span>
                 <svg
                   className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
@@ -45,21 +45,21 @@ export default function Home() {
                 </svg>
               </div>
             </div>
-            <div className="absolute inset-0 bg-hti-yellow/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-yellow-300/5 opacity-0 group-hover:opacity-100 transition-opacity" />
           </Link>
 
           {/* Ops Dashboard Card */}
           <Link
             href="/ops"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-red to-hti-orange p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col border-2 border-hti-yellow/30"
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br bg-red-700 p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col "
           >
             <div className="relative z-10 text-white">
               <div className="text-5xl mb-4">⚡</div>
               <h2 className="text-3xl font-bold mb-3 text-white">Operations Hub</h2>
-              <p className="text-hti-yellow mb-4 font-medium">
+              <p className="text-yellow-300 mb-4 font-medium">
                 Mission control for inventory, donations, distributions, and training management.
               </p>
-              <div className="flex items-center text-sm font-bold text-hti-yellow">
+              <div className="flex items-center text-sm font-bold text-yellow-300">
                 <span>Launch Hub</span>
                 <svg
                   className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
@@ -76,21 +76,21 @@ export default function Home() {
                 </svg>
               </div>
             </div>
-            <div className="absolute inset-0 bg-hti-yellow/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-yellow-300/5 opacity-0 group-hover:opacity-100 transition-opacity" />
           </Link>
 
           {/* Reports Dashboard Card */}
           <Link
             href="/reports"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-hti-orange to-hti-red p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col border-2 border-hti-yellow/30"
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br bg-orange-700 p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col "
           >
             <div className="relative z-10 text-white">
               <div className="text-4xl mb-4">📄</div>
               <h2 className="text-2xl font-bold mb-3 text-white">Grant Reports</h2>
-              <p className="text-hti-yellow mb-4 font-medium">
+              <p className="text-yellow-300 mb-4 font-medium">
                 Generate quarterly reports, track grant goals, and export data for NCDIT compliance.
               </p>
-              <div className="flex items-center text-sm font-bold text-hti-yellow">
+              <div className="flex items-center text-sm font-bold text-yellow-300">
                 <span>Generate Reports</span>
                 <svg
                   className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
