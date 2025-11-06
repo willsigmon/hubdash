@@ -43,14 +43,14 @@ export default function ActivityFeed() {
 
   if (loading) {
     return (
-      <div className="bg-white/5 backdrop-blur-sm rounded-xl border-2 border-hti-yellow/20 shadow-xl overflow-hidden">
-        <div className="p-4 bg-hti-red/10 border-b-2 border-hti-yellow/20 flex items-center justify-between">
+      <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-yellow/50 shadow-xl overflow-hidden">
+        <div className="p-4 bg-hti-red/15 border-b border-hti-yellow/40 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-hti-yellow rounded-full animate-pulse" />
             <span className="text-sm font-bold text-hti-yellow">Live Updates</span>
           </div>
         </div>
-        <div className="divide-y divide-hti-yellow/10">
+        <div className="divide-y divide-hti-yellow/40">
           {[...Array(6)].map((_, i) => (
             <div key={i} className="p-4 animate-pulse">
               <div className="bg-white/10 h-12 rounded" />
@@ -62,20 +62,20 @@ export default function ActivityFeed() {
   }
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm rounded-xl border-2 border-hti-yellow/20 shadow-xl overflow-hidden flex flex-col h-full">
+    <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-yellow/50 shadow-xl overflow-hidden flex flex-col h-full">
       {/* Header */}
-      <div className="p-4 md:p-5 bg-hti-red/10 border-b-2 border-hti-yellow/20 flex items-center justify-between">
+      <div className="p-4 md:p-5 bg-hti-red/15 border-b border-hti-yellow/40 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-hti-yellow rounded-full animate-pulse" />
           <span className="text-xs md:text-sm font-bold text-hti-yellow">Live Updates</span>
         </div>
-        <button className="text-xs text-hti-yellow/70 hover:text-hti-yellow transition-colors font-medium">
+        <button className="text-xs text-hti-yellow hover:text-hti-yellow-bright transition-colors font-medium">
           Clear All
         </button>
       </div>
 
       {/* Activity List */}
-      <div className="flex-1 overflow-y-auto divide-y divide-hti-yellow/10">
+      <div className="flex-1 overflow-y-auto divide-y divide-hti-yellow/40">
         {activities.length === 0 ? (
           <div className="flex items-center justify-center h-full min-h-[300px]">
             <div className="text-center text-hti-yellow/50 py-8">

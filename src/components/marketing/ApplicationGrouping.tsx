@@ -131,7 +131,7 @@ export default function ApplicationGrouping({
     return (
       <div
         onClick={() => onApplicationClick(app)}
-        className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-gray-200 overflow-hidden hover:scale-105 transform"
+        className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer border border-gray-300 hover:border-gray-200 overflow-hidden hover:scale-105 transform"
       >
         {/* Top Accent Bar */}
         <div className={`h-1.5 bg-gradient-to-r ${getCardAccentColor(app.status)}`} />
@@ -247,7 +247,7 @@ export default function ApplicationGrouping({
           const isCollapsed = collapsedGroups.has(groupKey);
 
           return (
-            <div key={groupKey} className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all">
+            <div key={groupKey} className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-300 hover:shadow-xl transition-all">
               {/* Group Header with pizzazz */}
               <button
                 onClick={() => toggleGroup(groupKey)}

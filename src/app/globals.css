@@ -65,3 +65,64 @@ body {
   color: #191347;
   margin-bottom: 1rem;
 }
+
+/* ========================================
+   CONTRAST & VISIBILITY FIXES
+   ======================================== */
+
+/* Fix invisible dividers - minimum 40% opacity for dividers */
+[class*="divide-hti-yellow"] {
+  border-color: var(--hti-yellow) !important;
+  opacity: 1 !important;
+}
+
+/* Remove excessive low-opacity borders */
+.border-hti-yellow\/10,
+.border-hti-yellow\/20 {
+  border-color: var(--hti-yellow) !important;
+}
+
+/* Fix border visibility - increase opacity to at least 50% */
+.border-hti-orange\/20,
+.border-hti-orange\/30,
+.border-hti-red\/20 {
+  border-color: var(--hti-orange) !important;
+}
+
+/* Ensure dividers are visible */
+.divide-hti-yellow\/10 {
+  border-color: var(--hti-yellow) !important;
+  opacity: 0.4;
+}
+
+.divide-hti-yellow\/20,
+.divide-hti-yellow\/30 {
+  border-color: var(--hti-yellow) !important;
+  opacity: 0.5;
+}
+
+.divide-gray-700 {
+  border-color: rgba(55, 65, 81, 1) !important;
+}
+
+/* Fix low-contrast text on semi-transparent backgrounds */
+.text-hti-navy,
+.text-hti-gray {
+  font-weight: 500 !important;
+}
+
+/* Ensure buttons and badges have proper contrast */
+.text-white {
+  text-shadow: none;
+}
+
+/* Reduce excessive border styling globally */
+.border-2 {
+  border-width: 1px !important;
+}
+
+/* Make sure label text is readable */
+dt {
+  font-weight: 600 !important;
+  color: var(--hti-navy) !important;
+}

@@ -144,7 +144,7 @@ export default function AppNav() {
               {searchQuery && (
                 <div className={`mt-2 rounded-lg shadow-lg p-2 ${
                   isDarkTheme
-                    ? 'bg-gray-800 border border-gray-700'
+                    ? 'bg-gray-800 border border-gray-600'
                     : 'bg-white border border-gray-200'
                 }`}>
                   <div className={`text-sm p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'}`}>

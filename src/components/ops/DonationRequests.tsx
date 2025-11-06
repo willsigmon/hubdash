@@ -39,8 +39,8 @@ export default function DonationRequests() {
 
   if (loading) {
     return (
-      <div className="bg-white/5 backdrop-blur-sm rounded-xl border-2 border-hti-yellow/20 shadow-xl overflow-hidden">
-        <div className="divide-y divide-hti-yellow/10">
+      <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-yellow/50 shadow-xl overflow-hidden">
+        <div className="divide-y divide-hti-yellow/40">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="p-6 animate-pulse">
               <div className="bg-white/10 h-16 rounded mb-3" />
@@ -53,15 +53,15 @@ export default function DonationRequests() {
   }
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm rounded-xl border-2 border-hti-yellow/20 shadow-xl overflow-hidden flex flex-col h-full">
+    <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-yellow/50 shadow-xl overflow-hidden flex flex-col h-full">
       {/* Header */}
-      <div className="px-4 md:px-6 py-4 bg-hti-red/10 border-b-2 border-hti-yellow/20">
+      <div className="px-4 md:px-6 py-4 bg-hti-red/15 border-b border-hti-yellow/40">
         <h3 className="text-lg font-bold text-white">📦 Donation Requests</h3>
       </div>
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto">
-        <div className="divide-y divide-hti-yellow/10">
+        <div className="divide-y divide-hti-yellow/40">
           {requests.length === 0 ? (
             <div className="p-8 md:p-12 text-center text-hti-yellow/50">
               <div className="text-4xl md:text-5xl mb-3">📭</div>
@@ -124,7 +124,7 @@ export default function DonationRequests() {
       </div>
 
       {/* Footer */}
-      <div className="p-3 md:p-4 bg-hti-navy/30 border-t-2 border-hti-yellow/20">
+      <div className="p-3 md:p-4 bg-hti-navy/30 border-t border-hti-yellow/40">
         <button className="w-full text-center text-xs md:text-sm font-bold text-hti-yellow hover:text-hti-yellow-bright transition-colors py-2">
           View All Requests →
         </button>

@@ -61,7 +61,7 @@ export default function CountyMap() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-hti-yellow/20">
+      <div className="bg-white rounded-2xl shadow-lg p-6 border border-hti-yellow/50">
         <div className="mb-4">
           <h3 className="text-lg font-bold text-hti-navy mb-2">
             Counties Served
@@ -80,8 +80,8 @@ export default function CountyMap() {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-hti-yellow/20">
-      <div className="p-8 bg-gradient-to-br from-hti-navy/5 to-hti-red/5 border-b-2 border-hti-yellow/30">
+    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-hti-yellow/50">
+      <div className="p-8 bg-gradient-to-br from-hti-navy/5 to-hti-red/5 border-b border-hti-yellow/50">
         <h3 className="text-2xl font-bold text-hti-navy mb-2">
           📍 {counties.length} Counties Served
         </h3>
@@ -122,7 +122,7 @@ export default function CountyMap() {
                 </div>
 
                 {/* Progress Bar */}
-                <div className="w-full bg-hti-gray-light rounded-full h-3 overflow-hidden border border-hti-yellow/20">
+                <div className="w-full bg-hti-gray-light rounded-full h-3 overflow-hidden border border-hti-yellow/50">
                   <div
                     className={`h-full rounded-full transition-all duration-300 ${
                       county.status === 'high' ? 'bg-gradient-to-r from-hti-red to-hti-orange' :
@@ -139,7 +139,7 @@ export default function CountyMap() {
       </div>
 
       {/* Summary Stats with Pizzazz */}
-      <div className="grid grid-cols-3 gap-6 p-8 bg-hti-gray-light border-t-2 border-hti-yellow/30">
+      <div className="grid grid-cols-3 gap-6 p-8 bg-hti-gray-light border-t border-hti-yellow/50">
         <div className="text-center group">
           <div className="text-4xl font-bold text-hti-navy mb-1 group-hover:scale-110 transition-transform">
             {totalDevices}
@@ -147,7 +147,7 @@ export default function CountyMap() {
           <div className="text-sm font-bold text-hti-navy">Total Devices</div>
           <div className="text-xs text-hti-gray mt-1 font-medium">across NC</div>
         </div>
-        <div className="text-center group border-l-2 border-r-2 border-hti-yellow/30">
+        <div className="text-center group border-l border-r border-hti-yellow/50">
           <div className="text-4xl font-bold text-hti-orange mb-1 group-hover:scale-110 transition-transform">
             {counties.length}
           </div>

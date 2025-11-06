@@ -26,8 +26,8 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
   };
 
   const InfoSection = ({ icon: Icon, title, children }: { icon: any, title: string, children: React.ReactNode }) => (
-    <div className="bg-white/80 backdrop-blur-xl border-2 border-hti-orange/40 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all hover:border-hti-orange/60">
-      <div className="flex items-center gap-3 mb-5 pb-4 border-b-2 border-hti-orange/30">
+    <div className="bg-white/80 backdrop-blur-xl border border-hti-orange/50 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all hover:border-hti-orange/60">
+      <div className="flex items-center gap-3 mb-5 pb-4 border-b border-hti-orange/50">
         <div className="p-3 bg-gradient-to-br from-hti-orange to-hti-red rounded-lg">
           <Icon className="w-5 h-5 text-white" />
         </div>
@@ -64,7 +64,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50 overflow-y-auto backdrop-blur-md">
-      <div className="bg-gradient-to-br from-white via-hti-yellow/3 to-hti-orange/5 rounded-3xl max-w-4xl w-full my-8 shadow-2xl overflow-hidden border-2 border-hti-yellow/30">
+      <div className="bg-gradient-to-br from-white via-hti-yellow/3 to-hti-orange/5 rounded-3xl max-w-4xl w-full my-8 shadow-2xl overflow-hidden border border-hti-yellow/50">
         {/* Premium Header */}
         <div className="sticky top-0 bg-gradient-to-r from-hti-orange via-hti-red to-hti-orange text-white px-8 py-8 border-b-4 border-hti-yellow">
           <div className="flex justify-between items-start mb-6">
@@ -181,8 +181,8 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
 
           {/* Internal Notes */}
           {(application.notes || application.internalComments) && (
-            <div className="bg-white/80 backdrop-blur-xl border-l-4 border-hti-red bg-gradient-to-br from-hti-red/10 to-hti-orange/10 rounded-2xl p-6 border-2 border-hti-red/40">
-              <div className="flex items-center gap-3 mb-5 pb-4 border-b-2 border-hti-red/40">
+            <div className="bg-white/80 backdrop-blur-xl border-l-4 border-hti-red bg-gradient-to-br from-hti-red/10 to-hti-orange/10 rounded-2xl p-6 border border-hti-red/50">
+              <div className="flex items-center gap-3 mb-5 pb-4 border-b border-hti-red/50">
                 <div className="p-3 bg-hti-red/30 rounded-lg">
                   <AlertCircle className="w-5 h-5 text-hti-red" />
                 </div>
@@ -197,7 +197,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
         </div>
 
         {/* Action Footer */}
-        <div className="sticky bottom-0 bg-gradient-to-r from-hti-orange/10 via-hti-yellow/10 to-hti-orange/10 backdrop-blur-xl px-8 py-6 border-t-2 border-hti-orange/20">
+        <div className="sticky bottom-0 bg-gradient-to-r from-hti-orange/10 via-hti-yellow/10 to-hti-orange/10 backdrop-blur-xl px-8 py-6 border-t border-hti-orange/50">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
             {/* Primary Action - Approve */}
             <button
@@ -219,7 +219,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
             {/* Schedule */}
             <button
               onClick={() => onAction?.('schedule', application.id)}
-              className="col-span-1 px-4 py-3 bg-white hover:bg-hti-gray-light text-hti-navy rounded-xl font-bold transition-all border-2 border-hti-orange/40 shadow-md hover:shadow-lg hover:scale-110 transform text-sm"
+              className="col-span-1 px-4 py-3 bg-white hover:bg-hti-gray-light text-hti-navy rounded-xl font-bold transition-all border border-hti-orange/50 shadow-md hover:shadow-lg hover:scale-110 transform text-sm"
             >
               Schedule
             </button>
@@ -243,7 +243,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
             {/* Export */}
             <button
               onClick={() => onAction?.('export', application.id)}
-              className="col-span-1 px-4 py-3 bg-hti-red/20 hover:bg-hti-red/40 text-hti-red rounded-xl font-bold transition-all border-2 border-hti-red/40 shadow-md hover:shadow-lg hover:scale-110 transform text-sm"
+              className="col-span-1 px-4 py-3 bg-hti-red/20 hover:bg-hti-red/40 text-hti-red rounded-xl font-bold transition-all border border-hti-red/50 shadow-md hover:shadow-lg hover:scale-110 transform text-sm"
             >
               PDF
             </button>

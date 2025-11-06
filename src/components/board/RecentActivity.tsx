@@ -30,8 +30,8 @@ export default function RecentActivity() {
   }, []);
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-hti-yellow/20">
-      <div className="p-6 bg-gradient-to-r from-hti-navy/5 to-hti-red/5 border-b-2 border-hti-yellow/30">
+    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-hti-yellow/50">
+      <div className="p-6 bg-gradient-to-r from-hti-navy/5 to-hti-red/5 border-b border-hti-yellow/50">
         <h3 className="text-xl font-bold text-hti-navy flex items-center gap-2 mb-1">
           🚀 Recent Activity
         </h3>
@@ -81,7 +81,7 @@ export default function RecentActivity() {
                         {activity.description}
                       </p>
                     </div>
-                    <div className="text-xs font-bold text-hti-navy whitespace-nowrap px-3 py-1.5 bg-hti-yellow/20 rounded-full border border-hti-yellow/40 group-hover:bg-hti-red/20 group-hover:border-hti-red/40 transition-all">
+                    <div className="text-xs font-bold text-hti-navy whitespace-nowrap px-3 py-1.5 bg-hti-yellow/20 rounded-full border border-hti-yellow/50 group-hover:bg-hti-red/20 group-hover:border-hti-red/40 transition-all">
                       {activity.timestamp}
                     </div>
                   </div>
@@ -93,7 +93,7 @@ export default function RecentActivity() {
       </div>
 
       {/* Footer */}
-      <div className="p-4 bg-hti-gray-light border-t-2 border-hti-yellow/20">
+      <div className="p-4 bg-hti-gray-light border-t border-hti-yellow/50">
         <button className="w-full text-center text-sm font-bold text-hti-red hover:text-hti-orange transition-colors flex items-center justify-center gap-2">
           <span>View All Activity</span>
           <span>→</span>

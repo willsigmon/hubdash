@@ -190,7 +190,7 @@ export default function ImpactMetrics() {
             </div>
 
             {/* Main metrics display */}
-            <div className="bg-hti-gray-light rounded-xl p-6 mb-6 border-2 border-hti-yellow/20">
+            <div className="bg-hti-gray-light rounded-xl p-6 mb-6 border border-hti-yellow/50">
               <div className="flex items-baseline gap-2 mb-2">
                 <div className="text-5xl md:text-6xl font-bold text-hti-navy">
                   {animatedValues[0]?.toLocaleString() || 0}
@@ -214,7 +214,7 @@ export default function ImpactMetrics() {
               </div>
 
               {/* Animated progress bar */}
-              <div className="w-full h-4 bg-gray-300 rounded-full overflow-hidden shadow-inner border border-hti-yellow/20">
+              <div className="w-full h-4 bg-gray-300 rounded-full overflow-hidden shadow-inner border border-hti-yellow/50">
                 <div
                   className={`h-full bg-gradient-to-r ${featuredMetric.color} rounded-full transition-all duration-500 ease-out shadow-md`}
                   style={{ width: `${animatedProgress}%` }}
@@ -242,7 +242,7 @@ export default function ImpactMetrics() {
         {otherMetrics.map((metric, index) => (
           <div
             key={metric.label}
-            className="group relative overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border-2 border-hti-yellow/20"
+            className="group relative overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-hti-yellow/50"
           >
             {/* Background gradient */}
             <div className={`absolute inset-0 bg-gradient-to-br ${metric.color} opacity-3 group-hover:opacity-8 transition-opacity`} />

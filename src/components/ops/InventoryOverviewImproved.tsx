@@ -88,7 +88,7 @@ export default function InventoryOverviewImproved() {
 
   if (loading) {
     return (
-      <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-xl overflow-hidden">
+      <div className="bg-gray-800 rounded-xl border border-gray-600 shadow-xl overflow-hidden">
         <div className="p-6 animate-pulse">
           <div className="bg-gray-700 h-10 rounded mb-4" />
           <div className="space-y-3">
@@ -103,7 +103,7 @@ export default function InventoryOverviewImproved() {
 
   return (
     <>
-      <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-xl overflow-hidden flex flex-col h-full">
+      <div className="bg-gray-800 rounded-xl border border-gray-600 shadow-xl overflow-hidden flex flex-col h-full">
         {/* Enhanced Header with Better Actions */}
         <div className="p-4 md:p-6 bg-gray-900/50 border-b border-gray-700">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-4">
@@ -143,7 +143,7 @@ export default function InventoryOverviewImproved() {
                 placeholder="Search serial, model, manufacturer, status..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white placeholder-gray-500 text-sm focus:outline-none focus:border-hti-teal focus:ring-2 focus:ring-hti-teal/30 transition-all"
+                className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-600 rounded-lg text-white placeholder-gray-500 text-sm focus:outline-none focus:border-hti-teal focus:ring-2 focus:ring-hti-teal/30 transition-all"
               />
               {searchQuery && (
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">
@@ -158,7 +158,7 @@ export default function InventoryOverviewImproved() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="pl-10 pr-8 py-2 bg-gray-900 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:border-hti-teal transition-colors appearance-none cursor-pointer"
+                className="pl-10 pr-8 py-2 bg-gray-900 border border-gray-600 rounded-lg text-white text-sm focus:outline-none focus:border-hti-teal transition-colors appearance-none cursor-pointer"
               >
                 <option value="all">All Statuses</option>
                 {Object.entries(statusLabels).map(([key, label]) => (
@@ -313,7 +313,7 @@ export default function InventoryOverviewImproved() {
           onClick={() => setSelectedDevice(null)}
         >
           <div
-            className="bg-gray-800 border border-gray-700 rounded-2xl max-w-2xl w-full shadow-2xl"
+            className="bg-gray-800 border border-gray-600 rounded-2xl max-w-2xl w-full shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-6 border-b border-gray-700">

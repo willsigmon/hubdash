@@ -54,14 +54,14 @@ export default function DevicePipeline() {
 
   if (loading) {
     return (
-      <div className="bg-white/5 backdrop-blur-sm rounded-xl border-2 border-hti-yellow/20 shadow-xl p-6">
+      <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-yellow/50 shadow-xl p-6">
         <div className="animate-pulse space-y-4">
           <div className="grid grid-cols-7 gap-2">
             {[...Array(7)].map((_, i) => (
               <div key={i} className="bg-white/10 rounded-lg h-24" />
             ))}
           </div>
-          <div className="grid grid-cols-4 gap-4 pt-6 border-t border-hti-yellow/10">
+          <div className="grid grid-cols-4 gap-4 pt-6 border-t border-hti-yellow/40">
             {[...Array(4)].map((_, i) => (
               <div key={i} className="bg-white/10 rounded h-16" />
             ))}
@@ -72,7 +72,7 @@ export default function DevicePipeline() {
   }
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm rounded-xl border-2 border-hti-yellow/20 shadow-xl p-4 md:p-6">
+    <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-yellow/50 shadow-xl p-4 md:p-6">
       {/* Header */}
       <h3 className="text-2xl font-bold text-white mb-8">📊 Device Pipeline</h3>
 
@@ -82,7 +82,7 @@ export default function DevicePipeline() {
           {stages.map((stage, index) => (
             <div key={stage.name} className="relative">
               {/* Stage Card - Desktop */}
-              <div className={`${stage.color} rounded-lg p-4 text-white hover:shadow-2xl transition-all cursor-pointer transform hover:scale-110 border-2 border-white/20`}>
+              <div className={`${stage.color} rounded-lg p-4 text-white hover:shadow-2xl transition-all cursor-pointer transform hover:scale-110 border border-white/40`}>
                 <div className="text-center">
                   <div className="text-3xl mb-2">{stage.icon}</div>
                   <div className="text-2xl font-bold mb-1">{stage.count}</div>
@@ -104,7 +104,7 @@ export default function DevicePipeline() {
         <div className="lg:hidden">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {stages.map((stage) => (
-              <div key={stage.name} className={`${stage.color} rounded-lg p-3 text-white text-center hover:shadow-xl transition-all cursor-pointer border-2 border-white/20`}>
+              <div key={stage.name} className={`${stage.color} rounded-lg p-3 text-white text-center hover:shadow-xl transition-all cursor-pointer border border-white/40`}>
                 <div className="text-2xl mb-1">{stage.icon}</div>
                 <div className="text-xl font-bold mb-0.5">{stage.count}</div>
                 <div className="text-xs font-bold opacity-100">{stage.name}</div>
@@ -115,20 +115,20 @@ export default function DevicePipeline() {
       </div>
 
       {/* Pipeline Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 pt-6 border-t-2 border-hti-yellow/20">
-        <div className="text-center p-4 bg-hti-red/10 rounded-lg border-2 border-hti-red/30">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 pt-6 border-t border-hti-yellow/50">
+        <div className="text-center p-4 bg-hti-red/15 rounded-lg border border-hti-red/50">
           <div className="text-xl md:text-2xl font-bold text-white">{stats.total}</div>
           <div className="text-xs md:text-sm text-hti-yellow font-bold mt-1">Total in Pipeline</div>
         </div>
-        <div className="text-center p-4 bg-green-600/10 rounded-lg border-2 border-green-600/30">
+        <div className="text-center p-4 bg-green-600/15 rounded-lg border border-green-600/50">
           <div className="text-xl md:text-2xl font-bold text-hti-yellow-bright">{stats.completionRate}%</div>
           <div className="text-xs md:text-sm text-hti-yellow font-bold mt-1">Completion Rate</div>
         </div>
-        <div className="text-center p-4 bg-hti-orange/10 rounded-lg border-2 border-hti-orange/30">
+        <div className="text-center p-4 bg-hti-orange/15 rounded-lg border border-hti-orange/50">
           <div className="text-xl md:text-2xl font-bold text-hti-yellow">{stats.avgCycleTime}</div>
           <div className="text-xs md:text-sm text-hti-yellow font-bold mt-1">Avg Cycle Time</div>
         </div>
-        <div className="text-center p-4 bg-hti-yellow/10 rounded-lg border-2 border-hti-yellow/30">
+        <div className="text-center p-4 bg-hti-yellow/15 rounded-lg border border-hti-yellow/50">
           <div className="text-xl md:text-2xl font-bold text-hti-red">{stats.bottleneck}</div>
           <div className="text-xs md:text-sm text-hti-yellow font-bold mt-1">Bottleneck</div>
         </div>
