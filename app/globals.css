@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --hti-navy: #0E2240;
+  --hti-blue: #6FC3DF;
+  --hti-white: #FFFFFF;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Custom HTI components */
+.metric-card {
+  @apply bg-white rounded-lg shadow-md p-6 border-l-4 border-hti-blue;
+}
+
+.metric-value {
+  @apply text-4xl font-bold text-hti-navy;
+}
+
+.metric-label {
+  @apply text-sm text-gray-600 mt-2;
+}
+
+.progress-bar {
+  @apply w-full bg-gray-200 rounded-full h-4 overflow-hidden;
+}
+
+.progress-fill {
+  @apply h-full bg-hti-blue transition-all duration-500;
+}
+
+.status-on-track {
+  @apply text-green-600 font-semibold;
+}
+
+.status-at-risk {
+  @apply text-yellow-600 font-semibold;
+}
+
+.status-behind {
+  @apply text-red-600 font-semibold;
+}
+
+.status-achieved {
+  @apply text-blue-600 font-semibold;
+}
+
+.btn-primary {
+  @apply bg-hti-navy text-white px-6 py-3 rounded-lg font-semibold hover:bg-opacity-90 transition-colors;
+}
+
+.btn-secondary {
+  @apply bg-white text-hti-navy border-2 border-hti-navy px-6 py-3 rounded-lg font-semibold hover:bg-hti-navy hover:text-white transition-colors;
+}
+
+.section-title {
+  @apply text-2xl font-bold text-hti-navy mb-6 pb-2 border-b-4 border-hti-blue;
+}
