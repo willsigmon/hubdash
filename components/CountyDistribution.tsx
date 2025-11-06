@@ -80,7 +80,7 @@ export function CountyDistribution() {
           <div className="text-sm text-gray-600">Total Devices</div>
         </div>
         <div>
-          <div className="text-2xl font-bold text-hti-blue">
+          <div className="text-2xl font-bold text-hti-navy">
             {countyData.reduce((sum, c) => sum + c.training, 0)}
           </div>
           <div className="text-sm text-gray-600">Total Training Hours</div>

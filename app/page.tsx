@@ -85,7 +85,7 @@ export default function Home() {
             ].map(county => (
               <div
                 key={county}
-                className="bg-hti-blue bg-opacity-10 border border-hti-blue rounded px-3 py-2 text-center text-sm font-medium"
+                className="bg-hti-blue bg-opacity-10 border border-hti-blue rounded px-3 py-2 text-center text-sm font-medium text-hti-navy"
               >
                 {county}
               </div>

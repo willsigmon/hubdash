@@ -36,12 +36,12 @@ export function DeviceStatusChart() {
         {/* Stats Grid */}
         <div className="grid grid-cols-2 gap-4">
           {deviceData.map((item) => (
-            <div key={item.status} className={`${item.color} bg-opacity-10 rounded-lg p-4`}>
+            <div key={item.status} className={`${item.color} bg-opacity-10 rounded-lg p-4 border border-gray-200`}>
               <div className={`text-3xl font-bold ${item.color.replace('bg-', 'text-')}`}>
                 {item.count.toLocaleString()}
               </div>
-              <div className="text-sm text-gray-700 mt-1">{item.status}</div>
-              <div className="text-xs text-gray-500 mt-1">
+              <div className="text-sm text-gray-800 font-medium mt-1">{item.status}</div>
+              <div className="text-xs text-gray-600 mt-1">
                 {((item.count / total) * 100).toFixed(1)}% of total
               </div>
             </div>

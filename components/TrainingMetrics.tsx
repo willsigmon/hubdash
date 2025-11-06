@@ -60,7 +60,7 @@ export function TrainingMetrics() {
                 className="h-full bg-hti-blue rounded-full transition-all duration-500 flex items-center justify-end pr-2"
                 style={{ width: `${(month.hours / maxHours) * 100}%` }}
               >
-                <span className="text-xs text-white font-medium">
+                <span className="text-xs text-hti-navy font-medium">
                   {month.hours}h
                 </span>
               </div>
@@ -85,8 +85,8 @@ export function TrainingMetrics() {
               key={item.topic}
               className="bg-hti-blue bg-opacity-10 border border-hti-blue rounded-full px-4 py-2 text-sm"
             >
-              <span className="font-medium">{item.topic}</span>
-              <span className="text-gray-600 ml-2">({item.sessions})</span>
+              <span className="font-medium text-hti-navy">{item.topic}</span>
+              <span className="text-gray-700 ml-2">({item.sessions})</span>
             </div>
           ))}
         </div>
