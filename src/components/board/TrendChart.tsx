@@ -24,7 +24,7 @@ export default function TrendChart() {
         <h3 className="text-lg font-semibold text-gray-900 mb-2">
           Devices Over Time
         </h3>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-700">
           Cumulative laptops collected and Chromebooks distributed
         </p>
       </div>
@@ -34,11 +34,11 @@ export default function TrendChart() {
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis
             dataKey="month"
-            stroke="#6b7280"
+            stroke="#374151"
             style={{ fontSize: '12px' }}
           />
           <YAxis
-            stroke="#6b7280"
+            stroke="#374151"
             style={{ fontSize: '12px' }}
           />
           <Tooltip
@@ -75,11 +75,11 @@ export default function TrendChart() {
 
       <div className="mt-4 grid grid-cols-2 gap-4">
         <div className="p-3 bg-hti-navy/5 rounded-lg">
-          <div className="text-xs font-medium text-gray-600 mb-1">Avg/Month</div>
+          <div className="text-xs font-medium text-gray-700 mb-1">Avg/Month</div>
           <div className="text-lg font-bold text-hti-navy">190 devices</div>
         </div>
         <div className="p-3 bg-hti-teal/5 rounded-lg">
-          <div className="text-xs font-medium text-gray-600 mb-1">Conversion Rate</div>
+          <div className="text-xs font-medium text-gray-700 mb-1">Conversion Rate</div>
           <div className="text-lg font-bold text-hti-teal">87%</div>
         </div>
       </div>

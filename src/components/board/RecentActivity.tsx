@@ -35,7 +35,7 @@ export default function RecentActivity() {
         <h3 className="text-xl font-bold text-hti-navy flex items-center gap-2 mb-1">
           🚀 Recent Activity
         </h3>
-        <p className="text-sm text-hti-gray font-medium">
+        <p className="text-sm text-gray-700 font-medium">
           Real-time updates from HTI operations
         </p>
       </div>
@@ -77,7 +77,7 @@ export default function RecentActivity() {
                       <h3 className="text-base font-bold text-hti-navy mb-1 group-hover:text-hti-red transition-colors">
                         {activity.title}
                       </h3>
-                      <p className="text-sm text-hti-gray">
+                      <p className="text-sm text-gray-700">
                         {activity.description}
                       </p>
                     </div>

@@ -25,7 +25,7 @@ export default function Home() {
             <div className="relative z-10 text-white">
               <div className="text-5xl mb-4">📊</div>
               <h2 className="text-3xl font-bold mb-3 text-white">Board Dashboard</h2>
-              <p className="text-hti-yellow/90 mb-4 font-medium">
+              <p className="text-hti-yellow mb-4 font-medium">
                 Executive summary with impact metrics, trends, and key insights for board members.
               </p>
               <div className="flex items-center text-sm font-bold text-hti-yellow">
@@ -56,7 +56,7 @@ export default function Home() {
             <div className="relative z-10 text-white">
               <div className="text-5xl mb-4">⚡</div>
               <h2 className="text-3xl font-bold mb-3 text-white">Operations Hub</h2>
-              <p className="text-hti-yellow/90 mb-4 font-medium">
+              <p className="text-hti-yellow mb-4 font-medium">
                 Mission control for inventory, donations, distributions, and training management.
               </p>
               <div className="flex items-center text-sm font-bold text-hti-yellow">
@@ -87,7 +87,7 @@ export default function Home() {
             <div className="relative z-10 text-white">
               <div className="text-4xl mb-4">📄</div>
               <h2 className="text-2xl font-bold mb-3 text-white">Grant Reports</h2>
-              <p className="text-white opacity-90 mb-4">
+              <p className="text-white mb-4">
                 Generate quarterly reports, track grant goals, and export data for NCDIT compliance.
               </p>
               <div className="flex items-center text-sm font-medium text-white">
@@ -118,7 +118,7 @@ export default function Home() {
             <div className="relative z-10 text-white">
               <div className="text-4xl mb-4">📣</div>
               <h2 className="text-2xl font-bold mb-3 text-white">Marketing Hub</h2>
-              <p className="text-white opacity-90 mb-4">
+              <p className="text-white mb-4">
                 Recipient stories, impact quotes, and partnership applications for marketing campaigns.
               </p>
               <div className="flex items-center text-sm font-medium text-white">
@@ -142,7 +142,7 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="mt-12 text-center text-sm text-gray-500">
+        <div className="mt-12 text-center text-sm text-gray-600">
           <p>HUBZone Technology Initiative • Henderson, NC</p>
           <p className="mt-1">
             <a
@@ -154,7 +154,7 @@ export default function Home() {
               hubzonetech.org
             </a>
           </p>
-          <p className="mt-4 text-xs text-gray-400">
+          <p className="mt-4 text-xs text-gray-600">
             Powered by Knack • Real-time data from HTI's database
           </p>
         </div>

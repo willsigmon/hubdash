@@ -17,9 +17,9 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
       case 'Pending':
         return 'bg-hti-yellow/30 text-hti-navy border-hti-yellow/60';
       case 'In Review':
-        return 'bg-hti-orange/30 text-hti-red border-hti-orange/60';
+        return 'bg-hti-orange/30 text-white border-hti-orange/60';
       case 'Rejected':
-        return 'bg-hti-red/30 text-hti-red border-hti-red/60';
+        return 'bg-hti-red/30 text-white border-hti-red/60';
       default:
         return 'bg-hti-gray/30 text-hti-navy border-hti-gray/60';
     }

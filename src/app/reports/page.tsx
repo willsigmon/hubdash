@@ -15,8 +15,8 @@ export default function ReportsPage() {
   const GRANT_DATA = {
     laptopsConverted: metrics?.grantLaptopsPresented || 0,
     laptopsGoal: metrics?.grantLaptopGoal || 1500,
-    trainingHours: 125, // Will be updated when connected to training data
-    trainingHoursGoal: 125,
+    trainingHours: metrics?.trainingHoursDelivered || 0, // Pull from actual training data
+    trainingHoursGoal: metrics?.trainingHoursGoal || 125,
     participants: metrics?.peopleTrained || 0,
     participantsGoal: 600,
   };

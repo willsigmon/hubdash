@@ -74,7 +74,7 @@ export default function AppNav() {
                           ? 'bg-teal-600/10 text-hti-teal border border-hti-teal/20'
                           : 'bg-pink-600/10 text-pink-600 border border-pink-600/20'
                         : isDarkTheme
-                          ? "text-gray-300 hover:bg-gray-800 hover:text-white"
+                          ? "text-gray-200 hover:bg-gray-800 hover:text-white"
                           : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                     }`}
                   >
@@ -126,8 +126,8 @@ export default function AppNav() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className={`w-full px-4 py-3 pl-12 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-teal focus:border-transparent ${
                     isDarkTheme
-                      ? 'bg-gray-800 border border-gray-600 text-white placeholder-gray-400'
-                      : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500'
+                      ? 'bg-gray-800 border border-gray-600 text-white placeholder-gray-500'
+                      : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-600'
                   }`}
                   autoFocus
                 />
@@ -147,7 +147,7 @@ export default function AppNav() {
                     ? 'bg-gray-800 border border-gray-600'
                     : 'bg-white border border-gray-200'
                 }`}>
-                  <div className={`text-sm p-2 ${isDarkTheme ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <div className={`text-sm p-2 ${isDarkTheme ? 'text-gray-300' : 'text-gray-500'}`}>
                     Press Enter to search across all data...
                   </div>
                 </div>
@@ -182,7 +182,7 @@ export default function AppNav() {
                           ? 'bg-teal-600/10 text-hti-teal'
                           : 'bg-pink-600/10 text-pink-600'
                         : isDarkTheme
-                          ? "text-gray-300 hover:bg-gray-800 hover:text-white"
+                          ? "text-gray-200 hover:bg-gray-800 hover:text-white"
                           : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                     }`}
                   >

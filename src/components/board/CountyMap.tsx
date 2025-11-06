@@ -66,7 +66,7 @@ export default function CountyMap() {
           <h3 className="text-lg font-bold text-hti-navy mb-2">
             Counties Served
           </h3>
-          <p className="text-sm text-hti-gray font-medium">
+          <p className="text-sm text-gray-700 font-medium">
             Digital Champion Grant distribution footprint
           </p>
         </div>
@@ -85,7 +85,7 @@ export default function CountyMap() {
         <h3 className="text-2xl font-bold text-hti-navy mb-2">
           📍 {counties.length} Counties Served
         </h3>
-        <p className="text-sm text-hti-gray font-medium">
+        <p className="text-sm text-gray-700 font-medium">
           Digital Champion Grant distribution footprint across North Carolina
         </p>
       </div>
@@ -117,7 +117,7 @@ export default function CountyMap() {
                   </div>
                   <div className="text-right ml-4 flex-shrink-0">
                     <div className="text-2xl font-bold text-hti-red">{county.devices}</div>
-                    <div className="text-xs text-hti-gray font-medium">devices</div>
+                    <div className="text-xs text-gray-700 font-medium">devices</div>
                   </div>
                 </div>
 
@@ -145,21 +145,21 @@ export default function CountyMap() {
             {totalDevices}
           </div>
           <div className="text-sm font-bold text-hti-navy">Total Devices</div>
-          <div className="text-xs text-hti-gray mt-1 font-medium">across NC</div>
+          <div className="text-xs text-gray-700 mt-1 font-medium">across NC</div>
         </div>
         <div className="text-center group border-l border-r border-hti-yellow/50">
           <div className="text-4xl font-bold text-hti-orange mb-1 group-hover:scale-110 transition-transform">
             {counties.length}
           </div>
           <div className="text-sm font-bold text-hti-navy">Counties</div>
-          <div className="text-xs text-hti-gray mt-1 font-medium">in program</div>
+          <div className="text-xs text-gray-700 mt-1 font-medium">in program</div>
         </div>
         <div className="text-center group">
           <div className="text-4xl font-bold text-hti-red mb-1 group-hover:scale-110 transition-transform">
             {counties.length > 0 ? Math.round(totalDevices / counties.length) : 0}
           </div>
           <div className="text-sm font-bold text-hti-navy">Avg/County</div>
-          <div className="text-xs text-hti-gray mt-1 font-medium">distribution</div>
+          <div className="text-xs text-gray-700 mt-1 font-medium">distribution</div>
         </div>
       </div>
     </div>

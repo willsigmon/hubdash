@@ -102,9 +102,9 @@ export default function ApplicationFilters({
         >
           <span className="font-medium text-gray-900">{title}</span>
           {isActive ? (
-            <ChevronUp className="w-4 h-4 text-gray-500" />
+            <ChevronUp className="w-4 h-4 text-gray-700" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-gray-500" />
+            <ChevronDown className="w-4 h-4 text-gray-700" />
           )}
         </button>
         {isActive && (

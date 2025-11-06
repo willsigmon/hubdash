@@ -189,7 +189,7 @@ export default function MarketingPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-hti-navy mb-2">Application Pipeline</h2>
-          <p className="text-gray-600">Real-time overview of partnership applications</p>
+          <p className="text-gray-700">Real-time overview of partnership applications</p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -279,7 +279,7 @@ export default function MarketingPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-hti-navy mb-2">Browse Applications</h2>
-          <p className="text-gray-600">Use filters and search to find applications. Click any card to view full details.</p>
+          <p className="text-gray-700">Use filters and search to find applications. Click any card to view full details.</p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">

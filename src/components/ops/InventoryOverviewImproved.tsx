@@ -19,8 +19,8 @@ const statusColors: Record<string, string> = {
   "qa_testing": "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
   "refurbishing": "bg-blue-500/20 text-blue-400 border-blue-500/30",
   "data_wipe": "bg-purple-500/20 text-purple-400 border-purple-500/30",
-  "received": "bg-gray-500/20 text-gray-400 border-gray-500/30",
-  "donated": "bg-gray-500/20 text-gray-400 border-gray-500/30",
+  "received": "bg-gray-500/20 text-gray-300 border-gray-500/30",
+  "donated": "bg-gray-500/20 text-gray-300 border-gray-500/30",
   "distributed": "bg-hti-teal/20 text-hti-teal border-hti-teal/30",
 };
 
@@ -109,7 +109,7 @@ export default function InventoryOverviewImproved() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-4">
             <div>
               <h3 className="text-lg font-semibold text-white">Device Inventory</h3>
-              <p className="text-sm text-gray-400 mt-1">
+              <p className="text-sm text-gray-300 mt-1">
                 {filteredDevices.length} of {devices.length} devices
                 {statusFilter !== "all" && ` • Filtered by ${statusLabels[statusFilter]}`}
               </p>
@@ -136,17 +136,17 @@ export default function InventoryOverviewImproved() {
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1 relative">
               <Search className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${
-                isSearching ? "text-hti-teal animate-pulse" : "text-gray-500"
+                isSearching ? "text-hti-teal animate-pulse" : "text-gray-300"
               }`} />
               <input
                 type="text"
                 placeholder="Search serial, model, manufacturer, status..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-600 rounded-lg text-white placeholder-gray-500 text-sm focus:outline-none focus:border-hti-teal focus:ring-2 focus:ring-hti-teal/30 transition-all"
+                className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-gray-600 rounded-lg text-white placeholder-gray-600 text-sm focus:outline-none focus:border-hti-teal focus:ring-2 focus:ring-hti-teal/30 transition-all"
               />
               {searchQuery && (
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400">
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-300">
                   {filteredDevices.length} results
                 </span>
               )}
@@ -154,7 +154,7 @@ export default function InventoryOverviewImproved() {
 
             {/* Status Filter */}
             <div className="relative">
-              <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+              <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -173,7 +173,7 @@ export default function InventoryOverviewImproved() {
         <div className="flex-1 overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-gray-900/50 sticky top-0">
-              <tr className="text-left text-xs font-medium text-gray-400 uppercase tracking-wider border-b border-gray-700">
+              <tr className="text-left text-xs font-medium text-gray-300 uppercase tracking-wider border-b border-gray-700">
                 <th className="px-3 md:px-6 py-3">Serial Number</th>
                 <th className="px-3 md:px-6 py-3">Device Info</th>
                 <th className="px-3 md:px-6 py-3">Status</th>
@@ -185,7 +185,7 @@ export default function InventoryOverviewImproved() {
             <tbody className="divide-y divide-gray-700">
               {filteredDevices.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-12 text-center text-gray-400">
+                  <td colSpan={6} className="px-6 py-12 text-center text-gray-300">
                     <div className="text-5xl mb-4">
                       {searchQuery || statusFilter !== "all" ? "🔍" : "📦"}
                     </div>
@@ -234,7 +234,7 @@ export default function InventoryOverviewImproved() {
                     </td>
                     <td className="px-3 md:px-6 py-4">
                       <div className="text-sm font-medium text-white">{device.model}</div>
-                      <div className="text-xs text-gray-500">{device.manufacturer}</div>
+                      <div className="text-xs text-gray-300">{device.manufacturer}</div>
                     </td>
                     <td className="px-3 md:px-6 py-4">
                       <span className={`px-3 py-1 rounded-full text-xs font-medium border inline-block ${statusColors[device.status] || statusColors.received}`}>
@@ -245,7 +245,7 @@ export default function InventoryOverviewImproved() {
                       <div className="text-sm text-gray-300">{device.assigned_to || "—"}</div>
                     </td>
                     <td className="px-3 md:px-6 py-4 hidden md:table-cell whitespace-nowrap">
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-gray-300">
                         {new Date(device.received_date).toLocaleDateString()}
                       </div>
                     </td>
@@ -282,14 +282,14 @@ export default function InventoryOverviewImproved() {
 
         {/* Enhanced Footer with Pagination */}
         <div className="p-4 bg-gray-900/50 border-t border-gray-700 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-sm text-gray-400">
+          <div className="text-sm text-gray-300">
             Showing <span className="font-medium text-white">{filteredDevices.length}</span> of{" "}
             <span className="font-medium text-white">{devices.length}</span> devices
           </div>
           <div className="flex items-center gap-2">
             <button
               disabled
-              className="p-2 bg-gray-700 rounded text-gray-500 cursor-not-allowed"
+              className="p-2 bg-gray-700 rounded text-gray-300 cursor-not-allowed"
               aria-label="Previous page"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -297,7 +297,7 @@ export default function InventoryOverviewImproved() {
             <span className="px-3 py-1 bg-gray-700 rounded text-white text-sm">1</span>
             <button
               disabled
-              className="p-2 bg-gray-700 rounded text-gray-500 cursor-not-allowed"
+              className="p-2 bg-gray-700 rounded text-gray-300 cursor-not-allowed"
               aria-label="Next page"
             >
               <ChevronRight className="w-4 h-4" />
@@ -322,19 +322,19 @@ export default function InventoryOverviewImproved() {
             <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-400">Serial Number</span>
+                  <span className="text-gray-300">Serial Number</span>
                   <p className="text-white font-mono mt-1">{selectedDevice.serial_number}</p>
                 </div>
                 <div>
-                  <span className="text-gray-400">Model</span>
+                  <span className="text-gray-300">Model</span>
                   <p className="text-white mt-1">{selectedDevice.model}</p>
                 </div>
                 <div>
-                  <span className="text-gray-400">Manufacturer</span>
+                  <span className="text-gray-300">Manufacturer</span>
                   <p className="text-white mt-1">{selectedDevice.manufacturer}</p>
                 </div>
                 <div>
-                  <span className="text-gray-400">Status</span>
+                  <span className="text-gray-300">Status</span>
                   <p className="mt-1">
                     <span className={`px-3 py-1 rounded-full text-xs font-medium border inline-block ${statusColors[selectedDevice.status]}`}>
                       {statusLabels[selectedDevice.status]}
@@ -342,15 +342,15 @@ export default function InventoryOverviewImproved() {
                   </p>
                 </div>
                 <div>
-                  <span className="text-gray-400">Location</span>
+                  <span className="text-gray-300">Location</span>
                   <p className="text-white mt-1">{selectedDevice.location}</p>
                 </div>
                 <div>
-                  <span className="text-gray-400">Assigned To</span>
+                  <span className="text-gray-300">Assigned To</span>
                   <p className="text-white mt-1">{selectedDevice.assigned_to || "Unassigned"}</p>
                 </div>
                 <div>
-                  <span className="text-gray-400">Received Date</span>
+                  <span className="text-gray-300">Received Date</span>
                   <p className="text-white mt-1">
                     {new Date(selectedDevice.received_date).toLocaleDateString()}
                   </p>

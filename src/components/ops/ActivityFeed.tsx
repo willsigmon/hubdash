@@ -92,12 +92,12 @@ export default function ActivityFeed() {
               <div className="flex items-start gap-3">
                 <div className="text-lg md:text-xl flex-shrink-0">{activity.icon}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs md:text-sm text-hti-yellow/90 leading-relaxed">
+                  <p className="text-xs md:text-sm text-hti-yellow leading-relaxed">
                     <span className="font-bold text-white">{activity.user_name}</span>
-                    <span className="text-hti-yellow/70"> {activity.action} </span>
+                    <span className="text-hti-yellow"> {activity.action} </span>
                     <span className="text-hti-orange font-bold break-words">{activity.target}</span>
                   </p>
-                  <p className="text-xs text-hti-yellow/50 mt-2 font-medium">{formatTimeAgo(activity.created_at)}</p>
+                  <p className="text-xs text-hti-yellow mt-2 font-medium">{formatTimeAgo(activity.created_at)}</p>
                 </div>
               </div>
             </div>

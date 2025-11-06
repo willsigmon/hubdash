@@ -112,19 +112,19 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
 
             <div className="space-y-3 border-t border-hti-yellow/50 pt-4">
               <div className="text-sm">
-                <p className="text-hti-gray/70 font-medium">Contact</p>
+                <p className="text-hti-navy font-medium">Contact</p>
                 <p className="text-hti-navy font-bold">{partner.contact_name}</p>
               </div>
               <div className="text-sm">
-                <p className="text-hti-gray/70 font-medium">Email</p>
+                <p className="text-hti-navy font-medium">Email</p>
                 <p className="text-hti-orange font-semibold text-xs break-all">{partner.contact_email}</p>
               </div>
               <div className="text-sm">
-                <p className="text-hti-gray/70 font-medium">Phone</p>
+                <p className="text-hti-navy font-medium">Phone</p>
                 <p className="text-hti-navy font-bold">{partner.contact_phone}</p>
               </div>
               <div className="text-sm">
-                <p className="text-hti-gray/70 font-medium">County</p>
+                <p className="text-hti-navy font-medium">County</p>
                 <p className="text-hti-navy font-bold">{partner.county || "Unknown"}</p>
               </div>
             </div>
@@ -152,7 +152,7 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
                     {stat.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-hti-gray/70 font-semibold">{stat.label}</p>
+                    <p className="text-xs text-hti-navy font-semibold">{stat.label}</p>
                     <p className="text-2xl font-bold text-hti-navy">{stat.value}</p>
                   </div>
                 </div>
@@ -190,22 +190,22 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-hti-yellow/50">
-                      <p className="text-xs font-bold text-hti-gray/70 uppercase tracking-wider mb-2">Organization Type</p>
+                      <p className="text-xs font-bold text-hti-navy uppercase tracking-wider mb-2">Organization Type</p>
                       <p className="text-2xl font-bold text-hti-navy capitalize">{partner.type}</p>
                     </div>
                     <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-hti-yellow/50">
-                      <p className="text-xs font-bold text-hti-gray/70 uppercase tracking-wider mb-2">County</p>
+                      <p className="text-xs font-bold text-hti-navy uppercase tracking-wider mb-2">County</p>
                       <p className="text-2xl font-bold text-hti-navy">{partner.county || "Unknown"}</p>
                     </div>
                     <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-hti-yellow/50">
-                      <p className="text-xs font-bold text-hti-gray/70 uppercase tracking-wider mb-2">Status</p>
+                      <p className="text-xs font-bold text-hti-navy uppercase tracking-wider mb-2">Status</p>
                       <div className="flex items-center gap-2">
                         <span className={`w-3 h-3 rounded-full ${partner.status === "active" ? "bg-green-500" : "bg-yellow-500"} animate-pulse`} />
                         <p className="text-lg font-bold text-hti-navy capitalize">{partner.status}</p>
                       </div>
                     </div>
                     <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-hti-yellow/50">
-                      <p className="text-xs font-bold text-hti-gray/70 uppercase tracking-wider mb-2">Devices Received</p>
+                      <p className="text-xs font-bold text-hti-navy uppercase tracking-wider mb-2">Devices Received</p>
                       <p className="text-2xl font-bold text-hti-orange">{partner.devices_received}</p>
                     </div>
                   </div>
@@ -223,7 +223,7 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
                     <h3 className="text-lg font-bold text-hti-navy mb-4">Client Population & Needs</h3>
                     <div className="space-y-4">
                       <div>
-                        <p className="text-sm font-bold text-hti-gray/70 mb-2">Works With</p>
+                        <p className="text-sm font-bold text-hti-navy mb-2">Works With</p>
                         <div className="flex flex-wrap gap-2">
                           {["Adults", "Families", "Job Seekers"].map((group) => (
                             <span key={group} className="px-3 py-1 bg-hti-yellow/20 border border-hti-yellow/50 text-hti-navy rounded-full text-xs font-bold">
@@ -233,7 +233,7 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
                         </div>
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-hti-gray/70 mb-2">Struggles Being Addressed</p>
+                        <p className="text-sm font-bold text-hti-navy mb-2">Struggles Being Addressed</p>
                         <div className="flex flex-wrap gap-2">
                           {["Digital Literacy", "Access", "Employment"].map((struggle) => (
                             <span key={struggle} className="px-3 py-1 bg-hti-orange/20 border border-hti-orange/50 text-hti-navy rounded-full text-xs font-bold">

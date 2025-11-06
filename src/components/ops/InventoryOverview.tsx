@@ -76,7 +76,7 @@ export default function InventoryOverview() {
             placeholder="Search serial, model, status..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 px-3 md:px-4 py-2 bg-hti-navy/30 border border-hti-yellow/50 rounded-lg text-white placeholder-hti-yellow/50 text-sm focus:outline-none focus:border-hti-yellow transition-all focus:bg-hti-navy/50"
+            className="flex-1 px-3 md:px-4 py-2 bg-hti-navy/30 border border-hti-yellow/50 rounded-lg text-white placeholder-hti-yellow text-sm focus:outline-none focus:border-hti-yellow transition-all focus:bg-hti-navy/50"
           />
           <button className="px-3 md:px-4 py-2 bg-hti-orange hover:bg-hti-red rounded-lg text-white text-xs md:text-sm font-bold transition-all whitespace-nowrap">
             Search
@@ -100,7 +100,7 @@ export default function InventoryOverview() {
           <tbody className="divide-y divide-gray-700">
             {filteredDevices.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-12 text-center text-gray-400">
+                <td colSpan={6} className="px-6 py-12 text-center text-gray-300">
                   <div className="text-3xl mb-2">🔍</div>
                   <p>No devices found</p>
                 </td>
@@ -113,7 +113,7 @@ export default function InventoryOverview() {
                   </td>
                   <td className="px-3 md:px-6 py-4">
                     <div className="text-xs md:text-sm font-medium text-white">{device.model}</div>
-                    <div className="text-xs text-gray-500">{device.manufacturer}</div>
+                    <div className="text-xs text-gray-300">{device.manufacturer}</div>
                   </td>
                   <td className="px-3 md:px-6 py-4">
                     <span className={`px-2 md:px-3 py-1 rounded-full text-xs font-medium border inline-block ${getDeviceStatusColor(device.status)}`}>
@@ -124,7 +124,7 @@ export default function InventoryOverview() {
                     <div className="text-xs md:text-sm text-gray-300">{device.assigned_to || "—"}</div>
                   </td>
                   <td className="px-3 md:px-6 py-4 hidden md:table-cell whitespace-nowrap">
-                    <div className="text-xs md:text-sm text-gray-500">
+                    <div className="text-xs md:text-sm text-gray-300">
                       {new Date(device.received_date).toLocaleDateString()}
                     </div>
                   </td>
@@ -133,8 +133,8 @@ export default function InventoryOverview() {
                       <button className="text-xs md:text-sm text-hti-teal hover:text-hti-teal-light transition-colors">
                         Edit
                       </button>
-                      <span className="text-gray-600">|</span>
-                      <button className="text-xs md:text-sm text-gray-400 hover:text-white transition-colors">
+                      <span className="text-gray-400">|</span>
+                      <button className="text-xs md:text-sm text-gray-300 hover:text-white transition-colors">
                         View
                       </button>
                     </div>
@@ -148,7 +148,7 @@ export default function InventoryOverview() {
 
       {/* Footer Pagination */}
       <div className="p-3 md:p-4 bg-gray-900/50 border-t border-gray-700 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="text-xs md:text-sm text-gray-400">
+        <div className="text-xs md:text-sm text-gray-300">
           Showing <span className="font-medium">{filteredDevices.length}</span> of <span className="font-medium">{devices.length}</span> devices
         </div>
         <div className="flex gap-2">

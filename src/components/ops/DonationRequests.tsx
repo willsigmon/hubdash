@@ -81,11 +81,11 @@ export default function DonationRequests() {
                       <h4 className="text-base md:text-lg font-bold text-white truncate group-hover:text-hti-yellow transition-colors">
                         {request.company}
                       </h4>
-                      <p className="text-xs md:text-sm text-hti-yellow/70 truncate">{request.contact_name}</p>
+                      <p className="text-xs md:text-sm text-hti-yellow truncate">{request.contact_name}</p>
                     </Link>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <div className="text-xs text-hti-yellow/50 font-medium">{formatDate(request.requested_date)}</div>
+                    <div className="text-xs text-hti-yellow font-medium">{formatDate(request.requested_date)}</div>
                     <div className={`text-xs font-bold ${getRequestStatusColor(request.status)} capitalize mt-1`}>
                       {request.status.replace('_', ' ')}
                     </div>
@@ -93,7 +93,7 @@ export default function DonationRequests() {
                 </div>
 
                 {/* Details Row */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 text-xs md:text-sm text-hti-yellow/70 mb-4 ml-6 md:ml-8 font-medium">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 text-xs md:text-sm text-hti-yellow mb-4 ml-6 md:ml-8 font-medium">
                   <div className="flex items-center gap-2">
                     <span>💻</span>
                     <span className="font-bold text-hti-yellow">{request.device_count}</span>
