@@ -20,10 +20,34 @@ export default function AppNav() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const navItems = [
-    { href: "/board", label: "Board", icon: LayoutDashboard, color: "hti-navy" },
-    { href: "/ops", label: "Operations", icon: Zap, color: "hti-red" },
-    { href: "/reports", label: "Reports", icon: FileText, color: "hti-teal" },
-    { href: "/marketing", label: "Marketing", icon: Megaphone, color: "pink-600" },
+    {
+      href: "/board",
+      label: "Board",
+      icon: LayoutDashboard,
+      activeLight: "bg-hti-plum/10 text-hti-plum border-hti-plum/30 shadow-sm",
+      activeDark: "bg-hti-fig/40 text-hti-soleil border-white/10 shadow-md",
+    },
+    {
+      href: "/ops",
+      label: "Operations",
+      icon: Zap,
+      activeLight: "bg-hti-ember/10 text-hti-ember border-hti-ember/30 shadow-sm",
+      activeDark: "bg-hti-ember/20 text-hti-soleil border-hti-ember/40 shadow-md",
+    },
+    {
+      href: "/reports",
+      label: "Reports",
+      icon: FileText,
+      activeLight: "bg-hti-gold/10 text-hti-fig border-hti-gold/40 shadow-sm",
+      activeDark: "bg-hti-gold/20 text-hti-midnight border-hti-gold/40 shadow-md",
+    },
+    {
+      href: "/marketing",
+      label: "Marketing",
+      icon: Megaphone,
+      activeLight: "bg-hti-sunset/10 text-hti-sunset border-hti-sunset/30 shadow-sm",
+      activeDark: "bg-hti-sunset/20 text-hti-soleil border-hti-sunset/40 shadow-md",
+    },
   ];
 
   const isActive = (href: string) => pathname?.startsWith(href);
@@ -36,20 +60,20 @@ export default function AppNav() {
   return (
     <>
       {/* Desktop Navigation - Theme Aware */}
-      <nav className={`sticky top-0 z-50 shadow-sm ${
+      <nav className={`sticky top-0 z-50 backdrop-blur-sm shadow-sm ${
         isDarkTheme
-          ? 'bg-gray-900 border-b border-gray-700'
-          : 'bg-white border-b border-gray-200'
+          ? 'bg-hti-midnight/95 border-b border-white/10'
+          : 'bg-white/95 border-b border-hti-fig/10'
       }`}>
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 hover:opacity-100 transition-opacity">
-              <div className="w-8 h-8 bg-gradient-to-br from-hti-navy to-hti-teal rounded-lg flex items-center justify-center text-white font-bold text-sm">
+              <div className="w-8 h-8 bg-gradient-to-br from-hti-plum via-hti-fig to-hti-dusk rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-sm">
                 HTI
               </div>
               <span className={`font-bold text-lg hidden sm:inline ${
-                isDarkTheme ? 'text-white' : 'text-hti-navy'
+                isDarkTheme ? 'text-hti-sand' : 'text-hti-plum'
               }`}>HubDash</span>
             </Link>
 
@@ -62,20 +86,12 @@ export default function AppNav() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all border ${
                       active
-                        ? isDarkTheme
-                          ? 'bg-hti-teal/20 text-hti-teal-light border border-hti-teal/40'
-                          : item.href === '/board'
-                          ? 'bg-blue-900/10 text-hti-navy border border-hti-navy/20'
-                          : item.href === '/ops'
-                          ? 'bg-red-600/10 text-hti-red border border-hti-red/20'
-                          : item.href === '/reports'
-                          ? 'bg-teal-600/10 text-hti-teal border border-hti-teal/20'
-                          : 'bg-pink-600/10 text-pink-600 border border-pink-600/20'
+                        ? (isDarkTheme ? item.activeDark : item.activeLight)
                         : isDarkTheme
-                          ? "text-gray-200 hover:bg-gray-800 hover:text-white"
-                          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                          ? "border-transparent text-hti-sand/80 hover:bg-white/5 hover:text-hti-sand"
+                          : "border-transparent text-hti-stone hover:bg-hti-sand/60 hover:text-hti-plum"
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -92,8 +108,8 @@ export default function AppNav() {
                 onClick={() => setSearchOpen(!searchOpen)}
                 className={`p-2 rounded-lg transition-colors ${
                   isDarkTheme
-                    ? 'hover:bg-gray-800 text-gray-300'
-                    : 'hover:bg-gray-100 text-gray-600'
+                    ? 'text-hti-sand/80 hover:bg-white/10 hover:text-hti-sand'
+                    : 'text-hti-stone/80 hover:bg-hti-sand/70 hover:text-hti-plum'
                 }`}
                 aria-label="Global search"
               >
@@ -105,8 +121,8 @@ export default function AppNav() {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className={`md:hidden p-2 rounded-lg transition-colors ${
                   isDarkTheme
-                    ? 'hover:bg-gray-800 text-gray-300'
-                    : 'hover:bg-gray-100 text-gray-600'
+                    ? 'text-hti-sand/80 hover:bg-white/10 hover:text-hti-sand'
+                    : 'text-hti-stone/80 hover:bg-hti-sand/70 hover:text-hti-plum'
                 }`}
                 aria-label="Toggle menu"
               >
@@ -124,18 +140,18 @@ export default function AppNav() {
                   placeholder="Search devices, donations, partners, quotes..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className={`w-full px-4 py-3 pl-12 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-teal focus:border-transparent ${
+                  className={`w-full px-4 py-3 pl-12 rounded-lg focus:outline-none focus:ring-2 ${
                     isDarkTheme
-                      ? 'bg-gray-800 border border-gray-600 text-white placeholder-gray-500'
-                      : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-600'
+                      ? 'bg-hti-midnight border border-white/15 text-hti-sand placeholder-hti-mist/70 focus:ring-hti-gold/30'
+                      : 'bg-white border border-hti-fig/15 text-hti-stone placeholder-hti-mist/80 focus:ring-hti-plum/30'
                   }`}
                   autoFocus
                 />
-                <Search className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                <Search className="w-5 h-5 text-hti-mist absolute left-4 top-1/2 -translate-y-1/2" />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-hti-mist hover:text-hti-plum"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -144,10 +160,10 @@ export default function AppNav() {
               {searchQuery && (
                 <div className={`mt-2 rounded-lg shadow-lg p-2 ${
                   isDarkTheme
-                    ? 'bg-gray-800 border border-gray-600'
-                    : 'bg-white border border-gray-200'
+                    ? 'bg-hti-midnight border border-white/10'
+                    : 'bg-white border border-hti-fig/10'
                 }`}>
-                  <div className={`text-sm p-2 ${isDarkTheme ? 'text-gray-300' : 'text-gray-500'}`}>
+                  <div className={`text-sm p-2 ${isDarkTheme ? 'text-hti-sand/80' : 'text-hti-stone/80'}`}>
                     Press Enter to search across all data...
                   </div>
                 </div>
@@ -160,8 +176,8 @@ export default function AppNav() {
         {mobileMenuOpen && (
           <div className={`md:hidden pb-4 ${
             isDarkTheme
-              ? 'border-t border-gray-700 bg-gray-900'
-              : 'border-t border-gray-200 bg-white'
+              ? 'border-t border-white/10 bg-hti-midnight'
+              : 'border-t border-hti-fig/10 bg-white'
           }`}>
             <div className="px-4 pt-2 space-y-1">
               {navItems.map((item) => {
@@ -172,18 +188,12 @@ export default function AppNav() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all ${
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all border ${
                       active
-                        ? item.href === '/board'
-                          ? 'bg-blue-900/10 text-hti-navy'
-                          : item.href === '/ops'
-                          ? 'bg-red-600/10 text-hti-red'
-                          : item.href === '/reports'
-                          ? 'bg-teal-600/10 text-hti-teal'
-                          : 'bg-pink-600/10 text-pink-600'
+                        ? (isDarkTheme ? item.activeDark : item.activeLight)
                         : isDarkTheme
-                          ? "text-gray-200 hover:bg-gray-800 hover:text-white"
-                          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                          ? "border-transparent text-hti-sand/80 hover:bg-white/5 hover:text-hti-sand"
+                          : "border-transparent text-hti-stone hover:bg-hti-sand/60 hover:text-hti-plum"
                     }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -197,14 +207,14 @@ export default function AppNav() {
       </nav>
 
       {/* Breadcrumb Trail - Theme Aware */}
-      <div className={isDarkTheme ? 'bg-gray-800 border-b border-gray-700' : 'bg-gray-50 border-b border-gray-200'}>
+      <div className={isDarkTheme ? 'bg-hti-midnight/85 border-b border-white/10' : 'bg-hti-sand/60 border-b border-hti-fig/10'}>
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-2">
-          <div className={`flex items-center gap-2 text-sm ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>
-            <Link href="/" className={isDarkTheme ? 'hover:text-hti-teal-light' : 'hover:text-hti-teal'}>
+          <div className={`flex items-center gap-2 text-sm ${isDarkTheme ? 'text-hti-sand/70' : 'text-hti-stone/80'}`}>
+            <Link href="/" className={isDarkTheme ? 'hover:text-hti-gold' : 'hover:text-hti-plum'}>
               Home
             </Link>
             <span>/</span>
-            <span className={isDarkTheme ? 'text-gray-200 font-medium' : 'text-gray-900 font-medium'}>
+            <span className={isDarkTheme ? 'text-hti-sand font-semibold' : 'text-hti-plum font-semibold'}>
               {navItems.find(item => isActive(item.href))?.label || "Dashboard"}
             </span>
           </div>

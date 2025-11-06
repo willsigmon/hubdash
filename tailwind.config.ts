@@ -9,15 +9,32 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // HTI Brand Colors - Official Palette
+        // HTI Brand Colors (2025 Palette)
         hti: {
-          navy: '#191347',        // Primary dark navy
-          red: '#E45927',         // Power button red
-          orange: '#F58420',      // Orange accent
-          yellow: '#FDB715',      // Primary yellow
-          'yellow-bright': '#FAD506', // Bright yellow
-          gray: '#282829',        // Dark gray
-          'gray-light': '#f5f5f5', // Light gray
+          // Core Palette
+          midnight: '#0F0C11',      // Deep anchor
+          plum: '#2F2D4C',          // Primary brand tone
+          fig: '#433D58',           // Secondary depth
+          dusk: '#4D4965',          // Muted accent
+          ember: '#C05F37',         // Warm accent
+          sunset: '#C65B32',        // Secondary warm accent
+          gold: '#E2A835',          // Signature gold
+          soleil: '#EACF3A',        // Highlight gold
+          clay: '#B4ABA3',          // Neutral midtone
+          sand: '#EEE6DF',          // Soft background neutral
+          mist: '#757A87',          // Muted typographic support
+          stone: '#615E5C',         // Dark neutral
+
+          // Legacy aliases mapped to new palette (for existing classes)
+          navy: '#2F2D4C',          // Alias → plum
+          red: '#C05F37',           // Alias → ember
+          orange: '#C65B32',        // Alias → sunset
+          yellow: '#E2A835',        // Alias → gold
+          'yellow-bright': '#EACF3A', // Alias → soleil
+          gray: '#615E5C',          // Alias → stone
+          'gray-light': '#EEE6DF',  // Alias → sand
+          teal: '#433D58',          // Alias → fig
+          'teal-light': '#615C7B',  // Softened secondary
         },
       },
       animation: {

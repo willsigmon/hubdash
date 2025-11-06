@@ -1,13 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --hti-navy: #191347;
-  --hti-red: #E45927;
-  --hti-orange: #F58420;
-  --hti-yellow: #FDB715;
-  --hti-yellow-bright: #FAD506;
-  --hti-gray: #282829;
-  --hti-gray-light: #f5f5f5;
+  /* Core brand palette */
+  --hti-midnight: #0F0C11;
+  --hti-plum: #2F2D4C;
+  --hti-fig: #433D58;
+  --hti-dusk: #4D4965;
+  --hti-ember: #C05F37;
+  --hti-sunset: #C65B32;
+  --hti-gold: #E2A835;
+  --hti-soleil: #EACF3A;
+  --hti-clay: #B4ABA3;
+  --hti-stone: #615E5C;
+  --hti-mist: #757A87;
+  --hti-sand: #EEE6DF;
+
+  /* Legacy aliases retained for existing utility classes */
+  --hti-navy: var(--hti-plum);
+  --hti-red: var(--hti-ember);
+  --hti-orange: var(--hti-sunset);
+  --hti-yellow: var(--hti-gold);
+  --hti-yellow-bright: var(--hti-soleil);
+  --hti-gray: var(--hti-stone);
+  --hti-gray-light: var(--hti-sand);
+  --hti-teal: var(--hti-fig);
+  --hti-teal-light: var(--hti-dusk);
 }
 
 body {
@@ -15,9 +32,10 @@ body {
 }
 
 /* Reports Page Utility Classes */
+
 .btn-primary {
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(to right, #E45927, #F58420);
+  background: linear-gradient(to right, var(--hti-ember), var(--hti-gold));
   color: white;
   font-weight: 600;
   border-radius: 0.5rem;
@@ -33,8 +51,8 @@ body {
 
 .btn-secondary {
   padding: 0.75rem 1.5rem;
-  border: 2px solid #191347;
-  color: #191347;
+  border: 1px solid rgba(67, 61, 88, 0.35);
+  color: var(--hti-plum);
   font-weight: 600;
   border-radius: 0.5rem;
   transition: all 0.2s;
@@ -42,28 +60,74 @@ body {
 }
 
 .btn-secondary:hover {
-  background: #f5f5f5;
+  background: var(--hti-sand);
 }
 
 .progress-bar {
   width: 100%;
   height: 0.5rem;
-  background: #e5e7eb;
+  background: rgba(238, 230, 223, 0.7);
   border-radius: 9999px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(to right, #F58420, #FDB715);
+  background: linear-gradient(to right, var(--hti-ember), var(--hti-gold));
   transition: width 0.5s ease-out;
 }
 
 .section-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #191347;
+  color: var(--hti-plum);
   margin-bottom: 1rem;
+}
+
+/* ========================================
+   BRAND-ALIGNED SURFACE + BORDER SYSTEM
+   ======================================== */
+
+/* Harmonize legacy gray utilities with HTI neutrals */
+.border-gray-200,
+.border-gray-300,
+.border-gray-400,
+.border-gray-500,
+.divide-gray-200,
+.divide-gray-300 {
+  border-color: rgba(67, 61, 88, 0.18) !important;
+}
+
+.bg-gray-50 {
+  background-color: rgba(238, 230, 223, 0.65) !important;
+}
+
+.text-gray-700,
+.text-gray-600 {
+  color: var(--hti-stone) !important;
+}
+
+.text-gray-500 {
+  color: rgba(117, 122, 135, 0.85) !important;
+}
+
+/* Input surfaces */
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  border-radius: 0.75rem;
+  border-color: rgba(67, 61, 88, 0.18);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--hti-ember);
+  box-shadow: 0 0 0 3px rgba(226, 168, 53, 0.25);
 }
 
 /* ========================================

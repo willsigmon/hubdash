@@ -164,9 +164,9 @@ export default function MarketingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-hti-sand/60 to-white">
       {/* Header */}
-      <header className="bg-gradient-to-r from-hti-navy to-hti-teal text-white shadow-xl">
+      <header className="bg-gradient-to-r from-hti-plum to-hti-fig text-white shadow-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-between">
             <div>
@@ -208,7 +208,7 @@ export default function MarketingPage() {
           </div>
 
           {/* Pending Card */}
-          <div className="group bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
+          <div className="group bg-gradient-to-br from-hti-gold to-hti-soleil rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
@@ -222,7 +222,7 @@ export default function MarketingPage() {
           </div>
 
           {/* In Review Card */}
-          <div className="group bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
+          <div className="group bg-gradient-to-br from-hti-fig to-hti-plum rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
@@ -235,7 +235,7 @@ export default function MarketingPage() {
           </div>
 
           {/* Approved Card */}
-          <div className="group bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
+          <div className="group bg-gradient-to-br from-hti-ember to-hti-gold rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
@@ -248,7 +248,7 @@ export default function MarketingPage() {
           </div>
 
           {/* Rejected Card */}
-          <div className="group bg-gradient-to-br from-red-500 to-red-600 rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
+          <div className="group bg-gradient-to-br from-hti-sunset to-hti-ember rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
@@ -261,7 +261,7 @@ export default function MarketingPage() {
           </div>
 
           {/* Chromebooks Card */}
-          <div className="group bg-gradient-to-br from-hti-teal to-hti-teal-light rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
+          <div className="group bg-gradient-to-br from-hti-fig to-hti-dusk rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
@@ -286,9 +286,9 @@ export default function MarketingPage() {
           {/* Sidebar - Filters */}
           <aside className="lg:w-80 shrink-0">
             <div className="sticky top-20 space-y-6">
-              <div className="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-hti-teal">
+              <div className="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-hti-fig">
                 <h3 className="text-lg font-bold text-hti-navy mb-4 flex items-center gap-2">
-                  <div className="w-2 h-2 bg-hti-teal rounded-full" />
+                  <div className="w-2 h-2 bg-hti-plum rounded-full" />
                   Filter Applications
                 </h3>
                 <ApplicationFilters

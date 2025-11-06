@@ -6,20 +6,20 @@ import CountyMap from "@/components/board/CountyMap";
 
 export default function BoardDashboard() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-hti-sand/40">
       {/* Header */}
-      <header className="bg-gradient-to-r from-hti-navy via-hti-navy to-hti-gray text-white shadow-lg border-b-4 border-hti-red">
+      <header className="bg-gradient-to-r from-hti-plum via-hti-fig to-hti-midnight text-white shadow-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-4xl md:text-5xl font-bold mb-2">HTI Board Dashboard</h1>
-              <p className="text-hti-yellow text-lg font-medium">
+              <p className="text-hti-soleil text-lg font-medium">
                 Executive overview of impact and operations
               </p>
             </div>
             <Link
               href="/"
-              className="px-6 py-3 bg-hti-red hover:bg-hti-orange text-white rounded-lg transition-all duration-200 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+              className="px-6 py-3 bg-gradient-to-r from-hti-ember to-hti-gold text-white rounded-lg transition-all duration-200 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5"
             >
               ← Back to HUB
             </Link>
@@ -33,10 +33,10 @@ export default function BoardDashboard() {
         <section className="mb-20">
           <div className="mb-10">
             <div className="flex items-baseline gap-3">
-              <h2 className="text-3xl md:text-4xl font-bold text-hti-navy">Impact at a Glance</h2>
-              <span className="px-3 py-1 bg-hti-red/10 text-hti-red text-xs font-bold rounded-full border border-hti-red/30">Live Data</span>
+              <h2 className="text-3xl md:text-4xl font-bold text-hti-plum">Impact at a Glance</h2>
+              <span className="px-3 py-1 bg-hti-ember/10 text-hti-ember text-xs font-bold rounded-full border border-hti-ember/30">Live Data</span>
             </div>
-            <p className="text-gray-700 mt-3 text-lg">
+            <p className="text-hti-stone mt-3 text-lg">
               Key performance indicators for the Digital Champion Grant and overall mission impact
             </p>
           </div>
@@ -44,13 +44,13 @@ export default function BoardDashboard() {
         </section>
 
         {/* Divider */}
-        <div className="my-20 border-t-2 border-hti-yellow/30" />
+        <div className="my-20 border-t border-hti-fig/10" />
 
         {/* County Map */}
         <section className="mb-20">
           <div className="mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-hti-navy mb-2">Counties Served</h2>
-            <p className="text-gray-700 text-lg">
+            <h2 className="text-3xl md:text-4xl font-bold text-hti-plum mb-2">Counties Served</h2>
+            <p className="text-hti-stone text-lg">
               Geographic reach of HTI's Digital Champion Grant programming
             </p>
           </div>
@@ -58,13 +58,13 @@ export default function BoardDashboard() {
         </section>
 
         {/* Divider */}
-        <div className="my-20 border-t-2 border-hti-yellow/30" />
+        <div className="my-20 border-t border-hti-fig/10" />
 
         {/* Recent Activity */}
         <section>
           <div className="mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-hti-navy mb-2">Recent Activity</h2>
-            <p className="text-gray-700 text-lg">
+            <h2 className="text-3xl md:text-4xl font-bold text-hti-plum mb-2">Recent Activity</h2>
+            <p className="text-hti-stone text-lg">
               Latest updates and milestones from the HTI team
             </p>
           </div>
@@ -73,9 +73,9 @@ export default function BoardDashboard() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-24 border-t border-hti-yellow/20 bg-hti-gray-light">
+      <footer className="mt-24 border-t border-hti-fig/10 bg-hti-sand">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <p className="text-center text-hti-gray text-sm font-medium">
+          <p className="text-center text-hti-stone text-sm font-medium">
             HTI Board Dashboard — Turning donations into opportunities
           </p>
         </div>

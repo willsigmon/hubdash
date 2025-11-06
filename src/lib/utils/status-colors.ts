@@ -9,13 +9,13 @@
  * Used in InventoryOverview.tsx and other device-related components
  */
 export const DEVICE_STATUS_COLORS: Record<string, string> = {
-  ready: "bg-green-500/20 text-green-400 border-green-500/30",
-  qa_testing: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-  refurbishing: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-  data_wipe: "bg-purple-500/20 text-purple-400 border-purple-500/30",
-  received: "bg-gray-500/20 text-gray-400 border-gray-500/30",
-  donated: "bg-gray-500/20 text-gray-400 border-gray-500/30",
-  distributed: "bg-hti-teal/20 text-hti-teal border-hti-teal/30",
+  ready: "bg-hti-ember/20 text-hti-ember border-hti-ember/30",
+  qa_testing: "bg-hti-gold/20 text-hti-gold border-hti-gold/30",
+  refurbishing: "bg-hti-plum/20 text-hti-plum border-hti-plum/30",
+  data_wipe: "bg-hti-fig/20 text-hti-fig border-hti-fig/30",
+  received: "bg-hti-stone/20 text-hti-stone border-hti-stone/30",
+  donated: "bg-hti-stone/20 text-hti-stone border-hti-stone/30",
+  distributed: "bg-hti-sunset/20 text-hti-sunset border-hti-sunset/30",
 };
 
 /**
@@ -53,9 +53,9 @@ export function getDeviceStatusLabel(status: string): string {
  * Used in DonationRequests.tsx for priority dots
  */
 export const PRIORITY_COLORS: Record<string, string> = {
-  urgent: "bg-red-500",
-  high: "bg-orange-500",
-  normal: "bg-blue-500",
+  urgent: "bg-hti-ember",
+  high: "bg-hti-sunset",
+  normal: "bg-hti-plum",
 };
 
 /**
@@ -63,10 +63,10 @@ export const PRIORITY_COLORS: Record<string, string> = {
  * Used in DonationRequests.tsx for status badges
  */
 export const REQUEST_STATUS_COLORS: Record<string, string> = {
-  pending: "text-yellow-400",
-  scheduled: "text-green-400",
-  in_progress: "text-blue-400",
-  completed: "text-gray-400",
+  pending: "text-hti-gold",
+  scheduled: "text-hti-ember",
+  in_progress: "text-hti-plum",
+  completed: "text-hti-stone",
 };
 
 /**
@@ -74,9 +74,9 @@ export const REQUEST_STATUS_COLORS: Record<string, string> = {
  * Used in ActivityFeed.tsx for activity border and background colors
  */
 export const ACTIVITY_TYPE_COLORS: Record<string, string> = {
-  success: "border-green-500/30 bg-green-500/5",
-  warning: "border-orange-500/30 bg-orange-500/5",
-  info: "border-blue-500/30 bg-blue-500/5",
+  success: "border-hti-ember/30 bg-hti-ember/10",
+  warning: "border-hti-gold/30 bg-hti-gold/10",
+  info: "border-hti-plum/30 bg-hti-plum/10",
 };
 
 /**

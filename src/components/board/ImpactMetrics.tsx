@@ -34,7 +34,7 @@ export default function ImpactMetrics() {
             value: data.grantLaptopsPresented || 0,
             suffix: ` / 1,500`,
             icon: "🎯",
-            color: "from-hti-red to-hti-orange",
+            color: "from-hti-ember to-hti-gold",
             description: "Since Sept 9, 2024 (Grant Period)",
             isFeatured: true,
             progress: grantProgress,
@@ -44,7 +44,7 @@ export default function ImpactMetrics() {
             value: data.totalLaptopsCollected || 0,
             suffix: "+",
             icon: "💻",
-            color: "from-hti-navy to-hti-gray",
+            color: "from-hti-plum to-hti-fig",
             description: "Overall collection since inception",
           },
           {
@@ -52,7 +52,7 @@ export default function ImpactMetrics() {
             value: data.countiesServed || 0,
             suffix: "",
             icon: "📍",
-            color: "from-hti-red to-hti-red/60",
+            color: "from-hti-sunset to-hti-ember",
             description: "Through Digital Champion Grant",
           },
           {
@@ -60,7 +60,7 @@ export default function ImpactMetrics() {
             value: data.peopleTrained || 0,
             suffix: "+",
             icon: "👥",
-            color: "from-hti-yellow to-hti-yellow-bright",
+            color: "from-hti-gold to-hti-soleil",
             description: "Digital literacy participants",
           },
           {
@@ -68,7 +68,7 @@ export default function ImpactMetrics() {
             value: data.eWasteTons || 0,
             suffix: " tons",
             icon: "♻️",
-            color: "from-green-600 to-green-400",
+            color: "from-hti-fig to-hti-mist",
             description: "Kept out of landfills",
           },
           {
@@ -76,7 +76,7 @@ export default function ImpactMetrics() {
             value: data.partnerOrganizations || 0,
             suffix: "",
             icon: "🤝",
-            color: "from-hti-orange to-hti-yellow",
+            color: "from-hti-ember to-hti-gold",
             description: "Community collaborations",
           },
         ];
@@ -162,7 +162,7 @@ export default function ImpactMetrics() {
       {/* Featured Grant Metrics Card */}
       {featuredMetric && (
         <div
-          className="group relative overflow-hidden rounded-2xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-300 border border-hti-red"
+          className="group relative overflow-hidden rounded-2xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-300 border border-hti-ember/25"
         >
           {/* Animated background gradient */}
           <div className={`absolute inset-0 bg-gradient-to-br ${featuredMetric.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`} />
@@ -176,10 +176,10 @@ export default function ImpactMetrics() {
               <div className="flex items-center gap-4">
                 <div className="text-6xl">{featuredMetric.icon}</div>
                 <div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-hti-navy">
+                  <h3 className="text-2xl md:text-3xl font-bold text-hti-plum">
                     {featuredMetric.label}
                   </h3>
-                  <p className="text-sm text-hti-gray mt-1 font-medium">
+                  <p className="text-sm text-hti-stone mt-1 font-medium">
                     {featuredMetric.description}
                   </p>
                 </div>
@@ -190,16 +190,16 @@ export default function ImpactMetrics() {
             </div>
 
             {/* Main metrics display */}
-            <div className="bg-hti-gray-light rounded-xl p-6 mb-6 border border-hti-yellow/50">
+              <div className="bg-hti-sand rounded-xl p-6 mb-6 border border-hti-gold/30">
               <div className="flex items-baseline gap-2 mb-2">
-                <div className="text-5xl md:text-6xl font-bold text-hti-navy">
+                <div className="text-5xl md:text-6xl font-bold text-hti-plum">
                   {animatedValues[0]?.toLocaleString() || 0}
                 </div>
-                <span className="text-2xl font-bold text-hti-red">
+                <span className="text-2xl font-bold text-hti-ember">
                   {featuredMetric.suffix}
                 </span>
               </div>
-              <p className="text-sm text-hti-gray font-medium">
+              <p className="text-sm text-hti-stone font-medium">
                 Goal: 1,500 laptops by end of grant period
               </p>
             </div>
@@ -207,14 +207,14 @@ export default function ImpactMetrics() {
             {/* Progress bar section */}
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-sm font-bold text-hti-navy">Grant Progress</span>
-                <span className="text-sm font-bold text-hti-red">
+                <span className="text-sm font-bold text-hti-plum">Grant Progress</span>
+                <span className="text-sm font-bold text-hti-ember">
                   {animatedProgress}%
                 </span>
               </div>
 
               {/* Animated progress bar */}
-              <div className="w-full h-4 bg-gray-300 rounded-full overflow-hidden shadow-inner border border-hti-yellow/50">
+              <div className="w-full h-4 bg-hti-sand/80 rounded-full overflow-hidden shadow-inner border border-hti-gold/30">
                 <div
                   className={`h-full bg-gradient-to-r ${featuredMetric.color} rounded-full transition-all duration-500 ease-out shadow-md`}
                   style={{ width: `${animatedProgress}%` }}
@@ -222,7 +222,7 @@ export default function ImpactMetrics() {
               </div>
 
               {/* Progress milestones */}
-              <div className="flex justify-between text-xs text-hti-navy font-bold mt-4 pt-2">
+              <div className="flex justify-between text-xs text-hti-plum font-bold mt-4 pt-2">
                 <span>0%</span>
                 <span>25%</span>
                 <span>50%</span>
@@ -242,7 +242,7 @@ export default function ImpactMetrics() {
         {otherMetrics.map((metric, index) => (
           <div
             key={metric.label}
-            className="group relative overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-hti-yellow/50"
+            className="group relative overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-hti-fig/10"
           >
             {/* Background gradient */}
             <div className={`absolute inset-0 bg-gradient-to-br ${metric.color} opacity-3 group-hover:opacity-8 transition-opacity`} />
@@ -261,19 +261,19 @@ export default function ImpactMetrics() {
 
               {/* Value section */}
               <div>
-                <div className="text-4xl font-bold text-hti-navy mb-1">
+                <div className="text-4xl font-bold text-hti-plum mb-1">
                   {animatedValues[index + 1]?.toLocaleString() || 0}
-                  <span className="text-2xl font-bold text-hti-red ml-1">
+                  <span className="text-2xl font-bold text-hti-ember ml-1">
                     {metric.suffix}
                   </span>
                 </div>
-                <h4 className="text-sm font-bold text-hti-navy">
+                <h4 className="text-sm font-bold text-hti-plum">
                   {metric.label}
                 </h4>
               </div>
 
               {/* Description */}
-              <div className="text-xs text-hti-gray leading-relaxed font-medium">
+              <div className="text-xs text-hti-stone leading-relaxed font-medium">
                 {metric.description}
               </div>
             </div>
