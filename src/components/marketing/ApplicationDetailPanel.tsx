@@ -13,21 +13,21 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Approved':
-        return 'bg-green-500/20 text-green-600 border-green-500/40';
+        return 'bg-green-500/30 text-green-700 border-green-500/60';
       case 'Pending':
-        return 'bg-hti-yellow/20 text-hti-navy border-hti-yellow/40';
+        return 'bg-hti-yellow/30 text-hti-navy border-hti-yellow/60';
       case 'In Review':
-        return 'bg-hti-orange/20 text-hti-orange border-hti-orange/40';
+        return 'bg-hti-orange/30 text-hti-red border-hti-orange/60';
       case 'Rejected':
-        return 'bg-hti-red/20 text-hti-red border-hti-red/40';
+        return 'bg-hti-red/30 text-hti-red border-hti-red/60';
       default:
-        return 'bg-hti-gray/20 text-hti-gray border-hti-gray/40';
+        return 'bg-hti-gray/30 text-hti-navy border-hti-gray/60';
     }
   };
 
   const InfoSection = ({ icon: Icon, title, children }: { icon: any, title: string, children: React.ReactNode }) => (
-    <div className="bg-white/50 backdrop-blur-xl border-2 border-hti-orange/20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all hover:border-hti-orange/40">
-      <div className="flex items-center gap-3 mb-5 pb-4 border-b-2 border-hti-orange/20">
+    <div className="bg-white/80 backdrop-blur-xl border-2 border-hti-orange/40 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all hover:border-hti-orange/60">
+      <div className="flex items-center gap-3 mb-5 pb-4 border-b-2 border-hti-orange/30">
         <div className="p-3 bg-gradient-to-br from-hti-orange to-hti-red rounded-lg">
           <Icon className="w-5 h-5 text-white" />
         </div>
@@ -44,12 +44,12 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
 
     return (
       <div className={fullWidth ? "col-span-2" : ""}>
-        <dt className="text-xs font-bold text-hti-orange/70 uppercase tracking-wider mb-2">{label}</dt>
+        <dt className="text-xs font-bold text-hti-orange uppercase tracking-wider mb-2">{label}</dt>
         <dd className="text-sm text-hti-navy font-medium">
           {Array.isArray(value) ? (
             <div className="flex flex-wrap gap-2">
               {value.map((item, idx) => (
-                <span key={idx} className="px-3 py-1 bg-hti-orange/10 text-hti-navy border border-hti-orange/40 rounded-lg text-xs font-bold">
+                <span key={idx} className="px-3 py-1 bg-hti-orange/20 text-hti-navy border border-hti-orange/60 rounded-lg text-xs font-bold">
                   {item}
                 </span>
               ))}
@@ -168,7 +168,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
             <InfoSection icon={Target} title="🎯 Marketing Assets">
               <dl className="grid grid-cols-1 gap-4">
                 {application.quote && (
-                  <div className="bg-gradient-to-br from-hti-yellow/15 to-hti-orange/10 p-6 rounded-xl border-l-4 border-hti-yellow">
+                  <div className="bg-gradient-to-br from-hti-yellow/25 to-hti-orange/20 p-6 rounded-xl border-l-4 border-hti-orange">
                     <p className="text-hti-navy italic text-lg leading-relaxed font-semibold">
                       "{application.quote}"
                     </p>
@@ -181,9 +181,9 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
 
           {/* Internal Notes */}
           {(application.notes || application.internalComments) && (
-            <div className="bg-white/50 backdrop-blur-xl border-l-4 border-hti-red bg-gradient-to-br from-hti-red/5 to-hti-orange/5 rounded-2xl p-6 border-2 border-hti-red/20">
-              <div className="flex items-center gap-3 mb-5 pb-4 border-b-2 border-hti-red/30">
-                <div className="p-3 bg-hti-red/20 rounded-lg">
+            <div className="bg-white/80 backdrop-blur-xl border-l-4 border-hti-red bg-gradient-to-br from-hti-red/10 to-hti-orange/10 rounded-2xl p-6 border-2 border-hti-red/40">
+              <div className="flex items-center gap-3 mb-5 pb-4 border-b-2 border-hti-red/40">
+                <div className="p-3 bg-hti-red/30 rounded-lg">
                   <AlertCircle className="w-5 h-5 text-hti-red" />
                 </div>
                 <h3 className="font-bold text-hti-navy text-lg">Internal Notes</h3>
