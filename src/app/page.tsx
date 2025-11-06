@@ -2,16 +2,16 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-hti-navy via-hti-gray to-hti-navy flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
       <div className="max-w-6xl w-full bg-white rounded-2xl shadow-2xl p-8 md:p-12">
         <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-bold text-hti-navy mb-4">
+          <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-4">
             HubDash
           </h1>
-          <p className="text-xl text-hti-navy font-medium">
+          <p className="text-xl text-slate-900 font-medium">
             HUBZone Technology Initiative Dashboard
           </p>
-          <p className="text-sm text-hti-gray mt-2 font-medium">
+          <p className="text-sm text-slate-600 mt-2 font-medium">
             Securely Repurposing Technology. Expanding Digital Opportunity.
           </p>
         </div>
@@ -20,7 +20,7 @@ export default function Home() {
           {/* Board Dashboard Card */}
           <Link
             href="/board"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br bg-blue-900 p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col "
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-blue-900 to-blue-800 p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col "
           >
             <div className="relative z-10 text-white">
               <div className="text-5xl mb-4">📊</div>
@@ -51,7 +51,7 @@ export default function Home() {
           {/* Ops Dashboard Card */}
           <Link
             href="/ops"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br bg-red-700 p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col "
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-red-700 to-red-600 p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col "
           >
             <div className="relative z-10 text-white">
               <div className="text-5xl mb-4">⚡</div>
@@ -82,7 +82,7 @@ export default function Home() {
           {/* Reports Dashboard Card */}
           <Link
             href="/reports"
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-br bg-orange-700 p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col "
+            className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-orange-700 to-orange-600 p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col "
           >
             <div className="relative z-10 text-white">
               <div className="text-4xl mb-4">📄</div>
@@ -149,7 +149,7 @@ export default function Home() {
               href="https://hubzonetech.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-hti-teal hover:underline"
+              className="text-cyan-400 hover:underline"
             >
               hubzonetech.org
             </a>
