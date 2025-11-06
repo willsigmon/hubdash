@@ -14,7 +14,7 @@ export default function OpsPage() {
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
               <h1 className="text-4xl font-bold flex items-center gap-3 text-white">
-                ⚡ HTI Operations Hub
+                ⚡ HTI Operations HUB
               </h1>
               <p className="text-hti-yellow mt-2 text-lg font-medium">
                 Mission Control • Real-Time Device Management
@@ -32,7 +32,7 @@ export default function OpsPage() {
                 href="/"
                 className="px-4 py-2 bg-hti-red hover:bg-hti-orange backdrop-blur-sm rounded-lg transition-all text-sm font-bold border-2 border-hti-red text-white shadow-lg"
               >
-                ← Back to Hub
+                ← Back to HUB
               </Link>
             </div>
           </div>

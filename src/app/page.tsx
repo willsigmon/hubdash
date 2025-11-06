@@ -55,12 +55,12 @@ export default function Home() {
           >
             <div className="relative z-10 text-white">
               <div className="text-5xl mb-4">⚡</div>
-              <h2 className="text-3xl font-bold mb-3 text-white">Operations Hub</h2>
+              <h2 className="text-3xl font-bold mb-3 text-white">Operations HUB</h2>
               <p className="text-yellow-300 mb-4 font-medium">
                 Mission control for inventory, donations, distributions, and training management.
               </p>
               <div className="flex items-center text-sm font-bold text-yellow-300">
-                <span>Launch Hub</span>
+                <span>Launch HUB</span>
                 <svg
                   className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
                   fill="none"
@@ -110,14 +110,14 @@ export default function Home() {
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
           </Link>
 
-          {/* Marketing Hub Card */}
+          {/* Marketing HUB Card */}
           <Link
             href="/marketing"
             className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-pink-600 to-rose-500 p-8 text-white hover:shadow-2xl transition-all duration-300 hover:scale-105 min-h-[300px] flex flex-col"
           >
             <div className="relative z-10 text-white">
               <div className="text-4xl mb-4">📣</div>
-              <h2 className="text-2xl font-bold mb-3 text-white">Marketing Hub</h2>
+              <h2 className="text-2xl font-bold mb-3 text-white">Marketing HUB</h2>
               <p className="text-white mb-4">
                 Recipient stories, impact quotes, and partnership applications for marketing campaigns.
               </p>

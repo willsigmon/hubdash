@@ -170,7 +170,7 @@ export default function MarketingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold mb-2">Marketing Hub</h1>
+              <h1 className="text-4xl font-bold mb-2">Marketing HUB</h1>
               <p className="text-white/90 text-lg">
                 Partnership application management for HTI's marketing team
               </p>
@@ -179,7 +179,7 @@ export default function MarketingPage() {
               href="/"
               className="px-6 py-3 bg-white/20 hover:bg-white/30 rounded-lg transition-colors text-sm font-semibold"
             >
-              ← Back to Hub
+              ← Back to HUB
             </Link>
           </div>
         </div>

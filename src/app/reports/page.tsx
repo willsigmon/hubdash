@@ -59,7 +59,7 @@ export default function ReportsPage() {
               href="/"
               className="px-6 py-3 bg-white/15 hover:bg-white/25 backdrop-blur-sm rounded-lg transition-all text-sm font-semibold border border-white/20 hover:border-white/40"
             >
-              ← Back to Hub
+              ← Back to HUB
             </Link>
           </div>
         </div>

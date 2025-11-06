@@ -21,7 +21,7 @@ export default function BoardDashboard() {
               href="/"
               className="px-6 py-3 bg-hti-red hover:bg-hti-orange text-white rounded-lg transition-all duration-200 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5"
             >
-              ← Back to Hub
+              ← Back to HUB
             </Link>
           </div>
         </div>
