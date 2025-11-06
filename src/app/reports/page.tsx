@@ -1,26 +1,44 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-
-// Grant progress data constants
-const GRANT_DATA = {
-  laptopsConverted: 832,
-  laptopsGoal: 1500,
-  trainingHours: 125,
-  trainingHoursGoal: 250,
-  participants: 450,
-  participantsGoal: 600,
-};
-
-// Calculate percentages
-const laptopProgress = Math.round((GRANT_DATA.laptopsConverted / GRANT_DATA.laptopsGoal) * 100);
-const trainingProgress = Math.round((GRANT_DATA.trainingHours / GRANT_DATA.trainingHoursGoal) * 100);
-const participantProgress = Math.round((GRANT_DATA.participants / GRANT_DATA.participantsGoal) * 100);
 
 export default function ReportsPage() {
   const [selectedQuarter, setSelectedQuarter] = useState('Q2 2025');
   const [reportType, setReportType] = useState('quarterly');
+  const [loading, setLoading] = useState(true);
+
+  // State for live data from API
+  const [metrics, setMetrics] = useState<any>(null);
+
+  // Default grant data
+  const GRANT_DATA = {
+    laptopsConverted: metrics?.grantLaptopsPresented || 0,
+    laptopsGoal: metrics?.grantLaptopGoal || 1500,
+    trainingHours: 125, // Will be updated when connected to training data
+    trainingHoursGoal: 125,
+    participants: metrics?.peopleTrained || 0,
+    participantsGoal: 600,
+  };
+
+  // Calculate percentages
+  const laptopProgress = Math.round((GRANT_DATA.laptopsConverted / GRANT_DATA.laptopsGoal) * 100);
+  const trainingProgress = Math.round((GRANT_DATA.trainingHours / GRANT_DATA.trainingHoursGoal) * 100);
+  const participantProgress = Math.round((GRANT_DATA.participants / GRANT_DATA.participantsGoal) * 100);
+
+  // Fetch live metrics
+  useEffect(() => {
+    fetch('/api/metrics')
+      .then(res => res.json())
+      .then(data => {
+        setMetrics(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching metrics:', error);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
@@ -131,19 +149,19 @@ export default function ReportsPage() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center">
                   <p className="text-gray-600 text-sm mb-1">Counties Served</p>
-                  <p className="text-2xl font-bold text-hti-navy">15</p>
+                  <p className="text-2xl font-bold text-hti-navy">{loading ? '—' : metrics?.countiesServed || 0}</p>
                 </div>
                 <div className="text-center">
                   <p className="text-gray-600 text-sm mb-1">Total Devices</p>
-                  <p className="text-2xl font-bold text-hti-navy">3,500+</p>
+                  <p className="text-2xl font-bold text-hti-navy">{loading ? '—' : (metrics?.totalLaptopsCollected || 0).toLocaleString()}</p>
                 </div>
                 <div className="text-center">
                   <p className="text-gray-600 text-sm mb-1">Community Partners</p>
-                  <p className="text-2xl font-bold text-hti-navy">35+</p>
+                  <p className="text-2xl font-bold text-hti-navy">{loading ? '—' : metrics?.partnerOrganizations || 0}</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-gray-600 text-sm mb-1">Grant Cycle</p>
-                  <p className="text-2xl font-bold text-hti-navy">2024-26</p>
+                  <p className="text-gray-600 text-sm mb-1">Total Distributed</p>
+                  <p className="text-2xl font-bold text-hti-navy">{loading ? '—' : (metrics?.totalChromebooksDistributed || 0).toLocaleString()}</p>
                 </div>
               </div>
             </div>
