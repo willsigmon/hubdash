@@ -99,15 +99,15 @@ export default function ApplicationGrouping({
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Approved':
-        return 'bg-green-100 text-green-800 border-green-300';
+        return 'bg-hti-ember/15 text-hti-ember border-hti-ember/30';
       case 'Pending':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-300';
+        return 'bg-hti-gold/20 text-hti-ember border-hti-gold/30';
       case 'In Review':
-        return 'bg-blue-100 text-blue-800 border-blue-300';
+        return 'bg-hti-plum/15 text-hti-plum border-hti-plum/30';
       case 'Rejected':
-        return 'bg-red-100 text-red-800 border-red-300';
+        return 'bg-hti-fig/15 text-hti-plum border-hti-fig/30';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-300';
+        return 'bg-hti-sand/70 text-hti-plum border-hti-fig/20';
     }
   };
 
@@ -116,22 +116,22 @@ export default function ApplicationGrouping({
     const getCardAccentColor = (status: string) => {
       switch (status) {
         case 'Pending':
-          return 'from-yellow-400 to-yellow-500';
+          return 'from-hti-gold to-hti-ember';
         case 'In Review':
-          return 'from-blue-500 to-blue-600';
+          return 'from-hti-plum to-hti-fig';
         case 'Approved':
-          return 'from-green-500 to-green-600';
+          return 'from-hti-ember to-hti-sunset';
         case 'Rejected':
-          return 'from-red-500 to-red-600';
+          return 'from-hti-fig to-hti-midnight';
         default:
-          return 'from-hti-teal to-hti-navy';
+          return 'from-hti-plum to-hti-dusk';
       }
     };
 
     return (
       <div
         onClick={() => onApplicationClick(app)}
-        className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer border border-gray-300 hover:border-gray-200 overflow-hidden hover:scale-105 transform"
+        className="group bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer border border-hti-fig/12 hover:border-hti-fig/20 overflow-hidden hover:-translate-y-1"
       >
         {/* Top Accent Bar */}
         <div className={`h-1.5 bg-gradient-to-r ${getCardAccentColor(app.status)}`} />
@@ -141,7 +141,7 @@ export default function ApplicationGrouping({
           {/* Header with Status Badge */}
           <div className="flex items-start justify-between mb-4">
             <div className="flex-1 min-w-0">
-              <h4 className="font-bold text-hti-navy text-lg mb-2 leading-snug group-hover:text-hti-teal transition-colors truncate">
+              <h4 className="font-bold text-hti-plum text-lg mb-2 leading-snug group-hover:text-hti-ember transition-colors truncate">
                 {app.organizationName}
               </h4>
               <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -149,7 +149,7 @@ export default function ApplicationGrouping({
                   {app.status}
                 </span>
                 {app.is501c3 && (
-                  <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700 border border-green-300">
+                  <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-hti-soleil/20 text-hti-ember border border-hti-soleil/40">
                     ✓ 501(c)(3)
                   </span>
                 )}
@@ -158,24 +158,24 @@ export default function ApplicationGrouping({
           </div>
 
           {/* Organization & Contact Info */}
-          <div className="space-y-2 mb-4 pb-4 border-b border-gray-100">
-            <p className="text-sm text-gray-700 font-medium">
-              <span className="text-gray-500">Contact:</span> {app.contactPerson}
+          <div className="space-y-2 mb-4 pb-4 border-b border-hti-fig/12">
+            <p className="text-sm text-hti-stone font-medium">
+              <span className="text-hti-mist">Contact:</span> {app.contactPerson}
             </p>
-            <p className="text-sm text-gray-600">
-              <span className="text-gray-500">Location:</span> {app.county || 'Unknown County'}
+            <p className="text-sm text-hti-stone">
+              <span className="text-hti-mist">Location:</span> {app.county || 'Unknown County'}
             </p>
           </div>
 
           {/* Key Stats - Chromebooks & Date */}
           <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="bg-gradient-to-br from-hti-teal/10 to-hti-navy/5 p-3 rounded-lg">
-              <div className="text-xs text-gray-600 font-medium mb-1">Chromebooks</div>
-              <div className="text-2xl font-bold text-hti-navy">{app.chromebooksNeeded}</div>
+            <div className="bg-gradient-to-br from-hti-ember/12 via-hti-gold/10 to-white p-3 rounded-xl border border-hti-ember/20">
+              <div className="text-xs text-hti-stone font-semibold mb-1 uppercase tracking-wide">Chromebooks</div>
+              <div className="text-2xl font-bold text-hti-plum">{app.chromebooksNeeded}</div>
             </div>
-            <div className="bg-gray-50 p-3 rounded-lg">
-              <div className="text-xs text-gray-600 font-medium mb-1">Submitted</div>
-              <div className="text-sm font-semibold text-gray-700">
+            <div className="bg-hti-sand/70 p-3 rounded-xl border border-hti-fig/12">
+              <div className="text-xs text-hti-stone font-semibold mb-1 uppercase tracking-wide">Submitted</div>
+              <div className="text-sm font-semibold text-hti-plum">
                 {new Date(app.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
               </div>
             </div>
@@ -183,15 +183,15 @@ export default function ApplicationGrouping({
 
           {/* Quote Section - if available */}
           {app.quote && (
-            <div className="bg-gradient-to-br from-hti-teal/5 via-hti-navy/5 to-transparent p-4 rounded-xl border-l-4 border-hti-teal">
-              <p className="text-sm text-hti-navy italic font-medium line-clamp-3 leading-relaxed">
+            <div className="bg-gradient-to-br from-hti-plum/8 via-hti-ember/8 to-transparent p-4 rounded-xl border-l-4 border-hti-ember">
+              <p className="text-sm text-hti-plum italic font-medium line-clamp-3 leading-relaxed">
                 "{app.quote.substring(0, 140)}..."
               </p>
             </div>
           )}
 
           {/* Click Indicator */}
-          <div className="mt-4 text-center text-xs text-gray-500 font-medium group-hover:text-hti-teal transition-colors">
+          <div className="mt-4 text-center text-xs text-hti-mist font-medium group-hover:text-hti-ember transition-colors">
             Click to view details →
           </div>
         </div>
@@ -211,25 +211,25 @@ export default function ApplicationGrouping({
 
   const getGroupColor = (group: string) => {
     const statusColors: Record<string, string> = {
-      'Pending': 'from-yellow-100 to-yellow-50 border-yellow-200',
-      'In Review': 'from-blue-100 to-blue-50 border-blue-200',
-      'Approved': 'from-green-100 to-green-50 border-green-200',
-      'Rejected': 'from-red-100 to-red-50 border-red-200'
+      'Pending': 'from-hti-gold/20 to-hti-soleil/15 border-hti-gold/30',
+      'In Review': 'from-hti-plum/20 to-hti-fig/15 border-hti-plum/30',
+      'Approved': 'from-hti-ember/20 to-hti-sunset/15 border-hti-ember/25',
+      'Rejected': 'from-hti-fig/20 to-hti-midnight/20 border-hti-fig/25'
     };
-    return statusColors[group] || 'from-gray-100 to-gray-50 border-gray-200';
+    return statusColors[group] || 'from-hti-sand/70 to-white border-hti-fig/12';
   };
 
   return (
     <div className="space-y-6">
       {/* Group By Selector */}
-      <div className="bg-white rounded-xl shadow-lg p-4">
+      <div className="bg-white rounded-2xl shadow-xl p-4 border border-hti-fig/12">
         <div className="flex items-center gap-3">
-          <Layers className="w-5 h-5 text-hti-teal" />
-          <label className="text-sm font-medium text-gray-700">Group by:</label>
+          <Layers className="w-5 h-5 text-hti-ember" />
+          <label className="text-sm font-semibold text-hti-plum">Group by:</label>
           <select
             value={groupBy}
             onChange={(e) => onGroupByChange(e.target.value as GroupingOption['value'])}
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hti-teal focus:border-transparent text-gray-900 bg-white"
+            className="flex-1 px-4 py-2 border border-hti-fig/15 rounded-xl focus:ring-2 focus:ring-hti-ember focus:border-hti-ember text-hti-plum bg-white"
           >
             {GROUPING_OPTIONS.map(option => (
               <option key={option.value} value={option.value}>
@@ -247,35 +247,35 @@ export default function ApplicationGrouping({
           const isCollapsed = collapsedGroups.has(groupKey);
 
           return (
-            <div key={groupKey} className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-300 hover:shadow-xl transition-all">
+            <div key={groupKey} className="bg-white rounded-2xl shadow-xl overflow-hidden border border-hti-fig/12 hover:border-hti-fig/20 transition-all">
               {/* Group Header with pizzazz */}
               <button
                 onClick={() => toggleGroup(groupKey)}
-                className={`w-full px-6 py-5 flex items-center justify-between bg-gradient-to-r ${getGroupColor(groupKey)} hover:shadow-md transition-all border-b group cursor-pointer`}
+                className={`w-full px-6 py-5 flex items-center justify-between bg-gradient-to-r ${getGroupColor(groupKey)} hover:shadow-md transition-all border-b border-white/20 group cursor-pointer`}
               >
                 <div className="flex items-center gap-4 flex-1">
                   <span className="text-2xl">{getGroupIcon(groupKey)}</span>
                   <div>
                     <div className={`px-3 py-1.5 rounded-full font-bold text-sm ${
-                      groupBy === 'status' ? getStatusColor(groupKey) : 'bg-hti-navy text-white'
+                      groupBy === 'status' ? getStatusColor(groupKey) : 'bg-hti-plum text-white border border-white/20'
                     }`}>
                       {groupKey}
                     </div>
                   </div>
                   <div className="ml-4 px-3 py-1 bg-white/70 rounded-full">
-                    <span className="text-sm font-semibold text-gray-700">
+                    <span className="text-sm font-semibold text-hti-stone">
                       {groupApps.length}
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-gray-700 font-medium">
+                  <span className="text-xs text-hti-stone font-medium">
                     {isCollapsed ? 'Show' : 'Hide'}
                   </span>
                   {isCollapsed ? (
-                    <ChevronDown className="w-5 h-5 text-gray-700 group-hover:translate-y-1 transition-transform" />
+                    <ChevronDown className="w-5 h-5 text-hti-stone group-hover:translate-y-1 transition-transform" />
                   ) : (
-                    <ChevronUp className="w-5 h-5 text-gray-700 group-hover:-translate-y-1 transition-transform" />
+                    <ChevronUp className="w-5 h-5 text-hti-stone group-hover:-translate-y-1 transition-transform" />
                   )}
                 </div>
               </button>
@@ -296,13 +296,13 @@ export default function ApplicationGrouping({
       {/* Empty State */}
       {groupKeys.length === 0 && (
         <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-          <div className="text-gray-400 mb-4">
+          <div className="text-hti-mist mb-4">
             <Layers className="w-16 h-16 mx-auto" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          <h3 className="text-lg font-semibold text-hti-plum mb-2">
             No applications found
           </h3>
-          <p className="text-gray-600">
+          <p className="text-hti-stone">
             Try adjusting your filters or search query
           </p>
         </div>

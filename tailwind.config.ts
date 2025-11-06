@@ -37,6 +37,12 @@ const config: Config = {
           'teal-light': '#615C7B',  // Softened secondary
         },
       },
+      borderColor: {
+        DEFAULT: '#433D5829', // Subtle plum tint for default borders
+      },
+      divideColor: {
+        DEFAULT: '#433D5829',
+      },
       animation: {
         'counter': 'counter 2s ease-out forwards',
         'fade-in': 'fadeIn 0.5s ease-in',

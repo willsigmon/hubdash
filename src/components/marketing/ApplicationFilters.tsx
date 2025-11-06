@@ -95,20 +95,20 @@ export default function ApplicationFilters({
     const isActive = activeSection === id;
 
     return (
-      <div className="border-b border-gray-200 last:border-b-0">
+      <div className="border-b border-hti-fig/12 last:border-b-0">
         <button
           onClick={() => setActiveSection(isActive ? null : id)}
-          className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-50 transition-colors"
+          className="w-full px-4 py-3 flex items-center justify-between hover:bg-hti-sand/70 transition-colors"
         >
-          <span className="font-medium text-gray-900">{title}</span>
+          <span className="font-semibold text-hti-plum">{title}</span>
           {isActive ? (
-            <ChevronUp className="w-4 h-4 text-gray-700" />
+            <ChevronUp className="w-4 h-4 text-hti-mist" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-gray-700" />
+            <ChevronDown className="w-4 h-4 text-hti-mist" />
           )}
         </button>
         {isActive && (
-          <div className="px-4 py-3 bg-gray-50">
+          <div className="px-4 py-3 bg-hti-sand/60">
             {children}
           </div>
         )}
@@ -117,14 +117,14 @@ export default function ApplicationFilters({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+    <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-hti-fig/12">
       {/* Header */}
-      <div className="bg-gradient-to-r from-hti-navy to-hti-teal text-white px-4 py-3 flex items-center justify-between">
+      <div className="bg-gradient-to-r from-hti-plum via-hti-fig to-hti-ember text-hti-sand px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Filter className="w-5 h-5" />
-          <h3 className="font-semibold">Filters</h3>
+          <h3 className="font-semibold tracking-wide uppercase text-xs">Filters</h3>
           {getActiveFilterCount() > 0 && (
-            <span className="px-2 py-1 bg-white/20 rounded-full text-xs">
+            <span className="px-2 py-1 bg-white/15 rounded-full text-xs text-white">
               {getActiveFilterCount()} active
             </span>
           )}
@@ -140,16 +140,16 @@ export default function ApplicationFilters({
       {isExpanded && (
         <>
           {/* Quick Actions */}
-          <div className="px-4 py-3 bg-gray-50 border-b border-gray-200 flex gap-2">
+          <div className="px-4 py-3 bg-hti-sand/70 border-b border-hti-fig/12 flex gap-2">
             <button
               onClick={clearAllFilters}
-              className="flex-1 px-3 py-2 bg-white hover:bg-gray-100 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 flex items-center justify-center gap-2 transition-colors"
+              className="flex-1 px-3 py-2 bg-white hover:bg-hti-sand/60 border border-hti-fig/15 rounded-xl text-sm font-medium text-hti-plum flex items-center justify-center gap-2 transition-colors"
             >
               <RotateCcw className="w-4 h-4" />
               Clear All
             </button>
             <button
-              className="flex-1 px-3 py-2 bg-hti-teal hover:bg-hti-teal-light text-white rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-colors"
+              className="flex-1 px-3 py-2 bg-gradient-to-r from-hti-ember to-hti-gold text-white rounded-xl text-sm font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-transform hover:-translate-y-0.5"
             >
               <Save className="w-4 h-4" />
               Save Preset
@@ -167,14 +167,14 @@ export default function ApplicationFilters({
                       type="checkbox"
                       checked={filters.statuses.includes(status)}
                       onChange={() => toggleStatus(status)}
-                      className="w-4 h-4 text-hti-teal rounded focus:ring-hti-teal"
+                      className="w-4 h-4 text-hti-ember rounded focus:ring-hti-ember"
                     />
-                    <span className="text-sm text-gray-700">{status}</span>
-                    <span className={`ml-auto px-2 py-0.5 rounded text-xs ${
-                      status === 'Approved' ? 'bg-green-100 text-green-800' :
-                      status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                      status === 'In Review' ? 'bg-blue-100 text-blue-800' :
-                      'bg-red-100 text-red-800'
+                    <span className="text-sm text-hti-stone">{status}</span>
+                    <span className={`ml-auto px-2 py-0.5 rounded-full text-xs font-semibold ${
+                      status === 'Approved' ? 'bg-hti-ember/15 text-hti-ember' :
+                      status === 'Pending' ? 'bg-hti-gold/20 text-hti-ember' :
+                      status === 'In Review' ? 'bg-hti-plum/15 text-hti-plum' :
+                      'bg-hti-fig/15 text-hti-plum'
                     }`}>
                       {status}
                     </span>
@@ -192,9 +192,9 @@ export default function ApplicationFilters({
                       type="checkbox"
                       checked={filters.counties.includes(county)}
                       onChange={() => toggleCounty(county)}
-                      className="w-4 h-4 text-hti-teal rounded focus:ring-hti-teal"
+                      className="w-4 h-4 text-hti-ember rounded focus:ring-hti-ember"
                     />
-                    <span className="text-sm text-gray-700">{county}</span>
+                    <span className="text-sm text-hti-stone">{county}</span>
                   </label>
                 ))}
               </div>
@@ -214,9 +214,9 @@ export default function ApplicationFilters({
                         name="chromebookRange"
                         checked={isSelected}
                         onChange={() => updateFilter('chromebooksRange', { min: range.min, max: range.max })}
-                        className="w-4 h-4 text-hti-teal focus:ring-hti-teal"
+                        className="w-4 h-4 text-hti-ember focus:ring-hti-ember"
                       />
-                      <span className="text-sm text-gray-700">{range.label}</span>
+                      <span className="text-sm text-hti-stone">{range.label}</span>
                     </label>
                   );
                 })}
@@ -226,9 +226,9 @@ export default function ApplicationFilters({
                     name="chromebookRange"
                     checked={filters.chromebooksRange.min === 0 && filters.chromebooksRange.max === 999999}
                     onChange={() => updateFilter('chromebooksRange', { min: 0, max: 999999 })}
-                    className="w-4 h-4 text-hti-teal focus:ring-hti-teal"
+                    className="w-4 h-4 text-hti-ember focus:ring-hti-ember"
                   />
-                  <span className="text-sm text-gray-700">All</span>
+                  <span className="text-sm text-hti-stone">All</span>
                 </label>
               </div>
             </FilterSection>
@@ -250,9 +250,9 @@ export default function ApplicationFilters({
                         name="dateRange"
                         checked={!!isSelected}
                         onChange={() => setDateRange(range.value)}
-                        className="w-4 h-4 text-hti-teal focus:ring-hti-teal"
+                        className="w-4 h-4 text-hti-ember focus:ring-hti-ember"
                       />
-                      <span className="text-sm text-gray-700">{range.label}</span>
+                      <span className="text-sm text-hti-stone">{range.label}</span>
                     </label>
                   );
                 })}
@@ -269,9 +269,9 @@ export default function ApplicationFilters({
                         type="checkbox"
                         checked={filters.organizationTypes.includes(type)}
                         onChange={() => toggleOrgType(type)}
-                        className="w-4 h-4 text-hti-teal rounded focus:ring-hti-teal"
+                        className="w-4 h-4 text-hti-ember rounded focus:ring-hti-ember"
                       />
-                      <span className="text-sm text-gray-700">{type}</span>
+                      <span className="text-sm text-hti-stone">{type}</span>
                     </label>
                   ))}
                 </div>
@@ -287,9 +287,9 @@ export default function ApplicationFilters({
                     name="firstTime"
                     checked={filters.firstTimeOnly === null}
                     onChange={() => updateFilter('firstTimeOnly', null)}
-                    className="w-4 h-4 text-hti-teal focus:ring-hti-teal"
+                    className="w-4 h-4 text-hti-ember focus:ring-hti-ember"
                   />
-                  <span className="text-sm text-gray-700">All Applicants</span>
+                  <span className="text-sm text-hti-stone">All Applicants</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
@@ -297,9 +297,9 @@ export default function ApplicationFilters({
                     name="firstTime"
                     checked={filters.firstTimeOnly === true}
                     onChange={() => updateFilter('firstTimeOnly', true)}
-                    className="w-4 h-4 text-hti-teal focus:ring-hti-teal"
+                    className="w-4 h-4 text-hti-ember focus:ring-hti-ember"
                   />
-                  <span className="text-sm text-gray-700">First-time Only</span>
+                  <span className="text-sm text-hti-stone">First-time Only</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
@@ -307,9 +307,9 @@ export default function ApplicationFilters({
                     name="firstTime"
                     checked={filters.firstTimeOnly === false}
                     onChange={() => updateFilter('firstTimeOnly', false)}
-                    className="w-4 h-4 text-hti-teal focus:ring-hti-teal"
+                    className="w-4 h-4 text-hti-ember focus:ring-hti-ember"
                   />
-                  <span className="text-sm text-gray-700">Returning Only</span>
+                  <span className="text-sm text-hti-stone">Returning Only</span>
                 </label>
               </div>
             </FilterSection>
