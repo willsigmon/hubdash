@@ -198,10 +198,10 @@ export default function MarketingPage() {
             <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
-                <BarChart3 className="w-8 h-8 text-white/80" />
+                <BarChart3 className="w-8 h-8 text-white" />
                 <Zap className="w-4 h-4 text-hti-yellow opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
-              <div className="text-sm font-medium text-white/80 mb-1">Total Applications</div>
+              <div className="text-sm font-medium text-white mb-1">Total Applications</div>
               <div className="text-4xl font-bold text-white">{stats.total}</div>
               <div className="text-xs text-white/60 mt-2">All statuses</div>
             </div>
@@ -212,10 +212,10 @@ export default function MarketingPage() {
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
-                <Clock className="w-8 h-8 text-white/80" />
+                <Clock className="w-8 h-8 text-white" />
                 <TrendingUp className="w-4 h-4 text-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
-              <div className="text-sm font-medium text-white/80 mb-1">Pending Review</div>
+              <div className="text-sm font-medium text-white mb-1">Pending Review</div>
               <div className="text-4xl font-bold text-white">{stats.pending}</div>
               <div className="text-xs text-white/60 mt-2">{stats.pending > 0 ? 'Action needed' : 'All reviewed'}</div>
             </div>
@@ -226,9 +226,9 @@ export default function MarketingPage() {
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
-                <Eye className="w-8 h-8 text-white/80" />
+                <Eye className="w-8 h-8 text-white" />
               </div>
-              <div className="text-sm font-medium text-white/80 mb-1">Under Review</div>
+              <div className="text-sm font-medium text-white mb-1">Under Review</div>
               <div className="text-4xl font-bold text-white">{stats.inReview}</div>
               <div className="text-xs text-white/60 mt-2">Being evaluated</div>
             </div>
@@ -239,9 +239,9 @@ export default function MarketingPage() {
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
-                <CheckCircle className="w-8 h-8 text-white/80" />
+                <CheckCircle className="w-8 h-8 text-white" />
               </div>
-              <div className="text-sm font-medium text-white/80 mb-1">Approved</div>
+              <div className="text-sm font-medium text-white mb-1">Approved</div>
               <div className="text-4xl font-bold text-white">{stats.approved}</div>
               <div className="text-xs text-white/60 mt-2">Ready to deliver</div>
             </div>
@@ -252,9 +252,9 @@ export default function MarketingPage() {
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
-                <XCircle className="w-8 h-8 text-white/80" />
+                <XCircle className="w-8 h-8 text-white" />
               </div>
-              <div className="text-sm font-medium text-white/80 mb-1">Rejected</div>
+              <div className="text-sm font-medium text-white mb-1">Rejected</div>
               <div className="text-4xl font-bold text-white">{stats.rejected}</div>
               <div className="text-xs text-white/60 mt-2">Ineligible</div>
             </div>
@@ -265,9 +265,9 @@ export default function MarketingPage() {
             <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
-                <Users className="w-8 h-8 text-white/80" />
+                <Users className="w-8 h-8 text-white" />
               </div>
-              <div className="text-sm font-medium text-white/80 mb-1">Chromebooks Needed</div>
+              <div className="text-sm font-medium text-white mb-1">Chromebooks Needed</div>
               <div className="text-4xl font-bold text-white">{stats.totalChromebooks}</div>
               <div className="text-xs text-white/60 mt-2">Total requested</div>
             </div>

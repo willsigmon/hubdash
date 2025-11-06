@@ -162,7 +162,7 @@ export default function ImpactMetrics() {
       {/* Featured Grant Metrics Card */}
       {featuredMetric && (
         <div
-          className="group relative overflow-hidden rounded-2xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-300 border-2 border-hti-red"
+          className="group relative overflow-hidden rounded-2xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-300 border border-hti-red"
         >
           {/* Animated background gradient */}
           <div className={`absolute inset-0 bg-gradient-to-br ${featuredMetric.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`} />

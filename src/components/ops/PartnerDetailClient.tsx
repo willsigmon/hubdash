@@ -134,7 +134,7 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
               <button className="px-3 py-2 bg-gradient-to-r from-hti-yellow to-hti-orange hover:shadow-lg text-hti-navy font-bold rounded-lg text-sm transition-all hover:scale-105">
                 Schedule
               </button>
-              <button className="px-3 py-2 bg-white border-2 border-hti-orange text-hti-orange hover:bg-hti-orange/10 font-bold rounded-lg text-sm transition-all">
+              <button className="px-3 py-2 bg-white border border-hti-orange text-hti-orange hover:bg-hti-orange/10 font-bold rounded-lg text-sm transition-all">
                 Message
               </button>
             </div>

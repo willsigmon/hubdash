@@ -21,7 +21,7 @@ export default function OpsPage() {
               </p>
             </div>
             <div className="flex items-center gap-4">
-              <div className="px-4 py-2 bg-hti-red/20 backdrop-blur-sm rounded-lg border-2 border-hti-red">
+              <div className="px-4 py-2 bg-hti-red/20 backdrop-blur-sm rounded-lg border border-hti-red">
                 <div className="text-xs text-hti-yellow font-medium">System Status</div>
                 <div className="text-sm font-bold flex items-center gap-2 text-white">
                   <span className="w-2 h-2 bg-hti-yellow rounded-full animate-pulse" />
@@ -30,7 +30,7 @@ export default function OpsPage() {
               </div>
               <Link
                 href="/"
-                className="px-4 py-2 bg-hti-red hover:bg-hti-orange backdrop-blur-sm rounded-lg transition-all text-sm font-bold border-2 border-hti-red text-white shadow-lg"
+                className="px-4 py-2 bg-hti-red hover:bg-hti-orange backdrop-blur-sm rounded-lg transition-all text-sm font-bold border border-hti-red text-white shadow-lg"
               >
                 ← Back to HUB
               </Link>

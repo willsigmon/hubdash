@@ -129,17 +129,17 @@ export default function QuoteCardGenerator({
                 <div className="border-t pt-4" style={{ borderColor: `${currentTheme.accentColor}40` }}>
                   <p className="font-bold text-lg">{authorName}</p>
                   {authorTitle && (
-                    <p className="text-sm opacity-90 mt-1">{authorTitle}</p>
+                    <p className="text-sm opacity-100 mt-1">{authorTitle}</p>
                   )}
                   {county && (
-                    <p className="text-sm opacity-75 mt-1">{county} County, NC</p>
+                    <p className="text-sm opacity-100 mt-1">{county} County, NC</p>
                   )}
                 </div>
 
                 {/* HTI Branding */}
                 <div className="text-center mt-6">
                   <div className="font-bold text-lg mb-1">HUBZone Technology Initiative</div>
-                  <div className="text-sm opacity-75">Expanding Digital Opportunity</div>
+                  <div className="text-sm opacity-100">Expanding Digital Opportunity</div>
                 </div>
               </div>
             </div>
@@ -165,7 +165,7 @@ export default function QuoteCardGenerator({
                   <button
                     key={theme.name}
                     onClick={() => setSelectedTheme(index)}
-                    className={`p-4 rounded-lg border-2 transition-all ${
+                    className={`p-4 rounded-lg border transition-all ${
                       selectedTheme === index
                         ? "border-hti-teal shadow-lg scale-105"
                         : "border-gray-200 hover:border-gray-300"
@@ -227,7 +227,7 @@ export default function QuoteCardGenerator({
               <button
                 onClick={handleDownload}
                 disabled={downloading}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-hti-navy to-hti-teal text-white rounded-lg font-semibold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-hti-navy to-hti-teal text-white rounded-lg font-semibold hover:opacity-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {downloading ? (
                   <>

@@ -71,7 +71,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
             <div className="flex-1">
               <h2 className="text-4xl font-bold mb-4 leading-tight">{application.organizationName}</h2>
               <div className="flex flex-wrap items-center gap-2">
-                <span className={`px-4 py-2 rounded-full text-xs font-bold border-2 ${getStatusColor(application.status)}`}>
+                <span className={`px-4 py-2 rounded-full text-xs font-bold border ${getStatusColor(application.status)}`}>
                   {application.status}
                 </span>
                 {application.is501c3 && (
@@ -88,7 +88,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
             </div>
             <button
               onClick={onClose}
-              className="text-white/80 hover:text-white transition-all p-3 hover:bg-white/20 rounded-xl"
+              className="text-white hover:text-white transition-all p-3 hover:bg-white/20 rounded-xl"
             >
               <X className="w-7 h-7" />
             </button>
@@ -97,15 +97,15 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
           {/* Quick Stats Grid */}
           <div className="grid grid-cols-3 gap-4">
             <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/30 hover:border-white/50 transition-all">
-              <div className="text-white/80 text-xs font-bold uppercase tracking-wider mb-2">Submitted</div>
+              <div className="text-white text-xs font-bold uppercase tracking-wider mb-2">Submitted</div>
               <div className="text-xl font-bold text-hti-yellow">{new Date(application.timestamp).toLocaleDateString()}</div>
             </div>
             <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/30 hover:border-white/50 transition-all">
-              <div className="text-white/80 text-xs font-bold uppercase tracking-wider mb-2">Location</div>
+              <div className="text-white text-xs font-bold uppercase tracking-wider mb-2">Location</div>
               <div className="text-xl font-bold text-hti-yellow">{application.county || 'Unknown'}</div>
             </div>
             <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/30 hover:border-white/50 transition-all">
-              <div className="text-white/80 text-xs font-bold uppercase tracking-wider mb-2">Chromebooks</div>
+              <div className="text-white text-xs font-bold uppercase tracking-wider mb-2">Chromebooks</div>
               <div className="text-3xl font-bold text-hti-yellow-bright">{application.chromebooksNeeded}</div>
             </div>
           </div>
@@ -227,7 +227,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
             {/* Contact */}
             <button
               onClick={() => onAction?.('contact', application.id)}
-              className="col-span-1 px-4 py-3 bg-hti-yellow/20 hover:bg-hti-yellow/40 text-hti-navy rounded-xl font-bold transition-all border-2 border-hti-yellow/40 shadow-md hover:shadow-lg hover:scale-110 transform text-sm"
+              className="col-span-1 px-4 py-3 bg-hti-yellow/20 hover:bg-hti-yellow/40 text-hti-navy rounded-xl font-bold transition-all border border-hti-yellow/40 shadow-md hover:shadow-lg hover:scale-110 transform text-sm"
             >
               Contacted
             </button>

@@ -40,7 +40,7 @@ export default function RecentActivity() {
         </p>
       </div>
 
-      <div className="divide-y divide-hti-yellow/10">
+      <div className="divide-y divide-hti-yellow/40">
         {loading ? (
           <div className="p-6 space-y-4 animate-pulse">
             {[...Array(5)].map((_, i) => (

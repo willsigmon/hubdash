@@ -184,7 +184,7 @@ export default function ReportsPage() {
                 <select
                   value={reportType}
                   onChange={(e) => setReportType(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-hti-navy focus:border-hti-navy bg-white font-medium text-gray-800"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hti-navy focus:border-hti-navy bg-white font-medium text-gray-800"
                 >
                   <option value="quarterly">Quarterly Accountability Report</option>
                   <option value="annual">Annual Summary</option>
@@ -201,7 +201,7 @@ export default function ReportsPage() {
                 <select
                   value={selectedQuarter}
                   onChange={(e) => setSelectedQuarter(e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-hti-navy focus:border-hti-navy bg-white font-medium text-gray-800"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hti-navy focus:border-hti-navy bg-white font-medium text-gray-800"
                 >
                   <option value="Q1 2025">Q1 2025 (Jan-Mar)</option>
                   <option value="Q2 2025">Q2 2025 (Apr-Jun)</option>
@@ -219,7 +219,7 @@ export default function ReportsPage() {
               <button className="btn-secondary flex-1 sm:flex-none">
                 Preview Report
               </button>
-              <button className="flex-1 sm:flex-none px-6 py-3 bg-gray-100 border-2 border-gray-400 text-gray-800 font-semibold rounded-lg hover:bg-gray-200 transition-colors">
+              <button className="flex-1 sm:flex-none px-6 py-3 bg-gray-100 border border-gray-400 text-gray-800 font-semibold rounded-lg hover:bg-gray-200 transition-colors">
                 Export CSV
               </button>
             </div>

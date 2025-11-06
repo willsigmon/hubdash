@@ -103,7 +103,7 @@ export default function CountyMap() {
             return (
               <div
                 key={county.name}
-                className="px-6 py-4 hover:bg-gradient-to-r hover:from-hti-yellow/5 hover:to-hti-red/5 transition-all border-b border-hti-yellow/10 last:border-b-0 group"
+                className="px-6 py-4 hover:bg-gradient-to-r hover:from-hti-yellow/5 hover:to-hti-red/5 transition-all border-b border-hti-yellow/40 last:border-b-0 group"
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-3 flex-1 min-w-0">

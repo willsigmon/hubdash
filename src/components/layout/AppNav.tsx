@@ -44,7 +44,7 @@ export default function AppNav() {
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <Link href="/" className="flex items-center gap-3 hover:opacity-100 transition-opacity">
               <div className="w-8 h-8 bg-gradient-to-br from-hti-navy to-hti-teal rounded-lg flex items-center justify-center text-white font-bold text-sm">
                 HTI
               </div>

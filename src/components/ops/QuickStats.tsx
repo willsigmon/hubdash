@@ -130,7 +130,7 @@ export default function QuickStats() {
           </div>
 
           {/* Bottom Accent Bar */}
-          <div className={`h-2 bg-gradient-to-r ${stat.color} group-hover:opacity-100 opacity-70 transition-opacity`} />
+          <div className={`h-2 bg-gradient-to-r ${stat.color} group-hover:opacity-100 opacity-100 transition-opacity`} />
         </div>
       ))}
     </div>

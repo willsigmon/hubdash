@@ -59,7 +59,7 @@ export function Toast({ id, type, message, description, duration = 5000, onClose
         <Icon className={`w-5 h-5 ${iconColors[type]} flex-shrink-0 mt-0.5`} />
         <div className="flex-1 min-w-0">
           <p className="font-semibold text-sm">{message}</p>
-          {description && <p className="text-sm mt-1 opacity-80">{description}</p>}
+          {description && <p className="text-sm mt-1 opacity-100">{description}</p>}
         </div>
         <button
           onClick={() => {
