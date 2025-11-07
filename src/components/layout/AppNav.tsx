@@ -56,19 +56,24 @@ export default function AppNav() {
   return (
     <>
       {/* Desktop Navigation - Light Glass Theme */}
-      <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/85 border-b border-hti-plum/10 shadow-sm">
+      <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-white/40 shadow-md">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-16 md:h-18 py-2">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 hover:opacity-100 transition-opacity">
-              <div className="w-8 h-8 bg-gradient-to-br from-hti-plum via-hti-fig to-hti-dusk rounded-lg flex items.center justify.center text-white font-bold text-sm shadow-sm">
-                HTI
+            <Link href="/" className="flex items-center gap-3 group">
+              <img
+                src="/hti-logo.svg"
+                alt="HTI Logo"
+                className="h-10 w-auto drop-shadow-sm transition-transform group-hover:scale-[1.02]"
+              />
+              <div className="hidden sm:flex flex-col leading-tight">
+                <span className="font-bold text-lg text-hti-plum tracking-tight">HUBDash</span>
+                <span className="text-[11px] font-semibold text-hti-stone/70 uppercase tracking-[0.28em]">HTI Platform</span>
               </div>
-              <span className="font-bold text-lg hidden sm:inline text-hti-plum">HUBDash</span>
             </Link>
 
             {/* Desktop Nav Items */}
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex items-center gap-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const active = isActive(item.href);
@@ -76,9 +81,8 @@ export default function AppNav() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm transition-all border bg-white/60 text-hti-stone hover:text-hti-plum hover:shadow-md hover:-translate-y-[1px] ${
-                      active ? `${item.active}` : "border-transparent"
-                    }`}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm transition-all border bg-white/65 text-hti-stone/90 hover:text-hti-plum hover:shadow-lg hover:-translate-y-[2px] focus:outline-none focus-visible:ring-2 focus-visible:ring-hti-teal/40 ${active ? `${item.active}` : "border-white/0"
+                      }`}
                   >
                     <Icon className="w-4 h-4" />
                     {item.label}
@@ -95,7 +99,7 @@ export default function AppNav() {
               {/* Search Button */}
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
-                className="p-2 rounded-lg transition-colors text-hti-stone/80 hover:bg-hti-sand/70 hover:text-hti-plum"
+                className="p-2 rounded-lg transition-colors text-hti-stone/70 hover:bg-hti-sand/70 hover:text-hti-plum focus:outline-none focus-visible:ring-2 focus-visible:ring-hti-teal/40"
                 aria-label="Global search"
               >
                 <Search className="w-5 h-5" />
@@ -157,9 +161,8 @@ export default function AppNav() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all border bg-white/70 text-hti-stone hover:text-hti-plum ${
-                      active ? `${item.active}` : "border-transparent"
-                    }`}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all border bg-white/70 text-hti-stone hover:text-hti-plum ${active ? `${item.active}` : "border-transparent"
+                      }`}
                   >
                     <Icon className="w-5 h-5" />
                     {item.label}

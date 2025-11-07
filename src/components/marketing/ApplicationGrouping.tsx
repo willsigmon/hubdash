@@ -1,8 +1,9 @@
 "use client";
 
 import { Partnership, GROUPING_OPTIONS, GroupingOption, CHROMEBOOK_RANGES } from "@/types/partnership";
-import { ChevronDown, ChevronUp, Layers } from "lucide-react";
+import { ChevronDown, ChevronUp, Layers, Mail, Phone, MapPin, Calendar, Users, Building2, CheckCircle2, Clock, AlertCircle, XCircle, HelpCircle } from "lucide-react";
 import { useState } from "react";
+import { formatDaysAgo, formatPlural } from "@/lib/utils/date-formatters";
 
 interface ApplicationGroupingProps {
   applications: Partnership[];
@@ -44,7 +45,7 @@ export default function ApplicationGrouping({
           groupKey = app.status;
           break;
         case 'county':
-          groupKey = app.county || 'Unknown County';
+          groupKey = app.county || 'Not Specified';
           break;
         case 'chromebooks':
           const range = CHROMEBOOK_RANGES.find(r =>
@@ -63,7 +64,7 @@ export default function ApplicationGrouping({
           else groupKey = 'Older';
           break;
         case 'orgType':
-          groupKey = app.organizationType || 'Unknown Type';
+          groupKey = app.organizationType || 'Not Specified';
           break;
         case 'firstTime':
           groupKey = app.firstTime ? 'First-time Applicants' : 'Returning Applicants';
@@ -96,103 +97,158 @@ export default function ApplicationGrouping({
     return a.localeCompare(b);
   });
 
-  const getStatusColor = (status: string) => {
+  const getStatusConfig = (status: string) => {
     switch (status) {
       case 'Approved':
-        return 'bg-hti-ember/15 text-hti-ember border-hti-ember/30';
+        return {
+          bg: 'bg-green-500/15',
+          text: 'text-green-700',
+          border: 'border-green-500/40',
+          icon: <CheckCircle2 className="w-4 h-4" />,
+          accent: 'from-green-500/20 to-green-600/10'
+        };
       case 'Pending':
-        return 'bg-hti-gold/20 text-hti-ember border-hti-gold/30';
+        return {
+          bg: 'bg-hti-yellow/20',
+          text: 'text-hti-navy',
+          border: 'border-hti-yellow/50',
+          icon: <Clock className="w-4 h-4" />,
+          accent: 'from-hti-yellow/25 to-hti-orange/15'
+        };
       case 'In Review':
-        return 'bg-hti-plum/15 text-hti-plum border-hti-plum/30';
+        return {
+          bg: 'bg-hti-teal/15',
+          text: 'text-hti-teal-dark',
+          border: 'border-hti-teal/40',
+          icon: <AlertCircle className="w-4 h-4" />,
+          accent: 'from-hti-teal/25 to-hti-navy/15'
+        };
       case 'Rejected':
-        return 'bg-hti-fig/15 text-hti-plum border-hti-fig/30';
+        return {
+          bg: 'bg-red-500/15',
+          text: 'text-red-700',
+          border: 'border-red-500/40',
+          icon: <XCircle className="w-4 h-4" />,
+          accent: 'from-red-500/20 to-red-600/10'
+        };
       default:
-        return 'bg-hti-sand/70 text-hti-plum border-hti-fig/20';
+        return {
+          bg: 'bg-hti-sand/60',
+          text: 'text-hti-stone',
+          border: 'border-hti-stone/30',
+          icon: <AlertCircle className="w-4 h-4" />,
+          accent: 'from-hti-sand/40 to-white'
+        };
     }
   };
 
   const ApplicationCard = ({ app }: { app: Partnership }) => {
-    // Determine accent color based on status
-    const getCardAccentColor = (status: string) => {
-      switch (status) {
-        case 'Pending':
-          return 'from-hti-gold to-hti-ember';
-        case 'In Review':
-          return 'from-hti-plum to-hti-fig';
-        case 'Approved':
-          return 'from-hti-ember to-hti-sunset';
-        case 'Rejected':
-          return 'from-hti-fig to-hti-midnight';
-        default:
-          return 'from-hti-plum to-hti-dusk';
-      }
-    };
+    const statusConfig = getStatusConfig(app.status);
+    const daysSinceSubmission = Math.floor((Date.now() - new Date(app.timestamp).getTime()) / (1000 * 60 * 60 * 24));
 
     return (
       <div
         onClick={() => onApplicationClick(app)}
-        className="group bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer border border-hti-fig/12 hover:border-hti-fig/20 overflow-hidden hover:-translate-y-1"
+        className="group glass-card glass-card--subtle shadow-glass hover:shadow-2xl transition-all duration-300 cursor-pointer border border-white/25 hover:border-white/40 overflow-hidden hover:-translate-y-1"
       >
-        {/* Top Accent Bar */}
-        <div className={`h-1.5 bg-gradient-to-r ${getCardAccentColor(app.status)}`} />
+        <div className={`glass-card__glow bg-gradient-to-br ${statusConfig.accent}`} />
 
-        {/* Card Content */}
-        <div className="p-6">
-          {/* Header with Status Badge */}
-          <div className="flex items-start justify-between mb-4">
+        <div className="relative p-5 space-y-4 z-10">
+          {/* Header Row */}
+          <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
-              <h4 className="font-bold text-hti-plum text-lg mb-2 leading-snug group-hover:text-hti-ember transition-colors truncate">
+              <h4 className="font-bold text-glass-bright text-lg mb-2 leading-tight group-hover:text-hti-teal transition-colors line-clamp-2">
                 {app.organizationName}
               </h4>
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getStatusColor(app.status)}`}>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}>
+                  {statusConfig.icon}
                   {app.status}
                 </span>
                 {app.is501c3 && (
-                  <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-hti-soleil/20 text-hti-ember border border-hti-soleil/40">
+                  <span
+                    className="px-2.5 py-1 rounded-full text-xs font-semibold bg-green-500/15 text-green-700 border border-green-500/30 group/501c3 relative"
+                    title="501(c)(3) tax-exempt status verified"
+                  >
                     ✓ 501(c)(3)
+                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-hti-navy text-white text-xs px-2 py-1 rounded opacity-0 group-hover/501c3:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50">
+                      Tax-exempt status verified
+                    </span>
+                  </span>
+                )}
+                {app.firstTime && (
+                  <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-hti-teal/15 text-hti-teal-dark border border-hti-teal/30">
+                    🆕 New
                   </span>
                 )}
               </div>
             </div>
           </div>
 
-          {/* Organization & Contact Info */}
-          <div className="space-y-2 mb-4 pb-4 border-b border-hti-fig/12">
-            <p className="text-sm text-hti-stone font-medium">
-              <span className="text-hti-mist">Contact:</span> {app.contactPerson}
-            </p>
-            <p className="text-sm text-hti-stone">
-              <span className="text-hti-mist">Location:</span> {app.county || 'Unknown County'}
-            </p>
-          </div>
-
-          {/* Key Stats - Chromebooks & Date */}
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="bg-gradient-to-br from-hti-ember/12 via-hti-gold/10 to-white p-3 rounded-xl border border-hti-ember/20">
-              <div className="text-xs text-hti-stone font-semibold mb-1 tracking-wide">Chromebooks</div>
-              <div className="text-2xl font-bold text-hti-plum">{app.chromebooksNeeded}</div>
-            </div>
-            <div className="bg-hti-sand/70 p-3 rounded-xl border border-hti-fig/12">
-              <div className="text-xs text-hti-stone font-semibold mb-1 tracking-wide">Submitted</div>
-              <div className="text-sm font-semibold text-hti-plum">
-                {new Date(app.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+          {/* Key Metrics Grid */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-white/5 backdrop-blur-sm px-3 py-2.5 border border-white/20 rounded-lg">
+              <div className="flex items-center gap-2 mb-1">
+                <Users className="w-3.5 h-3.5 text-glass-muted" />
+                <span className="text-xs text-glass-muted font-medium">Chromebooks</span>
+              </div>
+              <div className="text-2xl font-bold text-glass-bright">
+                {formatPlural(app.chromebooksNeeded, 'Chromebook')}
               </div>
             </div>
+            <div className="bg-white/5 backdrop-blur-sm px-3 py-2.5 border border-white/20 rounded-lg">
+              <div className="flex items-center gap-2 mb-1">
+                <Calendar className="w-3.5 h-3.5 text-glass-muted" />
+                <span className="text-xs text-glass-muted font-medium">Submitted</span>
+              </div>
+              <div className="text-sm font-bold text-glass-bright">
+                {new Date(app.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+              </div>
+              {daysSinceSubmission > 0 && (
+                <div className="text-[10px] text-glass-muted mt-0.5">
+                  {formatDaysAgo(daysSinceSubmission)}
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Quote Section - if available */}
+          {/* Contact & Location Info */}
+          <div className="space-y-2 pt-3 border-t glass-divider">
+            <div className="flex items-center gap-2 text-sm">
+              <Building2 className="w-4 h-4 text-glass-muted flex-shrink-0" />
+              <span className="text-glass-muted font-medium">Contact:</span>
+              <span className="text-glass-bright font-semibold truncate">{app.contactPerson}</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm">
+              <MapPin className="w-4 h-4 text-glass-muted flex-shrink-0" />
+              <span className="text-glass-muted font-medium">Location:</span>
+              <span className="text-glass-bright font-semibold">{app.county || <span className="text-glass-muted italic">Not specified</span>}</span>
+            </div>
+            {app.organizationType && (
+              <div className="flex items-center gap-2 text-sm">
+                <Building2 className="w-4 h-4 text-glass-muted flex-shrink-0" />
+                <span className="text-glass-muted font-medium">Type:</span>
+                <span className="text-glass-bright font-semibold capitalize">{app.organizationType}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Quote Preview - if available */}
           {app.quote && (
-            <div className="bg-gradient-to-br from-hti-plum/8 via-hti-ember/8 to-transparent p-4 rounded-xl border-l-4 border-hti-ember">
-              <p className="text-sm text-hti-plum italic font-medium line-clamp-3 leading-relaxed">
-                "{app.quote.substring(0, 140)}..."
-              </p>
+            <div className="pt-3 border-t glass-divider">
+              <div className="bg-gradient-to-br from-hti-navy/10 via-hti-teal/8 to-transparent p-3 rounded-lg border-l-2 border-hti-teal/50">
+                <p className="text-xs text-glass-muted italic font-medium line-clamp-2 leading-relaxed">
+                  "{app.quote.substring(0, 100)}{app.quote.length > 100 ? '...' : ''}"
+                </p>
+              </div>
             </div>
           )}
 
-          {/* Click Indicator */}
-          <div className="mt-4 text-center text-xs text-hti-mist font-medium group-hover:text-hti-ember transition-colors">
-            Click to view details →
+          {/* Action Hint */}
+          <div className="pt-2 text-center">
+            <span className="text-xs text-glass-muted font-medium group-hover:text-glass-bright transition-colors">
+              View details →
+            </span>
           </div>
         </div>
       </div>
@@ -211,25 +267,25 @@ export default function ApplicationGrouping({
 
   const getGroupColor = (group: string) => {
     const statusColors: Record<string, string> = {
-      'Pending': 'from-hti-gold/20 to-hti-soleil/15 border-hti-gold/30',
-      'In Review': 'from-hti-plum/20 to-hti-fig/15 border-hti-plum/30',
-      'Approved': 'from-hti-ember/20 to-hti-sunset/15 border-hti-ember/25',
-      'Rejected': 'from-hti-fig/20 to-hti-midnight/20 border-hti-fig/25'
+      'Pending': 'from-hti-yellow/25 to-hti-orange/15 border-hti-yellow/40',
+      'In Review': 'from-hti-teal/25 to-hti-navy/15 border-hti-teal/40',
+      'Approved': 'from-green-500/25 to-green-600/15 border-green-500/40',
+      'Rejected': 'from-red-500/25 to-red-600/15 border-red-500/40'
     };
-    return statusColors[group] || 'from-hti-sand/70 to-white border-hti-fig/12';
+    return statusColors[group] || 'from-hti-sand/40 to-white border-white/30';
   };
 
   return (
     <div className="space-y-6">
       {/* Group By Selector */}
-      <div className="bg-white rounded-2xl shadow-xl p-4 border border-hti-fig/12">
+      <div className="glass-card glass-card--subtle shadow-glass p-4 border border-white/25">
         <div className="flex items-center gap-3">
-          <Layers className="w-5 h-5 text-hti-ember" />
-          <label className="text-sm font-semibold text-hti-plum">Group by:</label>
+          <Layers className="w-5 h-5 text-hti-teal" />
+          <label className="text-sm font-semibold text-glass-bright">Group by:</label>
           <select
             value={groupBy}
             onChange={(e) => onGroupByChange(e.target.value as GroupingOption['value'])}
-            className="flex-1 px-4 py-2 border border-hti-fig/15 rounded-xl focus:ring-2 focus:ring-hti-ember focus:border-hti-ember text-hti-plum bg-white"
+            className="flex-1 px-4 py-2 glass-input glass-input--select text-sm font-medium"
           >
             {GROUPING_OPTIONS.map(option => (
               <option key={option.value} value={option.value}>
@@ -247,35 +303,34 @@ export default function ApplicationGrouping({
           const isCollapsed = collapsedGroups.has(groupKey);
 
           return (
-            <div key={groupKey} className="bg-white rounded-2xl shadow-xl overflow-hidden border border-hti-fig/12 hover:border-hti-fig/20 transition-all">
-              {/* Group Header with pizzazz */}
+            <div key={groupKey} className="glass-card glass-card--subtle shadow-glass overflow-hidden border border-white/20 transition-all">
+              {/* Group Header */}
               <button
                 onClick={() => toggleGroup(groupKey)}
-                className={`w-full px-6 py-5 flex items-center justify-between bg-gradient-to-r ${getGroupColor(groupKey)} hover:shadow-md transition-all border-b border-white/20 group cursor-pointer`}
+                className={`w-full px-6 py-4 flex items-center justify-between bg-gradient-to-r ${getGroupColor(groupKey)} hover:shadow-lg transition-all border-b border-white/25 group cursor-pointer`}
               >
                 <div className="flex items-center gap-4 flex-1">
                   <span className="text-2xl">{getGroupIcon(groupKey)}</span>
                   <div>
-                    <div className={`px-3 py-1.5 rounded-full font-bold text-sm ${
-                      groupBy === 'status' ? getStatusColor(groupKey) : 'bg-hti-plum text-white border border-white/20'
-                    }`}>
+                    <div className={`px-3 py-1.5 rounded-full font-bold text-sm border ${groupBy === 'status' ? getStatusConfig(groupKey).bg + ' ' + getStatusConfig(groupKey).text + ' ' + getStatusConfig(groupKey).border : 'bg-white/50 text-glass-bright border-white/50'
+                      }`}>
                       {groupKey}
                     </div>
                   </div>
-                  <div className="ml-4 px-3 py-1 bg-white/70 rounded-full">
-                    <span className="text-sm font-semibold text-hti-stone">
+                  <div className="ml-4 px-3 py-1 bg-white/60 rounded-full">
+                    <span className="text-sm font-semibold text-glass-bright">
                       {groupApps.length}
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-hti-stone font-medium">
+                  <span className="text-xs text-glass-muted font-medium">
                     {isCollapsed ? 'Show' : 'Hide'}
                   </span>
                   {isCollapsed ? (
-                    <ChevronDown className="w-5 h-5 text-hti-stone group-hover:translate-y-1 transition-transform" />
+                    <ChevronDown className="w-5 h-5 text-glass-bright group-hover:translate-y-1 transition-transform" />
                   ) : (
-                    <ChevronUp className="w-5 h-5 text-hti-stone group-hover:-translate-y-1 transition-transform" />
+                    <ChevronUp className="w-5 h-5 text-glass-bright group-hover:-translate-y-1 transition-transform" />
                   )}
                 </div>
               </button>
@@ -295,14 +350,14 @@ export default function ApplicationGrouping({
 
       {/* Empty State */}
       {groupKeys.length === 0 && (
-        <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-          <div className="text-hti-mist mb-4">
+        <div className="glass-card glass-card--subtle shadow-glass p-12 text-center border border-white/30">
+          <div className="text-glass-muted mb-4">
             <Layers className="w-16 h-16 mx-auto" />
           </div>
-          <h3 className="text-lg font-semibold text-hti-plum mb-2">
+          <h3 className="text-lg font-semibold text-glass-bright mb-2">
             No applications found
           </h3>
-          <p className="text-hti-stone">
+          <p className="text-glass-muted">
             Try adjusting your filters or search query
           </p>
         </div>

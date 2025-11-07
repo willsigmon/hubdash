@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useMetrics } from "@/lib/hooks/useMetrics";
+import EmptyState from "@/components/ui/EmptyState";
 
 interface Metric {
   label: string;
@@ -154,10 +155,14 @@ export default function ImpactMetrics() {
 
   if (isError) {
     return (
-      <div className="glass-card glass-card--subtle shadow-glass p-6 text-center border border-hti-red/40">
-        <p className="text-hti-red font-bold">Unable to load impact metrics right now.</p>
-        <p className="text-sm text-glass-muted mt-2">Please refresh or try again later.</p>
-      </div>
+      <EmptyState
+        icon={<span role="img" aria-label="metrics">📊</span>}
+        title="Impact metrics are taking a pause"
+        description="We’re under the Knack rate limit umbrella at the moment. Your last synced numbers will return automatically."
+        actionLabel="Refresh"
+        onAction={() => window.location.reload()}
+        tone="warning"
+      />
     );
   }
 
@@ -222,35 +227,37 @@ export default function ImpactMetrics() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-        {otherMetrics.map((metric, index) => (
-          <div
-            key={metric.label}
-            className="glass-card glass-card--subtle shadow-glass group transition-transform duration-300 hover:-translate-y-1 min-h-[220px]"
-          >
-            <div className={`glass-card__glow bg-gradient-to-br ${metric.color}`} />
-            <div className="relative p-6 space-y-4">
-              <div className="flex items-start justify-between">
-                <div className="text-5xl drop-shadow-[0_8px_22px_rgba(8,25,55,0.4)]">{metric.icon}</div>
-                <span className="glass-chip glass-chip--slate text-xs">Live</span>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-glass-bright mb-1">
-                  {animatedValues[index + 1]?.toLocaleString() || 0}
-                  <span className="text-2xl font-bold text-glass-muted ml-1">
-                    {metric.suffix}
-                  </span>
+      <div className="-mx-1 md:mx-0 overflow-x-auto pb-2">
+        <div className="grid grid-flow-col auto-cols-[minmax(200px,1fr)] sm:auto-cols-[minmax(220px,1fr)] md:auto-cols-[minmax(240px,1fr)] lg:auto-cols-[minmax(260px,1fr)] gap-4 md:gap-6 px-1 md:px-0">
+          {otherMetrics.map((metric, index) => (
+            <div
+              key={metric.label}
+              className="glass-card glass-card--subtle shadow-glass group transition-transform duration-300 hover:-translate-y-1 min-h-[220px] flex-shrink-0"
+            >
+              <div className={`glass-card__glow bg-gradient-to-br ${metric.color}`} />
+              <div className="relative p-6 space-y-4">
+                <div className="flex items-start justify-between">
+                  <div className="text-5xl drop-shadow-[0_8px_22px_rgba(8,25,55,0.4)]">{metric.icon}</div>
+                  <span className="glass-chip glass-chip--slate text-xs">Live</span>
                 </div>
-                <h4 className="text-sm font-semibold text-glass-muted opacity-90">
-                  {metric.label}
-                </h4>
+                <div>
+                  <div className="text-4xl font-bold text-glass-bright mb-1">
+                    {animatedValues[index + 1]?.toLocaleString() || 0}
+                    <span className="text-2xl font-bold text-glass-muted ml-1">
+                      {metric.suffix}
+                    </span>
+                  </div>
+                  <h4 className="text-sm font-semibold text-glass-muted opacity-90">
+                    {metric.label}
+                  </h4>
+                </div>
+                <p className="text-xs text-glass-muted leading-relaxed font-medium">
+                  {metric.description}
+                </p>
               </div>
-              <p className="text-xs text-glass-muted leading-relaxed font-medium">
-                {metric.description}
-              </p>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

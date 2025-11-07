@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useMetrics } from "@/lib/hooks/useMetrics";
+import { useMemo, useState } from "react";
+import { useDevices, useMetrics } from "@/lib/hooks/useMetrics";
 import { getDeviceStatusColor, getDeviceStatusLabel } from "@/lib/utils/status-colors";
+import EmptyState from "@/components/ui/EmptyState";
 
 interface Device {
   id: string;
@@ -22,72 +23,32 @@ interface PaginationMeta {
   total: number | null;
 }
 
-const PAGE_LIMIT = 10;
+const PAGE_LIMIT = 25;
 
 export default function InventoryOverview() {
-  const [devices, setDevices] = useState<Device[]>([]);
-  const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [sortOption, setSortOption] = useState<string>("received_desc");
-  const [pagination, setPagination] = useState<PaginationMeta>({
-    page: 1,
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data: metricsData } = useMetrics();
+
+  // Use React Query hook with proper status filtering
+  const apiStatusFilter = statusFilter !== "all" ? statusFilter : undefined;
+  const { data: devicesResponse, isLoading, isError } = useDevices(
+    currentPage,
+    PAGE_LIMIT,
+    apiStatusFilter
+  );
+
+  const devices = devicesResponse?.data ?? [];
+  const pagination = devicesResponse?.pagination ?? {
+    page: currentPage,
     limit: PAGE_LIMIT,
     hasMore: false,
     total: null,
-  });
-  const { data: metricsData } = useMetrics();
-
-  const fetchOptions = useMemo(
-    () => ({
-      search: searchQuery.trim(),
-      status: statusFilter,
-    }),
-    [searchQuery, statusFilter]
-  );
-
-  const loadDevices = useCallback(
-    async (targetPage: number, options: { search: string; status: string }) => {
-      try {
-        setLoading(true);
-        const isFiltering = options.search.length > 0 || options.status !== "all";
-        const baseLimit = isFiltering ? 200 : PAGE_LIMIT;
-        const params = new URLSearchParams({
-          page: String(targetPage),
-          limit: String(baseLimit),
-        });
-
-        const response = await fetch(`/api/devices?${params.toString()}`);
-        const payload = await response.json();
-        const devicesList = Array.isArray(payload?.data)
-          ? payload.data
-          : Array.isArray(payload)
-          ? payload
-          : [];
-
-        setDevices(devicesList);
-        setPagination({
-          page: targetPage,
-          limit: baseLimit,
-          hasMore: !isFiltering && Boolean(payload?.pagination?.hasMore),
-          total: payload?.pagination?.total ?? null,
-        });
-      } catch (error) {
-        console.error("Error fetching devices:", error);
-      } finally {
-        setLoading(false);
-      }
-    },
-    []
-  );
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      loadDevices(1, fetchOptions);
-    }, 250);
-    return () => clearTimeout(handler);
-  }, [fetchOptions, loadDevices]);
+  };
 
   const statusOptions = useMemo(() => {
     const unique = new Set<string>();
@@ -120,21 +81,15 @@ export default function InventoryOverview() {
   }, [devices, metricsData?.pipeline]);
 
   const filteredDevices = useMemo(() => {
-    const term = fetchOptions.search.toLowerCase();
-    const currentStatus = fetchOptions.status;
+    const term = searchQuery.trim().toLowerCase();
 
+    // Client-side filtering for search (status filtering happens server-side)
     const filtered = devices.filter((device) => {
-      const statusLabel = getDeviceStatusLabel(device.status);
-      const matchesStatus = currentStatus === "all" || statusLabel === currentStatus;
-
-      if (!matchesStatus) {
-        return false;
-      }
-
       if (term.length === 0) {
         return true;
       }
 
+      const statusLabel = getDeviceStatusLabel(device.status);
       return (
         (device.serial_number || "").toLowerCase().includes(term) ||
         (device.model || "").toLowerCase().includes(term) ||
@@ -166,36 +121,30 @@ export default function InventoryOverview() {
     });
 
     return sorted;
-  }, [devices, fetchOptions.search, fetchOptions.status, sortOption]);
+  }, [devices, searchQuery, sortOption]);
 
-  const isFiltering = fetchOptions.search.length > 0 || fetchOptions.status !== "all";
+  const isSearching = searchQuery.trim().length > 0;
 
   const showingStart =
     filteredDevices.length === 0
       ? 0
-      : isFiltering
-      ? 1
       : (pagination.page - 1) * pagination.limit + 1;
 
   const showingEnd =
     filteredDevices.length === 0
       ? 0
-      : isFiltering
-      ? filteredDevices.length
       : showingStart + filteredDevices.length - 1;
 
-  const totalDisplay = isFiltering
-    ? filteredDevices.length
-    : pagination.total ?? (pagination.page - 1) * pagination.limit + filteredDevices.length;
+  const totalDisplay = pagination.total ?? showingEnd;
 
   const handlePrev = () => {
-    if (isFiltering || pagination.page <= 1) return;
-    loadDevices(pagination.page - 1, fetchOptions);
+    if (pagination.page <= 1) return;
+    setCurrentPage(prev => prev - 1);
   };
 
   const handleNext = () => {
-    if (isFiltering || !pagination.hasMore) return;
-    loadDevices(pagination.page + 1, fetchOptions);
+    if (!pagination.hasMore) return;
+    setCurrentPage(prev => prev + 1);
   };
 
   const handleExport = async () => {
@@ -206,8 +155,8 @@ export default function InventoryOverview() {
       const devicesList = Array.isArray(payload?.data)
         ? payload.data
         : Array.isArray(payload)
-        ? payload
-        : [];
+          ? payload
+          : [];
 
       const columns = [
         "Serial Number",
@@ -230,7 +179,7 @@ export default function InventoryOverview() {
       ]);
 
       const csvContent = [columns, ...rows]
-        .map((line) => line.map((value) => `"${String(value).replace(/"/g, '""')}"`).join(","))
+        .map((line) => line.map((value: unknown) => `"${String(value).replace(/"/g, '""')}"`).join(","))
         .join("\n");
 
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -247,7 +196,7 @@ export default function InventoryOverview() {
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="glass-card glass-card--subtle shadow-glass overflow-hidden">
         <div className="p-6 animate-pulse">
@@ -259,6 +208,19 @@ export default function InventoryOverview() {
           </div>
         </div>
       </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <EmptyState
+        icon={<span role="img" aria-label="inventory">💾</span>}
+        title="Device inventory is temporarily unavailable"
+        description="Knack throttled requests earlier today. We’ll refresh these rows as soon as new API quota is available."
+        actionLabel="Reload"
+        onAction={() => window.location.reload()}
+        tone="warning"
+      />
     );
   }
 
@@ -418,7 +380,7 @@ export default function InventoryOverview() {
             className="glass-button text-xs md:text-sm"
             aria-label="Previous page of devices"
             onClick={handlePrev}
-            disabled={isFiltering || pagination.page === 1}
+            disabled={pagination.page === 1}
           >
             Previous
           </button>
@@ -426,7 +388,7 @@ export default function InventoryOverview() {
             className="glass-button text-xs md:text-sm"
             aria-label="Next page of devices"
             onClick={handleNext}
-            disabled={isFiltering || !pagination.hasMore}
+            disabled={!pagination.hasMore}
           >
             Next
           </button>

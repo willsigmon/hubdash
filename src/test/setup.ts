@@ -3,7 +3,7 @@
  * Configures testing environment with mocks and utilities
  */
 
-import { expect, afterEach } from 'vitest';
+import { expect, afterEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 import * as matchers from '@testing-library/jest-dom/matchers';
 
@@ -47,7 +47,9 @@ const localStorageMock = {
   setItem: vi.fn(),
   removeItem: vi.fn(),
   clear: vi.fn(),
-};
+  length: 0,
+  key: vi.fn(),
+} as Storage;
 global.localStorage = localStorageMock;
 
 // Mock ResizeObserver
@@ -83,8 +85,11 @@ Object.defineProperty(window, 'matchMedia', {
 HTMLCanvasElement.prototype.getContext = vi.fn();
 
 // Mock requestAnimationFrame
-global.requestAnimationFrame = vi.fn(cb => setTimeout(cb, 16));
-global.cancelAnimationFrame = vi.fn(id => clearTimeout(id));
+global.requestAnimationFrame = vi.fn((cb: FrameRequestCallback) => {
+  const id = setTimeout(cb, 16);
+  return id as unknown as number;
+}) as typeof requestAnimationFrame;
+global.cancelAnimationFrame = vi.fn((id: number) => clearTimeout(id)) as typeof cancelAnimationFrame;
 
 // Custom test utilities
 export const createMockMetricsData = () => ({
@@ -147,4 +152,3 @@ export const createMockPartnership = (overrides = {}) => ({
   quote: 'This will transform our community\'s access to technology.',
   ...overrides,
 });
-

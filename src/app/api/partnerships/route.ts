@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getKnackClient } from '@/lib/knack/client'
+import { getPartnershipFieldMap, normalizeKnackChoice, readKnackField, warnMissingPartnershipField } from '@/lib/knack/field-map'
 
 /**
  * GET /api/partnerships - Fetch partnership applications
@@ -10,9 +11,23 @@ export async function GET(request: Request) {
     const filter = searchParams.get('filter') || 'all' // pending, recent, all
 
     const knack = getKnackClient()
-    const objectKey = process.env.KNACK_PARTNERSHIP_APPLICATIONS_OBJECT || 'object_55'
 
-    let filters = [];
+    if (!knack.isConfigured()) {
+      console.error('❌ Knack not configured for partnerships endpoint')
+      return NextResponse.json(
+        {
+          error: 'Knack integration not configured',
+          setup_guide: 'Run: npm run setup-knack'
+        },
+        { status: 503 }
+      )
+    }
+
+    const objectKey = process.env.KNACK_PARTNERSHIP_APPLICATIONS_OBJECT || 'object_55'
+    console.log(`🤝 Fetching partnerships from Knack object ${objectKey} (filter: ${filter})`)
+    const partnershipFields = getPartnershipFieldMap()
+
+    const filters: any[] = [];
 
     // Filter by status for pending
     if (filter === 'pending') {
@@ -27,7 +42,7 @@ export async function GET(request: Request) {
       objectKey,
       {
         rows_per_page: 1000,
-        filters: filters.length > 0 ? JSON.stringify(filters) : undefined
+        filters: filters.length > 0 ? filters : undefined
       }
     )
 
@@ -37,7 +52,16 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Invalid data format from database' }, { status: 500 })
     }
 
+    if (!process.env.KNACK_PARTNERSHIP_STATUS_FIELD) {
+      warnMissingPartnershipField('status')
+    }
+
     const partnerships = knackRecords.map((r: any) => {
+      const statusValue = normalizeKnackChoice(readKnackField(r, partnershipFields.status))
+        ?? normalizeKnackChoice(r.field_679_raw)
+        ?? (typeof r.field_679 === 'string' ? r.field_679.trim() : undefined)
+        ?? 'Pending'
+
       // Extract all the rich application data
       const address = typeof r.field_636_raw === 'string' ? r.field_636_raw : (r.field_636_raw?.full || '');
       const email = typeof r.field_425_raw === 'string' ? r.field_425_raw : (r.field_425_raw?.email || '');
@@ -50,7 +74,7 @@ export async function GET(request: Request) {
         id: r.id,
         timestamp: r.field_424_raw?.iso_timestamp || r.field_424_raw || new Date().toISOString(),
         organizationName: r.field_426_raw || 'Unknown',
-        status: r.field_679_raw || 'Pending',
+        status: statusValue,
         email,
         address,
         county,
@@ -95,7 +119,7 @@ export async function GET(request: Request) {
     }
 
     return NextResponse.json(filteredPartnerships, {
-      headers: { 'Cache-Control': 'public, s-maxage=300' },
+      headers: { 'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600' }, // 30min cache
     })
   } catch (error: any) {
     console.error('Partnerships API Error:', error)

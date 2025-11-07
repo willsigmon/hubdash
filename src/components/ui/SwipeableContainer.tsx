@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, ReactNode, useEffect } from 'react';
-import { useDrag } from '@use-gesture/react';
+import { useDrag } from 'react-use-gesture';
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -133,11 +133,10 @@ export default function SwipeableContainer({
             <button
               key={index}
               onClick={() => navigateTo(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex
+              className={`w-2 h-2 rounded-full transition-all ${index === currentIndex
                   ? 'bg-hti-teal w-6'
                   : 'bg-hti-teal/30 hover:bg-hti-teal/50'
-              }`}
+                }`}
               aria-label={`Go to item ${index + 1}`}
             />
           ))}
@@ -274,4 +273,3 @@ export function MobileInput({
     />
   );
 }
-

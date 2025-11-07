@@ -17,23 +17,30 @@ import { QueryClient } from '@tanstack/react-query';
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // Data considered fresh for 5 minutes by default
-      staleTime: 5 * 60 * 1000, // 5 minutes
+      // AGGRESSIVE CACHING to avoid Knack 429 rate limits
+      staleTime: 30 * 60 * 1000, // 30 minutes (was 5min)
 
-      // Keep unused data in cache for 10 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes (was cacheTime in v4)
+      // Keep unused data in cache for 2 hours
+      gcTime: 120 * 60 * 1000, // 2 hours (was 10min)
 
-      // Don't refetch on window focus (reduces unnecessary API calls)
+      // NEVER refetch on window focus (reduces API calls)
       refetchOnWindowFocus: false,
 
-      // Don't refetch on reconnect (we have staleTime handling this)
+      // NEVER refetch on reconnect
       refetchOnReconnect: false,
 
-      // Retry failed requests 1 time (Knack API can be flaky)
-      retry: 1,
+      // Don't retry on 429 errors (makes it worse)
+      retry: (failureCount, error: any) => {
+        // Don't retry rate limit errors
+        if (error?.message?.includes('429') || error?.message?.includes('rate limit')) {
+          return false
+        }
+        // Retry other errors once
+        return failureCount < 1
+      },
 
-      // Wait 1 second before retrying
-      retryDelay: 1000,
+      // Wait 5 seconds before retrying (give Knack time to recover)
+      retryDelay: 5000,
     },
     mutations: {
       // Retry mutations once on failure
@@ -80,22 +87,22 @@ export const queryKeys = {
  * Override defaults for specific use cases
  */
 export const queryConfig = {
-  // Metrics need more frequent updates (2 min)
+  // Metrics - cache aggressively (1 hour)
   metrics: {
-    staleTime: 2 * 60 * 1000, // 2 minutes
-    gcTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 60 * 60 * 1000, // 1 hour (was 2min)
+    gcTime: 120 * 60 * 1000, // 2 hours (was 5min)
   },
 
-  // Organizations are mostly static (10 min)
+  // Organizations are static (2 hours)
   organizations: {
-    staleTime: 10 * 60 * 1000, // 10 minutes
-    gcTime: 15 * 60 * 1000, // 15 minutes
+    staleTime: 120 * 60 * 1000, // 2 hours (was 10min)
+    gcTime: 240 * 60 * 1000, // 4 hours (was 15min)
   },
 
-  // Real-time activity (30 seconds)
+  // Activity - still relatively fresh but no auto-refetch
   activity: {
-    staleTime: 30 * 1000, // 30 seconds
-    gcTime: 2 * 60 * 1000, // 2 minutes
-    refetchInterval: 60 * 1000, // Auto-refetch every minute
+    staleTime: 5 * 60 * 1000, // 5 minutes (was 30sec)
+    gcTime: 30 * 60 * 1000, // 30 minutes (was 2min)
+    refetchInterval: false, // DISABLED auto-refetch to save API calls
   },
 };

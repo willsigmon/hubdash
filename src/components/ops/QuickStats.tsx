@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { useMetrics } from "@/lib/hooks/useMetrics";
+import EmptyState from "@/components/ui/EmptyState";
 
 interface Stat {
   label: string;
@@ -19,39 +20,39 @@ export default function QuickStats() {
     if (!data) return [];
 
     return [
-          {
-            label: "In Pipeline",
-            value: String(data.inPipeline || 0),
-            change: "+12 today",
-            trend: "up",
-            icon: "🔄",
+      {
+        label: "In Pipeline",
+        value: String(data.inPipeline || 0),
+        change: "+12 today",
+        trend: "up",
+        icon: "🔄",
         gradient: "from-hti-yellow to-hti-yellow-light",
-          },
-          {
-            label: "Ready to Ship",
-            value: String(data.readyToShip || 0),
-            change: "8 scheduled",
-            trend: "neutral",
-            icon: "✅",
+      },
+      {
+        label: "Ready to Ship",
+        value: String(data.readyToShip || 0),
+        change: "8 scheduled",
+        trend: "neutral",
+        icon: "✅",
         gradient: "from-hti-orange-yellow to-hti-yellow",
-          },
-          {
+      },
+      {
         label: "Partner Orgs",
         value: String(data.partnerOrganizations || 0),
         change: "+2 this quarter",
         trend: "neutral",
         icon: "🤝",
         gradient: "from-hti-teal to-hti-teal-light",
-          },
-          {
-            label: "Avg Turnaround",
-            value: "4.2d",
-            change: "-0.8d vs last week",
-            trend: "down",
-            icon: "⚡",
+      },
+      {
+        label: "Avg Turnaround",
+        value: "4.2d",
+        change: "-0.8d vs last week",
+        trend: "down",
+        icon: "⚡",
         gradient: "from-hti-teal to-hti-sky",
-          },
-        ];
+      },
+    ];
   }, [data]);
 
   if (isLoading) {
@@ -66,12 +67,14 @@ export default function QuickStats() {
 
   if (isError) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="col-span-full bg-white/5 backdrop-blur-sm rounded-xl border border-hti-red/50 p-6 text-center">
-          <p className="text-hti-red font-bold">We couldn’t load the latest quick stats.</p>
-          <p className="text-sm text-hti-yellow mt-2">Refresh to try again.</p>
-        </div>
-      </div>
+      <EmptyState
+        icon={<span role="img" aria-label="warning">⚠️</span>}
+        title="We couldn’t load the latest quick stats"
+        description="Your data is cached safely. Once the connection is back, these numbers will refresh automatically."
+        actionLabel="Try again"
+        onAction={() => window.location.reload()}
+        tone="warning"
+      />
     );
   }
 
@@ -80,7 +83,7 @@ export default function QuickStats() {
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="glass-card group transition-transform duration-300 hover:-translate-y-1"
+          className="glass-card glass-card--subtle border border-white/25 group transition-transform duration-300 hover:-translate-y-1"
         >
           <div className={`glass-card__glow bg-gradient-to-br ${stat.gradient}`} />
 
@@ -103,10 +106,10 @@ export default function QuickStats() {
             </div>
 
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-glass-bright mb-1">
+              <div className="text-3xl md:text-4xl font-bold text-hti-navy mb-1">
                 {stat.value}
               </div>
-              <div className="text-xs md:text-sm font-semibold text-glass-muted">
+              <div className="text-xs md:text-sm font-semibold text-hti-plum/80">
                 {stat.label}
               </div>
             </div>

@@ -3,15 +3,29 @@
  * Connects to HTI's Knack database as the source of truth
  */
 
-interface KnackConfig {
+export interface KnackConfig {
   appId: string;
   apiKey: string;
   baseUrl?: string;
 }
 
-interface KnackRecord {
+export interface KnackRecord {
   id: string;
   [key: string]: any;
+}
+
+export interface KnackFilterRule {
+  field: string;
+  operator: 'is' | 'is not' | 'contains' | 'starts with' | 'ends with' | 'is blank' | 'is not blank' | '>' | '<' | '>=' | '<=' | 'is after' | 'is before';
+  value?: string | number | boolean;
+}
+
+export interface KnackQueryOptions {
+  filters?: KnackFilterRule | KnackFilterRule[];
+  rows_per_page?: number;
+  page?: number;
+  sort_field?: string;
+  sort_order?: 'asc' | 'desc';
 }
 
 export class KnackClient {
@@ -49,21 +63,39 @@ export class KnackClient {
 
   /**
    * Fetch all records from a Knack object
+   * Handles filter encoding internally and provides type safety
    */
-  async getRecords(objectKey: string, options?: {
-    filters?: any;
-    rows_per_page?: number;
-    page?: number;
-  }): Promise<KnackRecord[]> {
+  async getRecords(objectKey: string, options?: KnackQueryOptions): Promise<KnackRecord[]> {
     if (!this.isConfigured()) {
       throw new Error('Knack client not configured. Please add credentials to .env.local');
     }
 
     try {
       const params = new URLSearchParams();
-      if (options?.rows_per_page) params.append('rows_per_page', String(options.rows_per_page));
-      if (options?.page) params.append('page', String(options.page));
-      if (options?.filters) params.append('filters', JSON.stringify(options.filters));
+
+      if (options?.rows_per_page) {
+        params.append('rows_per_page', String(options.rows_per_page));
+      }
+
+      if (options?.page) {
+        params.append('page', String(options.page));
+      }
+
+      if (options?.sort_field) {
+        params.append('sort_field', options.sort_field);
+      }
+
+      if (options?.sort_order) {
+        params.append('sort_order', options.sort_order);
+      }
+
+      // Handle filter encoding - accept both single filter and array
+      if (options?.filters) {
+        const filterArray = Array.isArray(options.filters) ? options.filters : [options.filters];
+        if (filterArray.length > 0) {
+          params.append('filters', JSON.stringify(filterArray));
+        }
+      }
 
       const url = `${this.baseUrl}/objects/${objectKey}/records${params.toString() ? '?' + params.toString() : ''}`;
 
@@ -73,7 +105,8 @@ export class KnackClient {
       });
 
       if (!response.ok) {
-        throw new Error(`Knack API error: ${response.status} ${response.statusText}`);
+        const errorText = await response.text().catch(() => response.statusText);
+        throw new Error(`Knack API error: ${response.status} ${errorText}`);
       }
 
       const data = await response.json();

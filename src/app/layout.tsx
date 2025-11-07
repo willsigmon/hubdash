@@ -4,8 +4,10 @@ import AppNav from "@/components/layout/AppNav";
 import QueryProvider from "@/components/providers/QueryProvider";
 import PWARegistration from "@/components/providers/PWARegistration";
 import AccessibilityProvider from "@/components/providers/AccessibilityProvider";
+import FontLoader from "@/components/providers/FontLoader";
 import PWAInstallPrompt from "@/components/ui/PWAInstallPrompt";
 import AccessibilitySettings from "@/components/ui/AccessibilitySettings";
+import KnackStatusBanner from "@/components/ui/KnackStatusBanner";
 
 export const metadata: Metadata = {
   title: "HUBDash - HTI Dashboard",
@@ -36,9 +38,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <FontLoader />
         <QueryProvider>
           <PWARegistration />
           <AccessibilityProvider />
+          <KnackStatusBanner />
           <AppNav />
           {children}
           <PWAInstallPrompt />

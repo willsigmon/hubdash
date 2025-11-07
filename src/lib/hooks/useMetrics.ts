@@ -120,12 +120,14 @@ export function useDevices(
 
       const response = await fetch(`/api/devices?${params}`);
       if (!response.ok) {
-        throw new Error('Failed to fetch devices');
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || 'Failed to fetch devices');
       }
       return response.json();
     },
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 30 * 60 * 1000, // 30 minutes (was 5min) - aggressive caching for rate limits
+    gcTime: 120 * 60 * 1000, // 2 hours (was 10min)
+    retry: false, // Don't retry on 429 errors
   });
 }
 
@@ -143,12 +145,14 @@ export function usePartnerships(
     queryFn: async () => {
       const response = await fetch(`/api/partnerships?filter=${filter}`);
       if (!response.ok) {
-        throw new Error('Failed to fetch partnerships');
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || 'Failed to fetch partnerships');
       }
       return response.json();
     },
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 30 * 60 * 1000, // 30 minutes (was 5min) - aggressive caching
+    gcTime: 120 * 60 * 1000, // 2 hours (was 10min)
+    retry: false, // Don't retry on 429 errors
   });
 }
 

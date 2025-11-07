@@ -8,7 +8,14 @@ export default function Home() {
       </a>
       <div className="max-w-6xl w-full glass-card glass-card--subtle shadow-glass rounded-3xl p-8 md:p-12">
         <div className="absolute inset-0 glass-card__glow bg-gradient-to-br from-hti-teal/40 to-hti-yellow/30" />
-        <div className="relative text-center mb-12 space-y-3">
+        <div className="relative text-center mb-12 space-y-6">
+          <div className="flex justify-center mb-6">
+            <img
+              src="/hti-logo.svg"
+              alt="HTI Logo"
+              className="h-16 md:h-20 w-auto"
+            />
+          </div>
           <h1 className="text-5xl md:text-6xl font-bold text-glass-bright">
             HUBDash
           </h1>

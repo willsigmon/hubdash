@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { useMetrics } from "@/lib/hooks/useMetrics";
+import EmptyState from "@/components/ui/EmptyState";
 
 interface PipelineStage {
   name: string;
@@ -14,29 +15,29 @@ export default function DevicePipeline() {
   const { data, isLoading, isError } = useMetrics();
 
   const stages = useMemo<PipelineStage[]>(() => {
-    const pipeline = data?.pipeline || {};
+    const pipeline = data?.pipeline;
 
     return [
-      { name: "Donated", count: pipeline.donated || 0, accent: "slate", icon: "📥" },
-      { name: "Received", count: pipeline.received || 0, accent: "navy", icon: "✓" },
-      { name: "Data Wipe", count: pipeline.dataWipe || 0, accent: "navy", icon: "🔒" },
-      { name: "Refurbishing", count: pipeline.refurbishing || 0, accent: "orange", icon: "🔧" },
-      { name: "QA Testing", count: pipeline.qaTesting || 0, accent: "yellow", icon: "🧪" },
-      { name: "Ready", count: pipeline.ready || 0, accent: "teal", icon: "✅" },
-      { name: "Distributed", count: pipeline.distributed || 0, accent: "orange", icon: "🎯" },
-        ];
+      { name: "Donated", count: pipeline?.donated || 0, accent: "slate", icon: "📥" },
+      { name: "Received", count: pipeline?.received || 0, accent: "navy", icon: "✓" },
+      { name: "Data Wipe", count: pipeline?.dataWipe || 0, accent: "navy", icon: "🔒" },
+      { name: "Refurbishing", count: pipeline?.refurbishing || 0, accent: "orange", icon: "🔧" },
+      { name: "QA Testing", count: pipeline?.qaTesting || 0, accent: "yellow", icon: "🧪" },
+      { name: "Ready", count: pipeline?.ready || 0, accent: "teal", icon: "✅" },
+      { name: "Distributed", count: pipeline?.distributed || 0, accent: "orange", icon: "🎯" },
+    ];
   }, [data]);
 
   const summary = useMemo(() => {
     const total = stages.reduce((sum, stage) => sum + stage.count, 0);
     const distributed = data?.pipeline?.distributed || 0;
-        const completionRate = total > 0 ? Math.round((distributed / total) * 100) : 0;
+    const completionRate = total > 0 ? Math.round((distributed / total) * 100) : 0;
     const bottleneck = stages.slice(0, -1).reduce((max, stage) => Math.max(max, stage.count), 0);
 
     return {
-          total,
-          completionRate,
-          avgCycleTime: "4.2d", // TODO: Calculate from actual data
+      total,
+      completionRate,
+      avgCycleTime: "4.2d", // TODO: Calculate from actual data
       bottleneck,
     };
   }, [data?.pipeline?.distributed, stages]);
@@ -62,10 +63,14 @@ export default function DevicePipeline() {
 
   if (isError) {
     return (
-      <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-red/40 shadow-xl p-6 text-center">
-        <h3 className="text-xl font-bold text-white mb-2">📊 Device Pipeline</h3>
-        <p className="text-hti-yellow">We couldn’t load the latest pipeline data. Try refreshing the page.</p>
-      </div>
+      <EmptyState
+        icon={<span role="img" aria-label="device">📦</span>}
+        title="Pipeline data is temporarily unavailable"
+        description="Knack has reached its request limit for today. Your last known pipeline is saved and will refresh automatically when the connection resumes."
+        actionLabel="Reload"
+        onAction={() => window.location.reload()}
+        tone="warning"
+      />
     );
   }
 
@@ -104,24 +109,22 @@ export default function DevicePipeline() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-7 gap-3">
-          {stages.map((stage, index) => (
+        {stages.map((stage, index) => (
           <div key={stage.name} className="flex flex-col gap-3">
             <div
-              className={`glass-card glass-card--subtle px-4 py-5 text-center transition-transform duration-300 hover:-translate-y-1 ${
-                stage.count === summary.bottleneck && stage.name !== "Distributed" ? "ring-2 ring-hti-yellow/60" : ""
-              } ${index === stages.length - 1 ? "lg:col-span-1" : ""}`}
+              className={`glass-card glass-card--subtle px-4 py-5 text-center transition-transform duration-300 hover:-translate-y-1 ${stage.count === summary.bottleneck && stage.name !== "Distributed" ? "ring-2 ring-hti-yellow/60" : ""
+                } ${index === stages.length - 1 ? "lg:col-span-1" : ""}`}
             >
-              <div className={`glass-card__glow bg-gradient-to-br ${
-                stage.accent === "teal"
-                  ? "from-hti-teal to-hti-teal-light"
-                  : stage.accent === "orange"
+              <div className={`glass-card__glow bg-gradient-to-br ${stage.accent === "teal"
+                ? "from-hti-teal to-hti-teal-light"
+                : stage.accent === "orange"
                   ? "from-hti-orange to-hti-orange-yellow"
                   : stage.accent === "yellow"
-                  ? "from-hti-yellow to-hti-yellow-light"
-                  : stage.accent === "navy"
-                  ? "from-hti-navy to-hti-navy-dark"
-                  : "from-hti-sand to-hti-fog"
-              }`} />
+                    ? "from-hti-yellow to-hti-yellow-light"
+                    : stage.accent === "navy"
+                      ? "from-hti-navy to-hti-navy-dark"
+                      : "from-hti-sand to-hti-fog"
+                }`} />
               <div className="relative space-y-2">
                 <div className="text-3xl">{stage.icon}</div>
                 <div className="text-2xl font-bold text-glass-bright">{stage.count}</div>
@@ -130,12 +133,12 @@ export default function DevicePipeline() {
                 </div>
               </div>
             </div>
-              {index < stages.length - 1 && (
+            {index < stages.length - 1 && (
               <div className="hidden lg:block text-center text-glass-muted">→</div>
-              )}
-            </div>
-          ))}
-        </div>
+            )}
+          </div>
+        ))}
+      </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 pt-4 border-t glass-divider">
         <div className="glass-card glass-card--subtle px-4 py-4 text-center">

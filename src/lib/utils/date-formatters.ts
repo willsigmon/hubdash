@@ -63,3 +63,32 @@ export function formatTimeAgoShort(dateString: string): string {
   const days = Math.floor(hours / 24);
   return `${days}d`;
 }
+
+/**
+ * Format days ago in a more user-friendly way
+ * Returns: "2 days ago", "3 weeks ago", "2 months ago", "over 2 years ago"
+ */
+export function formatDaysAgo(days: number): string {
+  if (days < 7) {
+    return `${days} day${days !== 1 ? 's' : ''} ago`;
+  }
+  if (days < 30) {
+    const weeks = Math.floor(days / 7);
+    return `${weeks} week${weeks !== 1 ? 's' : ''} ago`;
+  }
+  if (days < 365) {
+    const months = Math.floor(days / 30);
+    return `${months} month${months !== 1 ? 's' : ''} ago`;
+  }
+  const years = Math.floor(days / 365);
+  return `over ${years} year${years !== 1 ? 's' : ''} ago`;
+}
+
+/**
+ * Format a number with proper pluralization
+ * Returns: "1 Chromebook" or "5 Chromebooks"
+ */
+export function formatPlural(count: number, singular: string, plural?: string): string {
+  const pluralForm = plural || `${singular}s`;
+  return count === 1 ? `${count} ${singular}` : `${count} ${pluralForm}`;
+}

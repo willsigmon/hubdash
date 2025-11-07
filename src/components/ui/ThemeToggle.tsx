@@ -46,7 +46,7 @@ export default function ThemeToggle() {
   return (
     <div className="flex items-center gap-1">
       <Button
-        variant={theme === 'light' ? 'default' : 'ghost'}
+        variant={theme === 'light' ? 'primary' : 'ghost'}
         size="sm"
         onClick={() => handleThemeChange('light')}
         aria-label="Switch to light theme"
@@ -56,7 +56,7 @@ export default function ThemeToggle() {
       </Button>
 
       <Button
-        variant={theme === 'dark' ? 'default' : 'ghost'}
+        variant={theme === 'dark' ? 'primary' : 'ghost'}
         size="sm"
         onClick={() => handleThemeChange('dark')}
         aria-label="Switch to dark theme"
@@ -66,7 +66,7 @@ export default function ThemeToggle() {
       </Button>
 
       <Button
-        variant={theme === 'system' ? 'default' : 'ghost'}
+        variant={theme === 'system' ? 'primary' : 'ghost'}
         size="sm"
         onClick={() => handleThemeChange('system')}
         aria-label="Use system theme"
@@ -113,4 +113,3 @@ export function ThemeToggleCompact() {
     </Button>
   );
 }
-

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getKnackClient } from '@/lib/knack/client'
-import { getCached, cacheKeys } from '@/lib/knack/cache-manager'
+import { cacheKeys } from '@/lib/knack/cache-manager'
+import { getCachedOrStale } from '@/lib/knack/persistent-cache'
 
 /**
  * GET /api/devices
@@ -26,14 +27,32 @@ export async function GET(request: Request) {
     const limit = parseInt(searchParams.get('limit') || '50');
     const status = searchParams.get('status'); // Optional filter
 
+    const knack = getKnackClient()
+
+    // Check if Knack is configured
+    if (!knack.isConfigured()) {
+      console.error('❌ Knack API credentials not configured')
+      console.error('   Add KNACK_APP_ID and KNACK_API_KEY to .env.local')
+      console.error('   See ENV_TEMPLATE.md for setup instructions')
+      return NextResponse.json(
+        {
+          error: 'Knack integration not configured. Please add KNACK_APP_ID and KNACK_API_KEY to .env.local',
+          setup_guide: 'See ENV_TEMPLATE.md or KNACK_SETUP.md for instructions'
+        },
+        { status: 503 }
+      )
+    }
+
     // Create cache key based on query params
     const cacheKey = cacheKeys.devicesPaginated(page, limit, status || undefined);
 
-    const result = await getCached(
+    // Use persistent cache with 30min TTL to reduce Knack API calls
+    const result = await getCachedOrStale(
       cacheKey,
       async () => {
-        const knack = getKnackClient()
         const objectKey = process.env.KNACK_DEVICES_OBJECT || 'object_7'
+
+        console.log(`📡 Fetching devices from Knack object ${objectKey} (page ${page}, limit ${limit}, status: ${status || 'all'})`)
 
         // Build filters
         const filters: any[] = [];
@@ -49,13 +68,22 @@ export async function GET(request: Request) {
         const knackRecords = await knack.getRecords(objectKey, {
           rows_per_page: limit,
           page: page,
-          filters: filters.length > 0 ? JSON.stringify(filters) : undefined
+          filters: filters.length > 0 ? filters : undefined
         });
+
+        console.log(`✅ Received ${knackRecords?.length || 0} records from Knack`)
 
         // Validate API response
         if (!Array.isArray(knackRecords)) {
-          console.error('Invalid Knack response - expected array:', knackRecords)
+          console.error('❌ Invalid Knack response - expected array:', knackRecords)
           throw new Error('Invalid data format from database');
+        }
+
+        if (knackRecords.length === 0) {
+          console.warn('⚠️  No devices found in Knack object. Check:')
+          console.warn('   1. Object key is correct:', objectKey)
+          console.warn('   2. Knack object has records')
+          console.warn('   3. API credentials have read permissions')
         }
 
         // Transform Knack records to our format
@@ -108,12 +136,12 @@ export async function GET(request: Request) {
           }
         };
       },
-      300 // 5 minute TTL (device data changes infrequently)
+      1800 // 30 minute TTL - aggressive caching to avoid 429 rate limits
     );
 
     return NextResponse.json(result, {
       headers: {
-        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60',
+        'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600',
       }
     })
   } catch (error: any) {

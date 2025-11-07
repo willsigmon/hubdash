@@ -10,7 +10,20 @@ export async function GET(request: Request) {
     const filter = searchParams.get('filter') || 'recent' // recent, all
 
     const knack = getKnackClient()
+
+    if (!knack.isConfigured()) {
+      console.error('❌ Knack not configured for recipients endpoint')
+      return NextResponse.json(
+        {
+          error: 'Knack integration not configured',
+          setup_guide: 'Run: npm run setup-knack'
+        },
+        { status: 503 }
+      )
+    }
+
     const objectKey = process.env.KNACK_LAPTOP_APPLICATIONS_OBJECT || 'object_62'
+    console.log(`👥 Fetching recipients from Knack object ${objectKey} (filter: ${filter})`)
     const knackRecords = await knack.getRecords(objectKey, { rows_per_page: 1000 })
 
     // Validate API response
@@ -30,16 +43,16 @@ export async function GET(request: Request) {
       // Validate dates to prevent Invalid Date
       const datePresented = r.field_557_raw
         ? (() => {
-            const date = new Date(typeof r.field_557_raw === 'string' ? r.field_557_raw : r.field_557_raw.iso_timestamp);
-            return !isNaN(date.getTime()) ? date.toISOString() : null;
-          })()
+          const date = new Date(typeof r.field_557_raw === 'string' ? r.field_557_raw : r.field_557_raw.iso_timestamp);
+          return !isNaN(date.getTime()) ? date.toISOString() : null;
+        })()
         : null;
 
       const timestamp = r.field_521_raw
         ? (() => {
-            const date = new Date(typeof r.field_521_raw === 'string' ? r.field_521_raw : r.field_521_raw.iso_timestamp);
-            return !isNaN(date.getTime()) ? date.toISOString() : new Date().toISOString();
-          })()
+          const date = new Date(typeof r.field_521_raw === 'string' ? r.field_521_raw : r.field_521_raw.iso_timestamp);
+          return !isNaN(date.getTime()) ? date.toISOString() : new Date().toISOString();
+        })()
         : new Date().toISOString();
 
       return {
@@ -85,7 +98,7 @@ export async function GET(request: Request) {
     });
 
     return NextResponse.json(filteredRecipients, {
-      headers: { 'Cache-Control': 'public, s-maxage=300' },
+      headers: { 'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600' }, // 30min cache
     })
   } catch (error: any) {
     console.error('Recipients API Error:', error)

@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type JSX } from "react";
+import { Facebook, Instagram, Linkedin, Music2 } from "lucide-react";
 import type { SocialFeedResponse, SocialPlatformResult, SocialPost } from "@/lib/social/types";
 
 type PlatformMeta = {
   label: string;
-  icon: string;
+  icon: JSX.Element;
   badge: string;
   accent: string;
 };
@@ -13,27 +14,27 @@ type PlatformMeta = {
 const platformMeta: Record<SocialPost["platform"], PlatformMeta> = {
   facebook: {
     label: "Facebook",
-    icon: "📘",
-    badge: "glass-chip glass-chip--navy",
-    accent: "bg-hti-navy/20 border border-white/10",
+    icon: <Facebook className="w-5 h-5 text-[#1778f2]" />,
+    badge: "glass-chip glass-chip--slate border border-[#1778f2]/35 text-[#1778f2]",
+    accent: "bg-[#1778f2]/15 border border-[#1778f2]/30",
   },
   instagram: {
     label: "Instagram",
-    icon: "📸",
-    badge: "glass-chip glass-chip--orange",
-    accent: "bg-hti-orange/15 border border-white/10",
+    icon: <Instagram className="w-5 h-5 text-[#e1306c]" />,
+    badge: "glass-chip glass-chip--orange border border-white/30",
+    accent: "bg-[#e1306c]/15 border border-white/20",
   },
   linkedin: {
     label: "LinkedIn",
-    icon: "💼",
-    badge: "glass-chip glass-chip--teal",
-    accent: "bg-hti-teal/20 border border-white/10",
+    icon: <Linkedin className="w-5 h-5 text-[#0a66c2]" />,
+    badge: "glass-chip glass-chip--teal border border-white/30",
+    accent: "bg-[#0a66c2]/15 border border-white/20",
   },
   tiktok: {
     label: "TikTok",
-    icon: "🎵",
-    badge: "glass-chip glass-chip--slate",
-    accent: "bg-black/30 border border-white/10",
+    icon: <Music2 className="w-5 h-5 text-[#69c9d0]" />,
+    badge: "glass-chip glass-chip--slate border border-white/25",
+    accent: "bg-black/30 border border-white/15",
   },
 };
 
@@ -170,7 +171,7 @@ export default function RecentActivity() {
               >
                 <div className="flex items-start gap-4">
                   <div
-                    className={`${meta.accent} text-white/90 w-12 h-12 rounded-xl flex items-center justify-center text-2xl shadow-md`}
+                    className={`${meta.accent} w-12 h-12 rounded-xl flex items-center justify-center shadow-md`}
                     aria-hidden="true"
                   >
                     {meta.icon}

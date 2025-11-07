@@ -6,6 +6,38 @@
 
 ---
 
+## 🚀 Quick Start
+
+### First-Time Setup (5 minutes)
+
+**HubDash requires Knack credentials to display live data:**
+
+```bash
+# 1. Clone and install
+git clone https://github.com/your-org/hubdash.git
+cd hubdash
+npm install
+
+# 2. Configure Knack connection
+npm run setup-knack
+# Enter your Knack credentials when prompted
+
+# 3. Test connection
+npm run test-knack
+
+# 4. Discover field IDs (optional but recommended)
+npm run discover-fields
+
+# 5. Start dev server
+npm run dev
+```
+
+Visit http://localhost:3000 to see your dashboards with **real Knack data**!
+
+📖 **Detailed setup guide**: [KNACK_QUICK_START.md](./KNACK_QUICK_START.md)
+
+---
+
 ## Getting Started
 
 ### For First-Time Users

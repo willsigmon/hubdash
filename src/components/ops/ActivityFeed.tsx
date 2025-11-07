@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { formatTimeAgo } from "@/lib/utils/date-formatters";
 import { getActivityTypeColor } from "@/lib/utils/status-colors";
+import EmptyState from "@/components/ui/EmptyState";
 
 interface Activity {
   id: string;
@@ -17,28 +18,20 @@ interface Activity {
 export default function ActivityFeed() {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch('/api/activity')
       .then(res => res.json())
       .then(data => {
-        setActivities(data);
+        setActivities(Array.isArray(data) ? data : []);
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching activity:', error);
+      .catch(err => {
+        console.error('Error fetching activity:', err);
+        setError(err instanceof Error ? err.message : 'Unable to load activity feed');
         setLoading(false);
       });
-
-    // Auto-refresh every 10 seconds
-    const interval = setInterval(() => {
-      fetch('/api/activity')
-        .then(res => res.json())
-        .then(data => setActivities(data))
-        .catch(console.error);
-    }, 10000);
-
-    return () => clearInterval(interval);
   }, []);
 
   if (loading) {
@@ -58,6 +51,19 @@ export default function ActivityFeed() {
           ))}
         </div>
       </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <EmptyState
+        icon={<span role="img" aria-label="satellite">🛰️</span>}
+        title="Activity feed is offline"
+        description="We’ll pick back up as soon as Knack lets us reconnect. All live updates resume automatically."
+        actionLabel="Retry"
+        onAction={() => window.location.reload()}
+        tone="warning"
+      />
     );
   }
 

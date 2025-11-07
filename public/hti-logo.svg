@@ -1,0 +1,19 @@
+<svg width="280" height="80" viewBox="0 0 280 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- HTI Logo based on the image provided -->
+
+  <!-- Orange Circle with Power Symbol -->
+  <circle cx="40" cy="40" r="35" fill="#FF6B35"/>
+  <path d="M40 20 L40 35 M40 35 L40 50 M30 35 A10 10 0 0 1 50 35" stroke="white" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <!-- H Circle -->
+  <circle cx="100" cy="40" r="35" fill="#FF8C42"/>
+  <text x="100" y="52" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="white" text-anchor="middle">H</text>
+
+  <!-- T Circle -->
+  <circle cx="160" cy="40" r="35" fill="#FFB84D"/>
+  <text x="160" y="52" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="white" text-anchor="middle">T</text>
+
+  <!-- I Circle -->
+  <circle cx="220" cy="40" r="35" fill="#FFD966"/>
+  <text x="220" y="52" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="white" text-anchor="middle">I</text>
+</svg>

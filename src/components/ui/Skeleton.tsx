@@ -34,7 +34,7 @@ export default function Skeleton({
       transition: {
         duration: 1.5,
         repeat: Infinity,
-        ease: 'easeInOut',
+        ease: [0.4, 0, 0.6, 1] as const,
       },
     },
   };

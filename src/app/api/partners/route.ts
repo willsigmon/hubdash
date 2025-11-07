@@ -4,7 +4,20 @@ import { getKnackClient } from '@/lib/knack/client'
 export async function GET() {
   try {
     const knack = getKnackClient()
+
+    if (!knack.isConfigured()) {
+      console.error('❌ Knack not configured for partners endpoint')
+      return NextResponse.json(
+        {
+          error: 'Knack integration not configured',
+          setup_guide: 'Run: npm run setup-knack'
+        },
+        { status: 503 }
+      )
+    }
+
     const objectKey = process.env.KNACK_ORGANIZATIONS_OBJECT || 'object_22'
+    console.log(`🏢 Fetching partners from Knack object ${objectKey}`)
     const knackRecords = await knack.getRecords(objectKey, { rows_per_page: 1000 })
 
     // Validate API response
@@ -50,7 +63,7 @@ export async function GET() {
     })
 
     return NextResponse.json(partners, {
-      headers: { 'Cache-Control': 'public, s-maxage=600' },
+      headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200' }, // 1hr cache
     })
   } catch (error: any) {
     console.error('Partners API Error:', error)

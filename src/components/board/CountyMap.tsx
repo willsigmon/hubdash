@@ -29,9 +29,25 @@ export default function CountyMap() {
     fetch('/api/partners')
       .then(res => res.json())
       .then(data => {
+        // Handle error responses
+        if (!data || typeof data === 'object' && 'error' in data) {
+          console.error('Partners API error:', data?.error || 'Unknown error')
+          setLoading(false)
+          return
+        }
+
+        // Ensure data is an array
+        const partners = Array.isArray(data) ? data : []
+
+        if (partners.length === 0) {
+          console.warn('No partners data received')
+          setLoading(false)
+          return
+        }
+
         // Group by county and sum devices
         const countyMap = new Map<string, number>();
-        data.forEach((partner: any) => {
+        partners.forEach((partner: any) => {
           const county = partner.county || 'Unknown';
           const current = countyMap.get(county) || 0;
           countyMap.set(county, current + (partner.devices_received || 0));
@@ -109,9 +125,8 @@ export default function CountyMap() {
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <span className="text-xl font-bold text-glass-bright w-6">#{idx + 1}</span>
                     <span className="font-bold text-glass-bright truncate">{county.name} County</span>
-                    <span className={`ml-2 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap ${
-                      statusColors[county.status]
-                    }`}>
+                    <span className={`ml-2 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap ${statusColors[county.status]
+                      }`}>
                       {statusLabels[county.status]}
                     </span>
                   </div>
@@ -124,11 +139,10 @@ export default function CountyMap() {
                 {/* Progress Bar */}
                 <div className="glass-track">
                   <div
-                    className={`glass-track__fill transition-all duration-300 ${
-                      county.status === 'high' ? 'bg-gradient-to-r from-hti-orange to-hti-yellow-orange' :
-                      county.status === 'moderate' ? 'bg-gradient-to-r from-hti-orange-yellow to-hti-yellow-orange' :
-                      'bg-gradient-to-r from-hti-navy to-hti-navy/80'
-                    }`}
+                    className={`glass-track__fill transition-all duration-300 ${county.status === 'high' ? 'bg-gradient-to-r from-hti-orange to-hti-yellow-orange' :
+                        county.status === 'moderate' ? 'bg-gradient-to-r from-hti-orange-yellow to-hti-yellow-orange' :
+                          'bg-gradient-to-r from-hti-navy to-hti-navy/80'
+                      }`}
                     style={{ width: `${percentage}%` }}
                   />
                 </div>

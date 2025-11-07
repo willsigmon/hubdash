@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getCachedOrStale } from "@/lib/knack/persistent-cache";
 
 type KnackRecord = Record<string, unknown> & { id: string };
 
@@ -70,8 +71,7 @@ async function fetchKnackCount(objectKey: string, filters?: unknown): Promise<nu
   return page.total_records ?? page.records?.length ?? 0;
 }
 
-async function fetchAllRecords(objectKey: string, filters?: unknown): Promise<{ records: KnackRecord[]; totalRecords: number }>
-{
+async function fetchAllRecords(objectKey: string, filters?: unknown): Promise<{ records: KnackRecord[]; totalRecords: number }> {
   const firstPage = await fetchKnackPage(objectKey, { filters, page: 1 });
   const totalRecords = firstPage.total_records ?? firstPage.records.length;
   const totalPages = firstPage.total_pages ?? 1;
@@ -117,13 +117,42 @@ const LAPTOP_FILTER = [{ field: "field_458", operator: "is", value: "Laptop" }];
 
 export async function GET() {
   try {
-    const grantLaptopsPresented = await fetchKnackCount(DEVICES_OBJECT, GRANT_FILTER);
+    // Check if Knack is configured
+    const appId = process.env.KNACK_APP_ID;
+    const apiKey = process.env.KNACK_API_KEY;
 
-    const [{ records: laptopRecords, totalRecords: totalDevices }, { records: organisations, totalRecords: organisationsTotal }]
-      = await Promise.all([
-        fetchAllRecords(DEVICES_OBJECT, LAPTOP_FILTER),
-        fetchAllRecords(ORGANISATIONS_OBJECT),
-      ]);
+    if (!appId || !apiKey) {
+      console.error('❌ Knack API credentials not configured for metrics endpoint')
+      console.error('   Add KNACK_APP_ID and KNACK_API_KEY to .env.local')
+      return NextResponse.json(
+        {
+          error: 'Knack integration not configured. Please add credentials to .env.local',
+          setup_guide: 'Run: npm run setup-knack'
+        },
+        { status: 503 }
+      )
+    }
+
+    console.log('📊 Fetching metrics from Knack...')
+
+    // Use persistent cache with 1 hour TTL to minimize API calls
+    const metrics = await getCachedOrStale(
+      'api:metrics:v2',
+      async () => {
+        const grantLaptopsPresented = await fetchKnackCount(DEVICES_OBJECT, GRANT_FILTER);
+
+        const [{ records: laptopRecords, totalRecords: totalDevices }, { records: organisations, totalRecords: organisationsTotal }]
+          = await Promise.all([
+            fetchAllRecords(DEVICES_OBJECT, LAPTOP_FILTER),
+            fetchAllRecords(ORGANISATIONS_OBJECT),
+          ]);
+
+        return { grantLaptopsPresented, laptopRecords, totalDevices, organisations, organisationsTotal };
+      },
+      3600 // 1 hour TTL
+    );
+
+    const { grantLaptopsPresented, laptopRecords, totalDevices, organisations, organisationsTotal } = metrics;
 
     const distributedCount = laptopRecords.reduce((acc, record) => {
       const status = normaliseStatus(record).toLowerCase();
@@ -152,7 +181,7 @@ export async function GET() {
 
     const grantLaptopGoal = Number(process.env.GRANT_LAPTOP_GOAL || 1500);
 
-    const metrics = {
+    const result = {
       grantLaptopsPresented,
       grantLaptopGoal,
       grantLaptopProgress: Math.round((grantLaptopsPresented / Math.max(grantLaptopGoal, 1)) * 100),
@@ -176,8 +205,10 @@ export async function GET() {
       readyToShip: readyCount,
     };
 
-    return NextResponse.json(metrics, {
-      headers: { "Cache-Control": "public, s-maxage=300" },
+    return NextResponse.json(result, {
+      headers: {
+        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200" // 1hr cache, 2hr stale
+      },
     });
   } catch (error: unknown) {
     console.error("Error generating metrics:", error);

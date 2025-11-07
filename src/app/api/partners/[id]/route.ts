@@ -1,11 +1,5 @@
 import { NextResponse } from "next/server";
 
-interface RouteParams {
-  params: {
-    id: string;
-  };
-}
-
 function mapPartner(record: any) {
   let county = "Unknown";
   if (Array.isArray(record?.field_613_raw) && record.field_613_raw.length > 0) {
@@ -43,9 +37,12 @@ function mapPartner(record: any) {
   };
 }
 
-export async function GET(_request: Request, { params }: RouteParams) {
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const partnerId = params.id;
+    const { id: partnerId } = await params;
     const appId = process.env.KNACK_APP_ID;
     const apiKey = process.env.KNACK_API_KEY;
     const objectKey = process.env.KNACK_ORGANIZATIONS_OBJECT || "object_22";

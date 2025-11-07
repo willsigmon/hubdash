@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, User } from 'lucide-react';
-import { usePresence, useConnectionStatus } from '@/lib/realtime/socket-manager';
+import { usePresence, useConnectionStatus, useNotifications, useCollaborativeFilters } from '@/lib/realtime/socket-manager';
 import { HoverAnimation } from './PageTransition';
 
 /**
@@ -83,11 +83,11 @@ export default function PresenceIndicator() {
                     </div>
                     <div className="text-xs text-hti-stone truncate">
                       {user.currentPage === '/' ? 'Home' :
-                       user.currentPage.startsWith('/board') ? 'Board Dashboard' :
-                       user.currentPage.startsWith('/ops') ? 'Operations Hub' :
-                       user.currentPage.startsWith('/reports') ? 'Reports' :
-                       user.currentPage.startsWith('/marketing') ? 'Marketing Hub' :
-                       user.currentPage}
+                        user.currentPage.startsWith('/board') ? 'Board Dashboard' :
+                          user.currentPage.startsWith('/ops') ? 'Operations Hub' :
+                            user.currentPage.startsWith('/reports') ? 'Reports' :
+                              user.currentPage.startsWith('/marketing') ? 'Marketing Hub' :
+                                user.currentPage}
                     </div>
                   </div>
                 </div>
@@ -117,15 +117,14 @@ export function LiveNotifications() {
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: 300, scale: 0.8 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className={`p-4 rounded-lg shadow-lg border-l-4 ${
-              notification.type === 'success'
+            className={`p-4 rounded-lg shadow-lg border-l-4 ${notification.type === 'success'
                 ? 'bg-green-50 border-green-500 text-green-800'
                 : notification.type === 'warning'
-                ? 'bg-yellow-50 border-yellow-500 text-yellow-800'
-                : notification.type === 'error'
-                ? 'bg-red-50 border-red-500 text-red-800'
-                : 'bg-blue-50 border-blue-500 text-blue-800'
-            }`}
+                  ? 'bg-yellow-50 border-yellow-500 text-yellow-800'
+                  : notification.type === 'error'
+                    ? 'bg-red-50 border-red-500 text-red-800'
+                    : 'bg-blue-50 border-blue-500 text-blue-800'
+              }`}
           >
             <div className="flex items-start justify-between">
               <div className="flex-1">
@@ -178,4 +177,3 @@ export function CollaborativeFiltersIndicator() {
     </div>
   );
 }
-
