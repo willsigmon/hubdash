@@ -1,5 +1,5 @@
 /**
- * Custom React Query hooks for HubDash API
+ * Custom React Query hooks for HUBDash API
  * Provides type-safe, cached data fetching with automatic deduplication
  */
 

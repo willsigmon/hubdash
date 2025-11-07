@@ -122,7 +122,7 @@ export default function ApplicationFilters({
       <div className="bg-gradient-to-r from-hti-plum via-hti-fig to-hti-ember text-hti-sand px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Filter className="w-5 h-5" />
-          <h3 className="font-semibold tracking-wide uppercase text-xs">Filters</h3>
+          <h3 className="font-semibold tracking-wide text-xs">Filters</h3>
           {getActiveFilterCount() > 0 && (
             <span className="px-2 py-1 bg-white/15 rounded-full text-xs text-white">
               {getActiveFilterCount()} active

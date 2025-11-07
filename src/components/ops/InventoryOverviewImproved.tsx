@@ -173,7 +173,7 @@ export default function InventoryOverviewImproved() {
         <div className="flex-1 overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-hti-midnight/80 sticky top-0">
-              <tr className="text-left text-xs font-medium text-hti-sand/80 uppercase tracking-wider border-b border-white/10">
+              <tr className="text-left text-xs font-medium text-hti-sand/80 tracking-wider border-b border-white/10">
                 <th className="px-3 md:px-6 py-3">Serial Number</th>
                 <th className="px-3 md:px-6 py-3">Device Info</th>
                 <th className="px-3 md:px-6 py-3">Status</th>

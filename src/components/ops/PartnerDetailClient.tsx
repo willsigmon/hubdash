@@ -26,20 +26,36 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
   const [partner, setPartner] = useState<PartnerData | null>(null);
   const [activeTab, setActiveTab] = useState<"organization" | "details" | "history">("organization");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Fetch partner data
-    fetch(`/api/partners`)
-      .then(res => res.json())
-      .then(data => {
-        const found = data.find((p: PartnerData) => p.id === partnerId);
-        if (found) {
-          setPartner(found);
+    if (!partnerId) return;
+
+    setLoading(true);
+    setError(null);
+
+    fetch(`/api/partners/${partnerId}`)
+      .then(async (res) => {
+        if (res.status === 404) {
+          throw new Error("not_found");
         }
+        if (!res.ok) {
+          throw new Error("failed");
+        }
+        return res.json();
+      })
+      .then((data: PartnerData) => {
+        setPartner(data);
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching partner:', error);
+      .catch((err) => {
+        console.error('Error fetching partner:', err);
+        if (err.message === "not_found") {
+          setError("Partner not found");
+        } else {
+          setError("Unable to load partner details right now.");
+        }
+        setPartner(null);
         setLoading(false);
       });
   }, [partnerId]);
@@ -55,6 +71,14 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
             <div className="bg-white/50 backdrop-blur-xl rounded-2xl border border-hti-yellow/50 p-6 h-80 animate-pulse" />
           </div>
         </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-hti-navy text-lg font-semibold">{error}</p>
       </div>
     );
   }
@@ -190,22 +214,22 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-hti-yellow/50">
-                      <p className="text-xs font-bold text-hti-navy uppercase tracking-wider mb-2">Organization Type</p>
+                      <p className="text-xs font-bold text-hti-navy tracking-wide mb-2">Organization type</p>
                       <p className="text-2xl font-bold text-hti-navy capitalize">{partner.type}</p>
                     </div>
                     <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-hti-yellow/50">
-                      <p className="text-xs font-bold text-hti-navy uppercase tracking-wider mb-2">County</p>
+                      <p className="text-xs font-bold text-hti-navy tracking-wide mb-2">County</p>
                       <p className="text-2xl font-bold text-hti-navy">{partner.county || "Unknown"}</p>
                     </div>
                     <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-hti-yellow/50">
-                      <p className="text-xs font-bold text-hti-navy uppercase tracking-wider mb-2">Status</p>
+                      <p className="text-xs font-bold text-hti-navy tracking-wide mb-2">Status</p>
                       <div className="flex items-center gap-2">
                         <span className={`w-3 h-3 rounded-full ${partner.status === "active" ? "bg-green-500" : "bg-yellow-500"} animate-pulse`} />
                         <p className="text-lg font-bold text-hti-navy capitalize">{partner.status}</p>
                       </div>
                     </div>
                     <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-hti-yellow/50">
-                      <p className="text-xs font-bold text-hti-navy uppercase tracking-wider mb-2">Devices Received</p>
+                      <p className="text-xs font-bold text-hti-navy tracking-wide mb-2">Devices received</p>
                       <p className="text-2xl font-bold text-hti-orange">{partner.devices_received}</p>
                     </div>
                   </div>

@@ -7,7 +7,7 @@ import ApplicationSearch from "@/components/marketing/ApplicationSearch";
 import ApplicationFilters from "@/components/marketing/ApplicationFilters";
 import ApplicationGrouping from "@/components/marketing/ApplicationGrouping";
 import ApplicationDetailPanel from "@/components/marketing/ApplicationDetailPanel";
-import { BarChart3, Users, CheckCircle, Clock, XCircle, Eye, Zap, TrendingUp } from "lucide-react";
+import { BarChart3, Users, CheckCircle, Clock, XCircle, Eye } from "lucide-react";
 
 export default function MarketingPage() {
   const [partnerships, setPartnerships] = useState<Partnership[]>([]);
@@ -165,19 +165,28 @@ export default function MarketingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-hti-sand/60 to-white">
+      <a href="#main-content" className="skip-to-content">
+        Skip to main content
+      </a>
       {/* Header */}
-      <header className="bg-gradient-to-r from-hti-plum to-hti-fig text-white shadow-xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex items-center justify-between">
+      <header
+        className="relative overflow-hidden bg-gradient-to-r from-hti-navy via-hti-navy/95 to-hti-navy text-white shadow-xl"
+        role="banner"
+      >
+        <div className="absolute inset-0 pointer-events-none opacity-35 bg-[radial-gradient(circle_at_top_right,_rgba(255,213,128,0.35),_transparent_60%)]" />
+        <div className="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(circle_at_bottom_left,_rgba(109,179,183,0.28),_transparent_65%)]" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex items-center justify-between gap-6 flex-wrap">
             <div>
-              <h1 className="text-4xl font-bold mb-2">Marketing HUB</h1>
-              <p className="text-white/90 text-lg">
+              <h1 className="text-4xl font-bold mb-2 text-white">Marketing HUB</h1>
+              <p className="text-hti-yellow text-lg">
                 Partnership application management for HTI's marketing team
               </p>
             </div>
             <Link
               href="/"
-              className="px-6 py-3 bg-white/20 hover:bg-white/30 rounded-lg transition-colors text-sm font-semibold"
+              className="glass-button glass-button--accent text-sm font-semibold shadow-glass focus:outline-none focus-visible:ring-2 focus-visible:ring-hti-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-hti-navy/60"
+              aria-label="Return to HUBDash home page"
             >
               ← Back to HUB
             </Link>
@@ -189,94 +198,80 @@ export default function MarketingPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-hti-navy mb-2">Application Pipeline</h2>
-          <p className="text-gray-700">Real-time overview of partnership applications</p>
+          <p className="text-hti-stone">Real-time overview of partnership applications</p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {/* Total Card */}
-          <div className="group bg-gradient-to-br from-hti-navy to-hti-navy/80 rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <BarChart3 className="w-8 h-8 text-white" />
-                <Zap className="w-4 h-4 text-hti-yellow opacity-0 group-hover:opacity-100 transition-opacity" />
+          {[
+            {
+              icon: <BarChart3 className="w-8 h-8 text-glass-bright" />,
+              title: "Total Applications",
+              value: stats.total,
+              footer: "All statuses",
+              glow: "from-hti-navy/45 to-hti-teal/30",
+              textClass: "text-glass-bright",
+            },
+            {
+              icon: <Clock className="w-8 h-8 text-hti-navy" />,
+              title: "Pending Review",
+              value: stats.pending,
+              footer: stats.pending > 0 ? "Action needed" : "All reviewed",
+              glow: "from-hti-yellow/45 to-hti-orange/30",
+              textClass: "text-hti-navy",
+            },
+            {
+              icon: <Eye className="w-8 h-8 text-glass-bright" />,
+              title: "Under Review",
+              value: stats.inReview,
+              footer: "Being evaluated",
+              glow: "from-hti-navy/40 to-hti-teal/30",
+              textClass: "text-glass-bright",
+            },
+            {
+              icon: <CheckCircle className="w-8 h-8 text-glass-bright" />,
+              title: "Approved",
+              value: stats.approved,
+              footer: "Ready to deliver",
+              glow: "from-hti-orange/45 to-hti-yellow/30",
+              textClass: "text-glass-bright",
+            },
+            {
+              icon: <XCircle className="w-8 h-8 text-glass-bright" />,
+              title: "Rejected",
+              value: stats.rejected,
+              footer: "Ineligible",
+              glow: "from-hti-orange/40 to-hti-red/30",
+              textClass: "text-glass-bright",
+            },
+            {
+              icon: <Users className="w-8 h-8 text-glass-bright" />,
+              title: "Chromebooks Needed",
+              value: stats.totalChromebooks,
+              footer: "Total requested",
+              glow: "from-hti-teal/40 to-hti-navy/35",
+              textClass: "text-glass-bright",
+            },
+          ].map(({ icon, title, value, footer, glow, textClass }, index) => (
+            <div
+              key={index}
+              className={`glass-card glass-card--subtle shadow-glass p-6 hover:-translate-y-1 transition-transform duration-300 relative group ${textClass}`}
+            >
+              <div className={`glass-card__glow bg-gradient-to-br ${glow}`} />
+              <div className="relative z-10 space-y-4">
+                <div className="flex items-center justify-between">
+                  {icon}
               </div>
-              <div className="text-sm font-medium text-white mb-1">Total Applications</div>
-              <div className="text-4xl font-bold text-white">{stats.total}</div>
-              <div className="text-xs text-white/60 mt-2">All statuses</div>
-            </div>
-          </div>
-
-          {/* Pending Card */}
-          <div className="group bg-gradient-to-br from-hti-gold to-hti-soleil rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <Clock className="w-8 h-8 text-white" />
-                <TrendingUp className="w-4 h-4 text-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="text-sm font-medium text-glass-muted">{title}</div>
+                <div className="text-4xl font-bold text-glass-bright">{value}</div>
+                <div className="text-xs text-glass-muted/80">{footer}</div>
               </div>
-              <div className="text-sm font-medium text-white mb-1">Pending Review</div>
-              <div className="text-4xl font-bold text-white">{stats.pending}</div>
-              <div className="text-xs text-white/60 mt-2">{stats.pending > 0 ? 'Action needed' : 'All reviewed'}</div>
             </div>
-          </div>
-
-          {/* In Review Card */}
-          <div className="group bg-gradient-to-br from-hti-fig to-hti-plum rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <Eye className="w-8 h-8 text-white" />
-              </div>
-              <div className="text-sm font-medium text-white mb-1">Under Review</div>
-              <div className="text-4xl font-bold text-white">{stats.inReview}</div>
-              <div className="text-xs text-white/60 mt-2">Being evaluated</div>
-            </div>
-          </div>
-
-          {/* Approved Card */}
-          <div className="group bg-gradient-to-br from-hti-ember to-hti-gold rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <CheckCircle className="w-8 h-8 text-white" />
-              </div>
-              <div className="text-sm font-medium text-white mb-1">Approved</div>
-              <div className="text-4xl font-bold text-white">{stats.approved}</div>
-              <div className="text-xs text-white/60 mt-2">Ready to deliver</div>
-            </div>
-          </div>
-
-          {/* Rejected Card */}
-          <div className="group bg-gradient-to-br from-hti-sunset to-hti-ember rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <XCircle className="w-8 h-8 text-white" />
-              </div>
-              <div className="text-sm font-medium text-white mb-1">Rejected</div>
-              <div className="text-4xl font-bold text-white">{stats.rejected}</div>
-              <div className="text-xs text-white/60 mt-2">Ineligible</div>
-            </div>
-          </div>
-
-          {/* Chromebooks Card */}
-          <div className="group bg-gradient-to-br from-hti-fig to-hti-dusk rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <Users className="w-8 h-8 text-white" />
-              </div>
-              <div className="text-sm font-medium text-white mb-1">Chromebooks Needed</div>
-              <div className="text-4xl font-bold text-white">{stats.totalChromebooks}</div>
-              <div className="text-xs text-white/60 mt-2">Total requested</div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
       {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12" role="main">
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-hti-navy mb-2">Browse Applications</h2>
           <p className="text-gray-700">Use filters and search to find applications. Click any card to view full details.</p>
@@ -286,10 +281,11 @@ export default function MarketingPage() {
           {/* Sidebar - Filters */}
           <aside className="lg:w-80 shrink-0">
             <div className="sticky top-20 space-y-6">
-              <div className="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-hti-fig">
-                <h3 className="text-lg font-bold text-hti-navy mb-4 flex items-center gap-2">
-                  <div className="w-2 h-2 bg-hti-plum rounded-full" />
-                  Filter Applications
+              <div className="glass-card glass-card--subtle shadow-glass p-6">
+                <div className="glass-card__glow bg-gradient-to-br from-hti-teal/30 to-hti-navy/25" />
+                <h3 className="relative z-10 text-lg font-bold text-glass-bright mb-4 flex items-center gap-2">
+                  <div className="w-2 h-2 bg-hti-teal rounded-full" />
+                  Filter applications
                 </h3>
                 <ApplicationFilters
                   filters={filters}
@@ -315,7 +311,7 @@ export default function MarketingPage() {
             {loading ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-white rounded-xl h-64 animate-pulse shadow-lg" />
+                  <div key={i} className="glass-card glass-card--subtle shadow-glass h-64 animate-pulse" />
                 ))}
               </div>
             ) : (

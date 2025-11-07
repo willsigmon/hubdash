@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useMetrics } from "@/lib/hooks/useMetrics";
 
 interface Metric {
   label: string;
@@ -14,89 +15,87 @@ interface Metric {
 }
 
 export default function ImpactMetrics() {
+  const { data, isLoading, isError } = useMetrics();
   const [metrics, setMetrics] = useState<Metric[]>([]);
   const [animatedValues, setAnimatedValues] = useState<number[]>([]);
   const [animatedProgress, setAnimatedProgress] = useState<number>(0);
-  const [loading, setLoading] = useState(true);
+
+  const metricsData = useMemo<Metric[]>(() => {
+    if (!data) return [];
+
+    const grantProgress = Math.round(
+      ((data.grantLaptopsPresented || 0) / Math.max(data.grantLaptopGoal || 1500, 1)) * 100
+    );
+
+    return [
+      {
+        label: "Grant Laptops Presented",
+        value: data.grantLaptopsPresented || 0,
+        suffix: ` / 1,500`,
+        icon: "🎯",
+        color: "from-hti-teal to-hti-teal-light",
+        description: "Since Sept 9, 2024 (Grant Period)",
+        isFeatured: true,
+        progress: grantProgress,
+      },
+      {
+        label: "Total Laptops (All-Time)",
+        value: data.totalLaptopsCollected || 0,
+        suffix: "+",
+        icon: "💻",
+        color: "from-hti-navy to-hti-teal",
+        description: "Overall collection since inception",
+      },
+      {
+        label: "Counties Served",
+        value: data.countiesServed || 0,
+        suffix: "",
+        icon: "📍",
+        color: "from-hti-yellow to-hti-yellow-light",
+        description: "Through Digital Champion Grant",
+      },
+      {
+        label: "People Trained",
+        value: data.peopleTrained || 0,
+        suffix: "+",
+        icon: "👥",
+        color: "from-hti-teal to-hti-sky",
+        description: "Digital literacy participants",
+      },
+      {
+        label: "E-Waste Diverted",
+        value: data.eWasteTons || 0,
+        suffix: " tons",
+        icon: "♻️",
+        color: "from-hti-navy-dark to-hti-fog",
+        description: "Kept out of landfills",
+      },
+      {
+        label: "Partner Organizations",
+        value: data.partnerOrganizations || 0,
+        suffix: "",
+        icon: "🤝",
+        color: "from-hti-teal-dark to-hti-teal",
+        description: "Community collaborations",
+      },
+    ];
+  }, [data]);
 
   useEffect(() => {
-    // Fetch metrics from API
-    fetch('/api/metrics')
-      .then(res => res.json())
-      .then(data => {
-        const grantProgress = Math.round(
-          ((data.grantLaptopsPresented || 0) / Math.max(data.grantLaptopGoal || 1500, 1)) * 100
-        );
+    if (!metricsData.length) return;
 
-        const metricsData: Metric[] = [
-          {
-            label: "Grant Laptops Presented",
-            value: data.grantLaptopsPresented || 0,
-            suffix: ` / 1,500`,
-            icon: "🎯",
-            color: "from-hti-ember to-hti-gold",
-            description: "Since Sept 9, 2024 (Grant Period)",
-            isFeatured: true,
-            progress: grantProgress,
-          },
-          {
-            label: "Total Laptops (All-Time)",
-            value: data.totalLaptopsCollected || 0,
-            suffix: "+",
-            icon: "💻",
-            color: "from-hti-plum to-hti-fig",
-            description: "Overall collection since inception",
-          },
-          {
-            label: "Counties Served",
-            value: data.countiesServed || 0,
-            suffix: "",
-            icon: "📍",
-            color: "from-hti-sunset to-hti-ember",
-            description: "Through Digital Champion Grant",
-          },
-          {
-            label: "People Trained",
-            value: data.peopleTrained || 0,
-            suffix: "+",
-            icon: "👥",
-            color: "from-hti-gold to-hti-soleil",
-            description: "Digital literacy participants",
-          },
-          {
-            label: "E-Waste Diverted",
-            value: data.eWasteTons || 0,
-            suffix: " tons",
-            icon: "♻️",
-            color: "from-hti-fig to-hti-mist",
-            description: "Kept out of landfills",
-          },
-          {
-            label: "Partner Organizations",
-            value: data.partnerOrganizations || 0,
-            suffix: "",
-            icon: "🤝",
-            color: "from-hti-ember to-hti-gold",
-            description: "Community collaborations",
-          },
-        ];
-
-        setMetrics(metricsData);
-        setAnimatedValues(metricsData.map(() => 0));
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching metrics:', error);
-        setLoading(false);
-      });
-  }, []);
+    setMetrics(metricsData);
+    setAnimatedValues(metricsData.map(() => 0));
+    setAnimatedProgress(0);
+  }, [metricsData]);
 
   useEffect(() => {
     if (metrics.length === 0) return;
 
-    const duration = 2000; // 2 seconds
+    const duration = 2000;
     const steps = 60;
     const interval = duration / steps;
+    const timers: NodeJS.Timeout[] = [];
 
     metrics.forEach((metric, index) => {
       let currentStep = 0;
@@ -105,124 +104,113 @@ export default function ImpactMetrics() {
       const timer = setInterval(() => {
         currentStep++;
         setAnimatedValues((prev) => {
-          const newValues = [...prev];
-          newValues[index] = Math.min(
-            Math.floor(increment * currentStep),
-            metric.value
-          );
-          return newValues;
+          const next = [...prev];
+          next[index] = Math.min(Math.floor(increment * currentStep), metric.value);
+          return next;
         });
 
         if (currentStep >= steps) {
           clearInterval(timer);
         }
       }, interval);
+
+      timers.push(timer);
     });
 
-    // Animate grant progress bar
-    const grantMetric = metrics[0];
-    if (grantMetric.progress !== undefined) {
+    const grant = metrics[0];
+    if (grant?.progress !== undefined) {
       let currentStep = 0;
-      const increment = grantMetric.progress / steps;
+      const increment = grant.progress / steps;
 
       const progressTimer = setInterval(() => {
         currentStep++;
         setAnimatedProgress(
-          Math.min(Math.floor(increment * currentStep), grantMetric.progress || 0)
+          Math.min(Math.floor(increment * currentStep), grant.progress || 0)
         );
 
         if (currentStep >= steps) {
           clearInterval(progressTimer);
         }
       }, interval);
+
+      timers.push(progressTimer);
     }
+
+    return () => timers.forEach((timer) => clearInterval(timer));
   }, [metrics]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="space-y-6">
-        {/* Featured card skeleton */}
-        <div className="h-64 rounded-2xl bg-gradient-to-br from-gray-200 to-gray-100 animate-pulse" />
-        {/* Regular cards skeleton */}
+        <div className="glass-card glass-card--subtle h-64 animate-pulse" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="rounded-xl bg-gray-200 animate-pulse h-44" />
+            <div key={i} className="glass-card glass-card--subtle h-44 animate-pulse" />
           ))}
         </div>
       </div>
     );
   }
 
-  // Separate featured metric from others
+  if (isError) {
+    return (
+      <div className="glass-card glass-card--subtle shadow-glass p-6 text-center border border-hti-red/40">
+        <p className="text-hti-red font-bold">Unable to load impact metrics right now.</p>
+        <p className="text-sm text-glass-muted mt-2">Please refresh or try again later.</p>
+      </div>
+    );
+  }
+
   const featuredMetric = metrics[0];
   const otherMetrics = metrics.slice(1);
 
   return (
     <div className="space-y-8">
-      {/* Featured Grant Metrics Card */}
       {featuredMetric && (
-        <div
-          className="group relative overflow-hidden rounded-2xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-300 border border-hti-ember/25"
-        >
-          {/* Animated background gradient */}
-          <div className={`absolute inset-0 bg-gradient-to-br ${featuredMetric.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`} />
-
-          {/* Top accent bar */}
-          <div className={`h-3 bg-gradient-to-r ${featuredMetric.color}`} />
-
-          <div className="relative p-8 md:p-10">
-            {/* Header with icon and badge */}
-            <div className="flex items-start justify-between mb-6 flex-wrap gap-4">
+        <div className="glass-card glass-card--subtle shadow-glass overflow-hidden group">
+          <div className={`glass-card__glow bg-gradient-to-br ${featuredMetric.color}`} />
+          <div className="relative p-8 md:p-10 space-y-6">
+            <div className="flex items-start justify-between flex-wrap gap-4">
               <div className="flex items-center gap-4">
                 <div className="text-6xl">{featuredMetric.icon}</div>
                 <div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-hti-plum">
+                  <h3 className="text-2xl md:text-3xl font-bold text-glass-bright">
                     {featuredMetric.label}
                   </h3>
-                  <p className="text-sm text-hti-stone mt-1 font-medium">
+                  <p className="text-sm text-glass-muted mt-1 font-medium">
                     {featuredMetric.description}
                   </p>
                 </div>
               </div>
-              <div className={`px-4 py-2 rounded-full bg-gradient-to-br ${featuredMetric.color} text-white text-sm font-bold shadow-lg whitespace-nowrap`}>
-                {animatedProgress}% Complete
-              </div>
+              <span className="glass-chip glass-chip--teal text-sm whitespace-nowrap">
+                {animatedProgress}% complete
+              </span>
             </div>
 
-            {/* Main metrics display */}
-              <div className="bg-hti-sand rounded-xl p-6 mb-6 border border-hti-gold/30">
+            <div className="glass-card glass-card--subtle shadow-glass p-6">
               <div className="flex items-baseline gap-2 mb-2">
-                <div className="text-5xl md:text-6xl font-bold text-hti-plum">
+                <div className="text-5xl md:text-6xl font-bold text-glass-bright">
                   {animatedValues[0]?.toLocaleString() || 0}
                 </div>
-                <span className="text-2xl font-bold text-hti-ember">
-                  {featuredMetric.suffix}
-                </span>
+                <span className="text-2xl font-bold text-glass-muted">{featuredMetric.suffix}</span>
               </div>
-              <p className="text-sm text-hti-stone font-medium">
+              <p className="text-sm text-glass-muted font-medium">
                 Goal: 1,500 laptops by end of grant period
               </p>
             </div>
 
-            {/* Progress bar section */}
             <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-bold text-hti-plum">Grant Progress</span>
-                <span className="text-sm font-bold text-hti-ember">
-                  {animatedProgress}%
-                </span>
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-bold text-glass-bright">Grant Progress</span>
+                <span className="text-sm font-bold text-glass-muted">{animatedProgress}%</span>
               </div>
-
-              {/* Animated progress bar */}
-              <div className="w-full h-4 bg-hti-sand/80 rounded-full overflow-hidden shadow-inner border border-hti-gold/30">
+              <div className="glass-track">
                 <div
-                  className={`h-full bg-gradient-to-r ${featuredMetric.color} rounded-full transition-all duration-500 ease-out shadow-md`}
-                  style={{ width: `${animatedProgress}%` }}
+                  className="glass-track__fill"
+                  style={{ width: `${Math.max(animatedProgress, 1)}%` }}
                 />
               </div>
-
-              {/* Progress milestones */}
-              <div className="flex justify-between text-xs text-hti-plum font-bold mt-4 pt-2">
+              <div className="flex justify-between text-xs text-glass-muted font-semibold mt-4 pt-2">
                 <span>0%</span>
                 <span>25%</span>
                 <span>50%</span>
@@ -231,55 +219,36 @@ export default function ImpactMetrics() {
               </div>
             </div>
           </div>
-
-          {/* Bottom decoration */}
-          <div className={`h-1 bg-gradient-to-r ${featuredMetric.color}`} />
         </div>
       )}
 
-      {/* Regular Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
         {otherMetrics.map((metric, index) => (
           <div
             key={metric.label}
-            className="group relative overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-hti-fig/10"
+            className="glass-card glass-card--subtle shadow-glass group transition-transform duration-300 hover:-translate-y-1 min-h-[220px]"
           >
-            {/* Background gradient */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${metric.color} opacity-3 group-hover:opacity-8 transition-opacity`} />
-
-            {/* Top accent */}
-            <div className={`h-2 bg-gradient-to-r ${metric.color}`} />
-
+            <div className={`glass-card__glow bg-gradient-to-br ${metric.color}`} />
             <div className="relative p-6 space-y-4">
-              {/* Header */}
               <div className="flex items-start justify-between">
-                <div className="text-5xl">{metric.icon}</div>
-                <div className={`px-2 py-1 rounded-full bg-gradient-to-br ${metric.color} text-white text-xs font-bold shadow-sm`}>
-                  Live
-                </div>
+                <div className="text-5xl drop-shadow-[0_8px_22px_rgba(8,25,55,0.4)]">{metric.icon}</div>
+                <span className="glass-chip glass-chip--slate text-xs">Live</span>
               </div>
-
-              {/* Value section */}
               <div>
-                <div className="text-4xl font-bold text-hti-plum mb-1">
+                <div className="text-4xl font-bold text-glass-bright mb-1">
                   {animatedValues[index + 1]?.toLocaleString() || 0}
-                  <span className="text-2xl font-bold text-hti-ember ml-1">
+                  <span className="text-2xl font-bold text-glass-muted ml-1">
                     {metric.suffix}
                   </span>
                 </div>
-                <h4 className="text-sm font-bold text-hti-plum">
+                <h4 className="text-sm font-semibold text-glass-muted opacity-90">
                   {metric.label}
                 </h4>
               </div>
-
-              {/* Description */}
-              <div className="text-xs text-hti-stone leading-relaxed font-medium">
+              <p className="text-xs text-glass-muted leading-relaxed font-medium">
                 {metric.description}
-              </div>
+              </p>
             </div>
-
-            {/* Bottom accent line */}
-            <div className={`h-1 bg-gradient-to-r ${metric.color}`} />
           </div>
         ))}
       </div>

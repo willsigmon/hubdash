@@ -170,11 +170,11 @@ export default function ApplicationGrouping({
           {/* Key Stats - Chromebooks & Date */}
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div className="bg-gradient-to-br from-hti-ember/12 via-hti-gold/10 to-white p-3 rounded-xl border border-hti-ember/20">
-              <div className="text-xs text-hti-stone font-semibold mb-1 uppercase tracking-wide">Chromebooks</div>
+              <div className="text-xs text-hti-stone font-semibold mb-1 tracking-wide">Chromebooks</div>
               <div className="text-2xl font-bold text-hti-plum">{app.chromebooksNeeded}</div>
             </div>
             <div className="bg-hti-sand/70 p-3 rounded-xl border border-hti-fig/12">
-              <div className="text-xs text-hti-stone font-semibold mb-1 uppercase tracking-wide">Submitted</div>
+              <div className="text-xs text-hti-stone font-semibold mb-1 tracking-wide">Submitted</div>
               <div className="text-sm font-semibold text-hti-plum">
                 {new Date(app.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
               </div>

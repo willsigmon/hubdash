@@ -2,12 +2,13 @@ import Link from "next/link";
 import PartnerDetailClient from "@/components/ops/PartnerDetailClient";
 
 interface PartnerDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function PartnerDetailPage({ params }: PartnerDetailPageProps) {
+export default async function PartnerDetailPage({ params }: PartnerDetailPageProps) {
+  const resolvedParams = await params;
   return (
     <div className="min-h-screen bg-gradient-to-br from-hti-yellow/5 via-white to-hti-orange/5">
       {/* Header Navigation */}
@@ -30,7 +31,7 @@ export default function PartnerDetailPage({ params }: PartnerDetailPageProps) {
 
       {/* Main Content */}
       <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <PartnerDetailClient partnerId={params.id} />
+        <PartnerDetailClient partnerId={resolvedParams.id} />
       </main>
     </div>
   );

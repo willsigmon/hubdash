@@ -1,112 +1,187 @@
-import { NextResponse } from 'next/server'
-import { getKnackClient } from '@/lib/knack/client'
+import { NextResponse } from "next/server";
+
+type KnackRecord = Record<string, unknown> & { id: string };
+
+interface KnackListResponse {
+  records: KnackRecord[];
+  total_records?: number;
+  total_pages?: number;
+  current_page?: number;
+}
+
+const KNACK_BASE_URL = process.env.KNACK_BASE_URL || "https://api.knack.com/v1";
+const DEVICES_OBJECT = process.env.KNACK_DEVICES_OBJECT || "object_7";
+const ORGANISATIONS_OBJECT = process.env.KNACK_ORGANIZATIONS_OBJECT || "object_22";
+
+function ensureKnackCredentials() {
+  const appId = process.env.KNACK_APP_ID;
+  const apiKey = process.env.KNACK_API_KEY;
+
+  if (!appId || !apiKey) {
+    throw new Error("Knack credentials missing. Add KNACK_APP_ID and KNACK_API_KEY to .env.local");
+  }
+
+  return {
+    appId,
+    apiKey,
+  };
+}
+
+async function fetchKnackPage(
+  objectKey: string,
+  {
+    page = 1,
+    rowsPerPage = 500,
+    filters,
+  }: {
+    page?: number;
+    rowsPerPage?: number;
+    filters?: unknown;
+  } = {}
+): Promise<KnackListResponse> {
+  const { appId, apiKey } = ensureKnackCredentials();
+
+  const params = new URLSearchParams();
+  params.set("rows_per_page", String(rowsPerPage));
+  params.set("page", String(page));
+  if (filters) {
+    params.set("filters", JSON.stringify(filters));
+  }
+
+  const response = await fetch(`${KNACK_BASE_URL}/objects/${objectKey}/records?${params.toString()}`, {
+    headers: {
+      "X-Knack-Application-Id": appId,
+      "X-Knack-REST-API-Key": apiKey,
+      "Content-Type": "application/json",
+    },
+    next: { revalidate: 300 },
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Knack request failed (${response.status}): ${body}`);
+  }
+
+  return (await response.json()) as KnackListResponse;
+}
+
+async function fetchKnackCount(objectKey: string, filters?: unknown): Promise<number> {
+  const page = await fetchKnackPage(objectKey, { filters, rowsPerPage: 1 });
+  return page.total_records ?? page.records?.length ?? 0;
+}
+
+async function fetchAllRecords(objectKey: string, filters?: unknown): Promise<{ records: KnackRecord[]; totalRecords: number }>
+{
+  const firstPage = await fetchKnackPage(objectKey, { filters, page: 1 });
+  const totalRecords = firstPage.total_records ?? firstPage.records.length;
+  const totalPages = firstPage.total_pages ?? 1;
+
+  if (totalPages === 1) {
+    return { records: firstPage.records ?? [], totalRecords };
+  }
+
+  const records = [...(firstPage.records ?? [])];
+  for (let page = 2; page <= totalPages; page += 1) {
+    const next = await fetchKnackPage(objectKey, { filters, page });
+    if (Array.isArray(next.records)) {
+      records.push(...next.records);
+    }
+  }
+
+  return { records, totalRecords };
+}
+
+function normaliseStatus(entry: KnackRecord, fallback = "Unknown"): string {
+  const raw = entry.field_56_raw ?? entry.field_56 ?? fallback;
+
+  if (Array.isArray(raw) && raw.length > 0) {
+    const first = raw[0] as Record<string, unknown>;
+    return String(first?.identifier || first?.id || first?.name || fallback);
+  }
+
+  if (typeof raw === "object" && raw !== null) {
+    const candidate = (raw as Record<string, unknown>).identifier || (raw as Record<string, unknown>).id;
+    if (candidate) return String(candidate);
+  }
+
+  return String(raw ?? fallback);
+}
+
+const GRANT_FILTER = [
+  { field: "field_458", operator: "is", value: "Laptop" },
+  { field: "field_56", operator: "is", value: "Completed-Presented" },
+  { field: "field_75", operator: "is after", value: "2024-09-08" },
+];
+
+const LAPTOP_FILTER = [{ field: "field_458", operator: "is", value: "Laptop" }];
 
 export async function GET() {
   try {
-    const knack = getKnackClient()
+    const grantLaptopsPresented = await fetchKnackCount(DEVICES_OBJECT, GRANT_FILTER);
 
-    // Use Knack API directly to get grant count (Date Presented > Sept 8, 2024)
-    const grantPresentedFilter = encodeURIComponent(JSON.stringify([
-      { field: 'field_458', operator: 'is', value: 'Laptop' },
-      { field: 'field_56', operator: 'is', value: 'Completed-Presented' },
-      { field: 'field_75', operator: 'is after', value: '2024-09-08' }
-    ]));
+    const [{ records: laptopRecords, totalRecords: totalDevices }, { records: organisations, totalRecords: organisationsTotal }]
+      = await Promise.all([
+        fetchAllRecords(DEVICES_OBJECT, LAPTOP_FILTER),
+        fetchAllRecords(ORGANISATIONS_OBJECT),
+      ]);
 
-    const grantResponse = await fetch(
-      `https://api.knack.com/v1/objects/object_7/records?rows_per_page=1&filters=${grantPresentedFilter}`,
-      {
-        headers: {
-          'X-Knack-Application-Id': process.env.KNACK_APP_ID!,
-          'X-Knack-REST-API-Key': process.env.KNACK_API_KEY!,
-        }
+    const distributedCount = laptopRecords.reduce((acc, record) => {
+      const status = normaliseStatus(record).toLowerCase();
+      return acc + (status.includes("completed") || status.includes("presented") ? 1 : 0);
+    }, 0);
+
+    const pipelineCounts = laptopRecords.reduce<Record<string, number>>((acc, record) => {
+      const status = normaliseStatus(record);
+      acc[status] = (acc[status] ?? 0) + 1;
+      return acc;
+    }, {});
+
+    const counties = new Set<string>();
+    organisations.forEach((organisation) => {
+      const countyRaw = organisation.field_613_raw ?? organisation.field_613;
+      if (Array.isArray(countyRaw) && countyRaw.length > 0) {
+        const first = countyRaw[0] as Record<string, unknown>;
+        const identifier = first?.identifier || first?.id || first?.name;
+        if (identifier) counties.add(String(identifier));
+      } else if (countyRaw) {
+        counties.add(String(countyRaw));
       }
-    );
+    });
 
-    const grantData = await grantResponse.json();
-    const grantPresentedCount = grantData.total_records || 0
+    const readyCount = pipelineCounts["Ready"] || pipelineCounts["Ready to Ship"] || pipelineCounts["Ready-to-Ship"] || 0;
 
-    // Also get all laptops for total count
-    const laptopFilter = JSON.stringify([
-      { field: 'field_458', operator: 'is', value: 'Laptop' }
-    ]);
-
-    const allLaptops = await knack.getRecords(
-      process.env.KNACK_DEVICES_OBJECT || 'object_7',
-      { rows_per_page: 1000, filters: laptopFilter }
-    )
-
-    const organizations = await knack.getRecords(process.env.KNACK_ORGANIZATIONS_OBJECT || 'object_22', { rows_per_page: 1000 })
-
-    const devices = allLaptops
-
-    // Grant start date: September 9, 2024
-    const GRANT_START_DATE = new Date('2024-09-09T00:00:00.000Z');
-
-    // Get status counts using Knack API directly (more accurate)
-    const statusesResponse = await fetch(
-      `https://api.knack.com/v1/objects/object_7/records?rows_per_page=1`,
-      {
-        headers: {
-          'X-Knack-Application-Id': process.env.KNACK_APP_ID!,
-          'X-Knack-REST-API-Key': process.env.KNACK_API_KEY!,
-        }
-      }
-    );
-    const statusData = await statusesResponse.json();
-    const totalDevices = statusData.total_records || 1000;
-
-    const totalCollected = devices.length
-
-    // Extract counties
-    const countiesSet = new Set();
-    organizations.forEach((org: any) => {
-      if (org.field_613_raw && Array.isArray(org.field_613_raw) && org.field_613_raw.length > 0) {
-        countiesSet.add(org.field_613_raw[0].identifier || org.field_613_raw[0].id);
-      } else if (typeof org.field_613_raw === 'string') {
-        countiesSet.add(org.field_613_raw);
-      }
-    })
-
-    const statusCounts: any = {}
-    devices.forEach((device: any) => {
-      const status = device.field_56_raw || 'Unknown'
-      statusCounts[status] = (statusCounts[status] || 0) + 1
-    })
+    const grantLaptopGoal = Number(process.env.GRANT_LAPTOP_GOAL || 1500);
 
     const metrics = {
-      // GRANT METRICS (Primary - Date Presented > Sept 8, 2024)
-      grantLaptopsPresented: grantPresentedCount,
-      grantLaptopGoal: 1500, // Updated Nov 5, 2025 (was 2,500)
-      grantLaptopProgress: Math.round((grantPresentedCount / 1500) * 100),
-      grantTrainingHoursGoal: 125, // Cut in half (was 250)
-
-      // OVERALL METRICS (All-time - shown as subsidiary)
-      totalLaptopsCollected: totalDevices, // All devices in Knack (5,464)
-      totalChromebooksDistributed: 2271, // All Completed-Presented laptops (no date filter)
-      countiesServed: countiesSet.size,
-      peopleTrained: 0, // TODO: Connect to actual training session data when available
-      eWasteTons: Math.round((totalCollected * 5) / 2000),
-      partnerOrganizations: organizations.length,
-
-      // Pipeline
+      grantLaptopsPresented,
+      grantLaptopGoal,
+      grantLaptopProgress: Math.round((grantLaptopsPresented / Math.max(grantLaptopGoal, 1)) * 100),
+      grantTrainingHoursGoal: Number(process.env.GRANT_TRAINING_HOURS_GOAL || 125),
+      totalLaptopsCollected: totalDevices,
+      totalChromebooksDistributed: distributedCount,
+      countiesServed: counties.size,
+      peopleTrained: Number(process.env.METRICS_PEOPLE_TRAINED || 0),
+      eWasteTons: Number(((totalDevices * 5) / 2000).toFixed(1)),
+      partnerOrganizations: organisationsTotal,
       pipeline: {
-        donated: statusCounts['Donated'] || 0,
-        received: statusCounts['Received'] || 0,
-        dataWipe: statusCounts['Data Wipe'] || 0,
-        refurbishing: statusCounts['Refurbishing'] || 0,
-        qaTesting: statusCounts['QA Testing'] || 0,
-        ready: statusCounts['Ready'] || 0,
-        distributed: 2271, // All Completed-Presented (no date filter)
+        donated: pipelineCounts["Donated"] || 0,
+        received: pipelineCounts["Received"] || 0,
+        dataWipe: pipelineCounts["Data Wipe"] || pipelineCounts["Data-Wipe"] || 0,
+        refurbishing: pipelineCounts["Refurbishing"] || pipelineCounts["Refurbished"] || 0,
+        qaTesting: pipelineCounts["QA Testing"] || pipelineCounts["QA"] || 0,
+        ready: readyCount,
+        distributed: distributedCount,
       },
-      inPipeline: Math.max(0, totalDevices - 2271), // Prevent negative
-      readyToShip: statusCounts['Ready'] || 0,
-    }
+      inPipeline: Math.max(0, totalDevices - distributedCount),
+      readyToShip: readyCount,
+    };
 
     return NextResponse.json(metrics, {
-      headers: { 'Cache-Control': 'public, s-maxage=300' },
-    })
-  } catch (error: any) {
-    console.error('Error:', error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+      headers: { "Cache-Control": "public, s-maxage=300" },
+    });
+  } catch (error: unknown) {
+    console.error("Error generating metrics:", error);
+    const message = error instanceof Error ? error.message : "Unexpected error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

@@ -1,60 +1,49 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
+import { useMetrics } from "@/lib/hooks/useMetrics";
 
 interface PipelineStage {
   name: string;
   count: number;
-  color: string;
+  accent: "slate" | "navy" | "teal" | "orange" | "yellow" | "red";
   icon: string;
 }
 
 export default function DevicePipeline() {
-  const [stages, setStages] = useState<PipelineStage[]>([]);
-  const [stats, setStats] = useState({ total: 0, completionRate: 0, avgCycleTime: "0d", bottleneck: 0 });
-  const [loading, setLoading] = useState(true);
+  const { data, isLoading, isError } = useMetrics();
 
-  useEffect(() => {
-    fetch('/api/metrics')
-      .then(res => res.json())
-      .then(data => {
-        const pipeline = data.pipeline || {};
+  const stages = useMemo<PipelineStage[]>(() => {
+    const pipeline = data?.pipeline || {};
 
-        const stagesData: PipelineStage[] = [
-          { name: "Donated", count: pipeline.donated || 0, color: "bg-hti-gray", icon: "📥" },
-          { name: "Received", count: pipeline.received || 0, color: "bg-hti-navy", icon: "✓" },
-          { name: "Data Wipe", count: pipeline.dataWipe || 0, color: "bg-hti-navy/80", icon: "🔒" },
-          { name: "Refurbishing", count: pipeline.refurbishing || 0, color: "bg-hti-orange", icon: "🔧" },
-          { name: "QA Testing", count: pipeline.qaTesting || 0, color: "bg-hti-yellow", icon: "🧪" },
-          { name: "Ready", count: pipeline.ready || 0, color: "bg-green-600", icon: "✅" },
-          { name: "Distributed", count: pipeline.distributed || 0, color: "bg-hti-red", icon: "🎯" },
+    return [
+      { name: "Donated", count: pipeline.donated || 0, accent: "slate", icon: "📥" },
+      { name: "Received", count: pipeline.received || 0, accent: "navy", icon: "✓" },
+      { name: "Data Wipe", count: pipeline.dataWipe || 0, accent: "navy", icon: "🔒" },
+      { name: "Refurbishing", count: pipeline.refurbishing || 0, accent: "orange", icon: "🔧" },
+      { name: "QA Testing", count: pipeline.qaTesting || 0, accent: "yellow", icon: "🧪" },
+      { name: "Ready", count: pipeline.ready || 0, accent: "teal", icon: "✅" },
+      { name: "Distributed", count: pipeline.distributed || 0, accent: "orange", icon: "🎯" },
         ];
+  }, [data]);
 
-        const total = stagesData.reduce((sum, stage) => sum + stage.count, 0);
-        const distributed = pipeline.distributed || 0;
+  const summary = useMemo(() => {
+    const total = stages.reduce((sum, stage) => sum + stage.count, 0);
+    const distributed = data?.pipeline?.distributed || 0;
         const completionRate = total > 0 ? Math.round((distributed / total) * 100) : 0;
+    const bottleneck = stages.slice(0, -1).reduce((max, stage) => Math.max(max, stage.count), 0);
 
-        // Find bottleneck (highest count excluding distributed)
-        const bottleneck = Math.max(...stagesData.slice(0, -1).map(s => s.count));
-
-        setStages(stagesData);
-        setStats({
+    return {
           total,
           completionRate,
           avgCycleTime: "4.2d", // TODO: Calculate from actual data
-          bottleneck
-        });
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching pipeline data:', error);
-        setLoading(false);
-      });
-  }, []);
+      bottleneck,
+    };
+  }, [data?.pipeline?.distributed, stages]);
 
-  if (loading) {
+  if (isLoading) {
     return (
-      <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-yellow/50 shadow-xl p-6">
+      <div className="glass-card glass-card--subtle shadow-glass p-6">
         <div className="animate-pulse space-y-4">
           <div className="grid grid-cols-7 gap-2">
             {[...Array(7)].map((_, i) => (
@@ -71,66 +60,99 @@ export default function DevicePipeline() {
     );
   }
 
-  return (
-    <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-yellow/50 shadow-xl p-4 md:p-6">
-      {/* Header */}
-      <h3 className="text-2xl font-bold text-white mb-8">📊 Device Pipeline</h3>
+  if (isError) {
+    return (
+      <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-red/40 shadow-xl p-6 text-center">
+        <h3 className="text-xl font-bold text-white mb-2">📊 Device Pipeline</h3>
+        <p className="text-hti-yellow">We couldn’t load the latest pipeline data. Try refreshing the page.</p>
+      </div>
+    );
+  }
 
-      {/* Pipeline Flow - Responsive */}
-      <div className="mb-8">
-        <div className="hidden lg:grid grid-cols-7 gap-2 mb-6">
+  return (
+    <div className="glass-card glass-card--subtle shadow-glass p-4 md:p-6 space-y-8">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h3 className="text-2xl font-bold text-glass-bright flex items-center gap-2">
+            📊 Device Pipeline
+          </h3>
+          <p className="text-sm text-glass-muted mt-1">
+            Live snapshot of every laptop moving through HTI’s refurbishment journey.
+          </p>
+        </div>
+        <div className="glass-chip glass-chip--slate text-xs md:text-sm">
+          {summary.total} devices in motion
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <div className="flex items-center justify-between text-sm">
+          <span className="text-glass-muted">Pipeline completion</span>
+          <span className="text-glass-bright font-semibold">{summary.completionRate}%</span>
+        </div>
+        <div className="glass-track">
+          <div
+            className="glass-track__fill"
+            style={{ width: `${Math.max(4, Math.min(100, summary.completionRate))}%` }}
+          />
+        </div>
+        <div className="flex justify-between text-[10px] tracking-[0.2em] text-glass-muted">
+          <span>Start</span>
+          <span>Mid</span>
+          <span>Complete</span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-7 gap-3">
           {stages.map((stage, index) => (
-            <div key={stage.name} className="relative">
-              {/* Stage Card - Desktop */}
-              <div className={`${stage.color} rounded-lg p-4 text-white hover:shadow-2xl transition-all cursor-pointer transform hover:scale-110 border border-white/40`}>
-                <div className="text-center">
-                  <div className="text-3xl mb-2">{stage.icon}</div>
-                  <div className="text-2xl font-bold mb-1">{stage.count}</div>
-                  <div className="text-xs font-bold opacity-100">{stage.name}</div>
+          <div key={stage.name} className="flex flex-col gap-3">
+            <div
+              className={`glass-card glass-card--subtle px-4 py-5 text-center transition-transform duration-300 hover:-translate-y-1 ${
+                stage.count === summary.bottleneck && stage.name !== "Distributed" ? "ring-2 ring-hti-yellow/60" : ""
+              } ${index === stages.length - 1 ? "lg:col-span-1" : ""}`}
+            >
+              <div className={`glass-card__glow bg-gradient-to-br ${
+                stage.accent === "teal"
+                  ? "from-hti-teal to-hti-teal-light"
+                  : stage.accent === "orange"
+                  ? "from-hti-orange to-hti-orange-yellow"
+                  : stage.accent === "yellow"
+                  ? "from-hti-yellow to-hti-yellow-light"
+                  : stage.accent === "navy"
+                  ? "from-hti-navy to-hti-navy-dark"
+                  : "from-hti-sand to-hti-fog"
+              }`} />
+              <div className="relative space-y-2">
+                <div className="text-3xl">{stage.icon}</div>
+                <div className="text-2xl font-bold text-glass-bright">{stage.count}</div>
+                <div className="text-xs font-semibold text-glass-muted tracking-wide">
+                  {stage.name}
                 </div>
               </div>
-
-              {/* Arrow - Desktop only */}
+            </div>
               {index < stages.length - 1 && (
-                <div className="absolute top-1/2 -right-2 transform -translate-y-1/2 z-10">
-                  <div className="text-hti-yellow text-2xl font-bold">→</div>
-                </div>
+              <div className="hidden lg:block text-center text-glass-muted">→</div>
               )}
             </div>
           ))}
         </div>
 
-        {/* Mobile/Tablet view - Responsive grid */}
-        <div className="lg:hidden">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {stages.map((stage) => (
-              <div key={stage.name} className={`${stage.color} rounded-lg p-3 text-white text-center hover:shadow-xl transition-all cursor-pointer border border-white/40`}>
-                <div className="text-2xl mb-1">{stage.icon}</div>
-                <div className="text-xl font-bold mb-0.5">{stage.count}</div>
-                <div className="text-xs font-bold opacity-100">{stage.name}</div>
-              </div>
-            ))}
-          </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 pt-4 border-t glass-divider">
+        <div className="glass-card glass-card--subtle px-4 py-4 text-center">
+          <div className="text-xl md:text-2xl font-bold text-glass-bright">{summary.total}</div>
+          <div className="text-xs md:text-sm text-glass-muted mt-1">Total in Pipeline</div>
         </div>
-      </div>
-
-      {/* Pipeline Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 pt-6 border-t border-hti-yellow/50">
-        <div className="text-center p-4 bg-hti-red/15 rounded-lg border border-hti-red/50">
-          <div className="text-xl md:text-2xl font-bold text-white">{stats.total}</div>
-          <div className="text-xs md:text-sm text-hti-yellow font-bold mt-1">Total in Pipeline</div>
+        <div className="glass-card glass-card--subtle px-4 py-4 text-center">
+          <div className="text-xl md:text-2xl font-bold text-glass-bright">{summary.completionRate}%</div>
+          <div className="text-xs md:text-sm text-glass-muted mt-1">Completion Rate</div>
         </div>
-        <div className="text-center p-4 bg-green-600/15 rounded-lg border border-green-600/50">
-          <div className="text-xl md:text-2xl font-bold text-hti-yellow-bright">{stats.completionRate}%</div>
-          <div className="text-xs md:text-sm text-hti-yellow font-bold mt-1">Completion Rate</div>
+        <div className="glass-card glass-card--subtle px-4 py-4 text-center">
+          <div className="text-xl md:text-2xl font-bold text-glass-bright">{summary.avgCycleTime}</div>
+          <div className="text-xs md:text-sm text-glass-muted mt-1">Avg Cycle Time</div>
         </div>
-        <div className="text-center p-4 bg-hti-orange/15 rounded-lg border border-hti-orange/50">
-          <div className="text-xl md:text-2xl font-bold text-hti-yellow">{stats.avgCycleTime}</div>
-          <div className="text-xs md:text-sm text-hti-yellow font-bold mt-1">Avg Cycle Time</div>
-        </div>
-        <div className="text-center p-4 bg-hti-yellow/15 rounded-lg border border-hti-yellow/50">
-          <div className="text-xl md:text-2xl font-bold text-hti-red">{stats.bottleneck}</div>
-          <div className="text-xs md:text-sm text-hti-yellow font-bold mt-1">Bottleneck</div>
+        <div className="glass-card glass-card--subtle px-4 py-4 text-center">
+          <div className="text-xl md:text-2xl font-bold text-glass-bright">{summary.bottleneck}</div>
+          <div className="text-xs md:text-sm text-glass-muted mt-1">Current Bottleneck</div>
         </div>
       </div>
     </div>

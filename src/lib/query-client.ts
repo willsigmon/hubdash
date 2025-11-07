@@ -6,7 +6,7 @@
 import { QueryClient } from '@tanstack/react-query';
 
 /**
- * Create a shared QueryClient instance with optimized defaults for HubDash
+ * Create a shared QueryClient instance with optimized defaults for HUBDash
  *
  * Cache Strategy:
  * - Device data: 5 min stale time (rarely changes)

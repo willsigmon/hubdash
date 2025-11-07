@@ -9,13 +9,18 @@
  * Used in InventoryOverview.tsx and other device-related components
  */
 export const DEVICE_STATUS_COLORS: Record<string, string> = {
-  ready: "bg-hti-ember/20 text-hti-ember border-hti-ember/30",
-  qa_testing: "bg-hti-gold/20 text-hti-gold border-hti-gold/30",
-  refurbishing: "bg-hti-plum/20 text-hti-plum border-hti-plum/30",
-  data_wipe: "bg-hti-fig/20 text-hti-fig border-hti-fig/30",
-  received: "bg-hti-stone/20 text-hti-stone border-hti-stone/30",
-  donated: "bg-hti-stone/20 text-hti-stone border-hti-stone/30",
-  distributed: "bg-hti-sunset/20 text-hti-sunset border-hti-sunset/30",
+  ready: "glass-chip glass-chip--teal",
+  qa_testing: "glass-chip glass-chip--yellow text-sm",
+  refurbishing: "glass-chip glass-chip--orange",
+  data_wipe: "glass-chip glass-chip--navy",
+  received: "glass-chip glass-chip--slate",
+  donated: "glass-chip glass-chip--slate",
+  distributed: "glass-chip glass-chip--orange",
+  in_process: "glass-chip glass-chip--teal",
+  marked_for_sale: "glass-chip glass-chip--yellow text-sm",
+  discarded_for_review: "glass-chip glass-chip--red",
+  completed_ready: "glass-chip glass-chip--teal",
+  completed_discarded: "glass-chip glass-chip--slate",
 };
 
 /**
@@ -30,14 +35,29 @@ export const DEVICE_STATUS_LABELS: Record<string, string> = {
   received: "Received",
   donated: "Donated",
   distributed: "Distributed",
+  in_process: "In Process",
+  marked_for_sale: "Marked for Sale",
+  discarded_for_review: "Discarded – Review",
+  completed_ready: "Completed · Ready",
+  completed_discarded: "Completed · Discarded",
 };
+
+function normalizeStatus(status: string): string {
+  return (status || "")
+    .toLowerCase()
+    .trim()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_|_$/g, "");
+}
 
 /**
  * Get the color class for a device status
  * Includes fallback to 'received' if status not found
  */
 export function getDeviceStatusColor(status: string): string {
-  return DEVICE_STATUS_COLORS[status] || DEVICE_STATUS_COLORS.received;
+  const key = normalizeStatus(status);
+  return DEVICE_STATUS_COLORS[key] || DEVICE_STATUS_COLORS.received;
 }
 
 /**
@@ -45,7 +65,8 @@ export function getDeviceStatusColor(status: string): string {
  * Includes fallback to the status value itself if not found
  */
 export function getDeviceStatusLabel(status: string): string {
-  return DEVICE_STATUS_LABELS[status] || status;
+  const key = normalizeStatus(status);
+  return DEVICE_STATUS_LABELS[key] || status;
 }
 
 /**
@@ -53,9 +74,9 @@ export function getDeviceStatusLabel(status: string): string {
  * Used in DonationRequests.tsx for priority dots
  */
 export const PRIORITY_COLORS: Record<string, string> = {
-  urgent: "bg-hti-ember",
-  high: "bg-hti-sunset",
-  normal: "bg-hti-plum",
+  urgent: "bg-hti-orange",
+  high: "bg-hti-orange-yellow",
+  normal: "bg-hti-navy",
 };
 
 /**
@@ -63,9 +84,9 @@ export const PRIORITY_COLORS: Record<string, string> = {
  * Used in DonationRequests.tsx for status badges
  */
 export const REQUEST_STATUS_COLORS: Record<string, string> = {
-  pending: "text-hti-gold",
-  scheduled: "text-hti-ember",
-  in_progress: "text-hti-plum",
+  pending: "text-hti-yellow",
+  scheduled: "text-hti-orange",
+  in_progress: "text-hti-navy",
   completed: "text-hti-stone",
 };
 
@@ -74,9 +95,9 @@ export const REQUEST_STATUS_COLORS: Record<string, string> = {
  * Used in ActivityFeed.tsx for activity border and background colors
  */
 export const ACTIVITY_TYPE_COLORS: Record<string, string> = {
-  success: "border-hti-ember/30 bg-hti-ember/10",
-  warning: "border-hti-gold/30 bg-hti-gold/10",
-  info: "border-hti-plum/30 bg-hti-plum/10",
+  success: "border border-hti-teal/50 bg-hti-teal/15",
+  warning: "border border-hti-yellow/45 bg-hti-yellow/15",
+  info: "border border-white/15 bg-white/10",
 };
 
 /**

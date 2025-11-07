@@ -9,39 +9,51 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // HTI Brand Colors (2025 Palette)
+        // Official HTI Brand Palette
         hti: {
-          // Core Palette
-          midnight: '#0F0C11',      // Deep anchor
-          plum: '#2F2D4C',          // Primary brand tone
-          fig: '#433D58',           // Secondary depth
-          dusk: '#4D4965',          // Muted accent
-          ember: '#C05F37',         // Warm accent
-          sunset: '#C65B32',        // Secondary warm accent
-          gold: '#E2A835',          // Signature gold
-          soleil: '#EACF3A',        // Highlight gold
-          clay: '#B4ABA3',          // Neutral midtone
-          sand: '#EEE6DF',          // Soft background neutral
-          mist: '#757A87',          // Muted typographic support
-          stone: '#615E5C',         // Dark neutral
+          navy: "#1e3a5f",
+          "navy-dark": "#142a45",
+          teal: "#4a9b9f",
+          "teal-light": "#6db3b7",
+          "teal-dark": "#3f8084",
+          red: "#ff6b6b",
+          "red-dark": "#e24e4e",
+          yellow: "#ffeb3b",
+          "yellow-light": "#fff9c4",
+          sand: "#f4f1ea",
+          stone: "#2b2829",
+          fog: "#dce4e8",
+          sky: "#e6f2f3",
+          white: "#ffffff",
 
-          // Legacy aliases mapped to new palette (for existing classes)
-          navy: '#2F2D4C',          // Alias → plum
-          red: '#C05F37',           // Alias → ember
-          orange: '#C65B32',        // Alias → sunset
-          yellow: '#E2A835',        // Alias → gold
-          'yellow-bright': '#EACF3A', // Alias → soleil
-          gray: '#615E5C',          // Alias → stone
-          'gray-light': '#EEE6DF',  // Alias → sand
-          teal: '#433D58',          // Alias → fig
-          'teal-light': '#615C7B',  // Softened secondary
+          // Semantic mappings
+          primary: "#4a9b9f",
+          "primary-dark": "#1e3a5f",
+          secondary: "#1e3a5f",
+          accent: "#ffeb3b",
+
+          // Legacy aliases – map to updated palette so existing classes don’t break
+          orange: "#4a9b9f",
+          "orange-yellow": "#6db3b7",
+          "yellow-orange": "#ffeb3b",
+          redwood: "#ff6b6b",
+          midnight: "#1e3a5f",
+          plum: "#1e3a5f",
+          fig: "#1e3a5f",
+          ember: "#4a9b9f",
+          sunset: "#6db3b7",
+          gold: "#ffeb3b",
+          soleil: "#ffeb3b",
+          "yellow-bright": "#ffeb3b",
+          gray: "#2b2829",
+          "gray-light": "#f4f1ea",
         },
       },
       borderColor: {
-        DEFAULT: '#433D5829', // Subtle plum tint for default borders
+        DEFAULT: 'rgba(30, 58, 95, 0.16)',
       },
       divideColor: {
-        DEFAULT: '#433D5829',
+        DEFAULT: 'rgba(30, 58, 95, 0.16)',
       },
       animation: {
         'counter': 'counter 2s ease-out forwards',

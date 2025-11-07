@@ -1,0 +1,95 @@
+{
+  "name": "HUBDash - HTI Dashboard System",
+  "short_name": "HUBDash",
+  "description": "Dual-dashboard system for HTI's laptop refurbishment program - Executive board overview and operational mission control",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#191347",
+  "theme_color": "#008080",
+  "orientation": "portrait-primary",
+  "categories": ["productivity", "business", "education"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-board.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshot-ops.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Board Dashboard",
+      "short_name": "Board",
+      "description": "Executive overview and impact metrics",
+      "url": "/board",
+      "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Operations Hub",
+      "short_name": "Ops",
+      "description": "Mission control and daily operations",
+      "url": "/ops",
+      "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Reports",
+      "short_name": "Reports",
+      "description": "Grant tracking and compliance reports",
+      "url": "/reports",
+      "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Marketing Hub",
+      "short_name": "Marketing",
+      "description": "Partnership applications and outreach",
+      "url": "/marketing",
+      "icons": [{ "src": "/icon-96x96.png", "sizes": "96x96" }]
+    }
+  ]
+}

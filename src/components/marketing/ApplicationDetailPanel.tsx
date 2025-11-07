@@ -44,7 +44,7 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
 
     return (
       <div className={fullWidth ? "col-span-2" : ""}>
-        <dt className="text-xs font-bold text-hti-orange uppercase tracking-wider mb-2">{label}</dt>
+        <dt className="text-xs font-bold text-hti-orange tracking-wide mb-2">{label}</dt>
         <dd className="text-sm text-hti-navy font-medium">
           {Array.isArray(value) ? (
             <div className="flex flex-wrap gap-2">
@@ -97,15 +97,15 @@ export default function ApplicationDetailPanel({ application, onClose, onAction 
           {/* Quick Stats Grid */}
           <div className="grid grid-cols-3 gap-4">
             <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/30 hover:border-white/50 transition-all">
-              <div className="text-white text-xs font-bold uppercase tracking-wider mb-2">Submitted</div>
+              <div className="text-white text-xs font-bold tracking-wide mb-2">Submitted</div>
               <div className="text-xl font-bold text-hti-yellow">{new Date(application.timestamp).toLocaleDateString()}</div>
             </div>
             <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/30 hover:border-white/50 transition-all">
-              <div className="text-white text-xs font-bold uppercase tracking-wider mb-2">Location</div>
+              <div className="text-white text-xs font-bold tracking-wide mb-2">Location</div>
               <div className="text-xl font-bold text-hti-yellow">{application.county || 'Unknown'}</div>
             </div>
             <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/30 hover:border-white/50 transition-all">
-              <div className="text-white text-xs font-bold uppercase tracking-wider mb-2">Chromebooks</div>
+              <div className="text-white text-xs font-bold tracking-wide mb-2">Chromebooks</div>
               <div className="text-3xl font-bold text-hti-yellow-bright">{application.chromebooksNeeded}</div>
             </div>
           </div>

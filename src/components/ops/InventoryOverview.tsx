@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMetrics } from "@/lib/hooks/useMetrics";
 import { getDeviceStatusColor, getDeviceStatusLabel } from "@/lib/utils/status-colors";
 
 interface Device {
@@ -14,39 +15,246 @@ interface Device {
   received_date: string;
 }
 
+interface PaginationMeta {
+  page: number;
+  limit: number;
+  hasMore: boolean;
+  total: number | null;
+}
+
+const PAGE_LIMIT = 10;
+
 export default function InventoryOverview() {
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(true);
+  const [exporting, setExporting] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [sortOption, setSortOption] = useState<string>("received_desc");
+  const [pagination, setPagination] = useState<PaginationMeta>({
+    page: 1,
+    limit: PAGE_LIMIT,
+    hasMore: false,
+    total: null,
+  });
+  const { data: metricsData } = useMetrics();
+
+  const fetchOptions = useMemo(
+    () => ({
+      search: searchQuery.trim(),
+      status: statusFilter,
+    }),
+    [searchQuery, statusFilter]
+  );
+
+  const loadDevices = useCallback(
+    async (targetPage: number, options: { search: string; status: string }) => {
+      try {
+        setLoading(true);
+        const isFiltering = options.search.length > 0 || options.status !== "all";
+        const baseLimit = isFiltering ? 200 : PAGE_LIMIT;
+        const params = new URLSearchParams({
+          page: String(targetPage),
+          limit: String(baseLimit),
+        });
+
+        const response = await fetch(`/api/devices?${params.toString()}`);
+        const payload = await response.json();
+        const devicesList = Array.isArray(payload?.data)
+          ? payload.data
+          : Array.isArray(payload)
+          ? payload
+          : [];
+
+        setDevices(devicesList);
+        setPagination({
+          page: targetPage,
+          limit: baseLimit,
+          hasMore: !isFiltering && Boolean(payload?.pagination?.hasMore),
+          total: payload?.pagination?.total ?? null,
+        });
+      } catch (error) {
+        console.error("Error fetching devices:", error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
 
   useEffect(() => {
-    fetch('/api/devices')
-      .then(res => res.json())
-      .then(data => {
-        setDevices(data.slice(0, 10)); // Show first 10
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching devices:', error);
-        setLoading(false);
-      });
-  }, []);
+    const handler = setTimeout(() => {
+      loadDevices(1, fetchOptions);
+    }, 250);
+    return () => clearTimeout(handler);
+  }, [fetchOptions, loadDevices]);
 
-  const filteredDevices = devices.filter(device =>
-    (device.serial_number || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (device.model || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (device.manufacturer || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (getDeviceStatusLabel(device.status) || '').toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const statusOptions = useMemo(() => {
+    const unique = new Set<string>();
+    devices.forEach((device) => {
+      if (device.status) {
+        unique.add(getDeviceStatusLabel(device.status));
+      }
+    });
+
+    const pipelineStatusMap: Record<string, string> = {
+      donated: "Donated",
+      received: "Received",
+      dataWipe: "Data Wipe",
+      refurbishing: "Refurbishing",
+      qaTesting: "QA Testing",
+      ready: "Ready to Ship",
+      distributed: "Distributed",
+    };
+
+    if (metricsData?.pipeline) {
+      Object.keys(metricsData.pipeline).forEach((key) => {
+        const label = pipelineStatusMap[key as keyof typeof pipelineStatusMap];
+        if (label) {
+          unique.add(label);
+        }
+      });
+    }
+
+    return Array.from(unique).sort();
+  }, [devices, metricsData?.pipeline]);
+
+  const filteredDevices = useMemo(() => {
+    const term = fetchOptions.search.toLowerCase();
+    const currentStatus = fetchOptions.status;
+
+    const filtered = devices.filter((device) => {
+      const statusLabel = getDeviceStatusLabel(device.status);
+      const matchesStatus = currentStatus === "all" || statusLabel === currentStatus;
+
+      if (!matchesStatus) {
+        return false;
+      }
+
+      if (term.length === 0) {
+        return true;
+      }
+
+      return (
+        (device.serial_number || "").toLowerCase().includes(term) ||
+        (device.model || "").toLowerCase().includes(term) ||
+        (device.manufacturer || "").toLowerCase().includes(term) ||
+        statusLabel.toLowerCase().includes(term)
+      );
+    });
+
+    const sorted = [...filtered].sort((a, b) => {
+      switch (sortOption) {
+        case "serial_asc":
+          return (a.serial_number || "").localeCompare(b.serial_number || "");
+        case "serial_desc":
+          return (b.serial_number || "").localeCompare(a.serial_number || "");
+        case "model_asc":
+          return (a.model || "").localeCompare(b.model || "");
+        case "model_desc":
+          return (b.model || "").localeCompare(a.model || "");
+        case "status_asc":
+          return getDeviceStatusLabel(a.status).localeCompare(getDeviceStatusLabel(b.status));
+        case "status_desc":
+          return getDeviceStatusLabel(b.status).localeCompare(getDeviceStatusLabel(a.status));
+        case "received_asc":
+          return new Date(a.received_date).getTime() - new Date(b.received_date).getTime();
+        case "received_desc":
+        default:
+          return new Date(b.received_date).getTime() - new Date(a.received_date).getTime();
+      }
+    });
+
+    return sorted;
+  }, [devices, fetchOptions.search, fetchOptions.status, sortOption]);
+
+  const isFiltering = fetchOptions.search.length > 0 || fetchOptions.status !== "all";
+
+  const showingStart =
+    filteredDevices.length === 0
+      ? 0
+      : isFiltering
+      ? 1
+      : (pagination.page - 1) * pagination.limit + 1;
+
+  const showingEnd =
+    filteredDevices.length === 0
+      ? 0
+      : isFiltering
+      ? filteredDevices.length
+      : showingStart + filteredDevices.length - 1;
+
+  const totalDisplay = isFiltering
+    ? filteredDevices.length
+    : pagination.total ?? (pagination.page - 1) * pagination.limit + filteredDevices.length;
+
+  const handlePrev = () => {
+    if (isFiltering || pagination.page <= 1) return;
+    loadDevices(pagination.page - 1, fetchOptions);
+  };
+
+  const handleNext = () => {
+    if (isFiltering || !pagination.hasMore) return;
+    loadDevices(pagination.page + 1, fetchOptions);
+  };
+
+  const handleExport = async () => {
+    try {
+      setExporting(true);
+      const response = await fetch(`/api/devices?page=1&limit=500`);
+      const payload = await response.json();
+      const devicesList = Array.isArray(payload?.data)
+        ? payload.data
+        : Array.isArray(payload)
+        ? payload
+        : [];
+
+      const columns = [
+        "Serial Number",
+        "Model",
+        "Manufacturer",
+        "Status",
+        "Location",
+        "Assigned To",
+        "Received",
+      ];
+
+      const rows = devicesList.map((device: Device) => [
+        device.serial_number ?? "",
+        device.model ?? "",
+        device.manufacturer ?? "",
+        getDeviceStatusLabel(device.status),
+        device.location ?? "",
+        device.assigned_to ?? "",
+        device.received_date ? new Date(device.received_date).toLocaleDateString() : "",
+      ]);
+
+      const csvContent = [columns, ...rows]
+        .map((line) => line.map((value) => `"${String(value).replace(/"/g, '""')}"`).join(","))
+        .join("\n");
+
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `hti-device-inventory-${new Date().toISOString().slice(0, 10)}.csv`;
+      link.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Export failed:", error);
+    } finally {
+      setExporting(false);
+    }
+  };
 
   if (loading) {
     return (
-      <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-yellow/50 shadow-xl overflow-hidden">
+      <div className="glass-card glass-card--subtle shadow-glass overflow-hidden">
         <div className="p-6 animate-pulse">
-          <div className="bg-white/10 h-10 rounded mb-4" />
+          <div className="bg-white/10 h-11 rounded mb-5" />
           <div className="space-y-3">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="bg-white/10 h-16 rounded" />
+            {[...Array(5)].map((_, index) => (
+              <div key={index} className="bg-white/10 h-16 rounded" />
             ))}
           </div>
         </div>
@@ -55,86 +263,138 @@ export default function InventoryOverview() {
   }
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-yellow/50 shadow-xl overflow-hidden flex flex-col h-full">
-      {/* Header with Search */}
-      <div className="p-4 md:p-6 bg-hti-red/15 border-b border-hti-yellow/50">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-4">
-          <h3 className="text-lg font-bold text-white">💾 Device Inventory</h3>
-          <div className="flex gap-2 w-full md:w-auto">
-            <button className="flex-1 md:flex-none px-3 md:px-4 py-2 bg-gradient-to-r from-hti-red to-hti-orange hover:shadow-lg rounded-lg text-white text-xs md:text-sm font-bold transition-all hover:scale-105">
-              + Add Device
+    <div className="glass-card glass-card--subtle shadow-glass flex flex-col h-full">
+      <div className="p-4 md:p-6 border-b glass-divider">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-5">
+          <div>
+            <h3 className="text-xl md:text-2xl font-bold text-glass-bright flex items-center gap-2">
+              💾 Device Inventory
+            </h3>
+            <p className="text-sm text-glass-muted mt-1">
+              Track live pipeline devices, surface bottlenecks, and take action fast.
+            </p>
+          </div>
+          <div className="flex gap-2 w-full lg:w-auto">
+            <button className="glass-button glass-button--accent text-sm" type="button" disabled>
+              Coming Soon
             </button>
-            <button className="flex-1 md:flex-none px-3 md:px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-hti-yellow text-xs md:text-sm font-bold transition-all border border-hti-yellow/50">
-              Export
+            <button
+              className="glass-button text-sm"
+              type="button"
+              onClick={handleExport}
+              disabled={exporting}
+            >
+              {exporting ? "Exporting…" : "Export CSV"}
             </button>
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
-          <input
-            type="text"
-            placeholder="Search serial, model, status..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 px-3 md:px-4 py-2 bg-hti-navy/30 border border-hti-yellow/50 rounded-lg text-white placeholder-hti-yellow text-sm focus:outline-none focus:border-hti-yellow transition-all focus:bg-hti-navy/50"
-          />
-          <button className="px-3 md:px-4 py-2 bg-hti-orange hover:bg-hti-red rounded-lg text-white text-xs md:text-sm font-bold transition-all whitespace-nowrap">
-            Search
+        <div className="flex flex-col xl:flex-row gap-3 xl:items-center">
+          <div className="flex-1 w-full">
+            <input
+              type="text"
+              placeholder="Search serial, model, manufacturer, status..."
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              className="glass-input text-sm"
+            />
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 w-full xl:w-auto">
+            <select
+              value={statusFilter}
+              onChange={(event) => setStatusFilter(event.target.value)}
+              className="glass-input glass-input--select text-sm"
+            >
+              <option value="all">All statuses</option>
+              {statusOptions.map((status) => (
+                <option key={status} value={status}>
+                  {status}
+                </option>
+              ))}
+            </select>
+            <select
+              value={sortOption}
+              onChange={(event) => setSortOption(event.target.value)}
+              className="glass-input glass-input--select text-sm"
+            >
+              <option value="received_desc">Received date · newest</option>
+              <option value="received_asc">Received date · oldest</option>
+              <option value="serial_asc">Serial number · A → Z</option>
+              <option value="serial_desc">Serial number · Z → A</option>
+              <option value="model_asc">Model · A → Z</option>
+              <option value="model_desc">Model · Z → A</option>
+              <option value="status_asc">Status · A → Z</option>
+              <option value="status_desc">Status · Z → A</option>
+            </select>
+          </div>
+          <button
+            type="button"
+            onClick={() => setSearchQuery("")}
+            disabled={!searchQuery}
+            className="glass-button text-sm"
+          >
+            Clear
           </button>
         </div>
       </div>
 
-      {/* Table Container */}
       <div className="flex-1 overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-hti-navy/50 sticky top-0">
-            <tr className="text-left text-xs font-bold text-hti-yellow uppercase tracking-wider border-b border-hti-yellow/50">
-              <th className="px-3 md:px-6 py-3">Serial Number</th>
-              <th className="px-3 md:px-6 py-3">Device Info</th>
+          <thead className="sticky top-0">
+            <tr className="text-left text-xs font-semibold text-glass-muted tracking-wider">
+              <th className="px-3 md:px-6 py-3">Serial number</th>
+              <th className="px-3 md:px-6 py-3">Device info</th>
               <th className="px-3 md:px-6 py-3">Status</th>
-              <th className="px-3 md:px-6 py-3 hidden sm:table-cell">Assigned To</th>
+              <th className="px-3 md:px-6 py-3 hidden sm:table-cell">Assigned to</th>
               <th className="px-3 md:px-6 py-3 hidden md:table-cell">Received</th>
               <th className="px-3 md:px-6 py-3 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-700">
+          <tbody className="divide-y divide-white/10">
             {filteredDevices.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-12 text-center text-gray-300">
+                <td colSpan={6} className="px-6 py-12 text-center text-glass-muted">
                   <div className="text-3xl mb-2">🔍</div>
                   <p>No devices found</p>
                 </td>
               </tr>
             ) : (
               filteredDevices.map((device) => (
-                <tr key={device.id} className="hover:bg-gray-750 transition-colors border-l-4 border-l-transparent hover:border-l-hti-teal">
+                <tr
+                  key={device.id}
+                  className="transition-colors border-l-4 border-l-transparent hover:border-l-hti-orange hover:bg-white/10"
+                >
                   <td className="px-3 md:px-6 py-4 whitespace-nowrap">
-                    <div className="text-xs md:text-sm font-mono text-white break-words md:break-normal">{device.serial_number}</div>
+                    <div className="text-xs md:text-sm font-mono text-glass-bright break-words md:break-normal">
+                      {device.serial_number || "—"}
+                    </div>
                   </td>
                   <td className="px-3 md:px-6 py-4">
-                    <div className="text-xs md:text-sm font-medium text-white">{device.model}</div>
-                    <div className="text-xs text-gray-300">{device.manufacturer}</div>
+                    <div className="text-xs md:text-sm font-semibold text-glass-bright">
+                      {device.model || "—"}
+                    </div>
+                    <div className="text-xs text-glass-muted">{device.manufacturer || "Unknown"}</div>
                   </td>
                   <td className="px-3 md:px-6 py-4">
-                    <span className={`px-2 md:px-3 py-1 rounded-full text-xs font-medium border inline-block ${getDeviceStatusColor(device.status)}`}>
+                    <span className={`${getDeviceStatusColor(device.status)} text-xs md:text-sm`}>
                       {getDeviceStatusLabel(device.status)}
                     </span>
                   </td>
                   <td className="px-3 md:px-6 py-4 hidden sm:table-cell">
-                    <div className="text-xs md:text-sm text-gray-300">{device.assigned_to || "—"}</div>
+                    <div className="text-xs md:text-sm text-glass-muted">{device.assigned_to || "—"}</div>
                   </td>
                   <td className="px-3 md:px-6 py-4 hidden md:table-cell whitespace-nowrap">
-                    <div className="text-xs md:text-sm text-gray-300">
-                      {new Date(device.received_date).toLocaleDateString()}
+                    <div className="text-xs md:text-sm text-glass-muted">
+                      {device.received_date ? new Date(device.received_date).toLocaleDateString() : "—"}
                     </div>
                   </td>
                   <td className="px-3 md:px-6 py-4 whitespace-nowrap text-right">
                     <div className="flex justify-end gap-2">
-                      <button className="text-xs md:text-sm text-hti-teal hover:text-hti-teal-light transition-colors">
+                      <button className="text-xs md:text-sm text-glass-muted hover:text-glass-bright transition-colors focus:outline-none focus:ring-2 focus:ring-hti-yellow rounded">
                         Edit
                       </button>
-                      <span className="text-gray-400">|</span>
-                      <button className="text-xs md:text-sm text-gray-300 hover:text-white transition-colors">
+                      <span className="text-glass-muted/60">|</span>
+                      <button className="text-xs md:text-sm text-glass-muted hover:text-glass-bright transition-colors focus:outline-none focus:ring-2 focus:ring-hti-yellow rounded">
                         View
                       </button>
                     </div>
@@ -146,16 +406,28 @@ export default function InventoryOverview() {
         </table>
       </div>
 
-      {/* Footer Pagination */}
-      <div className="p-3 md:p-4 bg-gray-900/50 border-t border-gray-700 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="text-xs md:text-sm text-gray-300">
-          Showing <span className="font-medium">{filteredDevices.length}</span> of <span className="font-medium">{devices.length}</span> devices
+      <div className="p-4 md:p-5 glass-divider flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="text-xs md:text-sm text-glass-muted">
+          Showing <span className="text-glass-bright font-semibold">{showingStart}</span>
+          {filteredDevices.length === 0 ? "" : `–${showingEnd}`}
+          {" of "}
+          <span className="text-glass-bright font-semibold">{totalDisplay}</span> devices
         </div>
         <div className="flex gap-2">
-          <button className="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded text-xs md:text-sm text-white transition-colors">
+          <button
+            className="glass-button text-xs md:text-sm"
+            aria-label="Previous page of devices"
+            onClick={handlePrev}
+            disabled={isFiltering || pagination.page === 1}
+          >
             Previous
           </button>
-          <button className="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded text-xs md:text-sm text-white transition-colors">
+          <button
+            className="glass-button text-xs md:text-sm"
+            aria-label="Next page of devices"
+            onClick={handleNext}
+            disabled={isFiltering || !pagination.hasMore}
+          >
             Next
           </button>
         </div>
