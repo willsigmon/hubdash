@@ -1,188 +1,134 @@
 import Link from "next/link";
+import PageHero from "@/components/layout/PageHero";
+import PageSectionHeading from "@/components/layout/PageSectionHeading";
+
+const destinations = [
+  {
+    title: "Board Dashboard",
+    description: "Executive summary with impact metrics, trends, and key insights for board members.",
+    href: "/board",
+    icon: "📊",
+    action: "View Dashboard",
+    glow: "from-hti-navy/40 to-hti-teal/30",
+    chip: "glass-chip--yellow",
+  },
+  {
+    title: "Operations HUB",
+    description: "Mission control for inventory, donations, distributions, and training management.",
+    href: "/ops",
+    icon: "⚡",
+    action: "Launch HUB",
+    glow: "from-hti-orange/50 via-hti-yellow/35 to-hti-teal/30",
+    chip: "glass-chip--orange text-hti-navy",
+  },
+  {
+    title: "Grant Reports",
+    description: "Generate quarterly reports, track grant goals, and export data for NCDIT compliance.",
+    href: "/reports",
+    icon: "📄",
+    action: "Generate Reports",
+    glow: "from-hti-yellow/35 to-hti-orange/35",
+    chip: "glass-chip--yellow",
+  },
+  {
+    title: "Marketing HUB",
+    description: "Recipient stories, impact quotes, and partnership applications for marketing campaigns.",
+    href: "/marketing",
+    icon: "📣",
+    action: "View Stories",
+    glow: "from-hti-teal/35 via-hti-navy/35 to-hti-yellow/30",
+    chip: "glass-chip--teal",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-hti-navy via-hti-navy/95 to-hti-navy flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-hti-sand/70 via-white to-hti-sand/40">
       <a href="#main-content" className="skip-to-content">
         Skip to main content
       </a>
-      <div className="max-w-6xl w-full glass-card glass-card--subtle shadow-glass rounded-3xl p-8 md:p-12">
-        <div className="absolute inset-0 glass-card__glow bg-gradient-to-br from-hti-teal/40 to-hti-yellow/30" />
-        <div className="relative text-center mb-12 space-y-6">
-          <div className="flex justify-center mb-6">
-            <img
-              src="/hti-logo.svg"
-              alt="HTI Logo"
-              className="h-16 md:h-20 w-auto"
-            />
-          </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-glass-bright">
-            HUBDash
-          </h1>
-          <p className="text-xl text-glass-bright/80 font-semibold tracking-wide uppercase">
-            HUBZone Technology Initiative Dashboard
-          </p>
-          <p className="text-sm text-glass-muted mt-2 font-medium">
+
+      <PageHero
+        title="HUBDash"
+        subtitle="Pick a workspace to dive into live data for boards, operations, grants, or marketing."
+        eyebrow="HTI Platform"
+        align="center"
+        theme="sunrise"
+        showLogo
+        actions={(
+          <div className="glass-chip glass-chip--yellow text-xs font-semibold">
             Securely Repurposing Technology. Expanding Digital Opportunity.
-          </p>
-        </div>
+          </div>
+        )}
+      />
 
-        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Board Dashboard Card */}
-          <Link
-            href="/board"
-            className="group glass-card glass-card--subtle hover:-translate-y-1 transition-transform duration-300 min-h-[300px] flex flex-col"
-            aria-label="Navigate to Board Dashboard - Executive summary with impact metrics"
-          >
-            <div className="glass-card__glow bg-gradient-to-br from-hti-navy/50 to-hti-teal/30" />
-            <div className="relative z-10 text-left space-y-4">
-              <div className="text-5xl" aria-hidden="true">📊</div>
-              <h2 className="text-3xl font-bold text-glass-bright">Board Dashboard</h2>
-              <p className="text-glass-muted text-base font-medium">
-                Executive summary with impact metrics, trends, and key insights for board members.
-              </p>
-              <div className="inline-flex items-center glass-chip glass-chip--yellow text-xs font-semibold">
-                <span>View Dashboard</span>
-                <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-white/10 to-hti-yellow/20" />
-          </Link>
+      <main
+        id="main-content"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12"
+        role="main"
+      >
+        <section className="space-y-6">
+          <PageSectionHeading
+            title="Select a mission-ready workspace"
+            subtitle="Every hub shares the same glass design language, CTA styles, and accessibility affordances so navigation feels seamless."
+            size="md"
+            align="stacked"
+          />
 
-          {/* Ops Dashboard Card */}
-          <Link
-            href="/ops"
-            className="group glass-card glass-card--subtle hover:-translate-y-1 transition-transform duration-300 min-h-[300px] flex flex-col"
-            aria-label="Navigate to Operations HUB - Mission control for inventory and donations"
-          >
-            <div className="glass-card__glow bg-gradient-to-br from-hti-orange/60 via-hti-yellow/40 to-hti-teal/30" />
-            <div className="relative z-10 text-left space-y-4">
-              <div className="text-5xl" aria-hidden="true">⚡</div>
-              <h2 className="text-3xl font-bold text-glass-bright">Operations HUB</h2>
-              <p className="text-glass-muted text-base font-medium">
-                Mission control for inventory, donations, distributions, and training management.
-              </p>
-              <div className="inline-flex items-center glass-chip glass-chip--orange text-xs font-semibold text-hti-navy">
-                <span>Launch HUB</span>
-                <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-white/10 via-hti-orange/20 to-hti-yellow/20" />
-          </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {destinations.map((card) => (
+              <article key={card.href} className="relative">
+                <div className="glass-card glass-card--subtle shadow-glass h-full flex flex-col">
+                  <div className={`glass-card__glow bg-gradient-to-br ${card.glow}`} />
+                  <div className="relative z-10 flex flex-col h-full p-6 space-y-4">
+                    <span className="text-4xl" aria-hidden="true">{card.icon}</span>
+                    <div className="space-y-2">
+                      <h2 className="text-2xl font-bold text-glass-bright">{card.title}</h2>
+                      <p className="text-sm text-glass-muted">{card.description}</p>
+                    </div>
+                    <div className="mt-auto pt-4 border-t glass-divider">
+                      <Link
+                        href={card.href}
+                        className={`inline-flex items-center gap-2 glass-chip ${card.chip} text-xs font-semibold hover:translate-x-1 transition-transform`}
+                      >
+                        <span>{card.action}</span>
+                        <svg
+                          className="w-5 h-5"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="M13 7l5 5-5 5" />
+                          <path d="M6 12h12" />
+                        </svg>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
 
-          {/* Reports Dashboard Card */}
-          <Link
-            href="/reports"
-            className="group glass-card glass-card--subtle hover:-translate-y-1 transition-transform duration-300 min-h-[300px] flex flex-col"
-            aria-label="Navigate to Grant Reports - Generate quarterly reports and track grant goals"
-          >
-            <div className="glass-card__glow bg-gradient-to-br from-hti-yellow/40 to-hti-orange/35" />
-            <div className="relative z-10 text-left space-y-4">
-              <div className="text-4xl" aria-hidden="true">📄</div>
-              <h2 className="text-2xl font-bold text-glass-bright">Grant Reports</h2>
-              <p className="text-glass-muted text-base font-medium">
-                Generate quarterly reports, track grant goals, and export data for NCDIT compliance.
-              </p>
-              <div className="inline-flex items-center glass-chip glass-chip--yellow text-xs font-semibold">
-                <span>Generate Reports</span>
-                <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-white/10 to-hti-yellow/15" />
-          </Link>
-
-          {/* Marketing HUB Card */}
-          <Link
-            href="/marketing"
-            className="group glass-card glass-card--subtle hover:-translate-y-1 transition-transform duration-300 min-h-[300px] flex flex-col"
-            aria-label="Navigate to Marketing HUB - Recipient stories and partnership applications"
-          >
-            <div className="glass-card__glow bg-gradient-to-br from-hti-teal/35 via-hti-navy/40 to-hti-yellow/30" />
-            <div className="relative z-10 text-left space-y-4">
-              <div className="text-4xl" aria-hidden="true">📣</div>
-              <h2 className="text-2xl font-bold text-glass-bright">Marketing HUB</h2>
-              <p className="text-glass-muted text-base font-medium">
-                Recipient stories, impact quotes, and partnership applications for marketing campaigns.
-              </p>
-              <div className="inline-flex items-center glass-chip glass-chip--teal text-xs font-semibold">
-                <span>View Stories</span>
-                <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-white/10 via-hti-teal/20 to-hti-yellow/15" />
-          </Link>
-        </div>
-
-        <div className="relative mt-12 text-center text-sm text-glass-muted">
+        <footer className="text-center text-sm text-hti-stone/70 space-y-2 pb-12" role="contentinfo">
           <p>HUBZone Technology Initiative • Henderson, NC</p>
-          <p className="mt-1">
+          <p>
             <a
               href="https://hubzonetech.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-glass-bright font-semibold hover:underline focus:outline-none focus:ring-2 focus:ring-hti-orange focus:ring-offset-2 rounded"
+              className="text-hti-navy font-semibold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-hti-ember rounded"
             >
               hubzonetech.org
             </a>
           </p>
-          <p className="mt-4 text-xs text-glass-muted/70">
-            Powered by Knack • Real-time data from HTI's database
-          </p>
-        </div>
-      </div>
-      <main id="main-content" className="sr-only">Main content</main>
+          <p className="text-xs">Powered by Knack • Live data synced from HTI's database</p>
+        </footer>
+      </main>
     </div>
   );
 }

@@ -20,19 +20,23 @@ export default function OpsPage() {
         subtitle="Mission control for device workflows and real-time coordination"
         icon={<span role="img" aria-label="lightning">⚡</span>}
         maxWidth="wide"
+        logoSrc="/hti-logo.svg"
         actions={(
-          <>
-            <div className="glass-card glass-card--subtle shadow-glass px-5 py-4 border border-hti-orange/45 min-w-[220px]">
-              <div className="glass-card__glow bg-gradient-to-br from-hti-orange/30 to-hti-yellow/20" />
-              <div className="relative space-y-1">
-                <div className="text-[11px] uppercase tracking-[0.2em] text-hti-yellow/90 font-semibold">System Status</div>
-                <div className="flex items-center gap-3 text-sm font-semibold text-white">
+          <div className="flex flex-col md:flex-row md:items-center gap-4">
+            <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-gradient-to-br from-hti-orange/25 via-hti-yellow/15 to-transparent px-6 py-4 shadow-[0_18px_40px_rgba(10,18,34,0.45)]">
+              <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.35),transparent_60%)]" />
+              <div className="relative z-10 space-y-2">
+                <div className="text-[11px] uppercase tracking-[0.24em] text-white/80 font-semibold">System status</div>
+                <div className="flex items-center gap-3 text-sm md:text-base font-semibold text-white">
                   <span className="relative inline-flex h-2.5 w-2.5">
                     <span className="absolute inline-flex h-full w-full rounded-full bg-hti-yellow/80 opacity-75 animate-ping" />
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-hti-yellow" />
                   </span>
-                  All Systems Operational
+                  All systems operational
                 </div>
+                <p className="text-xs text-white/70">
+                  Live sync to Knack pipeline metrics resumes automatically if throttled.
+                </p>
               </div>
             </div>
             <Link
@@ -42,7 +46,7 @@ export default function OpsPage() {
             >
               ← Back to HUB
             </Link>
-          </>
+          </div>
         )}
       />
 

@@ -344,13 +344,18 @@ export default function MarketingPage() {
       />
 
       {/* Statistics Dashboard */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6">
+      <section
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8"
+        aria-labelledby="marketing-stats-heading"
+      >
+        <div id="marketing-stats-heading">
           <PageSectionHeading
             icon={<TrendingUp className="w-6 h-6 text-hti-teal" aria-hidden />}
             title="Application Pipeline"
             subtitle="Real-time overview of partnership applications"
             size="md"
+            align="split"
+            eyebrow="Pipeline overview"
           />
         </div>
 
@@ -421,10 +426,10 @@ export default function MarketingPage() {
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
       {/* Main Content Area */}
-      <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10" role="main">
+      <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12" role="main">
         <div>
           <PageSectionHeading
             title="Browse Applications"

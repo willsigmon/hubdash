@@ -20,24 +20,28 @@ const THEME_STYLES: Record<PageHeroTheme, {
   overlayOne?: string;
   overlayTwo?: string;
   accentText: string;
+  depthOverlay?: string;
 }> = {
   navy: {
-    wrapper: "bg-gradient-to-r from-hti-navy via-hti-navy/95 to-hti-navy text-white",
+    wrapper: "bg-gradient-to-br from-hti-navy via-[#172748] to-[#101c33] text-white",
     overlayOne: "bg-[radial-gradient(circle_at_top_right,_rgba(109,179,183,0.35),_transparent_60%)]",
     overlayTwo: "bg-[radial-gradient(circle_at_bottom_left,_rgba(255,235,59,0.25),_transparent_65%)]",
     accentText: "text-hti-yellow",
+    depthOverlay: "bg-gradient-to-br from-black/45 via-black/35 to-black/15",
   },
   sunrise: {
     wrapper: "bg-gradient-to-r from-hti-navy via-hti-navy/90 to-hti-plum/85 text-white",
     overlayOne: "bg-[radial-gradient(circle_at_top_left,_rgba(109,179,183,0.25),_transparent_60%)]",
     overlayTwo: "bg-[radial-gradient(circle_at_bottom_right,_rgba(255,186,120,0.3),_transparent_60%)]",
     accentText: "text-hti-yellow",
+    depthOverlay: "bg-gradient-to-br from-black/50 via-black/35 to-black/20",
   },
   ops: {
     wrapper: "bg-gradient-to-r from-hti-navy/95 via-[#0a1627] to-hti-navy/80 text-white",
     overlayOne: "bg-[radial-gradient(circle_at_top_left,_rgba(255,170,85,0.28),_transparent_55%)]",
     overlayTwo: "bg-[radial-gradient(circle_at_bottom_right,_rgba(109,179,183,0.35),_transparent_60%)]",
     accentText: "text-hti-teal",
+    depthOverlay: "bg-gradient-to-br from-black/55 via-black/38 to-black/18",
   },
 };
 
@@ -56,13 +60,13 @@ export default function PageHero({
   align = "left",
   maxWidth = "default",
   showLogo = true,
-  logoSrc = "/hti-logo-mark.svg",
+  logoSrc = "/hti-logo.svg",
 }: PageHeroProps) {
   const themeStyle = THEME_STYLES[theme];
 
   return (
     <header
-      className={`relative overflow-hidden shadow-xl ${themeStyle.wrapper}`}
+      className={`relative isolate overflow-hidden shadow-xl ${themeStyle.wrapper}`}
       role="banner"
     >
       {themeStyle.overlayOne && (
@@ -71,6 +75,8 @@ export default function PageHero({
       {themeStyle.overlayTwo && (
         <div className={`absolute inset-0 pointer-events-none opacity-25 ${themeStyle.overlayTwo}`} />
       )}
+      <div className={`absolute inset-0 pointer-events-none mix-blend-multiply ${themeStyle.depthOverlay ?? "bg-black/40"}`} />
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-white/8 via-transparent to-transparent opacity-60" />
       <div className={`relative ${WIDTH_CLASS[maxWidth]} mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-12`}>
         <div
           className={`flex flex-col gap-6 ${align === "center" ? "items-center text-center" : ""} md:flex-row md:items-center md:justify-between`}
@@ -93,12 +99,12 @@ export default function PageHero({
               <div className={`flex ${align === "center" ? "justify-center" : ""} items-center gap-3`}
               >
                 {icon && <span className="text-2xl sm:text-3xl" aria-hidden>{icon}</span>}
-                <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+                <h1 className="text-4xl md:text-5xl font-bold leading-tight drop-shadow-[0_10px_24px_rgba(6,14,28,0.55)]">
                   {title}
                 </h1>
               </div>
               {subtitle && (
-                <p className="text-base md:text-xl font-medium text-white/80 max-w-2xl">
+                <p className="text-base md:text-xl font-medium text-white/85 max-w-2xl drop-shadow-[0_8px_18px_rgba(6,12,24,0.45)]">
                   {subtitle}
                 </p>
               )}

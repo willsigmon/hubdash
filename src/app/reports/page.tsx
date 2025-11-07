@@ -224,7 +224,7 @@ export default function ReportsPage() {
       />
 
       {/* Main Content */}
-      <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10" role="main">
+      <main id="main-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12" role="main">
 
         {/* Grant Progress Visualization - PROMINENT */}
         <section className="glass-card glass-card--subtle shadow-glass overflow-hidden">

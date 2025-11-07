@@ -5,7 +5,8 @@ import { useState, useEffect, useMemo } from "react";
 import { formatDate, formatPlural } from "@/lib/utils/date-formatters";
 import { getPriorityColor, getRequestStatusColor, PRIORITY_COLORS } from "@/lib/utils/status-colors";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import EmptyState from "@/components/ui/EmptyState";
+import DataPauseNotice from "@/components/ui/DataPauseNotice";
+import { interpretKnackError } from "@/lib/utils/knack-messaging";
 import {
   Search,
   Filter,
@@ -187,14 +188,16 @@ export default function DonationRequests() {
   }
 
   if (error) {
+    const knackMessage = interpretKnackError(error instanceof Error ? error.message : String(error ?? ""));
     return (
-      <EmptyState
-        icon={<AlertCircle className="w-5 h-5" />}
-        title="Donation feed is taking a break"
-        description={error instanceof Error ? error.message : 'We’ll try again shortly. Your last synced data remains safe.'}
-        actionLabel="Retry now"
-        onAction={() => queryClient.invalidateQueries({ queryKey: ['donations'] })}
+      <DataPauseNotice
+        icon={<span role="img" aria-label="donation">📦</span>}
         tone="warning"
+        title={knackMessage.title}
+        message={knackMessage.message}
+        detail={knackMessage.detail}
+        actionLabel="Try again now"
+        onAction={() => queryClient.invalidateQueries({ queryKey: ['donations'] })}
       />
     );
   }

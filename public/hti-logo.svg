@@ -1,19 +1,40 @@
-<svg width="280" height="80" viewBox="0 0 280 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- HTI Logo based on the image provided -->
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="150" viewBox="0 0 420 150" role="img" aria-labelledby="htiLogoTitle htiLogoDesc">
+  <title id="htiLogoTitle">HUBZone Technology Initiative logo</title>
+  <desc id="htiLogoDesc">Four orange and yellow circles that read HTI with a power icon followed by the HUBZone Technology Initiative wordmark.</desc>
+  <defs>
+    <linearGradient id="htiPowerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff7a2d" />
+      <stop offset="100%" stop-color="#ff9c2e" />
+    </linearGradient>
+    <linearGradient id="htiHGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff8f2f" />
+      <stop offset="100%" stop-color="#ffa743" />
+    </linearGradient>
+    <linearGradient id="htiTGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffb23c" />
+      <stop offset="100%" stop-color="#ffc347" />
+    </linearGradient>
+    <linearGradient id="htiIGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd44c" />
+      <stop offset="100%" stop-color="#ffe066" />
+    </linearGradient>
+  </defs>
+  <g transform="translate(30 20)">
+    <circle cx="50" cy="50" r="45" fill="url(#htiPowerGradient)" />
+    <path d="M50 22 v30" stroke="#ffffff" stroke-width="8" stroke-linecap="round" />
+    <path d="M35 42 a15 15 0 1 1 30 0" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" />
 
-  <!-- Orange Circle with Power Symbol -->
-  <circle cx="40" cy="40" r="35" fill="#FF6B35"/>
-  <path d="M40 20 L40 35 M40 35 L40 50 M30 35 A10 10 0 0 1 50 35" stroke="white" stroke-width="6" stroke-linecap="round" fill="none"/>
+    <circle cx="150" cy="50" r="45" fill="url(#htiHGradient)" />
+    <text x="150" y="64" fill="#ffffff" font-family="'Montserrat', 'Segoe UI', Arial, sans-serif" font-size="48" font-weight="700" text-anchor="middle">H</text>
 
-  <!-- H Circle -->
-  <circle cx="100" cy="40" r="35" fill="#FF8C42"/>
-  <text x="100" y="52" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="white" text-anchor="middle">H</text>
+    <circle cx="250" cy="50" r="45" fill="url(#htiTGradient)" />
+    <text x="250" y="64" fill="#ffffff" font-family="'Montserrat', 'Segoe UI', Arial, sans-serif" font-size="48" font-weight="700" text-anchor="middle">T</text>
 
-  <!-- T Circle -->
-  <circle cx="160" cy="40" r="35" fill="#FFB84D"/>
-  <text x="160" y="52" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="white" text-anchor="middle">T</text>
+    <circle cx="350" cy="50" r="45" fill="url(#htiIGradient)" />
+    <text x="350" y="64" fill="#ffffff" font-family="'Montserrat', 'Segoe UI', Arial, sans-serif" font-size="48" font-weight="700" text-anchor="middle">I</text>
+  </g>
 
-  <!-- I Circle -->
-  <circle cx="220" cy="40" r="35" fill="#FFD966"/>
-  <text x="220" y="52" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="white" text-anchor="middle">I</text>
+  <text x="210" y="136" fill="#102746" font-family="'Montserrat', 'Segoe UI', Arial, sans-serif" font-size="26" font-weight="700" text-anchor="middle" letter-spacing="0.12em">
+    HUBZONE TECHNOLOGY INITIATIVE
+  </text>
 </svg>
