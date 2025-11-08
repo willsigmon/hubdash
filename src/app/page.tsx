@@ -1,186 +1,116 @@
+import GlassCard from "@/components/ui/GlassCard";
+import GradientHeading from "@/components/ui/GradientHeading";
+import { ArrowRight, FileText, LayoutDashboard, Megaphone, Zap } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-hti-midnight via-hti-plum to-hti-midnight flex items-center justify-center p-6">
+    <div className="min-h-screen bg-app flex items-center justify-center p-6">
       {/* Skip link for keyboard users */}
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-hti-plum focus:px-4 focus:py-2 focus:rounded-md focus:shadow-lg"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-surface focus:text-primary focus:px-4 focus:py-2 focus:rounded-md focus:shadow"
       >
         Skip to main content
       </a>
-      <div className="max-w-6xl w-full bg-white/95 backdrop-blur rounded-3xl shadow-2xl border border-hti-fig/10 p-8 md:p-12">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-bold text-hti-plum mb-4">
-            HubDash
-          </h1>
-          <p className="text-xl text-hti-stone font-medium">
-            HUBZone Technology Initiative Dashboard
-          </p>
-          <p className="text-sm text-hti-mist mt-2 font-medium">
-            Securely Repurposing Technology. Expanding Digital Opportunity.
-          </p>
+
+      <div className="w-full max-w-6xl">
+        {/* Hero */}
+        <div className="text-center mb-10 md:mb-14">
+          <GradientHeading as="h1" className="text-5xl md:text-6xl">HubDash</GradientHeading>
+          <p className="text-lg md:text-xl text-secondary mt-3">HUBZone Technology Initiative Dashboard</p>
+          <p className="text-sm text-muted mt-1">Securely repurposing technology. Expanding digital opportunity.</p>
         </div>
 
-        <main id="main" className="grid grid-cols-1 md:grid-cols-2 gap-8" aria-label="Hub destinations">
-          {/* Board Dashboard Card */}
-          <Link
-            href="/board"
-            aria-label="Open Board Dashboard — executive metrics and trends"
-            className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-hti-plum to-hti-fig p-8 text-white hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 min-h-[300px] flex flex-col border border-white/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-hti-soleil/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
-          >
-            {/* subtle contrast overlay for readability */}
-            <div className="pointer-events-none absolute inset-0 bg-black/10 group-hover:bg-black/15 transition-colors" />
-            <div className="relative z-10 text-white">
-              <div className="text-5xl mb-4" aria-hidden>
-                📊
+        {/* Destinations */}
+        <main id="main" className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8" aria-label="Hub destinations">
+          <Link href="/board" aria-label="Open Board Dashboard — executive metrics and trends" className="group">
+            <GlassCard interactive elevation="lg" className="p-6 md:p-8 h-full">
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-xl accent-gradient text-white shadow">
+                  <LayoutDashboard className="w-6 h-6" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-2xl font-semibold text-primary mb-1">Board Dashboard</h2>
+                  <p className="text-sm text-secondary mb-4">Executive summary with impact metrics, trends, and insights for board members.</p>
+                  <div className="inline-flex items-center gap-2 text-accent font-semibold text-sm">
+                    <span>View Dashboard</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  </div>
+                </div>
               </div>
-              <h2 className="text-3xl font-bold mb-3 text-white">Board Dashboard</h2>
-              <p className="text-hti-soleil mb-4 font-medium">
-                Executive summary with impact metrics, trends, and key insights for board members.
-              </p>
-              <div className="flex items-center text-sm font-semibold text-hti-soleil">
-                <span>View Dashboard</span>
-                <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="absolute inset-0 bg-hti-soleil/15 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </GlassCard>
           </Link>
 
-          {/* Ops Dashboard Card */}
-          <Link
-            href="/ops"
-            aria-label="Launch Operations HUB — inventory, donations, distributions, training"
-            className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-hti-ember to-hti-sunset p-8 text-white hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 min-h-[300px] flex flex-col border border-white/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-hti-soleil/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
-          >
-            <div className="pointer-events-none absolute inset-0 bg-black/10 group-hover:bg-black/15 transition-colors" />
-            <div className="relative z-10 text-white">
-              <div className="text-5xl mb-4" aria-hidden>
-                ⚡
+          <Link href="/ops" aria-label="Launch Operations HUB — inventory, donations, distributions, training" className="group">
+            <GlassCard interactive elevation="lg" className="p-6 md:p-8 h-full">
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-xl accent-gradient text-white shadow">
+                  <Zap className="w-6 h-6" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-2xl font-semibold text-primary mb-1">Operations HUB</h2>
+                  <p className="text-sm text-secondary mb-4">Mission control for inventory, donations, distributions, and training management.</p>
+                  <div className="inline-flex items-center gap-2 text-accent font-semibold text-sm">
+                    <span>Launch HUB</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  </div>
+                </div>
               </div>
-              <h2 className="text-3xl font-bold mb-3 text-white">Operations HUB</h2>
-              <p className="text-hti-soleil mb-4 font-medium">
-                Mission control for inventory, donations, distributions, and training management.
-              </p>
-              <div className="flex items-center text-sm font-semibold text-hti-soleil">
-                <span>Launch HUB</span>
-                <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="absolute inset-0 bg-hti-soleil/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </GlassCard>
           </Link>
 
-          {/* Reports Dashboard Card */}
-          <Link
-            href="/reports"
-            aria-label="Generate Grant Reports — quarterly reports, goals, NCDIT exports"
-            className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-hti-gold to-hti-ember p-8 text-hti-midnight hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 min-h-[300px] flex flex-col border border-hti-ember/30 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-hti-soleil/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-          >
-            <div className="pointer-events-none absolute inset-0 bg-black/10 group-hover:bg-black/15 transition-colors" />
-            <div className="relative z-10 text-hti-midnight">
-              <div className="text-4xl mb-4" aria-hidden>
-                📄
+          <Link href="/reports" aria-label="Generate Grant Reports — quarterly reports, goals, NCDIT exports" className="group">
+            <GlassCard interactive elevation="lg" className="p-6 md:p-8 h-full">
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-xl accent-gradient text-white shadow">
+                  <FileText className="w-6 h-6" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-2xl font-semibold text-primary mb-1">Grant Reports</h2>
+                  <p className="text-sm text-secondary mb-4">Generate quarterly reports, track grant goals, and export data for NCDIT compliance.</p>
+                  <div className="inline-flex items-center gap-2 text-accent font-semibold text-sm">
+                    <span>Generate Reports</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  </div>
+                </div>
               </div>
-              <h2 className="text-2xl font-bold mb-3 text-hti-midnight">Grant Reports</h2>
-              <p className="text-hti-fig mb-4 font-medium">
-                Generate quarterly reports, track grant goals, and export data for NCDIT compliance.
-              </p>
-              <div className="flex items-center text-sm font-semibold text-hti-fig">
-                <span>Generate Reports</span>
-                <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="absolute inset-0 bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </GlassCard>
           </Link>
 
-          {/* Marketing HUB Card */}
-          <Link
-            href="/marketing"
-            aria-label="Open Marketing HUB — recipient stories and partnership applications"
-            className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-hti-fig to-hti-sunset p-8 text-white hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 min-h-[300px] flex flex-col border border-white/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-hti-soleil/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
-          >
-            <div className="pointer-events-none absolute inset-0 bg-black/10 group-hover:bg-black/15 transition-colors" />
-            <div className="relative z-10 text-white">
-              <div className="text-4xl mb-4" aria-hidden>
-                📣
+          <Link href="/marketing" aria-label="Open Marketing HUB — recipient stories and partnership applications" className="group">
+            <GlassCard interactive elevation="lg" className="p-6 md:p-8 h-full">
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-xl accent-gradient text-white shadow">
+                  <Megaphone className="w-6 h-6" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="text-2xl font-semibold text-primary mb-1">Marketing HUB</h2>
+                  <p className="text-sm text-secondary mb-4">Recipient stories, impact quotes, and partnership applications for marketing campaigns.</p>
+                  <div className="inline-flex items-center gap-2 text-accent font-semibold text-sm">
+                    <span>View Stories</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  </div>
+                </div>
               </div>
-              <h2 className="text-2xl font-bold mb-3 text-white">Marketing HUB</h2>
-              <p className="text-hti-soleil mb-4 font-medium">
-                Recipient stories, impact quotes, and partnership applications for marketing campaigns.
-              </p>
-              <div className="flex items-center text-sm font-semibold text-white">
-                <span>View Stories</span>
-                <svg
-                  className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="absolute inset-0 bg-hti-soleil/15 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </GlassCard>
           </Link>
         </main>
 
-        <div className="mt-12 text-center text-sm text-hti-stone">
+        {/* Footer */}
+        <div className="mt-10 md:mt-12 text-center text-sm text-secondary">
           <p>HUBZone Technology Initiative • Henderson, NC</p>
           <p className="mt-1">
             <a
               href="https://hubzonetech.org"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-hti-plum font-semibold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hti-soleil/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white rounded"
+              className="text-accent font-semibold hover:underline focus-visible:outline-none focus-ring rounded"
             >
               hubzonetech.org
             </a>
           </p>
-          <p className="mt-4 text-xs text-hti-mist">
-            Powered by Knack • Real-time data from HTI's database
-          </p>
+          <p className="mt-4 text-xs text-muted">Powered by Knack • Real-time data from HTI's database</p>
         </div>
       </div>
     </div>
