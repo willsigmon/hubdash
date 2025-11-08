@@ -31,6 +31,56 @@ body {
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
+/* ========================================
+   GLASS + ELEVATION UTILITIES (brand aligned)
+   ======================================== */
+
+/* Use as utility classes alongside Tailwind */
+.glass {
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.70),
+    rgba(255, 255, 255, 0.50)
+  );
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  border: 1px solid rgba(67, 61, 88, 0.18); /* plum-tinted */
+}
+
+.glass-strong {
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.80),
+    rgba(255, 255, 255, 0.58)
+  );
+  backdrop-filter: saturate(150%) blur(18px);
+  -webkit-backdrop-filter: saturate(150%) blur(18px);
+  border: 1px solid rgba(67, 61, 88, 0.22);
+}
+
+.glass-on-dark {
+  background: linear-gradient(
+    135deg,
+    rgba(15, 12, 17, 0.35),
+    rgba(47, 45, 76, 0.35)
+  );
+  backdrop-filter: saturate(150%) blur(16px);
+  -webkit-backdrop-filter: saturate(150%) blur(16px);
+  border: 1px solid rgba(226, 168, 53, 0.20); /* gold tint on dark */
+}
+
+.elevation-lg {
+  box-shadow: 0 12px 28px rgba(15, 12, 17, 0.22), 0 2px 8px rgba(15, 12, 17, 0.10);
+}
+
+.elevation-md {
+  box-shadow: 0 8px 18px rgba(15, 12, 17, 0.18), 0 1px 4px rgba(15, 12, 17, 0.08);
+}
+
+.no-black-border {
+  border-color: rgba(67, 61, 88, 0.18) !important;
+}
+
 /* Reports Page Utility Classes */
 
 .btn-primary {
