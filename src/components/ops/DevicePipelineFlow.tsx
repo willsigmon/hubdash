@@ -30,10 +30,10 @@ const WORKFLOW_STAGES = [
     label: "Unassigned/Ready",
     description: "Devices ready for technician assignment",
     icon: Package,
-    color: "from-blue-500 to-blue-600",
-    bgColor: "bg-blue-500/10",
-    textColor: "text-blue-600",
-    borderColor: "border-blue-500/20",
+    color: "accent-gradient",
+    bgColor: "bg-soft-accent",
+    textColor: "text-accent",
+    borderColor: "border-accent/20",
     route: "/ops/devices/unassigned"
   },
   {
@@ -41,10 +41,10 @@ const WORKFLOW_STAGES = [
     label: "Assigned",
     description: "In process with technicians",
     icon: Wrench,
-    color: "from-hti-sunset to-hti-orange",
-    bgColor: "bg-hti-sunset/10",
-    textColor: "text-hti-sunset",
-    borderColor: "border-hti-sunset/20",
+    color: "accent-gradient",
+    bgColor: "bg-soft-warning",
+    textColor: "text-warning",
+    borderColor: "border-warning/20",
     route: "/ops/devices/assigned"
   },
   {
@@ -52,10 +52,10 @@ const WORKFLOW_STAGES = [
     label: "Converted/Ready",
     description: "Ready to be presented",
     icon: CheckCircle,
-    color: "from-hti-gold to-hti-soleil",
-    bgColor: "bg-hti-gold/10",
-    textColor: "text-hti-gold",
-    borderColor: "border-hti-gold/20",
+    color: "accent-gradient",
+    bgColor: "bg-soft-accent",
+    textColor: "text-accent",
+    borderColor: "border-accent/20",
     route: "/ops/devices/converted"
   },
   {
@@ -63,10 +63,10 @@ const WORKFLOW_STAGES = [
     label: "Presented",
     description: "Donated to recipients",
     icon: Truck,
-    color: "from-emerald-500 to-emerald-600",
-    bgColor: "bg-emerald-500/10",
-    textColor: "text-emerald-600",
-    borderColor: "border-emerald-500/20",
+    color: "accent-gradient",
+    bgColor: "bg-soft-success",
+    textColor: "text-success",
+    borderColor: "border-success/20",
     route: "/ops/devices/presented"
   },
   {
@@ -74,10 +74,10 @@ const WORKFLOW_STAGES = [
     label: "Discarded",
     description: "Marked for eCycling",
     icon: Archive,
-    color: "from-hti-stone to-hti-mist",
-    bgColor: "bg-hti-stone/10",
-    textColor: "text-hti-stone",
-    borderColor: "border-hti-stone/20",
+    color: "accent-gradient",
+    bgColor: "bg-soft-danger",
+    textColor: "text-danger",
+    borderColor: "border-danger/20",
     route: "/ops/devices/discarded"
   },
 ];
@@ -120,10 +120,10 @@ export default function DevicePipelineFlow() {
     <div className="space-y-6">
       <GlassCard>
         <div className="mb-6">
-          <h3 className="text-2xl font-bold text-hti-plum mb-2">
+          <h3 className="text-2xl font-bold text-primary mb-2">
             Device Pipeline Workflow
           </h3>
-          <p className="text-hti-stone text-sm">
+          <p className="text-secondary text-sm">
             Track devices through the complete lifecycle from donation to presentation
           </p>
         </div>
@@ -140,7 +140,7 @@ export default function DevicePipelineFlow() {
                 {/* Connector Arrow */}
                 {index < WORKFLOW_STAGES.length - 1 && (
                   <div className="hidden md:block absolute top-1/2 -right-2 z-10 transform translate-x-1/2 -translate-y-1/2">
-                    <ChevronRight className="w-6 h-6 text-hti-stone/30" />
+                    <ChevronRight className="w-6 h-6 text-muted" />
                   </div>
                 )}
 
@@ -153,17 +153,17 @@ export default function DevicePipelineFlow() {
                     onMouseLeave={() => setSelectedStage(null)}
                   >
                     {/* Glow effect */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${stage.color} rounded-xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity`} />
+                    <div className={`absolute inset-0 ${stage.color} rounded-xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity`} />
 
                     {/* Card */}
-                    <div className={`relative bg-white rounded-xl p-4 border-2 ${stage.borderColor} ${stage.bgColor} transition-all shadow-sm group-hover:shadow-xl`}>
+                    <div className={`relative bg-surface rounded-xl p-4 border-2 ${stage.borderColor} ${stage.bgColor} transition-all shadow-sm group-hover:shadow-xl`}>
                       {/* Icon */}
-                      <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${stage.color} flex items-center justify-center mb-3 shadow-lg`}>
+                      <div className={`w-12 h-12 rounded-lg ${stage.color} flex items-center justify-center mb-3 shadow-lg`}>
                         <Icon className="w-6 h-6 text-white" />
                       </div>
 
                       {/* Count */}
-                      <div className="text-3xl font-bold text-hti-plum mb-1">
+                      <div className="text-3xl font-bold text-primary mb-1">
                         {count.toLocaleString()}
                       </div>
 
@@ -173,12 +173,12 @@ export default function DevicePipelineFlow() {
                       </div>
 
                       {/* Description */}
-                      <div className="text-xs text-hti-stone/60">
+                      <div className="text-xs text-muted">
                         {stage.description}
                       </div>
 
                       {/* Hover indicator */}
-                      <div className="mt-3 flex items-center gap-1 text-xs text-hti-plum/60 group-hover:text-hti-plum transition-colors">
+                      <div className="mt-3 flex items-center gap-1 text-xs text-secondary group-hover:text-primary transition-colors">
                         <span>View details</span>
                         <ChevronRight className="w-3 h-3" />
                       </div>
@@ -191,28 +191,28 @@ export default function DevicePipelineFlow() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-3 gap-4 pt-6 border-t border-hti-fig/10">
+        <div className="grid grid-cols-3 gap-4 pt-6 border-t border-default">
           <div className="text-center">
-            <div className="text-2xl font-bold text-hti-plum">
+            <div className="text-2xl font-bold text-primary">
               {stats?.total.toLocaleString()}
             </div>
-            <div className="text-xs text-hti-stone uppercase tracking-wider">
+            <div className="text-xs text-secondary uppercase tracking-wider">
               Total Devices
             </div>
           </div>
-          <div className="text-center border-l border-r border-hti-fig/10">
-            <div className="text-2xl font-bold text-hti-sunset">
+          <div className="text-center border-l border-r border-default">
+            <div className="text-2xl font-bold text-accent">
               {((stats?.assigned || 0) + (stats?.converted || 0)).toLocaleString()}
             </div>
-            <div className="text-xs text-hti-stone uppercase tracking-wider">
+            <div className="text-xs text-secondary uppercase tracking-wider">
               In Progress
             </div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-emerald-600">
+            <div className="text-2xl font-bold text-success">
               {((stats?.presented || 0) / (stats?.total || 1) * 100).toFixed(1)}%
             </div>
-            <div className="text-xs text-hti-stone uppercase tracking-wider">
+            <div className="text-xs text-secondary uppercase tracking-wider">
               Deployment Rate
             </div>
           </div>
@@ -222,16 +222,16 @@ export default function DevicePipelineFlow() {
       {/* Quick Actions */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Link href="/ops/devices/unassigned">
-          <GlassCard className="hover:border-blue-500/30 transition-all cursor-pointer group">
+          <GlassCard className="hover:border-accent/30 transition-all cursor-pointer group">
             <div className="flex items-center gap-3">
-              <div className="p-3 bg-blue-500/10 rounded-lg">
-                <Filter className="w-5 h-5 text-blue-600" />
+              <div className="p-3 bg-soft-accent rounded-lg">
+                <Filter className="w-5 h-5 text-accent" />
               </div>
               <div>
-                <div className="font-semibold text-hti-plum group-hover:text-blue-600 transition-colors">
+                <div className="font-semibold text-primary group-hover:text-accent transition-colors">
                   Devices Needing Assignment
                 </div>
-                <div className="text-xs text-hti-stone">
+                <div className="text-xs text-secondary">
                   {stats?.unassigned} devices ready
                 </div>
               </div>
@@ -240,16 +240,16 @@ export default function DevicePipelineFlow() {
         </Link>
 
         <Link href="/ops/devices/converted">
-          <GlassCard className="hover:border-hti-gold/30 transition-all cursor-pointer group">
+          <GlassCard className="hover:border-accent/30 transition-all cursor-pointer group">
             <div className="flex items-center gap-3">
-              <div className="p-3 bg-hti-gold/10 rounded-lg">
-                <CheckCircle className="w-5 h-5 text-hti-gold" />
+              <div className="p-3 bg-soft-accent rounded-lg">
+                <CheckCircle className="w-5 h-5 text-accent" />
               </div>
               <div>
-                <div className="font-semibold text-hti-plum group-hover:text-hti-gold transition-colors">
+                <div className="font-semibold text-primary group-hover:text-accent transition-colors">
                   Ready for Presentation
                 </div>
-                <div className="text-xs text-hti-stone">
+                <div className="text-xs text-secondary">
                   {stats?.converted} devices converted
                 </div>
               </div>
@@ -258,16 +258,16 @@ export default function DevicePipelineFlow() {
         </Link>
 
         <Link href="/ops/devices/discarded">
-          <GlassCard className="hover:border-hti-stone/30 transition-all cursor-pointer group">
+          <GlassCard className="hover:border-danger/30 transition-all cursor-pointer group">
             <div className="flex items-center gap-3">
-              <div className="p-3 bg-hti-stone/10 rounded-lg">
-                <Archive className="w-5 h-5 text-hti-stone" />
+              <div className="p-3 bg-soft-danger rounded-lg">
+                <Archive className="w-5 h-5 text-danger" />
               </div>
               <div>
-                <div className="font-semibold text-hti-plum group-hover:text-hti-stone transition-colors">
+                <div className="font-semibold text-primary group-hover:text-danger transition-colors">
                   Review Discarded Devices
                 </div>
-                <div className="text-xs text-hti-stone">
+                <div className="text-xs text-secondary">
                   {stats?.discarded} for eCycling
                 </div>
               </div>

@@ -8,7 +8,6 @@ interface Stat {
   change: string;
   trend: "up" | "down" | "neutral";
   icon: string;
-  color: string;
 }
 
 export default function QuickStats() {
@@ -26,7 +25,6 @@ export default function QuickStats() {
             change: "+12 today",
             trend: "up",
             icon: "🔄",
-            color: "from-hti-yellow to-hti-yellow-bright",
           },
           {
             label: "Ready to Ship",
@@ -34,7 +32,6 @@ export default function QuickStats() {
             change: "8 scheduled",
             trend: "neutral",
             icon: "✅",
-            color: "from-green-600 to-green-400",
           },
           {
             label: "Pending Pickup",
@@ -42,7 +39,6 @@ export default function QuickStats() {
             change: "5 urgent",
             trend: "up",
             icon: "📍",
-            color: "from-hti-red to-hti-orange",
           },
           {
             label: "Avg Turnaround",
@@ -50,7 +46,6 @@ export default function QuickStats() {
             change: "-0.8d vs last week",
             trend: "down",
             icon: "⚡",
-            color: "from-hti-orange to-hti-yellow",
           },
         ];
 
@@ -67,7 +62,7 @@ export default function QuickStats() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[...Array(4)].map((_, i) => (
-          <div key={i} className="bg-white/5 rounded-xl h-32 animate-pulse border border-hti-yellow/50" />
+          <div key={i} className="bg-surface-alt rounded-xl h-32 animate-pulse border border-default" />
         ))}
       </div>
     );
@@ -78,10 +73,10 @@ export default function QuickStats() {
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="relative overflow-hidden rounded-xl bg-white/5 backdrop-blur-sm border border-hti-yellow/50 shadow-xl hover:shadow-2xl hover:border-hti-red/70 transition-all duration-300 hover:scale-105 group"
+          className="relative overflow-hidden rounded-xl bg-surface-alt backdrop-blur-sm border border-default shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 group"
         >
           {/* Background Gradient */}
-          <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-5 group-hover:opacity-15 transition-opacity`} />
+          <div className="absolute inset-0 accent-gradient opacity-10 group-hover:opacity-20 transition-opacity" />
 
           {/* Content */}
           <div className="relative p-5 md:p-6">
@@ -90,7 +85,7 @@ export default function QuickStats() {
               <div className="text-3xl md:text-4xl group-hover:scale-110 transition-transform origin-left">{stat.icon}</div>
               <div className="flex-shrink-0">
                 {stat.trend === "up" && (
-                  <div className="flex items-center gap-1 text-hti-yellow text-xs font-bold bg-hti-yellow/30 px-2 py-1 rounded-full border border-hti-yellow/60">
+                  <div className="flex items-center gap-1 text-success text-xs font-bold bg-soft-success px-2 py-1 rounded-full border border-success/40">
                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M12 5.293l5.354-5.354a1 1 0 011.414 1.414L13.414 7l5.354 5.354a1 1 0 01-1.414 1.414L12 8.414l-5.354 5.354a1 1 0 11-1.414-1.414L10.586 7 5.232 1.646a1 1 0 111.414-1.414L12 5.293z" clipRule="evenodd" />
                     </svg>
@@ -98,7 +93,7 @@ export default function QuickStats() {
                   </div>
                 )}
                 {stat.trend === "down" && (
-                  <div className="flex items-center gap-1 text-hti-red text-xs font-bold bg-hti-red/30 px-2 py-1 rounded-full border border-hti-red/60">
+                  <div className="flex items-center gap-1 text-danger text-xs font-bold bg-soft-danger px-2 py-1 rounded-full border border-danger/40">
                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M12 15.707l5.354 5.354a1 1 0 001.414-1.414L13.414 15l5.354-5.354a1 1 0 10-1.414-1.414L12 13.586l-5.354-5.354a1 1 0 10-1.414 1.414L10.586 15l-5.354 5.354a1 1 0 001.414 1.414L12 15.707z" clipRule="evenodd" />
                     </svg>
@@ -106,7 +101,7 @@ export default function QuickStats() {
                   </div>
                 )}
                 {stat.trend === "neutral" && (
-                  <div className="flex items-center gap-1 text-hti-yellow text-xs font-bold bg-hti-yellow/30 px-2 py-1 rounded-full border border-hti-yellow/60">
+                  <div className="flex items-center gap-1 text-accent text-xs font-bold bg-soft-accent px-2 py-1 rounded-full border border-accent/40">
                     ⏸
                   </div>
                 )}
@@ -115,22 +110,22 @@ export default function QuickStats() {
 
             {/* Main Value and Label */}
             <div className="mb-3">
-              <div className="text-3xl md:text-4xl font-bold text-white mb-1 group-hover:text-hti-yellow transition-colors">
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-1 group-hover:text-accent transition-colors">
                 {stat.value}
               </div>
-              <div className="text-xs md:text-sm font-bold text-hti-yellow">
+              <div className="text-xs md:text-sm font-bold text-secondary">
                 {stat.label}
               </div>
             </div>
 
             {/* Change Indicator */}
-            <div className="text-xs md:text-xs text-hti-yellow bg-hti-yellow/20 rounded px-3 py-1.5 inline-block font-bold border border-hti-yellow/60">
+            <div className="text-xs md:text-xs text-accent bg-soft-accent rounded px-3 py-1.5 inline-block font-bold">
               {stat.change}
             </div>
           </div>
 
           {/* Bottom Accent Bar */}
-          <div className={`h-2 bg-gradient-to-r ${stat.color} group-hover:opacity-100 opacity-100 transition-opacity`} />
+          <div className="h-2 accent-gradient group-hover:opacity-100 opacity-100 transition-opacity" />
         </div>
       ))}
     </div>
