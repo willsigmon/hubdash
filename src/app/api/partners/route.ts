@@ -1,15 +1,15 @@
-import { NextResponse, NextRequest } from 'next/server'
+import { cacheKeys, invalidateCache } from '@/lib/knack/cache-manager'
 import { getKnackClient } from '@/lib/knack/client'
-import { z } from 'zod'
 import {
-  requireAuth,
-  mapPartnerPayload,
-  safeKnack,
-  successResponse,
-  errorResponse,
-  type PartnerDTO
+    errorResponse,
+    mapPartnerPayload,
+    requireAuth,
+    safeKnack,
+    successResponse,
+    type PartnerDTO
 } from '@/lib/knack/write-utils'
-import { invalidateCache, cacheKeys } from '@/lib/knack/cache-manager'
+import { NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
 
 export async function GET() {
   try {

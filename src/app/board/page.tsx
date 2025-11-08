@@ -1,5 +1,6 @@
 import CountyMap from "@/components/board/CountyMap";
 import ImpactMetrics from "@/components/board/ImpactMetrics";
+import { LiveImpactCounter } from "@/components/board/LiveImpactCounter";
 import RecentActivity from "@/components/board/RecentActivity";
 import TrendChart from "@/components/board/TrendChart";
 import GradientHeading from "@/components/ui/GradientHeading";
@@ -30,6 +31,14 @@ export default function BoardDashboard() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Live Impact Counter - Hero Section */}
+        <section className="mb-20">
+          <LiveImpactCounter />
+        </section>
+
+        {/* Divider */}
+        <div className="my-20 border-t border-hti-fig/10" />
+
         {/* Impact Metrics Grid */}
         <section className="mb-20">
           <div className="mb-10">

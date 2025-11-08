@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart } from 'recharts';
 import GlassCard from '@/components/ui/GlassCard';
 import GradientHeading from '@/components/ui/GradientHeading';
+import { useEffect, useState } from 'react';
+import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 interface TrendData {
   month: string;
@@ -24,7 +24,7 @@ export default function TrendChart() {
         // Generate trend data (in production, this would come from historical records)
         const totalCollected = metricsData.totalLaptopsCollected || 0;
         const totalDistributed = metricsData.totalChromebooksDistributed || 0;
-        
+
         // Simulate monthly growth (replace with actual historical data when available)
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const monthlyData: TrendData[] = months.map((month, index) => {
@@ -40,7 +40,7 @@ export default function TrendChart() {
 
         // Calculate stats
         const avgPerMonth = Math.floor(totalCollected / 12);
-        const conversionRate = totalCollected > 0 
+        const conversionRate = totalCollected > 0
           ? Math.round((totalDistributed / totalCollected) * 100)
           : 0;
 
