@@ -4,7 +4,7 @@ import React from "react";
 
 interface GradientHeadingProps {
     children: React.ReactNode;
-    as?: keyof JSX.IntrinsicElements;
+    as?: React.ElementType;
     className?: string;
     from?: string;
     to?: string;
