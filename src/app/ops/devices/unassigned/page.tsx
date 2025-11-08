@@ -1,20 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { 
-  UserPlus, 
-  Calendar, 
-  ArrowLeft,
-  Search,
-  Package,
-  ChevronLeft,
-  ChevronRight
-} from "lucide-react";
 import GlassCard from "@/components/ui/GlassCard";
 import GradientHeading from "@/components/ui/GradientHeading";
 import { queryKeys } from "@/lib/query-client";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+    ArrowLeft,
+    Calendar,
+    ChevronLeft,
+    ChevronRight,
+    Package,
+    Search,
+    UserPlus
+} from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 interface Device {
   id: string;
@@ -94,7 +94,7 @@ export default function UnassignedDevicesPage() {
 
   const handleAssignDevices = () => {
     if (selectedDevices.size === 0 || !selectedTechId || !pickupDate) return;
-    
+
     assignMutation.mutate({
       deviceIds: Array.from(selectedDevices),
       technicianId: selectedTechId,
@@ -129,7 +129,7 @@ export default function UnassignedDevicesPage() {
           <ArrowLeft className="w-4 h-4" />
           Back to Operations
         </Link>
-        
+
         <GradientHeading
           from="from-blue-500"
           to="to-blue-700"

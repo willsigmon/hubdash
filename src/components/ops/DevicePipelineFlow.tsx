@@ -1,19 +1,19 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { 
-  Package, 
-  Wrench, 
-  CheckCircle, 
-  Truck, 
-  Archive,
-  ChevronRight,
-  Filter
-} from "lucide-react";
-import GlassCard from "../ui/GlassCard";
 import { queryKeys } from "@/lib/query-client";
+import { useQuery } from "@tanstack/react-query";
+import {
+    Archive,
+    CheckCircle,
+    ChevronRight,
+    Filter,
+    Package,
+    Truck,
+    Wrench
+} from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import GlassCard from "../ui/GlassCard";
 
 interface DeviceStats {
   total: number;
@@ -154,7 +154,7 @@ export default function DevicePipelineFlow() {
                   >
                     {/* Glow effect */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${stage.color} rounded-xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity`} />
-                    
+
                     {/* Card */}
                     <div className={`relative bg-white rounded-xl p-4 border-2 ${stage.borderColor} ${stage.bgColor} transition-all shadow-sm group-hover:shadow-xl`}>
                       {/* Icon */}

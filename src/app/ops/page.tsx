@@ -1,9 +1,9 @@
-import Link from "next/link";
+import ActivityFeed from "@/components/ops/ActivityFeed";
 import DevicePipelineFlow from "@/components/ops/DevicePipelineFlow";
-import QuickStats from "@/components/ops/QuickStats";
 import DonationRequests from "@/components/ops/DonationRequests";
 import InventoryOverview from "@/components/ops/InventoryOverview";
-import ActivityFeed from "@/components/ops/ActivityFeed";
+import QuickStats from "@/components/ops/QuickStats";
+import Link from "next/link";
 
 export default function OpsPage() {
   return (

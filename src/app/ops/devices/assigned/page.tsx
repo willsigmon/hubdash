@@ -1,0 +1,429 @@
+"use client";
+
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { 
+  ArrowLeft,
+  Search,
+  Wrench,
+  Check,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  UserCircle,
+  Calendar,
+  RotateCcw
+} from "lucide-react";
+import GlassCard from "@/components/ui/GlassCard";
+import GradientHeading from "@/components/ui/GradientHeading";
+import { queryKeys } from "@/lib/query-client";
+import Link from "next/link";
+
+interface AssignedDevice {
+  id: string;
+  serial: string;
+  type: string;
+  assignedTo: string;
+  assignedDate: string;
+  pickupDate?: string;
+  driveWiped: boolean;
+  osLoaded: boolean;
+  tested: boolean;
+  condition: string;
+  specs?: string;
+}
+
+export default function AssignedDevicesPage() {
+  const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [techFilter, setTechFilter] = useState<string>("all");
+
+  const limit = 25;
+  const queryClient = useQueryClient();
+
+  const { data, isLoading } = useQuery({
+    queryKey: queryKeys.devicesPaginated(page, limit, "Assigned"),
+    queryFn: async () => {
+      const res = await fetch(`/api/devices?page=${page}&limit=${limit}&status=Assigned`);
+      if (!res.ok) throw new Error("Failed to fetch devices");
+      return res.json();
+    },
+  });
+
+  const updateCheckboxMutation = useMutation({
+    mutationFn: async ({
+      deviceId,
+      field,
+      value,
+    }: {
+      deviceId: string;
+      field: "driveWiped" | "osLoaded" | "tested";
+      value: boolean;
+    }) => {
+      // In production: PATCH /api/devices/:id
+      const res = await fetch(`/api/devices/${deviceId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_WRITE_API_TOKEN}`,
+        },
+        body: JSON.stringify({ [field]: value }),
+      });
+      if (!res.ok) throw new Error("Failed to update device");
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.devices });
+    },
+  });
+
+  const markConvertedMutation = useMutation({
+    mutationFn: async (deviceId: string) => {
+      // In production: POST /api/devices/:id/convert
+      const res = await fetch(`/api/devices/${deviceId}/convert`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_WRITE_API_TOKEN}`,
+        },
+      });
+      if (!res.ok) throw new Error("Failed to mark as converted");
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.devices });
+    },
+  });
+
+  const reassignMutation = useMutation({
+    mutationFn: async ({
+      deviceId,
+      newTechId,
+    }: {
+      deviceId: string;
+      newTechId: string;
+    }) => {
+      // In production: POST /api/devices/:id/reassign
+      const res = await fetch(`/api/devices/${deviceId}/reassign`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_WRITE_API_TOKEN}`,
+        },
+        body: JSON.stringify({ technicianId: newTechId }),
+      });
+      if (!res.ok) throw new Error("Failed to reassign device");
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.devices });
+    },
+  });
+
+  const devices = data?.records || [];
+  const totalPages = Math.ceil((data?.total || 0) / limit);
+
+  // Mock technicians for filter (would come from API)
+  const technicians = [
+    "Sarah Chen",
+    "Marcus Johnson",
+    "Elena Rodriguez",
+    "David Kim",
+    "Amara Williams",
+  ];
+
+  const filteredDevices = devices.filter((d: AssignedDevice) => {
+    const matchesSearch =
+      d.serial?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      d.type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      d.assignedTo?.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesTech = techFilter === "all" || d.assignedTo === techFilter;
+    
+    return matchesSearch && matchesTech;
+  });
+
+  const handleCheckbox = (deviceId: string, field: "driveWiped" | "osLoaded" | "tested", currentValue: boolean) => {
+    updateCheckboxMutation.mutate({ deviceId, field, value: !currentValue });
+  };
+
+  const handleMarkConverted = (deviceId: string) => {
+    if (confirm("Mark this device as converted/ready for presentation?")) {
+      markConvertedMutation.mutate(deviceId);
+    }
+  };
+
+  const getProgressPercentage = (device: AssignedDevice) => {
+    const steps = [device.driveWiped, device.osLoaded, device.tested];
+    const completed = steps.filter(Boolean).length;
+    return (completed / steps.length) * 100;
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-hti-navy via-hti-gray to-hti-navy/90 p-6">
+      {/* Header */}
+      <div className="max-w-7xl mx-auto mb-8">
+        <Link href="/ops" className="inline-flex items-center gap-2 text-hti-yellow hover:text-hti-gold mb-4 transition-colors">
+          <ArrowLeft className="w-4 h-4" />
+          Back to Operations
+        </Link>
+        
+        <GradientHeading
+          from="from-hti-sunset"
+          to="to-hti-orange"
+        >
+          Assigned Devices
+        </GradientHeading>
+        <p className="text-hti-mist mt-2">
+          {data?.total || 0} devices currently with technicians
+        </p>
+      </div>
+
+      <div className="max-w-7xl mx-auto space-y-6">
+        {/* Filters Bar */}
+        <GlassCard>
+          <div className="flex items-center gap-4 flex-wrap">
+            {/* Search */}
+            <div className="flex-1 min-w-[300px]">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-hti-stone" />
+                <input
+                  type="text"
+                  placeholder="Search by serial, type, or technician..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-white/50 border border-hti-fig/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-sunset text-hti-plum placeholder-hti-stone/50"
+                />
+              </div>
+            </div>
+
+            {/* Technician Filter */}
+            <select
+              value={techFilter}
+              onChange={(e) => setTechFilter(e.target.value)}
+              className="px-4 py-3 bg-white/50 border border-hti-fig/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-sunset text-hti-plum"
+            >
+              <option value="all">All Technicians</option>
+              {technicians.map((tech) => (
+                <option key={tech} value={tech}>
+                  {tech}
+                </option>
+              ))}
+            </select>
+          </div>
+        </GlassCard>
+
+        {/* Legend */}
+        <GlassCard className="bg-hti-sunset/5">
+          <div className="flex items-center gap-6 text-sm">
+            <div className="font-semibold text-hti-plum">Progress Checklist:</div>
+            <div className="flex items-center gap-2">
+              <Wrench className="w-4 h-4 text-hti-sunset" />
+              <span className="text-hti-stone">Drive Wiped</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Wrench className="w-4 h-4 text-hti-sunset" />
+              <span className="text-hti-stone">OS Loaded</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Check className="w-4 h-4 text-hti-sunset" />
+              <span className="text-hti-stone">Tested</span>
+            </div>
+          </div>
+        </GlassCard>
+
+        {/* Devices Table */}
+        <GlassCard>
+          {isLoading ? (
+            <div className="space-y-3">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div key={i} className="h-20 bg-white/20 animate-pulse rounded-lg" />
+              ))}
+            </div>
+          ) : filteredDevices.length === 0 ? (
+            <div className="text-center py-12">
+              <Wrench className="w-16 h-16 text-hti-stone/30 mx-auto mb-4" />
+              <p className="text-hti-stone text-lg">No assigned devices found</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-hti-fig/10">
+                    <th className="text-left p-3 text-sm font-semibold text-hti-plum">Serial</th>
+                    <th className="text-left p-3 text-sm font-semibold text-hti-plum">Type</th>
+                    <th className="text-left p-3 text-sm font-semibold text-hti-plum">Technician</th>
+                    <th className="text-left p-3 text-sm font-semibold text-hti-plum">Pickup Date</th>
+                    <th className="text-left p-3 text-sm font-semibold text-hti-plum">Progress</th>
+                    <th className="text-center p-3 text-sm font-semibold text-hti-plum">Drive Wiped</th>
+                    <th className="text-center p-3 text-sm font-semibold text-hti-plum">OS Loaded</th>
+                    <th className="text-center p-3 text-sm font-semibold text-hti-plum">Tested</th>
+                    <th className="text-left p-3 text-sm font-semibold text-hti-plum">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredDevices.map((device: AssignedDevice) => {
+                    const progress = getProgressPercentage(device);
+                    const isComplete = progress === 100;
+
+                    return (
+                      <tr
+                        key={device.id}
+                        className="border-b border-hti-fig/5 hover:bg-white/30 transition-colors"
+                      >
+                        <td className="p-3 font-mono text-sm text-hti-plum">{device.serial}</td>
+                        <td className="p-3 text-sm text-hti-stone">{device.type}</td>
+                        <td className="p-3">
+                          <div className="flex items-center gap-2">
+                            <UserCircle className="w-4 h-4 text-hti-sunset" />
+                            <span className="text-sm text-hti-stone">{device.assignedTo}</span>
+                          </div>
+                        </td>
+                        <td className="p-3">
+                          <div className="flex items-center gap-2 text-sm text-hti-stone">
+                            <Calendar className="w-4 h-4 text-hti-stone/50" />
+                            {device.pickupDate || "—"}
+                          </div>
+                        </td>
+                        <td className="p-3">
+                          <div className="space-y-1">
+                            <div className="flex items-center justify-between text-xs">
+                              <span className="text-hti-stone">{progress.toFixed(0)}%</span>
+                              {isComplete && (
+                                <span className="text-emerald-600 font-semibold">Complete!</span>
+                              )}
+                            </div>
+                            <div className="w-full h-2 bg-hti-stone/10 rounded-full overflow-hidden">
+                              <div
+                                className={`h-full transition-all duration-300 ${
+                                  isComplete
+                                    ? "bg-gradient-to-r from-emerald-500 to-emerald-600"
+                                    : "bg-gradient-to-r from-hti-sunset to-hti-orange"
+                                }`}
+                                style={{ width: `${progress}%` }}
+                              />
+                            </div>
+                          </div>
+                        </td>
+                        <td className="p-3 text-center">
+                          <input
+                            type="checkbox"
+                            checked={device.driveWiped}
+                            onChange={() => handleCheckbox(device.id, "driveWiped", device.driveWiped)}
+                            className="w-5 h-5 rounded border-hti-fig/20 text-hti-sunset focus:ring-hti-sunset cursor-pointer"
+                          />
+                        </td>
+                        <td className="p-3 text-center">
+                          <input
+                            type="checkbox"
+                            checked={device.osLoaded}
+                            onChange={() => handleCheckbox(device.id, "osLoaded", device.osLoaded)}
+                            className="w-5 h-5 rounded border-hti-fig/20 text-hti-sunset focus:ring-hti-sunset cursor-pointer"
+                          />
+                        </td>
+                        <td className="p-3 text-center">
+                          <input
+                            type="checkbox"
+                            checked={device.tested}
+                            onChange={() => handleCheckbox(device.id, "tested", device.tested)}
+                            className="w-5 h-5 rounded border-hti-fig/20 text-hti-sunset focus:ring-hti-sunset cursor-pointer"
+                          />
+                        </td>
+                        <td className="p-3">
+                          <div className="flex items-center gap-2">
+                            {isComplete && (
+                              <button
+                                onClick={() => handleMarkConverted(device.id)}
+                                className="flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded text-xs font-semibold hover:shadow-lg transition-all"
+                              >
+                                <Check className="w-3 h-3" />
+                                Mark Ready
+                              </button>
+                            )}
+                            <button
+                              onClick={() => {
+                                const newTech = prompt("Enter new technician ID:");
+                                if (newTech) reassignMutation.mutate({ deviceId: device.id, newTechId: newTech });
+                              }}
+                              className="p-1.5 hover:bg-hti-stone/10 rounded transition-colors"
+                              title="Reassign"
+                            >
+                              <RotateCcw className="w-4 h-4 text-hti-stone" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between mt-6 pt-6 border-t border-hti-fig/10">
+              <div className="text-sm text-hti-stone">
+                Page {page} of {totalPages} ({data?.total} total)
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setPage(Math.max(1, page - 1))}
+                  disabled={page === 1}
+                  className="p-2 rounded bg-white/50 hover:bg-white/70 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <ChevronLeft className="w-5 h-5 text-hti-plum" />
+                </button>
+                <button
+                  onClick={() => setPage(Math.min(totalPages, page + 1))}
+                  disabled={page === totalPages}
+                  className="p-2 rounded bg-white/50 hover:bg-white/70 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <ChevronRight className="w-5 h-5 text-hti-plum" />
+                </button>
+              </div>
+            </div>
+          )}
+        </GlassCard>
+
+        {/* Summary Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <GlassCard>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-hti-plum mb-1">
+                {filteredDevices.filter((d: AssignedDevice) => getProgressPercentage(d) === 100).length}
+              </div>
+              <div className="text-xs text-hti-stone uppercase tracking-wider">Ready to Convert</div>
+            </div>
+          </GlassCard>
+          <GlassCard>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-hti-sunset mb-1">
+                {filteredDevices.filter((d: AssignedDevice) => getProgressPercentage(d) > 0 && getProgressPercentage(d) < 100).length}
+              </div>
+              <div className="text-xs text-hti-stone uppercase tracking-wider">In Progress</div>
+            </div>
+          </GlassCard>
+          <GlassCard>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-600 mb-1">
+                {filteredDevices.filter((d: AssignedDevice) => getProgressPercentage(d) === 0).length}
+              </div>
+              <div className="text-xs text-hti-stone uppercase tracking-wider">Not Started</div>
+            </div>
+          </GlassCard>
+          <GlassCard>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-hti-gold mb-1">
+                {filteredDevices.length > 0
+                  ? (filteredDevices.reduce((sum: number, d: AssignedDevice) => sum + getProgressPercentage(d), 0) / filteredDevices.length).toFixed(0)
+                  : 0}%
+              </div>
+              <div className="text-xs text-hti-stone uppercase tracking-wider">Avg Progress</div>
+            </div>
+          </GlassCard>
+        </div>
+      </div>
+    </div>
+  );
+}
