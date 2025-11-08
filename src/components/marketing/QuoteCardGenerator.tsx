@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { Download, Copy, Check, RefreshCw, Palette } from "lucide-react";
+import { Check, Copy, Download, Palette, RefreshCw } from "lucide-react";
+import { useRef, useState } from "react";
 
 interface QuoteCardGeneratorProps {
   quote: string;
@@ -72,25 +72,25 @@ export default function QuoteCardGenerator({
 
   return (
     <div
-      className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
+      className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-hti-fig/12"
+        className="bg-surface rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-6 border-b border-hti-fig/12 bg-hti-sand/60">
+        <div className="p-6 border-b border-default bg-surface-alt">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold text-hti-plum">Generate Quote Card</h2>
-              <p className="text-sm text-hti-stone mt-1">
+              <h2 className="text-2xl font-bold text-primary">Generate Quote Card</h2>
+              <p className="text-sm text-secondary mt-1">
                 Create shareable social media graphics from impact stories
               </p>
             </div>
             <button
               onClick={onClose}
-              className="text-hti-mist hover:text-hti-plum text-2xl transition-colors"
+              className="text-muted hover:text-accent text-2xl transition-colors"
             >
               ×
             </button>
@@ -101,8 +101,8 @@ export default function QuoteCardGenerator({
         <div className="p-6 grid md:grid-cols-2 gap-8">
           {/* Left: Preview */}
           <div>
-            <h3 className="text-lg font-semibold text-hti-plum mb-4">Preview</h3>
-            <div className="aspect-square rounded-xl shadow-2xl overflow-hidden border-4 border-hti-fig/12">
+            <h3 className="text-lg font-semibold text-primary mb-4">Preview</h3>
+            <div className="aspect-square rounded-xl shadow-2xl overflow-hidden border-4 border-default">
               <div
                 style={{
                   background: currentTheme.bg,
@@ -145,18 +145,18 @@ export default function QuoteCardGenerator({
             </div>
 
             {/* Download hint */}
-            <p className="text-xs text-hti-mist mt-3 text-center">
+            <p className="text-xs text-muted mt-3 text-center">
               Final card will be 1080×1080px (Instagram optimal)
             </p>
           </div>
 
           {/* Right: Controls */}
           <div>
-            <h3 className="text-lg font-semibold text-hti-plum mb-4">Customization</h3>
+            <h3 className="text-lg font-semibold text-primary mb-4">Customization</h3>
 
             {/* Theme Selection */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-hti-stone mb-3 flex items-center gap-2">
+              <label className="block text-sm font-medium text-secondary mb-3 flex items-center gap-2">
                 <Palette className="w-4 h-4" />
                 Choose Theme
               </label>
@@ -167,15 +167,15 @@ export default function QuoteCardGenerator({
                     onClick={() => setSelectedTheme(index)}
                     className={`p-4 rounded-xl border transition-all ${
                       selectedTheme === index
-                        ? "border-hti-ember shadow-lg scale-105 bg-hti-sand/50"
-                        : "border-hti-fig/12 hover:border-hti-fig/18 bg-white"
+                        ? "border-accent shadow-lg scale-105 bg-surface-alt"
+                        : "border-default hover:border-strong bg-surface"
                     }`}
                   >
                     <div
                       className="w-full h-16 rounded-md mb-2"
                       style={{ background: theme.bg }}
                     />
-                    <p className="text-sm font-medium text-hti-stone">{theme.name}</p>
+                    <p className="text-sm font-medium text-secondary">{theme.name}</p>
                   </button>
                 ))}
               </div>
@@ -183,16 +183,16 @@ export default function QuoteCardGenerator({
 
             {/* Quote Text (editable) */}
             <div className="mb-6">
-              <label className="block text-sm font-medium text-hti-stone mb-2">
+              <label className="block text-sm font-medium text-secondary mb-2">
                 Quote Text
               </label>
               <textarea
                 defaultValue={quote}
                 rows={4}
-                className="w-full px-3 py-2 border border-hti-fig/15 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-ember text-sm"
+                className="w-full px-3 py-2 border border-default rounded-lg focus-ring text-sm bg-surface-alt text-primary placeholder:text-muted"
                 placeholder="Edit the quote text..."
               />
-              <p className="text-xs text-hti-mist mt-1">
+              <p className="text-xs text-muted mt-1">
                 Keep it under 180 characters for best readability
               </p>
             </div>
@@ -200,24 +200,24 @@ export default function QuoteCardGenerator({
             {/* Author Details (editable) */}
             <div className="space-y-3 mb-6">
               <div>
-                <label className="block text-sm font-medium text-hti-stone mb-2">
+                <label className="block text-sm font-medium text-secondary mb-2">
                   Author Name
                 </label>
                 <input
                   type="text"
                   defaultValue={authorName}
-                  className="w-full px-3 py-2 border border-hti-fig/15 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-ember text-sm"
+                  className="w-full px-3 py-2 border border-default rounded-lg focus-ring text-sm bg-surface-alt text-primary placeholder:text-muted"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-hti-stone mb-2">
+                <label className="block text-sm font-medium text-secondary mb-2">
                   Title/Role (optional)
                 </label>
                 <input
                   type="text"
                   defaultValue={authorTitle}
                   placeholder="e.g., Chromebook Recipient, Partner Organization"
-                  className="w-full px-3 py-2 border border-hti-fig/15 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-ember text-sm"
+                  className="w-full px-3 py-2 border border-default rounded-lg focus-ring text-sm bg-surface-alt text-primary placeholder:text-muted"
                 />
               </div>
             </div>
@@ -227,7 +227,7 @@ export default function QuoteCardGenerator({
               <button
                 onClick={handleDownload}
                 disabled={downloading}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-hti-plum to-hti-ember text-white rounded-xl font-semibold shadow hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 px-6 py-3 accent-gradient text-white rounded-xl font-semibold shadow hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {downloading ? (
                   <>
@@ -244,11 +244,11 @@ export default function QuoteCardGenerator({
 
               <button
                 onClick={handleCopy}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-hti-sand/70 hover:bg-hti-sand text-hti-plum rounded-xl font-semibold border border-hti-fig/12 transition-all"
+                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-surface-alt hover:bg-surface text-primary rounded-xl font-semibold border border-default transition-all"
               >
                 {copied ? (
                   <>
-                    <Check className="w-5 h-5 text-hti-ember" />
+                    <Check className="w-5 h-5 text-success" />
                     Copied to Clipboard!
                   </>
                 ) : (
@@ -261,16 +261,16 @@ export default function QuoteCardGenerator({
 
               <button
                 onClick={onClose}
-                className="w-full px-6 py-3 bg-white hover:bg-hti-sand/70 text-hti-stone rounded-xl font-semibold transition-colors border border-hti-fig/15"
+                className="w-full px-6 py-3 bg-surface-alt hover:bg-surface text-secondary rounded-xl font-semibold transition-colors border border-default"
               >
                 Close
               </button>
             </div>
 
             {/* Usage Tips */}
-            <div className="mt-6 p-4 bg-hti-soleil/15 rounded-xl border border-hti-gold/30">
-              <h4 className="font-semibold text-hti-plum text-sm mb-2">💡 Usage Tips</h4>
-              <ul className="text-xs text-hti-plum space-y-1">
+            <div className="mt-6 p-4 bg-soft-accent rounded-xl border border-accent/30">
+              <h4 className="font-semibold text-primary text-sm mb-2">💡 Usage Tips</h4>
+              <ul className="text-xs text-secondary space-y-1">
                 <li>• Use for Instagram, Facebook, and LinkedIn posts</li>
                 <li>• Keep quotes authentic and impactful</li>
                 <li>• Get permission before sharing personal stories</li>

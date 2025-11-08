@@ -164,9 +164,9 @@ export default function MarketingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-hti-sand/60 to-white">
+    <div className="min-h-screen bg-app">
       {/* Header */}
-      <header className="bg-gradient-to-r from-hti-plum to-hti-fig text-white shadow-xl">
+      <header className="accent-gradient text-white shadow-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-between">
             <div>
@@ -188,88 +188,82 @@ export default function MarketingPage() {
       {/* Statistics Dashboard with Pizzazz */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-hti-navy mb-2">Application Pipeline</h2>
-          <p className="text-gray-700">Real-time overview of partnership applications</p>
+          <h2 className="text-2xl font-bold text-primary mb-2">Application Pipeline</h2>
+          <p className="text-secondary">Real-time overview of partnership applications</p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {/* Total Card */}
-          <div className="group bg-gradient-to-br from-hti-navy to-hti-navy/80 rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="group bg-surface rounded-2xl shadow-xl p-6 border border-default hover:border-strong transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
-                <BarChart3 className="w-8 h-8 text-white" />
-                <Zap className="w-4 h-4 text-hti-yellow opacity-0 group-hover:opacity-100 transition-opacity" />
+                <BarChart3 className="w-8 h-8 text-accent" />
+                <Zap className="w-4 h-4 text-accent/80 opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
-              <div className="text-sm font-medium text-white mb-1">Total Applications</div>
-              <div className="text-4xl font-bold text-white">{stats.total}</div>
-              <div className="text-xs text-white/60 mt-2">All statuses</div>
+              <div className="text-sm font-medium text-secondary mb-1">Total Applications</div>
+              <div className="text-4xl font-bold text-primary">{stats.total}</div>
+              <div className="text-xs text-muted mt-2">All statuses</div>
             </div>
           </div>
 
           {/* Pending Card */}
-          <div className="group bg-gradient-to-br from-hti-gold to-hti-soleil rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="group bg-surface rounded-2xl shadow-xl p-6 border border-default hover:border-strong transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
-                <Clock className="w-8 h-8 text-white" />
-                <TrendingUp className="w-4 h-4 text-yellow-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <Clock className="w-8 h-8 text-warning" />
+                <TrendingUp className="w-4 h-4 text-warning opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
-              <div className="text-sm font-medium text-white mb-1">Pending Review</div>
-              <div className="text-4xl font-bold text-white">{stats.pending}</div>
-              <div className="text-xs text-white/60 mt-2">{stats.pending > 0 ? 'Action needed' : 'All reviewed'}</div>
+              <div className="text-sm font-medium text-secondary mb-1">Pending Review</div>
+              <div className="text-4xl font-bold text-primary">{stats.pending}</div>
+              <div className="text-xs text-muted mt-2">{stats.pending > 0 ? 'Action needed' : 'All reviewed'}</div>
             </div>
           </div>
 
           {/* In Review Card */}
-          <div className="group bg-gradient-to-br from-hti-fig to-hti-plum rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="group bg-surface rounded-2xl shadow-xl p-6 border border-default hover:border-strong transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
-                <Eye className="w-8 h-8 text-white" />
+                <Eye className="w-8 h-8 text-accent" />
               </div>
-              <div className="text-sm font-medium text-white mb-1">Under Review</div>
-              <div className="text-4xl font-bold text-white">{stats.inReview}</div>
-              <div className="text-xs text-white/60 mt-2">Being evaluated</div>
+              <div className="text-sm font-medium text-secondary mb-1">Under Review</div>
+              <div className="text-4xl font-bold text-primary">{stats.inReview}</div>
+              <div className="text-xs text-muted mt-2">Being evaluated</div>
             </div>
           </div>
 
           {/* Approved Card */}
-          <div className="group bg-gradient-to-br from-hti-ember to-hti-gold rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="group bg-surface rounded-2xl shadow-xl p-6 border border-default hover:border-strong transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
-                <CheckCircle className="w-8 h-8 text-white" />
+                <CheckCircle className="w-8 h-8 text-success" />
               </div>
-              <div className="text-sm font-medium text-white mb-1">Approved</div>
-              <div className="text-4xl font-bold text-white">{stats.approved}</div>
-              <div className="text-xs text-white/60 mt-2">Ready to deliver</div>
+              <div className="text-sm font-medium text-secondary mb-1">Approved</div>
+              <div className="text-4xl font-bold text-primary">{stats.approved}</div>
+              <div className="text-xs text-muted mt-2">Ready to deliver</div>
             </div>
           </div>
 
           {/* Rejected Card */}
-          <div className="group bg-gradient-to-br from-hti-sunset to-hti-ember rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="group bg-surface rounded-2xl shadow-xl p-6 border border-default hover:border-strong transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
-                <XCircle className="w-8 h-8 text-white" />
+                <XCircle className="w-8 h-8 text-danger" />
               </div>
-              <div className="text-sm font-medium text-white mb-1">Rejected</div>
-              <div className="text-4xl font-bold text-white">{stats.rejected}</div>
-              <div className="text-xs text-white/60 mt-2">Ineligible</div>
+              <div className="text-sm font-medium text-secondary mb-1">Rejected</div>
+              <div className="text-4xl font-bold text-primary">{stats.rejected}</div>
+              <div className="text-xs text-muted mt-2">Ineligible</div>
             </div>
           </div>
 
           {/* Chromebooks Card */}
-          <div className="group bg-gradient-to-br from-hti-fig to-hti-dusk rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-white overflow-hidden relative">
-            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="group bg-surface rounded-2xl shadow-xl p-6 border border-default hover:border-strong transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-4">
-                <Users className="w-8 h-8 text-white" />
+                <Users className="w-8 h-8 text-accent" />
               </div>
-              <div className="text-sm font-medium text-white mb-1">Chromebooks Needed</div>
-              <div className="text-4xl font-bold text-white">{stats.totalChromebooks}</div>
-              <div className="text-xs text-white/60 mt-2">Total requested</div>
+              <div className="text-sm font-medium text-secondary mb-1">Chromebooks Needed</div>
+              <div className="text-4xl font-bold text-primary">{stats.totalChromebooks}</div>
+              <div className="text-xs text-muted mt-2">Total requested</div>
             </div>
           </div>
         </div>
@@ -278,17 +272,17 @@ export default function MarketingPage() {
       {/* Main Content Area */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-hti-navy mb-2">Browse Applications</h2>
-          <p className="text-gray-700">Use filters and search to find applications. Click any card to view full details.</p>
+          <h2 className="text-2xl font-bold text-primary mb-2">Browse Applications</h2>
+          <p className="text-secondary">Use filters and search to find applications. Click any card to view full details.</p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar - Filters */}
           <aside className="lg:w-80 shrink-0">
             <div className="sticky top-20 space-y-6">
-              <div className="bg-white rounded-2xl shadow-lg p-6 border-l-4 border-hti-fig">
-                <h3 className="text-lg font-bold text-hti-navy mb-4 flex items-center gap-2">
-                  <div className="w-2 h-2 bg-hti-plum rounded-full" />
+              <div className="bg-surface rounded-2xl shadow-lg p-6 border-l-4 border-accent">
+                <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
+                  <div className="w-2 h-2 bg-accent rounded-full" />
                   Filter Applications
                 </h3>
                 <ApplicationFilters
@@ -315,7 +309,7 @@ export default function MarketingPage() {
             {loading ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-white rounded-xl h-64 animate-pulse shadow-lg" />
+                  <div key={i} className="bg-surface border border-default rounded-xl h-64 animate-pulse shadow" />
                 ))}
               </div>
             ) : (
