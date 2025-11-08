@@ -9,7 +9,7 @@ interface MetricCardProps {
     suffix?: string;
     description?: string;
     highlight?: boolean;
-    gradient?: { from: string; to: string };
+    gradientClass?: string; // e.g., "from-hti-plum to-hti-fig"
 }
 
 export default function MetricCard({
@@ -19,7 +19,7 @@ export default function MetricCard({
     suffix,
     description,
     highlight = false,
-    gradient = { from: "hti-plum", to: "hti-fig" },
+    gradientClass = "from-hti-plum to-hti-fig",
 }: MetricCardProps) {
     return (
         <GlassCard
@@ -35,7 +35,7 @@ export default function MetricCard({
                 aria-hidden
                 className={clsx(
                     "absolute inset-0 opacity-10 group-hover:opacity-15 transition bg-gradient-to-br",
-                    `from-${gradient.from} to-${gradient.to}`
+                    gradientClass
                 )}
             />
             <div className="relative z-10 space-y-3">

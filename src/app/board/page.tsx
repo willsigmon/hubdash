@@ -1,7 +1,7 @@
-import Link from "next/link";
+import CountyMap from "@/components/board/CountyMap";
 import ImpactMetrics from "@/components/board/ImpactMetrics";
 import RecentActivity from "@/components/board/RecentActivity";
-import CountyMap from "@/components/board/CountyMap";
+import Link from "next/link";
 // import TrendChart from "@/components/board/TrendChart"; // Temporarily disabled
 
 export default function BoardDashboard() {
@@ -33,7 +33,7 @@ export default function BoardDashboard() {
         <section className="mb-20">
           <div className="mb-10">
             <div className="flex items-baseline gap-3">
-              <h2 className="text-3xl md:text-4xl font-bold text-hti-plum">Impact at a Glance</h2>
+              <GradientHeading className="text-3xl md:text-4xl" from="hti-plum" to="hti-fig">Impact at a Glance</GradientHeading>
               <span className="px-3 py-1 bg-hti-ember/10 text-hti-ember text-xs font-bold rounded-full border border-hti-ember/30">Live Data</span>
             </div>
             <p className="text-hti-stone mt-3 text-lg">
@@ -49,7 +49,7 @@ export default function BoardDashboard() {
         {/* County Map */}
         <section className="mb-20">
           <div className="mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-hti-plum mb-2">Counties Served</h2>
+            <GradientHeading className="text-3xl md:text-4xl mb-2" from="hti-ember" to="hti-gold">Counties Served</GradientHeading>
             <p className="text-hti-stone text-lg">
               Geographic reach of HTI's Digital Champion Grant programming
             </p>
@@ -63,7 +63,7 @@ export default function BoardDashboard() {
         {/* Recent Activity */}
         <section>
           <div className="mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-hti-plum mb-2">Recent Activity</h2>
+            <GradientHeading className="text-3xl md:text-4xl mb-2" from="hti-plum" to="hti-soleil">Recent Activity</GradientHeading>
             <p className="text-hti-stone text-lg">
               Latest updates and milestones from the HTI team
             </p>

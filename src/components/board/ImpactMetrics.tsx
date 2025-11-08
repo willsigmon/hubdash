@@ -1,5 +1,6 @@
 "use client";
 
+import MetricCard from "@/components/ui/MetricCard";
 import { useEffect, useState } from "react";
 
 interface Metric {
@@ -161,126 +162,52 @@ export default function ImpactMetrics() {
     <div className="space-y-8">
       {/* Featured Grant Metrics Card */}
       {featuredMetric && (
-        <div
-          className="group relative overflow-hidden rounded-2xl bg-white shadow-2xl hover:shadow-3xl transition-all duration-300 border border-hti-ember/25"
-        >
-          {/* Animated background gradient */}
-          <div className={`absolute inset-0 bg-gradient-to-br ${featuredMetric.color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`} />
+        <div className="space-y-6">
+          <MetricCard
+            label={featuredMetric.label}
+            value={animatedValues[0] ?? 0}
+            suffix={featuredMetric.suffix}
+            icon={featuredMetric.icon}
+            description={featuredMetric.description}
+            highlight
+            gradientClass={featuredMetric.color}
+          />
 
-          {/* Top accent bar */}
-          <div className={`h-3 bg-gradient-to-r ${featuredMetric.color}`} />
-
-          <div className="relative p-8 md:p-10">
-            {/* Header with icon and badge */}
-            <div className="flex items-start justify-between mb-6 flex-wrap gap-4">
-              <div className="flex items-center gap-4">
-                <div className="text-6xl">{featuredMetric.icon}</div>
-                <div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-hti-plum">
-                    {featuredMetric.label}
-                  </h3>
-                  <p className="text-sm text-hti-stone mt-1 font-medium">
-                    {featuredMetric.description}
-                  </p>
-                </div>
-              </div>
-              <div className={`px-4 py-2 rounded-full bg-gradient-to-br ${featuredMetric.color} text-white text-sm font-bold shadow-lg whitespace-nowrap`}>
-                {animatedProgress}% Complete
-              </div>
+          {/* Progress bar section */}
+          <div className="space-y-3 rounded-2xl p-6 glass border elevation-md">
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-bold text-hti-plum">Grant Progress</span>
+              <span className="text-sm font-bold text-hti-ember">{animatedProgress}%</span>
             </div>
-
-            {/* Main metrics display */}
-              <div className="bg-hti-sand rounded-xl p-6 mb-6 border border-hti-gold/30">
-              <div className="flex items-baseline gap-2 mb-2">
-                <div className="text-5xl md:text-6xl font-bold text-hti-plum">
-                  {animatedValues[0]?.toLocaleString() || 0}
-                </div>
-                <span className="text-2xl font-bold text-hti-ember">
-                  {featuredMetric.suffix}
-                </span>
-              </div>
-              <p className="text-sm text-hti-stone font-medium">
-                Goal: 1,500 laptops by end of grant period
-              </p>
+            <div className="w-full h-3 bg-hti-sand/80 rounded-full overflow-hidden shadow-inner border border-hti-gold/30">
+              <div
+                className={`h-full bg-gradient-to-r ${featuredMetric.color} rounded-full transition-all duration-500 ease-out shadow-md`}
+                style={{ width: `${animatedProgress}%` }}
+              />
             </div>
-
-            {/* Progress bar section */}
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-bold text-hti-plum">Grant Progress</span>
-                <span className="text-sm font-bold text-hti-ember">
-                  {animatedProgress}%
-                </span>
-              </div>
-
-              {/* Animated progress bar */}
-              <div className="w-full h-4 bg-hti-sand/80 rounded-full overflow-hidden shadow-inner border border-hti-gold/30">
-                <div
-                  className={`h-full bg-gradient-to-r ${featuredMetric.color} rounded-full transition-all duration-500 ease-out shadow-md`}
-                  style={{ width: `${animatedProgress}%` }}
-                />
-              </div>
-
-              {/* Progress milestones */}
-              <div className="flex justify-between text-xs text-hti-plum font-bold mt-4 pt-2">
-                <span>0%</span>
-                <span>25%</span>
-                <span>50%</span>
-                <span>75%</span>
-                <span>100%</span>
-              </div>
+            <div className="flex justify-between text-[10px] text-hti-plum font-bold mt-2">
+              <span>0%</span>
+              <span>25%</span>
+              <span>50%</span>
+              <span>75%</span>
+              <span>100%</span>
             </div>
           </div>
-
-          {/* Bottom decoration */}
-          <div className={`h-1 bg-gradient-to-r ${featuredMetric.color}`} />
         </div>
       )}
 
       {/* Regular Metrics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {otherMetrics.map((metric, index) => (
-          <div
+          <MetricCard
             key={metric.label}
-            className="group relative overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-hti-fig/10"
-          >
-            {/* Background gradient */}
-            <div className={`absolute inset-0 bg-gradient-to-br ${metric.color} opacity-3 group-hover:opacity-8 transition-opacity`} />
-
-            {/* Top accent */}
-            <div className={`h-2 bg-gradient-to-r ${metric.color}`} />
-
-            <div className="relative p-6 space-y-4">
-              {/* Header */}
-              <div className="flex items-start justify-between">
-                <div className="text-5xl">{metric.icon}</div>
-                <div className={`px-2 py-1 rounded-full bg-gradient-to-br ${metric.color} text-white text-xs font-bold shadow-sm`}>
-                  Live
-                </div>
-              </div>
-
-              {/* Value section */}
-              <div>
-                <div className="text-4xl font-bold text-hti-plum mb-1">
-                  {animatedValues[index + 1]?.toLocaleString() || 0}
-                  <span className="text-2xl font-bold text-hti-ember ml-1">
-                    {metric.suffix}
-                  </span>
-                </div>
-                <h4 className="text-sm font-bold text-hti-plum">
-                  {metric.label}
-                </h4>
-              </div>
-
-              {/* Description */}
-              <div className="text-xs text-hti-stone leading-relaxed font-medium">
-                {metric.description}
-              </div>
-            </div>
-
-            {/* Bottom accent line */}
-            <div className={`h-1 bg-gradient-to-r ${metric.color}`} />
-          </div>
+            label={metric.label}
+            value={animatedValues[index + 1] ?? 0}
+            suffix={metric.suffix}
+            icon={metric.icon}
+            description={metric.description}
+            gradientClass={metric.color}
+          />
         ))}
       </div>
     </div>
