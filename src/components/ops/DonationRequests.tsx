@@ -39,12 +39,12 @@ export default function DonationRequests() {
 
   if (loading) {
     return (
-      <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-yellow/50 shadow-xl overflow-hidden">
-        <div className="divide-y divide-hti-yellow/40">
+      <div className="bg-surface rounded-xl border border-default shadow overflow-hidden">
+        <div className="divide-y divide-default/50">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="p-6 animate-pulse">
-              <div className="bg-white/10 h-16 rounded mb-3" />
-              <div className="bg-white/10 h-8 rounded" />
+              <div className="bg-surface-alt h-16 rounded mb-3" />
+              <div className="bg-surface-alt h-8 rounded" />
             </div>
           ))}
         </div>
@@ -53,39 +53,39 @@ export default function DonationRequests() {
   }
 
   return (
-    <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-hti-yellow/50 shadow-xl overflow-hidden flex flex-col h-full">
+    <div className="bg-surface rounded-xl border border-default shadow overflow-hidden flex flex-col h-full">
       {/* Header */}
-      <div className="px-4 md:px-6 py-4 bg-hti-red/15 border-b border-hti-yellow/40">
-        <h3 className="text-lg font-bold text-white">📦 Donation Requests</h3>
+      <div className="px-4 md:px-6 py-4 bg-surface-alt/60 border-b border-default">
+        <h3 className="text-lg font-bold text-primary">📦 Donation Requests</h3>
       </div>
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto">
-        <div className="divide-y divide-hti-yellow/40">
+        <div className="divide-y divide-default/50">
           {requests.length === 0 ? (
-            <div className="p-8 md:p-12 text-center text-hti-yellow/50">
+            <div className="p-8 md:p-12 text-center text-muted">
               <div className="text-4xl md:text-5xl mb-3">📭</div>
-              <p className="text-sm md:text-base font-medium">No pending donation requests</p>
+              <p className="text-sm md:text-base font-medium text-secondary">No pending donation requests</p>
             </div>
           ) : (
             requests.map((request) => (
               <div
                 key={request.id}
-                className="p-4 md:p-6 hover:bg-hti-yellow/5 transition-colors border-l-4 border-l-transparent hover:border-l-hti-yellow"
+                className="p-4 md:p-6 hover:bg-surface-alt transition-colors border-l-4 border-l-transparent hover:border-l-accent"
               >
                 {/* Header Row */}
                 <div className="flex items-start justify-between mb-3 gap-4">
                   <div className="flex items-start gap-3 flex-1 min-w-0">
                     <div className={`w-3 h-3 rounded-full flex-shrink-0 mt-1 ${getPriorityColor(request.priority)}`} />
                     <Link href={`/ops/partners/${request.id}`} className="flex-1 min-w-0 group">
-                      <h4 className="text-base md:text-lg font-bold text-white truncate group-hover:text-hti-yellow transition-colors">
+                      <h4 className="text-base md:text-lg font-bold text-primary truncate group-hover:text-accent transition-colors">
                         {request.company}
                       </h4>
-                      <p className="text-xs md:text-sm text-hti-yellow truncate">{request.contact_name}</p>
+                      <p className="text-xs md:text-sm text-secondary truncate">{request.contact_name}</p>
                     </Link>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <div className="text-xs text-hti-yellow font-medium">{formatDate(request.requested_date)}</div>
+                    <div className="text-xs text-muted font-medium">{formatDate(request.requested_date)}</div>
                     <div className={`text-xs font-bold ${getRequestStatusColor(request.status)} capitalize mt-1`}>
                       {request.status.replace('_', ' ')}
                     </div>
@@ -93,10 +93,10 @@ export default function DonationRequests() {
                 </div>
 
                 {/* Details Row */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 text-xs md:text-sm text-hti-yellow mb-4 ml-6 md:ml-8 font-medium">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 text-xs md:text-sm text-secondary mb-4 ml-6 md:ml-8 font-medium">
                   <div className="flex items-center gap-2">
                     <span>💻</span>
-                    <span className="font-bold text-hti-yellow">{request.device_count}</span>
+                    <span className="font-bold text-primary">{request.device_count}</span>
                     <span className="hidden md:inline">devices</span>
                   </div>
                   <div className="flex items-center gap-2 col-span-2 md:col-span-1">
@@ -107,12 +107,12 @@ export default function DonationRequests() {
 
                 {/* Actions */}
                 <div className="flex gap-2 ml-6 md:ml-8">
-                  <button className="flex-1 px-3 md:px-4 py-2 bg-gradient-to-r from-hti-red to-hti-orange hover:shadow-lg rounded-lg text-white text-xs md:text-sm font-bold transition-all hover:scale-105">
+                  <button className="flex-1 px-3 md:px-4 py-2 accent-gradient hover:shadow-lg rounded-lg text-white text-xs md:text-sm font-bold transition-all hover:scale-105">
                     Schedule Pickup
                   </button>
                   <Link
                     href={`/ops/partners/${request.id}`}
-                    className="px-3 md:px-4 py-2 bg-hti-yellow/20 hover:bg-hti-yellow/40 rounded-lg text-hti-yellow text-xs md:text-sm font-bold transition-all border border-hti-yellow/50 text-center"
+                    className="px-3 md:px-4 py-2 bg-soft-warning hover:bg-soft-warning rounded-lg text-warning text-xs md:text-sm font-bold transition-all border border-warning/40 text-center"
                   >
                     View Partner →
                   </Link>
@@ -124,8 +124,8 @@ export default function DonationRequests() {
       </div>
 
       {/* Footer */}
-      <div className="p-3 md:p-4 bg-hti-navy/30 border-t border-hti-yellow/40">
-        <button className="w-full text-center text-xs md:text-sm font-bold text-hti-yellow hover:text-hti-yellow-bright transition-colors py-2">
+      <div className="p-3 md:p-4 bg-surface-alt/60 border-t border-default">
+        <button className="w-full text-center text-xs md:text-sm font-bold text-secondary hover:text-primary transition-colors py-2">
           View All Requests →
         </button>
       </div>
