@@ -1,6 +1,7 @@
 import CountyMap from "@/components/board/CountyMap";
 import ImpactMetrics from "@/components/board/ImpactMetrics";
 import RecentActivity from "@/components/board/RecentActivity";
+import GradientHeading from "@/components/ui/GradientHeading";
 import Link from "next/link";
 // import TrendChart from "@/components/board/TrendChart"; // Temporarily disabled
 
