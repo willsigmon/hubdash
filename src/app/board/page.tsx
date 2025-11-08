@@ -1,9 +1,9 @@
 import CountyMap from "@/components/board/CountyMap";
 import ImpactMetrics from "@/components/board/ImpactMetrics";
 import RecentActivity from "@/components/board/RecentActivity";
+import TrendChart from "@/components/board/TrendChart";
 import GradientHeading from "@/components/ui/GradientHeading";
 import Link from "next/link";
-// import TrendChart from "@/components/board/TrendChart"; // Temporarily disabled
 
 export default function BoardDashboard() {
   return (
@@ -42,6 +42,14 @@ export default function BoardDashboard() {
             </p>
           </div>
           <ImpactMetrics />
+        </section>
+
+        {/* Divider */}
+        <div className="my-20 border-t border-hti-fig/10" />
+
+        {/* Trend Chart */}
+        <section className="mb-20">
+          <TrendChart />
         </section>
 
         {/* Divider */}

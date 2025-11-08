@@ -1,6 +1,15 @@
-import { NextResponse } from 'next/server'
+import { cacheKeys, getCached, invalidateCache } from '@/lib/knack/cache-manager'
 import { getKnackClient } from '@/lib/knack/client'
-import { getCached, cacheKeys } from '@/lib/knack/cache-manager'
+import {
+    errorResponse,
+    mapDevicePayload,
+    requireAuth,
+    safeKnack,
+    successResponse,
+    type DeviceDTO
+} from '@/lib/knack/write-utils'
+import { NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
 
 /**
  * GET /api/devices
@@ -120,5 +129,144 @@ export async function GET(request: Request) {
     console.error('Devices API Error:', error)
     const message = error?.message || error?.toString() || 'Unknown error occurred'
     return NextResponse.json({ error: message }, { status: 500 })
+  }
+}
+
+/**
+ * POST /api/devices
+ * Create a new device record
+ * Requires: Authorization header with WRITE_API_TOKEN
+ */
+const createDeviceSchema = z.object({
+  type: z.enum(['Laptop', 'Desktop', 'Tablet', 'Other']),
+  status: z.string().min(1),
+  serial: z.string().optional(),
+  dateReceived: z.string().optional(),
+  datePresented: z.string().optional(),
+  orgId: z.string().optional(),
+  notes: z.string().optional(),
+});
+
+export async function POST(request: NextRequest) {
+  try {
+    requireAuth(request);
+
+    const body = await request.json();
+    const validated = createDeviceSchema.parse(body);
+
+    const knack = getKnackClient();
+    const objectKey = process.env.KNACK_DEVICES_OBJECT || 'object_7';
+    const payload = mapDevicePayload(validated as DeviceDTO);
+
+    const newRecord = await safeKnack(
+      () => knack.createRecord(objectKey, payload),
+      'Create device'
+    );
+
+    // Invalidate all device caches
+    invalidateCache(cacheKeys.devices);
+    // Note: paginated caches would need pattern-based invalidation
+
+    return NextResponse.json(successResponse(newRecord, newRecord.id), { status: 201 });
+  } catch (error: any) {
+    if (error.message?.includes('authorization') || error.message?.includes('Authorization')) {
+      return NextResponse.json(errorResponse(error.message, 401), { status: 401 });
+    }
+    if (error.name === 'ZodError') {
+      return NextResponse.json(errorResponse('Invalid request data: ' + error.message, 400), { status: 400 });
+    }
+    console.error('POST /api/devices error:', error);
+    return NextResponse.json(errorResponse(error.message || 'Failed to create device'), { status: 500 });
+  }
+}
+
+/**
+ * PUT /api/devices
+ * Update an existing device record
+ * Requires: Authorization header with WRITE_API_TOKEN
+ * Body must include { id: string, ...fields }
+ */
+const updateDeviceSchema = z.object({
+  id: z.string().min(1),
+  type: z.enum(['Laptop', 'Desktop', 'Tablet', 'Other']).optional(),
+  status: z.string().optional(),
+  serial: z.string().optional(),
+  dateReceived: z.string().optional(),
+  datePresented: z.string().optional(),
+  orgId: z.string().optional(),
+  notes: z.string().optional(),
+});
+
+export async function PUT(request: NextRequest) {
+  try {
+    requireAuth(request);
+
+    const body = await request.json();
+    const validated = updateDeviceSchema.parse(body);
+    const { id, ...updates } = validated;
+
+    const knack = getKnackClient();
+    const objectKey = process.env.KNACK_DEVICES_OBJECT || 'object_7';
+    const payload = mapDevicePayload(updates as DeviceDTO);
+
+    const updatedRecord = await safeKnack(
+      () => knack.updateRecord(objectKey, id, payload),
+      'Update device'
+    );
+
+    // Invalidate caches
+    invalidateCache(cacheKeys.devices);
+
+    return NextResponse.json(successResponse(updatedRecord, id));
+  } catch (error: any) {
+    if (error.message?.includes('authorization') || error.message?.includes('Authorization')) {
+      return NextResponse.json(errorResponse(error.message, 401), { status: 401 });
+    }
+    if (error.name === 'ZodError') {
+      return NextResponse.json(errorResponse('Invalid request data: ' + error.message, 400), { status: 400 });
+    }
+    console.error('PUT /api/devices error:', error);
+    return NextResponse.json(errorResponse(error.message || 'Failed to update device'), { status: 500 });
+  }
+}
+
+/**
+ * DELETE /api/devices
+ * Delete a device record
+ * Requires: Authorization header with WRITE_API_TOKEN
+ * Body must include { id: string }
+ */
+const deleteDeviceSchema = z.object({
+  id: z.string().min(1),
+});
+
+export async function DELETE(request: NextRequest) {
+  try {
+    requireAuth(request);
+
+    const body = await request.json();
+    const validated = deleteDeviceSchema.parse(body);
+
+    const knack = getKnackClient();
+    const objectKey = process.env.KNACK_DEVICES_OBJECT || 'object_7';
+
+    await safeKnack(
+      () => knack.deleteRecord(objectKey, validated.id),
+      'Delete device'
+    );
+
+    // Invalidate caches
+    invalidateCache(cacheKeys.devices);
+
+    return NextResponse.json(successResponse({ deleted: true }, validated.id));
+  } catch (error: any) {
+    if (error.message?.includes('authorization') || error.message?.includes('Authorization')) {
+      return NextResponse.json(errorResponse(error.message, 401), { status: 401 });
+    }
+    if (error.name === 'ZodError') {
+      return NextResponse.json(errorResponse('Invalid request data: ' + error.message, 400), { status: 400 });
+    }
+    console.error('DELETE /api/devices error:', error);
+    return NextResponse.json(errorResponse(error.message || 'Failed to delete device'), { status: 500 });
   }
 }

@@ -22,7 +22,7 @@ Helper (shared): `src/lib/knack/write-utils.ts`
 
 ## Devices
 File: `src/app/api/devices/route.ts`
-- Methods: 
+- Methods:
   - POST `/api/devices` → create device
   - PUT `/api/devices` → update by `id`
   - DELETE `/api/devices` → delete by `id`
@@ -81,4 +81,3 @@ const deviceCreateSchema = z.object({
 - Unit: mapper functions (DTO→Knack fields) with sample inputs.
 - Integration: mock fetch to Knack or use a test app with limited permissions.
 - Smoke: curl requests with Authorization header.
-
