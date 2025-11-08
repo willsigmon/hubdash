@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
-import Link from "next/link";
-import { Partnership, FilterOptions, GroupingOption } from "@/types/partnership";
-import ApplicationSearch from "@/components/marketing/ApplicationSearch";
+import ApplicationDetailPanel from "@/components/marketing/ApplicationDetailPanel";
 import ApplicationFilters from "@/components/marketing/ApplicationFilters";
 import ApplicationGrouping from "@/components/marketing/ApplicationGrouping";
-import ApplicationDetailPanel from "@/components/marketing/ApplicationDetailPanel";
-import { BarChart3, Users, CheckCircle, Clock, XCircle, Eye, Zap, TrendingUp } from "lucide-react";
+import ApplicationSearch from "@/components/marketing/ApplicationSearch";
+import { FilterOptions, GroupingOption, Partnership } from "@/types/partnership";
+import { BarChart3, CheckCircle, Clock, Eye, TrendingUp, Users, XCircle, Zap } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 
 export default function MarketingPage() {
   const [partnerships, setPartnerships] = useState<Partnership[]>([]);

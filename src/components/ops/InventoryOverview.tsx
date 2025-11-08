@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { getDeviceStatusColor, getDeviceStatusLabel } from "@/lib/utils/status-colors";
+import { useEffect, useState } from "react";
 
 interface Device {
   id: string;

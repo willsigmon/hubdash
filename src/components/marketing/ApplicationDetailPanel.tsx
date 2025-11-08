@@ -1,7 +1,7 @@
 "use client";
 
 import { Partnership } from "@/types/partnership";
-import { X, Mail, Phone, Building2, Users, Target, Lightbulb, TrendingUp, Calendar, MapPin, CheckCircle2, AlertCircle } from "lucide-react";
+import { AlertCircle, Building2, CheckCircle2, Lightbulb, Mail, Target, TrendingUp, Users, X } from "lucide-react";
 
 interface ApplicationDetailPanelProps {
   application: Partnership;

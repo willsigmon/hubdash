@@ -9,13 +9,13 @@
  * Used in InventoryOverview.tsx and other device-related components
  */
 export const DEVICE_STATUS_COLORS: Record<string, string> = {
-  ready: "bg-hti-ember/20 text-hti-ember border-hti-ember/30",
-  qa_testing: "bg-hti-gold/20 text-hti-gold border-hti-gold/30",
-  refurbishing: "bg-hti-plum/20 text-hti-plum border-hti-plum/30",
-  data_wipe: "bg-hti-fig/20 text-hti-fig border-hti-fig/30",
-  received: "bg-hti-stone/20 text-hti-stone border-hti-stone/30",
-  donated: "bg-hti-stone/20 text-hti-stone border-hti-stone/30",
-  distributed: "bg-hti-sunset/20 text-hti-sunset border-hti-sunset/30",
+  ready: "bg-soft-success text-success border-success/30",
+  qa_testing: "bg-soft-warning text-warning border-warning/30",
+  refurbishing: "bg-soft-accent text-accent border-accent/30",
+  data_wipe: "bg-soft-accent text-accent border-accent/30",
+  received: "bg-soft-accent text-accent border-accent/30",
+  donated: "bg-soft-accent text-accent border-accent/30",
+  distributed: "bg-soft-success text-success border-success/30",
 };
 
 /**
@@ -53,9 +53,9 @@ export function getDeviceStatusLabel(status: string): string {
  * Used in DonationRequests.tsx for priority dots
  */
 export const PRIORITY_COLORS: Record<string, string> = {
-  urgent: "bg-hti-ember",
-  high: "bg-hti-sunset",
-  normal: "bg-hti-plum",
+  urgent: "bg-danger",
+  high: "bg-warning",
+  normal: "bg-accent",
 };
 
 /**
@@ -63,10 +63,10 @@ export const PRIORITY_COLORS: Record<string, string> = {
  * Used in DonationRequests.tsx for status badges
  */
 export const REQUEST_STATUS_COLORS: Record<string, string> = {
-  pending: "text-hti-gold",
-  scheduled: "text-hti-ember",
-  in_progress: "text-hti-plum",
-  completed: "text-hti-stone",
+  pending: "text-warning",
+  scheduled: "text-accent",
+  in_progress: "text-accent",
+  completed: "text-secondary",
 };
 
 /**
@@ -74,9 +74,9 @@ export const REQUEST_STATUS_COLORS: Record<string, string> = {
  * Used in ActivityFeed.tsx for activity border and background colors
  */
 export const ACTIVITY_TYPE_COLORS: Record<string, string> = {
-  success: "border-hti-ember/30 bg-hti-ember/10",
-  warning: "border-hti-gold/30 bg-hti-gold/10",
-  info: "border-hti-plum/30 bg-hti-plum/10",
+  success: "border-success/30 bg-soft-success",
+  warning: "border-warning/30 bg-soft-warning",
+  info: "border-accent/30 bg-soft-accent",
 };
 
 /**

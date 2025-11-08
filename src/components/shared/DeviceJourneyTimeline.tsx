@@ -26,37 +26,32 @@ const JOURNEY_STAGES = [
   {
     status: "Donated",
     icon: Package,
-    color: "from-blue-500 to-blue-600",
-    bgColor: "bg-blue-500/10",
-    borderColor: "border-blue-500/30",
+    bgClass: "bg-soft-accent",
+    borderClass: "border-accent/30",
   },
   {
     status: "Received",
     icon: CheckCircle,
-    color: "from-hti-plum to-hti-fig",
-    bgColor: "bg-hti-plum/10",
-    borderColor: "border-hti-plum/30",
+    bgClass: "bg-soft-accent",
+    borderClass: "border-accent/30",
   },
   {
     status: "Testing",
     icon: Wrench,
-    color: "from-hti-sunset to-hti-orange",
-    bgColor: "bg-hti-sunset/10",
-    borderColor: "border-hti-sunset/30",
+    bgClass: "bg-soft-warning",
+    borderClass: "border-warning/30",
   },
   {
     status: "Ready",
     icon: CheckCircle,
-    color: "from-hti-gold to-hti-soleil",
-    bgColor: "bg-hti-gold/10",
-    borderColor: "border-hti-gold/30",
+    bgClass: "bg-soft-success",
+    borderClass: "border-success/30",
   },
   {
     status: "Deployed",
     icon: Truck,
-    color: "from-emerald-500 to-emerald-600",
-    bgColor: "bg-emerald-500/10",
-    borderColor: "border-emerald-500/30",
+    bgClass: "bg-soft-success",
+    borderClass: "border-success/30",
   },
 ];
 
@@ -133,7 +128,7 @@ export function DeviceJourneyTimeline({ deviceId, serialNumber, deviceType, onCl
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-hti-midnight/90 backdrop-blur-md animate-in fade-in duration-300"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-300"
       onClick={onClose}
     >
       <div
@@ -142,21 +137,21 @@ export function DeviceJourneyTimeline({ deviceId, serialNumber, deviceType, onCl
       >
         <GlassCard className="relative" variant="translucent">
           {/* Header */}
-          <div className="sticky top-0 z-10 bg-gradient-to-br from-hti-plum/95 to-hti-midnight/95 backdrop-blur-xl p-6 border-b border-white/10">
+          <div className="sticky top-0 z-10 bg-surface backdrop-blur-xl p-6 border-b border-default">
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-lg bg-surface-alt hover:bg-surface transition-colors border border-default"
             >
-              <X className="w-5 h-5 text-white" />
+              <X className="w-5 h-5 text-primary" />
             </button>
 
             <GradientHeading className="text-3xl mb-2" variant="accent">
               Device Journey
             </GradientHeading>
-            <div className="flex items-center gap-4 text-white/60 text-sm">
-              <span className="font-mono">{serialNumber}</span>
-              <span>•</span>
-              <span>{deviceType}</span>
+            <div className="flex items-center gap-4 text-secondary text-sm">
+              <span className="font-mono text-primary">{serialNumber}</span>
+              <span className="text-muted">•</span>
+              <span className="text-primary">{deviceType}</span>
             </div>
           </div>
 
@@ -175,7 +170,7 @@ export function DeviceJourneyTimeline({ deviceId, serialNumber, deviceType, onCl
             ) : (
               <div className="relative">
                 {/* Vertical Line */}
-                <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-hti-plum via-hti-gold to-emerald-500" />
+                <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-accent" />
 
                 {/* Events */}
                 <div className="space-y-6">
@@ -191,24 +186,24 @@ export function DeviceJourneyTimeline({ deviceId, serialNumber, deviceType, onCl
                         style={{ animationDelay: `${index * 100}ms` }}
                       >
                         {/* Icon Circle */}
-                        <div className={`absolute left-0 w-16 h-16 rounded-full bg-gradient-to-br ${stageInfo.color} flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform`}>
-                          <Icon className="w-8 h-8 text-white" />
+                        <div className={`absolute left-0 w-16 h-16 rounded-full ${stageInfo.bgClass} flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform border ${stageInfo.borderClass}`}>
+                          <Icon className="w-8 h-8 text-primary" />
                         </div>
 
                         {/* Event Card */}
-                        <div className={`bg-white/5 hover:bg-white/10 rounded-xl p-4 border ${stageInfo.borderColor} transition-all ${isLast ? 'ring-2 ring-emerald-500/30' : ''}`}>
+                        <div className={`bg-surface hover:bg-surface-alt rounded-xl p-4 border ${stageInfo.borderClass} transition-all ${isLast ? 'ring-2 ring-success/30' : ''}`}>
                           {/* Status & Date */}
                           <div className="flex items-start justify-between mb-2">
                             <div>
-                              <h4 className="text-white font-semibold text-lg flex items-center gap-2">
+                              <h4 className="text-primary font-semibold text-lg flex items-center gap-2">
                                 {event.status}
                                 {isLast && (
-                                  <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 text-xs rounded-full border border-emerald-500/30 animate-pulse">
+                                  <span className="px-2 py-1 bg-soft-success text-success text-xs rounded-full border border-success/30 animate-pulse">
                                     Current Status
                                   </span>
                                 )}
                               </h4>
-                              <div className="flex items-center gap-2 text-white/60 text-sm mt-1">
+                              <div className="flex items-center gap-2 text-secondary text-sm mt-1">
                                 <Calendar className="w-3 h-3" />
                                 <span>{new Date(event.date).toLocaleDateString('en-US', {
                                   weekday: 'long',
@@ -218,7 +213,7 @@ export function DeviceJourneyTimeline({ deviceId, serialNumber, deviceType, onCl
                                 })}</span>
                                 {event.timestamp && (
                                   <>
-                                    <span>•</span>
+                                    <span className="text-muted">•</span>
                                     <span>{event.timestamp}</span>
                                   </>
                                 )}
@@ -230,21 +225,21 @@ export function DeviceJourneyTimeline({ deviceId, serialNumber, deviceType, onCl
                           {(event.technician || event.partner || event.notes) && (
                             <div className="mt-3 space-y-2">
                               {event.technician && (
-                                <div className="flex items-center gap-2 text-white/80 text-sm">
-                                  <User className="w-4 h-4 text-hti-gold" />
-                                  <span className="font-medium">Technician:</span>
-                                  <span>{event.technician}</span>
+                                <div className="flex items-center gap-2 text-secondary text-sm">
+                                  <User className="w-4 h-4 text-accent" />
+                                  <span className="font-medium text-primary">Technician:</span>
+                                  <span className="text-primary">{event.technician}</span>
                                 </div>
                               )}
                               {event.partner && (
-                                <div className="flex items-center gap-2 text-white/80 text-sm">
-                                  <Building className="w-4 h-4 text-hti-gold" />
-                                  <span className="font-medium">Partner:</span>
-                                  <span>{event.partner}</span>
+                                <div className="flex items-center gap-2 text-secondary text-sm">
+                                  <Building className="w-4 h-4 text-accent" />
+                                  <span className="font-medium text-primary">Partner:</span>
+                                  <span className="text-primary">{event.partner}</span>
                                 </div>
                               )}
                               {event.notes && (
-                                <div className="text-white/60 text-sm italic mt-2 pl-6 border-l-2 border-white/10">
+                                <div className="text-secondary text-sm italic mt-2 pl-6 border-l-2 border-default">
                                   {event.notes}
                                 </div>
                               )}
@@ -260,22 +255,22 @@ export function DeviceJourneyTimeline({ deviceId, serialNumber, deviceType, onCl
           </div>
 
           {/* Footer Stats */}
-          <div className="p-6 border-t border-white/10 bg-white/5 grid grid-cols-3 gap-4">
+          <div className="p-6 border-t border-default bg-surface-alt grid grid-cols-3 gap-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-white">{events.length}</div>
-              <div className="text-xs text-white/60 uppercase tracking-wider">Timeline Events</div>
+              <div className="text-2xl font-bold text-primary">{events.length}</div>
+              <div className="text-xs text-secondary uppercase tracking-wider">Timeline Events</div>
             </div>
-            <div className="text-center border-l border-r border-white/10">
-              <div className="text-2xl font-bold text-hti-gold">
+            <div className="text-center border-l border-r border-default">
+              <div className="text-2xl font-bold text-accent">
                 {events.length > 0 ? Math.ceil((new Date(events[events.length - 1].date).getTime() - new Date(events[0].date).getTime()) / (1000 * 60 * 60 * 24)) : 0}
               </div>
-              <div className="text-xs text-white/60 uppercase tracking-wider">Days in System</div>
+              <div className="text-xs text-secondary uppercase tracking-wider">Days in System</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-emerald-400">
+              <div className="text-2xl font-bold text-success">
                 {events.find(e => e.status === "Deployed") ? "✓" : "⏳"}
               </div>
-              <div className="text-xs text-white/60 uppercase tracking-wider">Deployment Status</div>
+              <div className="text-xs text-secondary uppercase tracking-wider">Deployment Status</div>
             </div>
           </div>
         </GlassCard>

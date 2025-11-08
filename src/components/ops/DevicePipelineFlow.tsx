@@ -194,8 +194,8 @@ export default function DevicePipelineFlow() {
         <div className="grid grid-cols-3 gap-4 pt-6 border-t border-default">
           <div className="text-center">
             <div className="text-2xl font-bold text-primary">
-              {stats?.total.toLocaleString()}
-            </div>
+                {stats?.total !== undefined ? stats.total.toLocaleString() : "—"}
+              </div>
             <div className="text-xs text-secondary uppercase tracking-wider">
               Total Devices
             </div>

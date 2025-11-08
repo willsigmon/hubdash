@@ -27,29 +27,25 @@ export default function AppNav() {
       href: "/board",
       label: "Board",
       icon: LayoutDashboard,
-      activeLight: "bg-hti-plum/10 text-hti-plum border-hti-plum/30 shadow-sm",
-      activeDark: "bg-hti-fig/40 text-hti-soleil border-white/10 shadow-md",
+      // legacy style keys removed in favor of semantic tokens
     },
     {
       href: "/ops",
       label: "Operations",
       icon: Zap,
-      activeLight: "bg-hti-ember/10 text-hti-ember border-hti-ember/30 shadow-sm",
-      activeDark: "bg-hti-ember/20 text-hti-soleil border-hti-ember/40 shadow-md",
+      // legacy style keys removed in favor of semantic tokens
     },
     {
       href: "/reports",
       label: "Reports",
       icon: FileText,
-      activeLight: "bg-hti-gold/10 text-hti-fig border-hti-gold/40 shadow-sm",
-      activeDark: "bg-hti-gold/20 text-hti-midnight border-hti-gold/40 shadow-md",
+      // legacy style keys removed in favor of semantic tokens
     },
     {
       href: "/marketing",
       label: "Marketing",
       icon: Megaphone,
-      activeLight: "bg-hti-sunset/10 text-hti-sunset border-hti-sunset/30 shadow-sm",
-      activeDark: "bg-hti-sunset/20 text-hti-soleil border-hti-sunset/40 shadow-md",
+      // legacy style keys removed in favor of semantic tokens
     },
   ];
 
@@ -70,7 +66,7 @@ export default function AppNav() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 hover:opacity-100 transition-opacity">
-              <div className="w-8 h-8 bg-gradient-to-br from-hti-plum via-hti-fig to-hti-dusk rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-sm">
+              <div className="w-8 h-8 accent-gradient rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-sm">
                 HTI
               </div>
               <span className={`font-bold text-lg hidden sm:inline text-primary`}>HubDash</span>
