@@ -49,6 +49,11 @@ body {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
+.btn-primary:focus-visible {
+  outline: 2px solid var(--hti-ember);
+  outline-offset: 2px;
+}
+
 .btn-secondary {
   padding: 0.75rem 1.5rem;
   border: 1px solid rgba(67, 61, 88, 0.35);
@@ -61,6 +66,11 @@ body {
 
 .btn-secondary:hover {
   background: var(--hti-sand);
+}
+
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--hti-plum);
+  outline-offset: 2px;
 }
 
 .progress-bar {
@@ -189,4 +199,32 @@ textarea:focus {
 dt {
   font-weight: 600 !important;
   color: var(--hti-navy) !important;
+}
+
+/* ========================================
+   ACCESSIBILITY - FOCUS STATES
+   ======================================== */
+
+/* Focus visible styles for all interactive elements */
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+[role="link"]:focus-visible {
+  outline: 2px solid var(--hti-ember);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+/* Focus for form elements */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--hti-ember);
+  outline-offset: 0px;
+}
+
+/* Focus for links in navigation */
+nav a:focus-visible {
+  outline: 2px solid var(--hti-ember);
+  outline-offset: 2px;
 }
