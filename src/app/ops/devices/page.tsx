@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { DeviceManagementTable } from "@/components/ops/DeviceManagementTable";
+import Link from "next/link";
 
 export default function DevicesPage() {
   return (

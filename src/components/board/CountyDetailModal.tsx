@@ -1,6 +1,6 @@
 "use client";
 
-import { X, MapPin, Users, TrendingUp, Calendar } from "lucide-react";
+import { Calendar, MapPin, TrendingUp, Users, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import GlassCard from "../ui/GlassCard";
 import GradientHeading from "../ui/GradientHeading";
@@ -20,11 +20,11 @@ interface CountyDetailModalProps {
   onFilterByCounty?: (county: string) => void;
 }
 
-export function CountyDetailModal({ 
-  countyName, 
-  totalDevices, 
+export function CountyDetailModal({
+  countyName,
+  totalDevices,
   onClose,
-  onFilterByCounty 
+  onFilterByCounty
 }: CountyDetailModalProps) {
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
@@ -44,16 +44,16 @@ export function CountyDetailModal({
       });
   }, [countyName]);
 
-  const avgDevicesPerPartner = partners.length > 0 
-    ? Math.round(totalDevices / partners.length) 
+  const avgDevicesPerPartner = partners.length > 0
+    ? Math.round(totalDevices / partners.length)
     : 0;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-hti-midnight/80 backdrop-blur-sm animate-in fade-in duration-200"
       onClick={onClose}
     >
-      <div 
+      <div
         className="w-full max-w-4xl max-h-[90vh] overflow-auto"
         onClick={(e) => e.stopPropagation()}
       >
@@ -66,7 +66,7 @@ export function CountyDetailModal({
             >
               <X className="w-5 h-5 text-white" />
             </button>
-            
+
             <div className="flex items-start gap-4">
               <div className="p-3 bg-hti-ember/20 rounded-xl border border-hti-ember/30">
                 <MapPin className="w-8 h-8 text-hti-gold" />
@@ -91,7 +91,7 @@ export function CountyDetailModal({
               </div>
               <div className="text-3xl font-bold text-white">{totalDevices}</div>
             </div>
-            
+
             <div className="bg-white/5 rounded-xl p-4 border border-white/10">
               <div className="flex items-center gap-2 mb-2">
                 <Users className="w-4 h-4 text-hti-gold" />
@@ -99,7 +99,7 @@ export function CountyDetailModal({
               </div>
               <div className="text-3xl font-bold text-white">{partners.length}</div>
             </div>
-            
+
             <div className="bg-white/5 rounded-xl p-4 border border-white/10">
               <div className="flex items-center gap-2 mb-2">
                 <Calendar className="w-4 h-4 text-hti-soleil" />
@@ -115,7 +115,7 @@ export function CountyDetailModal({
               <Users className="w-4 h-4 text-hti-gold" />
               Partners in {countyName} County
             </h4>
-            
+
             {loading ? (
               <div className="space-y-2">
                 {[1,2,3].map(i => (
@@ -129,7 +129,7 @@ export function CountyDetailModal({
             ) : (
               <div className="space-y-2 max-h-96 overflow-y-auto">
                 {partners.map(partner => (
-                  <div 
+                  <div
                     key={partner.id}
                     className="bg-white/5 hover:bg-white/10 rounded-lg p-4 border border-white/10 hover:border-hti-gold/30 transition-all"
                   >

@@ -1,25 +1,25 @@
 "use client";
 
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import { 
-  Laptop, 
-  Plus, 
-  Search, 
-  Filter, 
-  Edit2, 
-  Trash2, 
-  Check, 
-  X, 
-  ChevronLeft, 
-  ChevronRight,
-  Download,
-  Clock
+import { queryKeys } from "@/lib/query-client";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+    Check,
+    ChevronLeft,
+    ChevronRight,
+    Clock,
+    Download,
+    Edit2,
+    Filter,
+    Laptop,
+    Plus,
+    Search,
+    Trash2,
+    X
 } from "lucide-react";
+import { useState } from "react";
+import { DeviceJourneyTimeline } from "../shared/DeviceJourneyTimeline";
 import GlassCard from "../ui/GlassCard";
 import GradientHeading from "../ui/GradientHeading";
-import { queryKeys } from "@/lib/query-client";
-import { DeviceJourneyTimeline } from "../shared/DeviceJourneyTimeline";
 
 interface Device {
   id: string;
@@ -52,7 +52,7 @@ export function DeviceManagementTable() {
     queryFn: async () => {
       let url = `/api/devices?page=${page}&limit=${limit}`;
       if (statusFilter !== "all") url += `&status=${statusFilter}`;
-      
+
       const res = await fetch(url);
       if (!res.ok) throw new Error("Failed to fetch devices");
       return res.json();
@@ -63,7 +63,7 @@ export function DeviceManagementTable() {
     mutationFn: async (id: string) => {
       const res = await fetch(`/api/devices`, {
         method: "DELETE",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${process.env.NEXT_PUBLIC_WRITE_API_TOKEN || ""}`,
         },
@@ -81,7 +81,7 @@ export function DeviceManagementTable() {
     mutationFn: async ({ id, updates }: { id: string; updates: Partial<Device> }) => {
       const res = await fetch(`/api/devices`, {
         method: "PUT",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${process.env.NEXT_PUBLIC_WRITE_API_TOKEN || ""}`,
         },
@@ -101,7 +101,7 @@ export function DeviceManagementTable() {
     mutationFn: async (newDevice: Partial<Device>) => {
       const res = await fetch(`/api/devices`, {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${process.env.NEXT_PUBLIC_WRITE_API_TOKEN || ""}`,
         },
@@ -119,13 +119,13 @@ export function DeviceManagementTable() {
 
   const devices = data?.devices || [];
   const filteredDevices = devices.filter(d => {
-    const matchesSearch = !searchQuery || 
+    const matchesSearch = !searchQuery ||
       d.serial_number?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       d.device_type?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       d.organization?.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     const matchesType = typeFilter === "all" || d.device_type === typeFilter;
-    
+
     return matchesSearch && matchesType;
   });
 
@@ -172,7 +172,7 @@ export function DeviceManagementTable() {
           onClose={() => setJourneyDevice(null)}
         />
       )}
-      
+
       {/* Header with Actions */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
@@ -353,7 +353,7 @@ export function DeviceManagementTable() {
               </thead>
               <tbody>
                 {filteredDevices.map(device => (
-                  <tr 
+                  <tr
                     key={device.id}
                     className="border-b border-hti-fig/10 hover:bg-white/50 transition-colors"
                   >

@@ -1,7 +1,7 @@
 "use client";
 
+import { Building, Calendar, CheckCircle, Package, Truck, User, Wrench, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { X, Package, Wrench, CheckCircle, Truck, Calendar, User, Building } from "lucide-react";
 import GlassCard from "../ui/GlassCard";
 import GradientHeading from "../ui/GradientHeading";
 
@@ -132,11 +132,11 @@ export function DeviceJourneyTimeline({ deviceId, serialNumber, deviceType, onCl
   };
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-hti-midnight/90 backdrop-blur-md animate-in fade-in duration-300"
       onClick={onClose}
     >
-      <div 
+      <div
         className="w-full max-w-4xl max-h-[90vh] overflow-auto"
         onClick={(e) => e.stopPropagation()}
       >
@@ -149,7 +149,7 @@ export function DeviceJourneyTimeline({ deviceId, serialNumber, deviceType, onCl
             >
               <X className="w-5 h-5 text-white" />
             </button>
-            
+
             <GradientHeading className="text-3xl mb-2" from="hti-gold" to="hti-soleil">
               Device Journey
             </GradientHeading>
@@ -185,7 +185,7 @@ export function DeviceJourneyTimeline({ deviceId, serialNumber, deviceType, onCl
                     const isLast = index === events.length - 1;
 
                     return (
-                      <div 
+                      <div
                         key={event.id}
                         className="relative pl-20 group animate-in slide-in-from-left duration-500"
                         style={{ animationDelay: `${index * 100}ms` }}
@@ -210,11 +210,11 @@ export function DeviceJourneyTimeline({ deviceId, serialNumber, deviceType, onCl
                               </h4>
                               <div className="flex items-center gap-2 text-white/60 text-sm mt-1">
                                 <Calendar className="w-3 h-3" />
-                                <span>{new Date(event.date).toLocaleDateString('en-US', { 
-                                  weekday: 'long', 
-                                  year: 'numeric', 
-                                  month: 'long', 
-                                  day: 'numeric' 
+                                <span>{new Date(event.date).toLocaleDateString('en-US', {
+                                  weekday: 'long',
+                                  year: 'numeric',
+                                  month: 'long',
+                                  day: 'numeric'
                                 })}</span>
                                 {event.timestamp && (
                                   <>

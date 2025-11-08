@@ -98,7 +98,7 @@ export default function CountyMap() {
           onFilterByCounty={handleFilterByCounty}
         />
       )}
-      
+
       <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-hti-fig/10">
         <div className="p-8 bg-gradient-to-br from-hti-plum/8 to-hti-ember/8 border-b border-hti-fig/10">
           <h3 className="text-2xl font-bold text-hti-plum mb-2">
@@ -123,7 +123,7 @@ export default function CountyMap() {
             const maxDevices = counties[0].devices;
             const percentage = (county.devices / maxDevices) * 100;
             const isHovered = hoveredCounty === county.name;
-            
+
             return (
               <div
                 key={county.name}
@@ -144,7 +144,7 @@ export default function CountyMap() {
                     <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-hti-midnight" />
                   </div>
                 )}
-              
+
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <span className="text-xl font-bold text-hti-plum w-6">#{idx + 1}</span>

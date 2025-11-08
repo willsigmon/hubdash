@@ -1,5 +1,5 @@
 import Link from "next/link";
-import DevicePipeline from "@/components/ops/DevicePipeline";
+import DevicePipelineFlow from "@/components/ops/DevicePipelineFlow";
 import QuickStats from "@/components/ops/QuickStats";
 import DonationRequests from "@/components/ops/DonationRequests";
 import InventoryOverview from "@/components/ops/InventoryOverview";
@@ -52,7 +52,7 @@ export default function OpsPage() {
 
         {/* Device Pipeline Section */}
         <section>
-          <DevicePipeline />
+          <DevicePipelineFlow />
         </section>
 
         {/* Two Column Layout - Donation Requests & Activity Feed */}
