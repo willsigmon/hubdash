@@ -50,18 +50,18 @@ const FOCUS_AREAS = [
 ];
 
 const FOCUS_AREA_COLORS: Record<string, string> = {
-  "After School Programs": "bg-blue-500/10 text-blue-600",
-  "Autism Support": "bg-purple-500/10 text-purple-600",
-  "Education": "bg-hti-plum/10 text-hti-plum",
-  "Employment Training": "bg-emerald-500/10 text-emerald-600",
-  "Health & Wellness": "bg-hti-gold/10 text-hti-gold",
-  "Housing/Homeless": "bg-hti-sunset/10 text-hti-sunset",
-  "Hunger Relief": "bg-orange-500/10 text-orange-600",
-  "Immigration Services": "bg-cyan-500/10 text-cyan-600",
-  "Legal Aid": "bg-indigo-500/10 text-indigo-600",
-  "Senior Services": "bg-rose-500/10 text-rose-600",
-  "Veterans Support": "bg-red-600/10 text-red-600",
-  "Youth Development": "bg-teal-500/10 text-teal-600",
+  "After School Programs": "bg-soft-accent text-accent",
+  "Autism Support": "bg-soft-accent text-accent",
+  "Education": "bg-soft-accent text-accent",
+  "Employment Training": "bg-soft-accent text-accent",
+  "Health & Wellness": "bg-soft-accent text-accent",
+  "Housing/Homeless": "bg-soft-accent text-accent",
+  "Hunger Relief": "bg-soft-accent text-accent",
+  "Immigration Services": "bg-soft-accent text-accent",
+  "Legal Aid": "bg-soft-accent text-accent",
+  "Senior Services": "bg-soft-accent text-accent",
+  "Veterans Support": "bg-soft-accent text-accent",
+  "Youth Development": "bg-soft-accent text-accent",
 };
 
 export default function RecipientOrganizations() {
@@ -195,12 +195,12 @@ export default function RecipientOrganizations() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <GradientHeading from="from-hti-plum" to="to-hti-fig">
+        <GradientHeading variant="plum" className="text-3xl">
           Recipient Organizations
         </GradientHeading>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-hti-plum to-hti-fig text-white rounded-lg font-semibold hover:shadow-xl transition-all"
+          className="flex items-center gap-2 px-6 py-3 accent-gradient text-white rounded-lg font-semibold hover:shadow-xl transition-all"
         >
           <Plus className="w-5 h-5" />
           Add Organization
@@ -211,28 +211,28 @@ export default function RecipientOrganizations() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <GlassCard>
           <div className="text-center">
-            <div className="text-3xl font-bold text-hti-plum mb-1">{filteredOrgs.length}</div>
-            <div className="text-xs text-hti-stone uppercase tracking-wider">Total Partners</div>
+            <div className="text-3xl font-bold text-primary mb-1">{filteredOrgs.length}</div>
+            <div className="text-xs text-secondary uppercase tracking-wider">Total Partners</div>
           </div>
         </GlassCard>
         <GlassCard>
           <div className="text-center">
-            <div className="text-3xl font-bold text-emerald-600 mb-1">
+            <div className="text-3xl font-bold text-success mb-1">
               {filteredOrgs.filter(o => o.status === "Active").length}
             </div>
-            <div className="text-xs text-hti-stone uppercase tracking-wider">Active</div>
+            <div className="text-xs text-secondary uppercase tracking-wider">Active</div>
           </div>
         </GlassCard>
         <GlassCard>
           <div className="text-center">
-            <div className="text-3xl font-bold text-hti-sunset mb-1">{totalDevices}</div>
-            <div className="text-xs text-hti-stone uppercase tracking-wider">Devices Presented</div>
+            <div className="text-3xl font-bold text-accent mb-1">{totalDevices}</div>
+            <div className="text-xs text-secondary uppercase tracking-wider">Devices Presented</div>
           </div>
         </GlassCard>
         <GlassCard>
           <div className="text-center">
-            <div className="text-3xl font-bold text-hti-gold mb-1">{avgDevices.toFixed(0)}</div>
-            <div className="text-xs text-hti-stone uppercase tracking-wider">Avg per Partner</div>
+            <div className="text-3xl font-bold text-accent mb-1">{avgDevices.toFixed(0)}</div>
+            <div className="text-xs text-secondary uppercase tracking-wider">Avg per Partner</div>
           </div>
         </GlassCard>
       </div>
@@ -242,13 +242,13 @@ export default function RecipientOrganizations() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-hti-stone" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted" />
             <input
               type="text"
               placeholder="Search organizations..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-white/50 border border-hti-fig/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-plum text-hti-plum placeholder-hti-stone/50"
+              className="w-full pl-10 pr-4 py-3 bg-surface-alt border border-default rounded-lg focus:outline-none focus-ring text-primary placeholder:text-muted"
             />
           </div>
 
@@ -256,7 +256,7 @@ export default function RecipientOrganizations() {
           <select
             value={countyFilter}
             onChange={(e) => setCountyFilter(e.target.value)}
-            className="px-4 py-3 bg-white/50 border border-hti-fig/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-plum text-hti-plum"
+            className="px-4 py-3 bg-surface-alt border border-default rounded-lg focus:outline-none focus-ring text-primary"
           >
             <option value="all">All Counties</option>
             {counties.map((county) => (
@@ -270,7 +270,7 @@ export default function RecipientOrganizations() {
           <select
             value={focusFilter}
             onChange={(e) => setFocusFilter(e.target.value)}
-            className="px-4 py-3 bg-white/50 border border-hti-fig/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-plum text-hti-plum"
+            className="px-4 py-3 bg-surface-alt border border-default rounded-lg focus:outline-none focus-ring text-primary"
           >
             <option value="all">All Focus Areas</option>
             {FOCUS_AREAS.map((area) => (
@@ -284,7 +284,7 @@ export default function RecipientOrganizations() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-3 bg-white/50 border border-hti-fig/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-plum text-hti-plum"
+            className="px-4 py-3 bg-surface-alt border border-default rounded-lg focus:outline-none focus-ring text-primary"
           >
             <option value="all">All Statuses</option>
             <option value="Active">Active</option>
@@ -301,29 +301,29 @@ export default function RecipientOrganizations() {
             {[1, 2].map((i) => (
               <GlassCard key={i}>
                 <div className="animate-pulse space-y-3">
-                  <div className="h-6 bg-white/20 rounded w-3/4" />
-                  <div className="h-4 bg-white/20 rounded w-1/2" />
-                  <div className="h-20 bg-white/20 rounded" />
+                  <div className="h-6 bg-surface-alt rounded w-3/4" />
+                  <div className="h-4 bg-surface-alt rounded w-1/2" />
+                  <div className="h-20 bg-surface-alt rounded" />
                 </div>
               </GlassCard>
             ))}
           </>
         ) : filteredOrgs.length === 0 ? (
           <div className="col-span-full text-center py-12">
-            <Building className="w-16 h-16 text-hti-stone/30 mx-auto mb-4" />
-            <p className="text-hti-stone text-lg">No organizations found</p>
+            <Building className="w-16 h-16 text-muted mx-auto mb-4" />
+            <p className="text-secondary text-lg">No organizations found</p>
           </div>
         ) : (
           filteredOrgs.map((org) => (
             <GlassCard key={org.id} className="hover:shadow-xl transition-shadow">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-start gap-3">
-                  <div className="p-3 bg-gradient-to-br from-hti-plum to-hti-fig rounded-lg">
+                  <div className="p-3 accent-gradient rounded-lg">
                     <Building className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-hti-plum mb-1">{org.name}</h3>
-                    <div className="flex items-center gap-2 text-sm text-hti-stone">
+                    <h3 className="text-xl font-bold text-primary mb-1">{org.name}</h3>
+                    <div className="flex items-center gap-2 text-sm text-secondary">
                       <MapPin className="w-4 h-4" />
                       {org.county} County
                     </div>
@@ -333,10 +333,10 @@ export default function RecipientOrganizations() {
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-semibold ${
                       org.status === "Active"
-                        ? "bg-emerald-500/10 text-emerald-600"
+                        ? "bg-soft-success text-success"
                         : org.status === "Pending"
-                        ? "bg-hti-gold/10 text-hti-gold"
-                        : "bg-hti-stone/10 text-hti-stone"
+                        ? "bg-soft-warning text-warning"
+                        : "bg-soft-danger text-danger"
                     }`}
                   >
                     {org.status}
@@ -346,7 +346,7 @@ export default function RecipientOrganizations() {
 
               {/* Focus Areas */}
               <div className="mb-4">
-                <div className="text-xs text-hti-stone/70 uppercase tracking-wider mb-2">
+                <div className="text-xs text-muted uppercase tracking-wider mb-2">
                   Focus Areas
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -354,7 +354,7 @@ export default function RecipientOrganizations() {
                     <span
                       key={area}
                       className={`px-2 py-1 rounded text-xs font-medium ${
-                        FOCUS_AREA_COLORS[area] || "bg-hti-stone/10 text-hti-stone"
+                        FOCUS_AREA_COLORS[area] || "bg-soft-accent text-accent"
                       }`}
                     >
                       {area}
@@ -366,23 +366,23 @@ export default function RecipientOrganizations() {
               {/* Contact Info */}
               {org.contactName && (
                 <div className="mb-4 space-y-2">
-                  <div className="flex items-center gap-2 text-sm text-hti-stone">
+                  <div className="flex items-center gap-2 text-sm text-secondary">
                     <Users className="w-4 h-4" />
                     {org.contactName}
                   </div>
                   {org.email && (
-                    <div className="flex items-center gap-2 text-sm text-hti-stone">
+                    <div className="flex items-center gap-2 text-sm text-secondary">
                       <Mail className="w-4 h-4" />
                       <a
                         href={`mailto:${org.email}`}
-                        className="hover:text-hti-plum transition-colors"
+                        className="hover:text-accent transition-colors"
                       >
                         {org.email}
                       </a>
                     </div>
                   )}
                   {org.phone && (
-                    <div className="flex items-center gap-2 text-sm text-hti-stone">
+                    <div className="flex items-center gap-2 text-sm text-secondary">
                       <Phone className="w-4 h-4" />
                       {org.phone}
                     </div>
@@ -391,35 +391,35 @@ export default function RecipientOrganizations() {
               )}
 
               {/* Stats */}
-              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-hti-fig/10">
+              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-default">
                 <div>
-                  <div className="flex items-center gap-2 text-2xl font-bold text-hti-sunset mb-1">
+                  <div className="flex items-center gap-2 text-2xl font-bold text-accent mb-1">
                     <TrendingUp className="w-5 h-5" />
                     {org.totalDevicesReceived}
                   </div>
-                  <div className="text-xs text-hti-stone">Devices Received</div>
+                  <div className="text-xs text-secondary">Devices Received</div>
                 </div>
                 {org.lastPresentation && (
                   <div>
-                    <div className="flex items-center gap-2 text-sm text-hti-stone mb-1">
+                    <div className="flex items-center gap-2 text-sm text-secondary mb-1">
                       <Calendar className="w-4 h-4" />
                       {org.lastPresentation}
                     </div>
-                    <div className="text-xs text-hti-stone/70">Last Presentation</div>
+                    <div className="text-xs text-muted">Last Presentation</div>
                   </div>
                 )}
               </div>
 
               {/* Notes */}
               {org.notes && (
-                <div className="mt-4 p-3 bg-hti-gold/5 rounded-lg border border-hti-gold/20">
-                  <div className="text-xs text-hti-stone italic">{org.notes}</div>
+                <div className="mt-4 p-3 bg-soft-accent rounded-lg border border-accent/20">
+                  <div className="text-xs text-secondary italic">{org.notes}</div>
                 </div>
               )}
 
               {/* Actions */}
               <div className="flex gap-2 mt-4">
-                <button className="flex items-center gap-2 px-4 py-2 bg-white/50 hover:bg-white/70 rounded-lg text-sm font-medium text-hti-plum transition-colors">
+                <button className="flex items-center gap-2 px-4 py-2 bg-surface-alt hover:bg-surface rounded-lg text-sm font-medium text-primary transition-colors">
                   <Edit2 className="w-4 h-4" />
                   Edit
                 </button>
@@ -429,7 +429,7 @@ export default function RecipientOrganizations() {
                       deleteMutation.mutate(org.id);
                     }
                   }}
-                  className="flex items-center gap-2 px-4 py-2 bg-hti-sunset/10 hover:bg-hti-sunset/20 rounded-lg text-sm font-medium text-hti-sunset transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 bg-soft-danger hover:bg-soft-danger rounded-lg text-sm font-medium text-danger transition-colors"
                 >
                   <Trash2 className="w-4 h-4" />
                   Delete
@@ -443,14 +443,14 @@ export default function RecipientOrganizations() {
       {/* Create Modal Placeholder */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6">
-            <h3 className="text-2xl font-bold text-hti-plum mb-4">Add Organization</h3>
-            <p className="text-hti-stone text-sm mb-4">
+          <div className="bg-surface rounded-2xl shadow-2xl max-w-lg w-full p-6">
+            <h3 className="text-2xl font-bold text-primary mb-4">Add Organization</h3>
+            <p className="text-secondary text-sm mb-4">
               Create form coming soon - full CRUD implementation
             </p>
             <button
               onClick={() => setShowCreateModal(false)}
-              className="px-6 py-3 bg-hti-stone/20 text-hti-stone rounded-lg font-semibold hover:bg-hti-stone/30 transition-colors"
+              className="px-6 py-3 bg-surface-alt text-secondary rounded-lg font-semibold hover:bg-surface transition-colors"
             >
               Close
             </button>
