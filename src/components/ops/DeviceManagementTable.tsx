@@ -13,11 +13,13 @@ import {
   X, 
   ChevronLeft, 
   ChevronRight,
-  Download
+  Download,
+  Clock
 } from "lucide-react";
 import GlassCard from "../ui/GlassCard";
 import GradientHeading from "../ui/GradientHeading";
 import { queryKeys } from "@/lib/query-client";
+import { DeviceJourneyTimeline } from "../shared/DeviceJourneyTimeline";
 
 interface Device {
   id: string;
@@ -43,6 +45,7 @@ export function DeviceManagementTable() {
   const [editForm, setEditForm] = useState<Partial<Device>>({});
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [createForm, setCreateForm] = useState<Partial<Device>>({});
+  const [journeyDevice, setJourneyDevice] = useState<Device | null>(null);
 
   const { data, isLoading, error } = useQuery<{ devices: Device[]; total: number; page: number }>({
     queryKey: queryKeys.devicesPaginated(page, limit, statusFilter !== "all" ? statusFilter : undefined),
@@ -160,6 +163,16 @@ export function DeviceManagementTable() {
 
   return (
     <div className="space-y-6">
+      {/* Device Journey Modal */}
+      {journeyDevice && (
+        <DeviceJourneyTimeline
+          deviceId={journeyDevice.id}
+          serialNumber={journeyDevice.serial_number || "Unknown"}
+          deviceType={journeyDevice.device_type || "Unknown"}
+          onClose={() => setJourneyDevice(null)}
+        />
+      )}
+      
       {/* Header with Actions */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
@@ -435,6 +448,13 @@ export function DeviceManagementTable() {
                         <td className="p-4 text-sm text-hti-stone">{device.organization || "—"}</td>
                         <td className="p-4 text-right">
                           <div className="flex gap-1 justify-end">
+                            <button
+                              onClick={() => setJourneyDevice(device)}
+                              className="p-2 hover:bg-hti-soleil/10 rounded-lg transition-colors text-hti-gold"
+                              title="View Device Journey"
+                            >
+                              <Clock className="w-4 h-4" />
+                            </button>
                             <button
                               onClick={() => {
                                 setEditingId(device.id);
