@@ -85,6 +85,37 @@ export class KnackClient {
   }
 
   /**
+   * Fetch a single record by ID from a Knack object
+   */
+  async getRecord(objectKey: string, recordId: string): Promise<KnackRecord | null> {
+    if (!this.isConfigured()) {
+      throw new Error('Knack client not configured. Please add credentials to .env.local');
+    }
+
+    try {
+      const url = `${this.baseUrl}/objects/${objectKey}/records/${recordId}`;
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: this.getHeaders(),
+      });
+
+      if (response.status === 404) {
+        return null;
+      }
+
+      if (!response.ok) {
+        throw new Error(`Knack API error: ${response.status} ${response.statusText}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error(`Error fetching Knack record ${recordId} from ${objectKey}:`, error);
+      throw error;
+    }
+  }
+
+  /**
    * Create a new record in a Knack object
    */
   async createRecord(objectKey: string, data: Record<string, any>): Promise<KnackRecord> {
