@@ -16,3 +16,12 @@ export type { BadgeProps } from './Badge';
 
 export { default as Button } from './Button';
 export type { ButtonProps } from './Button';
+
+export {
+  MetricCardSkeleton,
+  FeaturedMetricCardSkeleton,
+  ActivityFeedSkeleton,
+  TableSkeleton,
+  CardGridSkeleton,
+  DarkCardSkeleton,
+} from './LoadingSkeleton';

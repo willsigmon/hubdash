@@ -43,11 +43,8 @@ export default function BoardDashboard() {
           <ImpactMetrics />
         </section>
 
-        {/* Divider */}
-        <div className="my-20 border-t border-hti-fig/10" />
-
         {/* County Map */}
-        <section className="mb-20">
+        <section className="mb-20 pt-20 border-t border-hti-fig/10">
           <div className="mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-hti-plum mb-2">Counties Served</h2>
             <p className="text-hti-stone text-lg">
@@ -57,11 +54,8 @@ export default function BoardDashboard() {
           <CountyMap />
         </section>
 
-        {/* Divider */}
-        <div className="my-20 border-t border-hti-fig/10" />
-
         {/* Recent Activity */}
-        <section>
+        <section className="pt-20 border-t border-hti-fig/10">
           <div className="mb-10">
             <h2 className="text-3xl md:text-4xl font-bold text-hti-plum mb-2">Recent Activity</h2>
             <p className="text-hti-stone text-lg">
