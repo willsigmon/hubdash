@@ -35,7 +35,7 @@ export default function ImpactMetrics() {
             value: data.grantLaptopsPresented || 0,
             suffix: ` / 1,500`,
             icon: "🎯",
-            color: "from-hti-ember to-hti-gold",
+            color: "accent-gradient",
             description: "Since Sept 9, 2024 (Grant Period)",
             isFeatured: true,
             progress: grantProgress,
@@ -45,7 +45,7 @@ export default function ImpactMetrics() {
             value: data.totalLaptopsCollected || 0,
             suffix: "+",
             icon: "💻",
-            color: "from-hti-plum to-hti-fig",
+            color: "accent-gradient",
             description: "Overall collection since inception",
           },
           {
@@ -53,7 +53,7 @@ export default function ImpactMetrics() {
             value: data.countiesServed || 0,
             suffix: "",
             icon: "📍",
-            color: "from-hti-sunset to-hti-ember",
+            color: "accent-gradient",
             description: "Through Digital Champion Grant",
           },
           {
@@ -61,7 +61,7 @@ export default function ImpactMetrics() {
             value: data.peopleTrained || 0,
             suffix: "+",
             icon: "👥",
-            color: "from-hti-gold to-hti-soleil",
+            color: "accent-gradient",
             description: "Digital literacy participants",
           },
           {
@@ -69,7 +69,7 @@ export default function ImpactMetrics() {
             value: data.eWasteTons || 0,
             suffix: " tons",
             icon: "♻️",
-            color: "from-hti-fig to-hti-mist",
+            color: "accent-gradient",
             description: "Kept out of landfills",
           },
           {
@@ -77,7 +77,7 @@ export default function ImpactMetrics() {
             value: data.partnerOrganizations || 0,
             suffix: "",
             icon: "🤝",
-            color: "from-hti-ember to-hti-gold",
+            color: "accent-gradient",
             description: "Community collaborations",
           },
         ];
@@ -174,18 +174,18 @@ export default function ImpactMetrics() {
           />
 
           {/* Progress bar section */}
-          <div className="space-y-3 rounded-2xl p-6 glass border elevation-md">
+          <div className="space-y-3 rounded-2xl p-6 glass border border-default elevation-md">
             <div className="flex justify-between items-center">
-              <span className="text-sm font-bold text-hti-plum">Grant Progress</span>
-              <span className="text-sm font-bold text-hti-ember">{animatedProgress}%</span>
+              <span className="text-sm font-bold text-primary">Grant Progress</span>
+              <span className="text-sm font-bold text-accent">{animatedProgress}%</span>
             </div>
-            <div className="w-full h-3 bg-hti-sand/80 rounded-full overflow-hidden shadow-inner border border-hti-gold/30">
+            <div className="w-full h-3 bg-surface-alt rounded-full overflow-hidden shadow-inner border border-default">
               <div
-                className={`h-full bg-gradient-to-r ${featuredMetric.color} rounded-full transition-all duration-500 ease-out shadow-md`}
+                className={`h-full ${featuredMetric.color} rounded-full transition-all duration-500 ease-out shadow-md`}
                 style={{ width: `${animatedProgress}%` }}
               />
             </div>
-            <div className="flex justify-between text-[10px] text-hti-plum font-bold mt-2">
+            <div className="flex justify-between text-[10px] text-primary font-bold mt-2">
               <span>0%</span>
               <span>25%</span>
               <span>50%</span>

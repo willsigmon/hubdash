@@ -257,3 +257,93 @@ dt {
   font-weight: 600 !important;
   color: var(--hti-navy) !important;
 }
+
+/* ========================================
+   THEME TOKENS (Light + Dim) AUGMENTATION
+   ======================================== */
+
+:root {
+  --bg-app: #f8f7f5;
+  --bg-app-alt: #efebe6;
+  --bg-surface: #ffffff;
+  --bg-surface-alt: #faf8f4;
+  --bg-glass: rgba(255,255,255,0.72);
+  --bg-glass-alt: rgba(255,255,255,0.55);
+  --color-text-primary: var(--hti-plum);
+  --color-text-secondary: var(--hti-stone);
+  --color-text-muted: var(--hti-mist);
+  --color-border: rgba(67,61,88,0.16);
+  --color-border-strong: rgba(67,61,88,0.28);
+  --color-accent: var(--hti-ember);
+  --color-accent-alt: var(--hti-gold);
+  --color-accent-soft: rgba(192,95,55,0.12);
+  --color-danger: #dc2626;
+  --color-danger-soft: rgba(220,38,38,0.10);
+  --color-success: #059669;
+  --color-success-soft: rgba(5,150,105,0.12);
+  --color-warning: var(--hti-gold);
+  --color-warning-soft: rgba(226,168,53,0.20);
+  --shadow-color: 15 12 17;
+  --focus-ring: 226 168 53;
+}
+
+.theme-dim {
+  --bg-app: #121115;
+  --bg-app-alt: #1A1920;
+  --bg-surface: #1F1D24;
+  --bg-surface-alt: #26242C;
+  --bg-glass: rgba(31,29,36,0.55);
+  --bg-glass-alt: rgba(31,29,36,0.38);
+  --color-text-primary: #f3f2f8;
+  --color-text-secondary: #d7d5e0;
+  --color-text-muted: #9d9aa9;
+  --color-border: rgba(230,226,217,0.12);
+  --color-border-strong: rgba(230,226,217,0.26);
+  --color-accent: var(--hti-gold);
+  --color-accent-alt: var(--hti-ember);
+  --color-accent-soft: rgba(226,168,53,0.20);
+  --color-danger: #ef4444;
+  --color-danger-soft: rgba(239,68,68,0.14);
+  --color-success: #10b981;
+  --color-success-soft: rgba(16,185,129,0.16);
+  --color-warning: var(--hti-soleil);
+  --color-warning-soft: rgba(234,207,58,0.22);
+  --shadow-color: 0 0 0;
+  --focus-ring: 226 168 53;
+}
+
+body { background: var(--bg-app); color: var(--color-text-primary); }
+
+/* Override glass utilities to use tokens */
+.glass { background: linear-gradient(to bottom right,var(--bg-glass),var(--bg-glass-alt)); border: 1px solid var(--color-border); }
+.glass-strong { background: linear-gradient(to bottom right,rgba(255,255,255,0.82),rgba(255,255,255,0.62)); border: 1px solid var(--color-border-strong); }
+.glass-on-dark { background: linear-gradient(135deg,rgba(31,29,36,0.55),rgba(47,45,76,0.40)); border: 1px solid var(--color-border-strong); }
+
+/* Utility classes */
+.bg-app { background: var(--bg-app); }
+.bg-surface { background: var(--bg-surface); }
+.bg-surface-alt { background: var(--bg-surface-alt); }
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-muted { color: var(--color-text-muted); }
+.border-default { border-color: var(--color-border); }
+.border-strong { border-color: var(--color-border-strong); }
+.accent-gradient { background: linear-gradient(to right,var(--color-accent),var(--color-accent-alt)); }
+.focus-ring { box-shadow: 0 0 0 3px rgba(var(--focus-ring) / 0.35); }
+
+/* Semantic color utilities backed by tokens */
+.text-accent { color: var(--color-accent); }
+.text-accent-alt { color: var(--color-accent-alt); }
+.text-success { color: var(--color-success); }
+.text-warning { color: var(--color-warning); }
+.text-danger { color: var(--color-danger); }
+
+.bg-soft-accent { background: var(--color-accent-soft); }
+.bg-soft-success { background: var(--color-success-soft); }
+.bg-soft-warning { background: var(--color-warning-soft); }
+.bg-soft-danger { background: var(--color-danger-soft); }
+
+.border-accent { border-color: var(--color-accent); }
+.border-success { border-color: var(--color-success); }
+.border-warning { border-color: var(--color-warning); }
+.border-danger { border-color: var(--color-danger); }

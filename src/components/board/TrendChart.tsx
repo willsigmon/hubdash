@@ -56,8 +56,8 @@ export default function TrendChart() {
   if (loading) {
     return (
       <GlassCard className="p-6 animate-pulse">
-        <div className="h-8 bg-hti-plum/10 rounded w-1/3 mb-4"></div>
-        <div className="h-64 bg-hti-fig/10 rounded"></div>
+        <div className="h-8 bg-surface-alt rounded w-1/3 mb-4"></div>
+        <div className="h-64 bg-surface-alt rounded"></div>
       </GlassCard>
     );
   }
@@ -65,10 +65,10 @@ export default function TrendChart() {
   return (
     <GlassCard className="p-6 md:p-8">
       <div className="mb-6">
-        <GradientHeading className="text-2xl md:text-3xl mb-2" from="hti-plum" to="hti-teal">
+        <GradientHeading className="text-2xl md:text-3xl mb-2" variant="plum">
           Devices Over Time
         </GradientHeading>
-        <p className="text-sm md:text-base text-hti-stone font-medium">
+        <p className="text-sm md:text-base text-secondary font-medium">
           Cumulative laptops collected and Chromebooks distributed throughout the year
         </p>
       </div>
@@ -85,28 +85,28 @@ export default function TrendChart() {
               <stop offset="95%" stopColor="#d96846" stopOpacity={0.05}/>
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5d5cf" opacity={0.3} />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" opacity={0.3} />
           <XAxis
             dataKey="month"
-            stroke="#827b75"
+            stroke="var(--color-text-muted)"
             style={{ fontSize: '13px', fontWeight: 600 }}
-            tick={{ fill: '#827b75' }}
+            tick={{ fill: 'var(--color-text-muted)' }}
           />
           <YAxis
-            stroke="#827b75"
+            stroke="var(--color-text-muted)"
             style={{ fontSize: '13px', fontWeight: 600 }}
-            tick={{ fill: '#827b75' }}
+            tick={{ fill: 'var(--color-text-muted)' }}
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: 'rgba(255, 255, 255, 0.95)',
-              border: '1px solid #e5d5cf',
+              backgroundColor: 'var(--bg-surface)',
+              border: '1px solid var(--color-border)',
               borderRadius: '12px',
               padding: '12px 16px',
               boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
             }}
-            labelStyle={{ color: '#5a1b4a', fontWeight: 'bold', marginBottom: '4px' }}
-            itemStyle={{ color: '#827b75', fontSize: '14px' }}
+            labelStyle={{ color: 'var(--color-text-primary)', fontWeight: 'bold', marginBottom: '4px' }}
+            itemStyle={{ color: 'var(--color-text-secondary)', fontSize: '14px' }}
           />
           <Legend
             wrapperStyle={{ fontSize: '14px', fontWeight: 600 }}
@@ -115,34 +115,34 @@ export default function TrendChart() {
           <Area
             type="monotone"
             dataKey="collected"
-            stroke="#5a1b4a"
+            stroke="var(--color-accent)"
             strokeWidth={3}
             fill="url(#collectedGradient)"
             name="Laptops Collected"
-            dot={{ fill: '#5a1b4a', r: 4, strokeWidth: 2, stroke: '#fff' }}
+            dot={{ fill: 'var(--color-accent)', r: 4, strokeWidth: 2, stroke: '#fff' }}
             activeDot={{ r: 6, strokeWidth: 2 }}
           />
           <Area
             type="monotone"
             dataKey="distributed"
-            stroke="#d96846"
+            stroke="var(--color-accent-alt)"
             strokeWidth={3}
             fill="url(#distributedGradient)"
             name="Chromebooks Distributed"
-            dot={{ fill: '#d96846', r: 4, strokeWidth: 2, stroke: '#fff' }}
+            dot={{ fill: 'var(--color-accent-alt)', r: 4, strokeWidth: 2, stroke: '#fff' }}
             activeDot={{ r: 6, strokeWidth: 2 }}
           />
         </AreaChart>
       </ResponsiveContainer>
 
       <div className="mt-6 grid grid-cols-2 gap-4">
-        <div className="p-4 rounded-xl bg-gradient-to-br from-hti-plum/10 to-hti-fig/10 border border-hti-plum/20">
-          <div className="text-xs font-bold text-hti-plum uppercase tracking-wide mb-1">Avg/Month</div>
-          <div className="text-2xl md:text-3xl font-bold text-hti-plum">{stats.avgPerMonth.toLocaleString()} <span className="text-lg">devices</span></div>
+        <div className="p-4 rounded-xl bg-soft-accent border border-default">
+          <div className="text-xs font-bold text-accent uppercase tracking-wide mb-1">Avg/Month</div>
+          <div className="text-2xl md:text-3xl font-bold text-primary">{stats.avgPerMonth.toLocaleString()} <span className="text-lg">devices</span></div>
         </div>
-        <div className="p-4 rounded-xl bg-gradient-to-br from-hti-ember/10 to-hti-gold/10 border border-hti-ember/20">
-          <div className="text-xs font-bold text-hti-ember uppercase tracking-wide mb-1">Conversion Rate</div>
-          <div className="text-2xl md:text-3xl font-bold text-hti-ember">{stats.conversionRate}%</div>
+        <div className="p-4 rounded-xl bg-soft-warning border border-default">
+          <div className="text-xs font-bold text-warning uppercase tracking-wide mb-1">Conversion Rate</div>
+          <div className="text-2xl md:text-3xl font-bold text-warning">{stats.conversionRate}%</div>
         </div>
       </div>
     </GlassCard>

@@ -30,31 +30,31 @@ export default function RecentActivity() {
   }, []);
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-hti-fig/10">
-      <div className="p-6 bg-gradient-to-r from-hti-plum/8 to-hti-ember/8 border-b border-hti-fig/10">
-        <h3 className="text-xl font-bold text-hti-plum flex items-center gap-2 mb-1">
+    <div className="bg-surface rounded-2xl shadow-lg overflow-hidden border border-default">
+      <div className="p-6 bg-gradient-to-r from-[var(--bg-surface-alt)] to-[var(--bg-surface)] border-b border-default">
+        <h3 className="text-xl font-bold text-primary flex items-center gap-2 mb-1">
           🚀 Recent Activity
         </h3>
-        <p className="text-sm text-hti-stone font-medium">
+        <p className="text-sm text-secondary font-medium">
           Real-time updates from HTI operations
         </p>
       </div>
 
-      <div className="divide-y divide-hti-fig/10">
+      <div className="divide-y divide-default">
         {loading ? (
           <div className="p-6 space-y-4 animate-pulse">
             {[...Array(5)].map((_, i) => (
               <div key={i} className="flex gap-4">
-                <div className="w-12 h-12 bg-hti-sand rounded-lg" />
+                <div className="w-12 h-12 bg-surface-alt rounded-lg" />
                 <div className="flex-1">
-                  <div className="h-4 bg-hti-sand rounded w-3/4 mb-2" />
-                  <div className="h-3 bg-hti-sand rounded w-full" />
+                  <div className="h-4 bg-surface-alt rounded w-3/4 mb-2" />
+                  <div className="h-3 bg-surface-alt rounded w-full" />
                 </div>
               </div>
             ))}
           </div>
         ) : activities.length === 0 ? (
-          <div className="p-8 text-center text-hti-stone/60">
+          <div className="p-8 text-center text-muted">
             <div className="text-4xl mb-3">📭</div>
             <p className="font-medium">No recent activity yet</p>
           </div>
@@ -62,11 +62,11 @@ export default function RecentActivity() {
           activities.map((activity) => (
             <div
               key={activity.id}
-              className="p-6 hover:bg-gradient-to-r hover:from-hti-sand/60 hover:to-hti-soleil/10 transition-all group"
+              className="p-6 hover:bg-surface-alt transition-all group"
             >
               <div className="flex items-start gap-4">
                 {/* Icon with better styling */}
-                <div className={`${activity.color} text-white p-3 rounded-xl text-2xl flex-shrink-0 shadow-md group-hover:scale-110 transition-transform`}>
+                <div className={`accent-gradient text-white p-3 rounded-xl text-2xl flex-shrink-0 shadow-md group-hover:scale-110 transition-transform`}>
                   {activity.icon}
                 </div>
 
@@ -74,14 +74,14 @@ export default function RecentActivity() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h3 className="text-base font-bold text-hti-plum mb-1 group-hover:text-hti-ember transition-colors">
+                      <h3 className="text-base font-bold text-primary mb-1 group-hover:text-accent transition-colors">
                         {activity.title}
                       </h3>
-                      <p className="text-sm text-hti-stone">
+                      <p className="text-sm text-secondary">
                         {activity.description}
                       </p>
                     </div>
-                    <div className="text-xs font-bold text-hti-plum whitespace-nowrap px-3 py-1.5 bg-hti-gold/15 rounded-full border border-hti-gold/40 group-hover:bg-hti-ember/15 group-hover:border-hti-ember/40 transition-all">
+                    <div className="text-xs font-bold text-primary whitespace-nowrap px-3 py-1.5 bg-soft-warning rounded-full border border-warning group-hover:bg-soft-accent group-hover:border-accent transition-all">
                       {activity.timestamp}
                     </div>
                   </div>
@@ -93,8 +93,8 @@ export default function RecentActivity() {
       </div>
 
       {/* Footer */}
-      <div className="p-4 bg-hti-sand border-t border-hti-fig/10">
-        <button className="w-full text-center text-sm font-bold text-hti-plum hover:text-hti-ember transition-colors flex items-center justify-center gap-2">
+      <div className="p-4 bg-surface-alt border-t border-default">
+        <button className="w-full text-center text-sm font-bold text-primary hover:text-accent transition-colors flex items-center justify-center gap-2">
           <span>View All Activity</span>
           <span>→</span>
         </button>

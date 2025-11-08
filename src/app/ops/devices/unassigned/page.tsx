@@ -130,10 +130,10 @@ export default function UnassignedDevicesPage() {
           Back to Operations
         </Link>
 
-        <GradientHeading
-          from="from-blue-500"
-          to="to-blue-700"
-        >
+          <GradientHeading
+            className="text-3xl mb-2"
+            variant="plum"
+          >
           Unassigned Devices
         </GradientHeading>
         <p className="text-hti-mist mt-2">

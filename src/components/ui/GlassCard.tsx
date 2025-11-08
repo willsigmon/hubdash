@@ -4,25 +4,39 @@ import clsx from "clsx";
 import React from "react";
 
 interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
-    tone?: "light" | "dark";
-    elevation?: "md" | "lg";
+    variant?: "translucent" | "solid" | "ghost";
+    elevation?: "sm" | "md" | "lg";
+    interactive?: boolean;
 }
 
 export default function GlassCard({
-    tone = "light",
+    variant = "translucent",
     elevation = "md",
+    interactive = false,
     className,
     children,
     ...rest
 }: GlassCardProps) {
+    const base = "rounded-2xl border transition-colors duration-200";
+    const variantClass =
+        variant === "solid"
+            ? "bg-surface-alt border-default"
+            : variant === "ghost"
+                ? "bg-transparent border-transparent"
+                : "backdrop-blur-md bg-surface/70 border-default"; // translucent
+    const elevationClass =
+        elevation === "lg"
+            ? "shadow-lg"
+            : elevation === "sm"
+                ? "shadow-sm"
+                : "shadow-md";
+    const interactiveClass = interactive
+        ? "hover:border-strong hover:bg-surface-hover cursor-pointer"
+        : "";
+
     return (
         <div
-            className={clsx(
-                tone === "dark" ? "glass-on-dark" : "glass",
-                elevation === "lg" ? "elevation-lg" : "elevation-md",
-                "rounded-2xl border no-black-border",
-                className
-            )}
+            className={clsx(base, variantClass, elevationClass, interactiveClass, className)}
             {...rest}
         >
             {children}

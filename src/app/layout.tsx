@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
-import "./globals.css";
 import AppNav from "@/components/layout/AppNav";
 import QueryProvider from "@/components/providers/QueryProvider";
+import ThemeProvider from "@/components/providers/ThemeProvider";
+import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "HubDash - HTI Dashboard",
@@ -17,12 +18,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-        <QueryProvider>
-          <AppNav />
-          {children}
-        </QueryProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased bg-app text-primary">
+        <ThemeProvider>
+          <QueryProvider>
+            <AppNav />
+            {children}
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

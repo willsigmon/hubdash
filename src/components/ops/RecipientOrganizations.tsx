@@ -1,24 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { 
-  Building,
-  MapPin,
-  Users,
-  Mail,
-  Phone,
-  Plus,
-  Edit2,
-  Trash2,
-  Search,
-  Filter,
-  TrendingUp,
-  Calendar
+import { queryKeys } from "@/lib/query-client";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+    Building,
+    Calendar,
+    Edit2,
+    Mail,
+    MapPin,
+    Phone,
+    Plus,
+    Search,
+    Trash2,
+    TrendingUp,
+    Users
 } from "lucide-react";
+import { useState } from "react";
 import GlassCard from "../ui/GlassCard";
 import GradientHeading from "../ui/GradientHeading";
-import { queryKeys } from "@/lib/query-client";
 
 interface RecipientOrg {
   id: string;

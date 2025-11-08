@@ -1,23 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { 
-  ArrowLeft,
-  Search,
-  Wrench,
-  Check,
-  X,
-  ChevronLeft,
-  ChevronRight,
-  UserCircle,
-  Calendar,
-  RotateCcw
-} from "lucide-react";
 import GlassCard from "@/components/ui/GlassCard";
 import GradientHeading from "@/components/ui/GradientHeading";
 import { queryKeys } from "@/lib/query-client";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+    ArrowLeft,
+    Calendar,
+    Check,
+    ChevronLeft,
+    ChevronRight,
+    RotateCcw,
+    Search,
+    UserCircle,
+    Wrench
+} from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 interface AssignedDevice {
   id: string;
@@ -137,9 +136,9 @@ export default function AssignedDevicesPage() {
       d.serial?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       d.type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       d.assignedTo?.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     const matchesTech = techFilter === "all" || d.assignedTo === techFilter;
-    
+
     return matchesSearch && matchesTech;
   });
 
@@ -167,11 +166,11 @@ export default function AssignedDevicesPage() {
           <ArrowLeft className="w-4 h-4" />
           Back to Operations
         </Link>
-        
-        <GradientHeading
-          from="from-hti-sunset"
-          to="to-hti-orange"
-        >
+
+          <GradientHeading
+            className="text-3xl mb-2"
+            variant="plum"
+          >
           Assigned Devices
         </GradientHeading>
         <p className="text-hti-mist mt-2">

@@ -2,7 +2,6 @@ import ActivityFeed from "@/components/ops/ActivityFeed";
 import DevicePipelineFlow from "@/components/ops/DevicePipelineFlow";
 import DonationRequests from "@/components/ops/DonationRequests";
 import EquipmentInventory from "@/components/ops/EquipmentInventory";
-import InventoryOverview from "@/components/ops/InventoryOverview";
 import QuickStats from "@/components/ops/QuickStats";
 import Link from "next/link";
 

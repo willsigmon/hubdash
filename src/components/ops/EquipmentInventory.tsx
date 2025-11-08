@@ -1,28 +1,26 @@
 "use client";
 
-import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { 
-  Monitor,
-  HardDrive,
-  Battery,
-  Cable,
-  Cpu,
-  Wifi,
-  Plus,
-  Edit2,
-  Trash2,
-  Check,
-  X,
-  Search,
-  ChevronDown,
-  ChevronUp,
-  TrendingDown,
-  AlertTriangle
+import { queryKeys } from "@/lib/query-client";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+    AlertTriangle,
+    Battery,
+    Cable,
+    ChevronDown,
+    ChevronUp,
+    Cpu,
+    Edit2,
+    HardDrive,
+    Monitor,
+    Plus,
+    Search,
+    Trash2,
+    TrendingDown,
+    Wifi
 } from "lucide-react";
+import { useState } from "react";
 import GlassCard from "../ui/GlassCard";
 import GradientHeading from "../ui/GradientHeading";
-import { queryKeys } from "@/lib/query-client";
 
 interface InventoryItem {
   id: string;
@@ -194,12 +192,12 @@ export default function EquipmentInventory() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <GradientHeading from="from-hti-plum" to="to-hti-fig">
+        <GradientHeading variant="plum">
           Equipment & Parts Inventory
         </GradientHeading>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-hti-plum to-hti-fig text-white rounded-lg font-semibold hover:shadow-xl transition-all"
+          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-accent to-accent-alt text-white rounded-lg font-semibold hover:shadow-xl transition-all"
         >
           <Plus className="w-5 h-5" />
           Add Item
