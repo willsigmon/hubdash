@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { CountyDetailModal } from "./CountyDetailModal";
 
 interface County {
   name: string;
@@ -24,6 +25,8 @@ export default function CountyMap() {
   const [counties, setCounties] = useState<County[]>([]);
   const [totalDevices, setTotalDevices] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [selectedCounty, setSelectedCounty] = useState<County | null>(null);
+  const [hoveredCounty, setHoveredCounty] = useState<string | null>(null);
 
   useEffect(() => {
     fetch('/api/partners')
@@ -79,16 +82,35 @@ export default function CountyMap() {
     );
   }
 
+  const handleFilterByCounty = (countyName: string) => {
+    // This would integrate with a global filter context
+    console.log('Filtering all dashboards by:', countyName);
+    // TODO: Implement global county filter
+  };
+
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-hti-fig/10">
-      <div className="p-8 bg-gradient-to-br from-hti-plum/8 to-hti-ember/8 border-b border-hti-fig/10">
-        <h3 className="text-2xl font-bold text-hti-plum mb-2">
-          📍 {counties.length} Counties Served
-        </h3>
-        <p className="text-sm text-hti-stone font-medium">
-          Digital Champion Grant distribution footprint across North Carolina
-        </p>
-      </div>
+    <>
+      {selectedCounty && (
+        <CountyDetailModal
+          countyName={selectedCounty.name}
+          totalDevices={selectedCounty.devices}
+          onClose={() => setSelectedCounty(null)}
+          onFilterByCounty={handleFilterByCounty}
+        />
+      )}
+      
+      <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-hti-fig/10">
+        <div className="p-8 bg-gradient-to-br from-hti-plum/8 to-hti-ember/8 border-b border-hti-fig/10">
+          <h3 className="text-2xl font-bold text-hti-plum mb-2">
+            📍 {counties.length} Counties Served
+          </h3>
+          <p className="text-sm text-hti-stone font-medium">
+            Digital Champion Grant distribution footprint across North Carolina
+          </p>
+          <p className="text-xs text-hti-stone/60 mt-2 italic">
+            Click county for details • Double-click to filter all data
+          </p>
+        </div>
 
       {/* County List with Progress Bars */}
       <div className="space-y-1 mb-0 max-h-80 overflow-y-auto">
@@ -100,11 +122,29 @@ export default function CountyMap() {
           counties.map((county, idx) => {
             const maxDevices = counties[0].devices;
             const percentage = (county.devices / maxDevices) * 100;
+            const isHovered = hoveredCounty === county.name;
+            
             return (
               <div
                 key={county.name}
-                className="px-6 py-4 hover:bg-gradient-to-r hover:from-hti-sand/60 hover:to-hti-soleil/10 transition-all border-b border-hti-fig/10 last:border-b-0 group"
+                className="px-6 py-4 hover:bg-gradient-to-r hover:from-hti-sand/60 hover:to-hti-soleil/10 transition-all border-b border-hti-fig/10 last:border-b-0 group cursor-pointer relative"
+                onClick={() => setSelectedCounty(county)}
+                onDoubleClick={() => handleFilterByCounty(county.name)}
+                onMouseEnter={() => setHoveredCounty(county.name)}
+                onMouseLeave={() => setHoveredCounty(null)}
               >
+                {/* Tooltip on hover */}
+                {isHovered && (
+                  <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 z-10 px-4 py-2 bg-hti-midnight text-white text-sm rounded-lg shadow-xl whitespace-nowrap animate-in fade-in slide-in-from-bottom-2 duration-200">
+                    <div className="font-semibold">Click for details • Double-click to filter</div>
+                    <div className="text-xs text-white/60 mt-1">
+                      {county.devices} devices across {county.name} County
+                    </div>
+                    {/* Arrow */}
+                    <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-hti-midnight" />
+                  </div>
+                )}
+              
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     <span className="text-xl font-bold text-hti-plum w-6">#{idx + 1}</span>
@@ -162,6 +202,7 @@ export default function CountyMap() {
           <div className="text-xs text-hti-stone mt-1 font-medium">distribution</div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
