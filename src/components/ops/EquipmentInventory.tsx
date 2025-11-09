@@ -19,6 +19,7 @@ import {
   Wifi
 } from "lucide-react";
 import { useState } from "react";
+import { X } from "lucide-react";
 import GlassCard from "../ui/GlassCard";
 import GradientHeading from "../ui/GradientHeading";
 
@@ -49,6 +50,213 @@ const PARTS_TYPES = [
   { value: "WiFi Card", icon: Wifi, color: "text-accent" },
 ];
 
+interface InventoryModalProps {
+  item?: InventoryItem;
+  onClose: () => void;
+  onSubmit: (data: Partial<InventoryItem>) => void;
+  isLoading: boolean;
+}
+
+function InventoryModal({ item, onClose, onSubmit, isLoading }: InventoryModalProps) {
+  const [formData, setFormData] = useState<Partial<InventoryItem>>({
+    category: item?.category || "equipment",
+    type: item?.type || "",
+    name: item?.name || "",
+    quantity: item?.quantity || 0,
+    minThreshold: item?.minThreshold || 0,
+    location: item?.location || "",
+    condition: item?.condition || "Good",
+    notes: item?.notes || "",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
+
+  const availableTypes = formData.category === "equipment" ? EQUIPMENT_TYPES : PARTS_TYPES;
+
+  return (
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-surface rounded-2xl shadow-2xl max-w-2xl w-full border border-default max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-surface border-b border-default p-6 flex items-center justify-between">
+          <h3 className="text-2xl font-bold text-primary">
+            {item ? "Edit Inventory Item" : "Add Inventory Item"}
+          </h3>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-surface-alt rounded-lg transition-colors"
+            aria-label="Close"
+          >
+            <X className="w-5 h-5 text-secondary" />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Category */}
+          <div>
+            <label className="block text-sm font-semibold text-primary mb-2">
+              Category *
+            </label>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, category: "equipment", type: "" })}
+                className={`flex-1 px-4 py-3 rounded-lg font-semibold transition-all ${
+                  formData.category === "equipment"
+                    ? "accent-gradient text-on-accent"
+                    : "bg-surface-alt text-secondary hover:bg-surface"
+                }`}
+              >
+                Equipment
+              </button>
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, category: "parts", type: "" })}
+                className={`flex-1 px-4 py-3 rounded-lg font-semibold transition-all ${
+                  formData.category === "parts"
+                    ? "accent-gradient text-on-accent"
+                    : "bg-surface-alt text-secondary hover:bg-surface"
+                }`}
+              >
+                Parts
+              </button>
+            </div>
+          </div>
+
+          {/* Type */}
+          <div>
+            <label className="block text-sm font-semibold text-primary mb-2">
+              Type *
+            </label>
+            <select
+              value={formData.type}
+              onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+              className="w-full px-4 py-3 bg-surface-alt border border-default rounded-lg focus:outline-none focus-ring text-primary"
+              required
+            >
+              <option value="">Select type...</option>
+              {availableTypes.map((t) => (
+                <option key={t.value} value={t.value}>
+                  {t.value}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Name */}
+          <div>
+            <label className="block text-sm font-semibold text-primary mb-2">
+              Name *
+            </label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className="w-full px-4 py-3 bg-surface-alt border border-default rounded-lg focus:outline-none focus-ring text-primary placeholder:text-muted"
+              placeholder='e.g., Dell 24" LCD Monitor'
+              required
+            />
+          </div>
+
+          {/* Quantity & Min Threshold */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">
+                Quantity *
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={formData.quantity}
+                onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) || 0 })}
+                className="w-full px-4 py-3 bg-surface-alt border border-default rounded-lg focus:outline-none focus-ring text-primary"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-primary mb-2">
+                Min Threshold *
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={formData.minThreshold}
+                onChange={(e) => setFormData({ ...formData, minThreshold: parseInt(e.target.value) || 0 })}
+                className="w-full px-4 py-3 bg-surface-alt border border-default rounded-lg focus:outline-none focus-ring text-primary"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Location */}
+          <div>
+            <label className="block text-sm font-semibold text-primary mb-2">
+              Location
+            </label>
+            <input
+              type="text"
+              value={formData.location || ""}
+              onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+              className="w-full px-4 py-3 bg-surface-alt border border-default rounded-lg focus:outline-none focus-ring text-primary placeholder:text-muted"
+              placeholder="e.g., Warehouse A"
+            />
+          </div>
+
+          {/* Condition */}
+          <div>
+            <label className="block text-sm font-semibold text-primary mb-2">
+              Condition
+            </label>
+            <select
+              value={formData.condition}
+              onChange={(e) => setFormData({ ...formData, condition: e.target.value })}
+              className="w-full px-4 py-3 bg-surface-alt border border-default rounded-lg focus:outline-none focus-ring text-primary"
+            >
+              <option value="New">New</option>
+              <option value="Good">Good</option>
+              <option value="Fair">Fair</option>
+              <option value="Poor">Poor</option>
+            </select>
+          </div>
+
+          {/* Notes */}
+          <div>
+            <label className="block text-sm font-semibold text-primary mb-2">
+              Notes
+            </label>
+            <textarea
+              value={formData.notes || ""}
+              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+              className="w-full px-4 py-3 bg-surface-alt border border-default rounded-lg focus:outline-none focus-ring text-primary placeholder:text-muted"
+              rows={3}
+              placeholder="Additional notes..."
+            />
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-3 pt-4 border-t border-default">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 px-6 py-3 bg-surface-alt text-secondary rounded-lg font-semibold hover:bg-surface transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="flex-1 px-6 py-3 accent-gradient text-on-accent rounded-lg font-semibold shadow hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? "Saving..." : item ? "Update Item" : "Create Item"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 export default function EquipmentInventory() {
   const [activeTab, setActiveTab] = useState<"equipment" | "parts">("equipment");
   const [searchTerm, setSearchTerm] = useState("");
@@ -59,123 +267,73 @@ export default function EquipmentInventory() {
 
   const queryClient = useQueryClient();
 
-  const { data: inventoryData, isLoading } = useQuery<InventoryItem[] | { inventory?: InventoryItem[] } | null>({
-    queryKey: queryKeys.devices, // TODO: Create queryKeys.inventory
+  const { data: inventoryData, isLoading } = useQuery<InventoryItem[]>({
+    queryKey: ["inventory"],
     queryFn: async () => {
-      // In production: GET /api/inventory
-      // Mock data for now
-      return [
-        {
-          id: "1",
-          category: "equipment",
-          type: "Monitor",
-          name: "Dell 24\" LCD Monitor",
-          quantity: 45,
-          minThreshold: 20,
-          location: "Warehouse A",
-          condition: "Good",
-          lastUpdated: "2024-01-15",
-        },
-        {
-          id: "2",
-          category: "equipment",
-          type: "Hard Drive",
-          name: "500GB HDD",
-          quantity: 12,
-          minThreshold: 15,
-          location: "Storage Room",
-          condition: "Good",
-          notes: "Low stock - order more",
-          lastUpdated: "2024-01-14",
-        },
-        {
-          id: "3",
-          category: "parts",
-          type: "Battery",
-          name: "Laptop Battery - Generic",
-          quantity: 8,
-          minThreshold: 10,
-          location: "Parts Bin 3",
-          condition: "New",
-          notes: "Urgent reorder needed",
-          lastUpdated: "2024-01-13",
-        },
-        {
-          id: "4",
-          category: "parts",
-          type: "RAM",
-          name: "8GB DDR4 RAM",
-          quantity: 67,
-          minThreshold: 25,
-          location: "Parts Bin 1",
-          condition: "Good",
-          lastUpdated: "2024-01-16",
-        },
-      ];
+      const res = await fetch("/api/inventory");
+      if (!res.ok) throw new Error("Failed to fetch inventory");
+      const data = await res.json();
+      return Array.isArray(data) ? data : [];
     },
   });
 
-  // Safely extract inventory array from various possible response shapes
-  const inventory: InventoryItem[] = Array.isArray(inventoryData)
-    ? inventoryData
-    : inventoryData && typeof inventoryData === 'object' && 'inventory' in inventoryData && Array.isArray(inventoryData.inventory)
-      ? inventoryData.inventory
-      : [];
+  const inventory: InventoryItem[] = inventoryData || [];
 
   const createMutation = useMutation({
     mutationFn: async (newItem: Partial<InventoryItem>) => {
-      // In production: POST /api/inventory
       const res = await fetch("/api/inventory", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_WRITE_API_TOKEN}`,
         },
         body: JSON.stringify(newItem),
       });
-      if (!res.ok) throw new Error("Failed to create item");
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.error || "Failed to create item");
+      }
       return res.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.devices });
+      queryClient.invalidateQueries({ queryKey: ["inventory"] });
       setShowCreateModal(false);
     },
   });
 
   const updateMutation = useMutation({
     mutationFn: async ({ id, updates }: { id: string; updates: Partial<InventoryItem> }) => {
-      // In production: PATCH /api/inventory/:id
       const res = await fetch(`/api/inventory/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_WRITE_API_TOKEN}`,
         },
         body: JSON.stringify(updates),
       });
-      if (!res.ok) throw new Error("Failed to update item");
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.error || "Failed to update item");
+      }
       return res.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.devices });
+      queryClient.invalidateQueries({ queryKey: ["inventory"] });
       setEditingId(null);
     },
   });
 
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      // In production: DELETE /api/inventory/:id
       const res = await fetch(`/api/inventory/${id}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_WRITE_API_TOKEN}`,
-        },
       });
-      if (!res.ok) throw new Error("Failed to delete item");
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.error || "Failed to delete item");
+      }
       return res.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.devices });
+      queryClient.invalidateQueries({ queryKey: ["inventory"] });
     },
   });
 
@@ -430,22 +588,23 @@ export default function EquipmentInventory() {
         )}
       </div>
 
-      {/* Create/Edit Modal - simplified for now */}
-      {showCreateModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-surface rounded-2xl shadow-2xl max-w-lg w-full p-6 border border-default">
-            <h3 className="text-2xl font-bold text-primary mb-4">Add Inventory Item</h3>
-            <p className="text-secondary text-sm mb-4">
-              Create form coming soon - full CRUD implementation
-            </p>
-            <button
-              onClick={() => setShowCreateModal(false)}
-              className="px-6 py-3 bg-soft-accent text-accent rounded-lg font-semibold hover:bg-soft-accent transition-colors border border-accent"
-            >
-              Close
-            </button>
-          </div>
-        </div>
+      {/* Create/Edit Modal */}
+      {(showCreateModal || editingId) && (
+        <InventoryModal
+          item={editingId ? inventory.find(i => i.id === editingId) : undefined}
+          onClose={() => {
+            setShowCreateModal(false);
+            setEditingId(null);
+          }}
+          onSubmit={(data) => {
+            if (editingId) {
+              updateMutation.mutate({ id: editingId, updates: data });
+            } else {
+              createMutation.mutate(data);
+            }
+          }}
+          isLoading={createMutation.isPending || updateMutation.isPending}
+        />
       )}
     </div>
   );

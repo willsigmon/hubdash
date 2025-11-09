@@ -13,15 +13,15 @@ interface SocialMediaPost {
 
 /**
  * GET /api/social-media
- * 
+ *
  * Returns recent social media posts from HTI's accounts.
- * 
+ *
  * TODO: Integrate with actual social media APIs:
  * - Instagram Basic Display API or Instagram Graph API
  * - LinkedIn API
  * - TikTok API (when available)
  * - Facebook Graph API
- * 
+ *
  * For now, returns mock data that matches the expected structure.
  */
 export async function GET() {
@@ -75,4 +75,3 @@ export async function GET() {
     },
   });
 }
-

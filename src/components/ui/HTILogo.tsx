@@ -37,17 +37,17 @@ export default function HTILogo({ size = "md", showText = true, className = "" }
         <div className={`${config.circle} rounded-full bg-[#E67E50] flex items-center justify-center shadow-md`}>
           <Power className="w-1/2 h-1/2 text-white stroke-[3]" />
         </div>
-        
+
         {/* H Circle - Orange */}
         <div className={`${config.circle} rounded-full bg-[#F19E3E] flex items-center justify-center shadow-md`}>
           <span className="text-white font-bold text-lg">H</span>
         </div>
-        
+
         {/* T Circle - Yellow-Orange */}
         <div className={`${config.circle} rounded-full bg-[#F5BB2D] flex items-center justify-center shadow-md`}>
           <span className="text-white font-bold text-lg">T</span>
         </div>
-        
+
         {/* I Circle - Yellow */}
         <div className={`${config.circle} rounded-full bg-[#F9D71C] flex items-center justify-center shadow-md`}>
           <span className="text-white font-bold text-lg">I</span>
@@ -63,4 +63,3 @@ export default function HTILogo({ size = "md", showText = true, className = "" }
     </div>
   );
 }
-
