@@ -1,7 +1,7 @@
 "use client";
 
+import { ChevronLeft, ChevronRight, Download, Edit2, Eye, Filter, Plus, Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Search, Download, Plus, Eye, Edit2, ChevronLeft, ChevronRight, Filter } from "lucide-react";
 
 interface Device {
   id: string;
@@ -246,7 +246,7 @@ export default function InventoryOverviewImproved() {
                     </td>
                     <td className="px-3 md:px-6 py-4 hidden md:table-cell whitespace-nowrap">
                       <div className="text-sm text-secondary">
-                        {new Date(device.received_date).toLocaleDateString()}
+                        {typeof window !== 'undefined' && device.received_date ? new Date(device.received_date).toLocaleDateString() : '—'}
                       </div>
                     </td>
                     <td className="px-3 md:px-6 py-4 whitespace-nowrap text-right">
@@ -352,7 +352,7 @@ export default function InventoryOverviewImproved() {
                 <div>
                   <span className="text-secondary">Received Date</span>
                   <p className="text-primary mt-1">
-                    {new Date(selectedDevice.received_date).toLocaleDateString()}
+                    {typeof window !== 'undefined' && selectedDevice.received_date ? new Date(selectedDevice.received_date).toLocaleDateString() : '—'}
                   </p>
                 </div>
               </div>

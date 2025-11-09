@@ -164,7 +164,7 @@ export default function DevicePipelineFlow() {
 
                       {/* Count */}
                       <div className="text-3xl font-bold text-primary mb-1">
-                        {count.toLocaleString()}
+                        {typeof count === 'number' ? count.toLocaleString() : '—'}
                       </div>
 
                       {/* Label */}
@@ -194,7 +194,7 @@ export default function DevicePipelineFlow() {
         <div className="grid grid-cols-3 gap-4 pt-6 border-t border-default">
           <div className="text-center">
             <div className="text-2xl font-bold text-primary">
-                {stats?.total !== undefined ? stats.total.toLocaleString() : "—"}
+                {typeof stats?.total === 'number' ? stats.total.toLocaleString() : "—"}
               </div>
             <div className="text-xs text-secondary uppercase tracking-wider">
               Total Devices
@@ -202,7 +202,7 @@ export default function DevicePipelineFlow() {
           </div>
           <div className="text-center border-l border-r border-default">
             <div className="text-2xl font-bold text-accent">
-              {((stats?.assigned || 0) + (stats?.converted || 0)).toLocaleString()}
+              {typeof window !== 'undefined' ? ((stats?.assigned || 0) + (stats?.converted || 0)).toLocaleString() : '—'}
             </div>
             <div className="text-xs text-secondary uppercase tracking-wider">
               In Progress

@@ -125,7 +125,7 @@ export default function InventoryOverview() {
                   </td>
                   <td className="px-3 md:px-6 py-4 hidden md:table-cell whitespace-nowrap">
                     <div className="text-xs md:text-sm text-muted">
-                      {new Date(device.received_date).toLocaleDateString()}
+                      {typeof window !== 'undefined' && device.received_date ? new Date(device.received_date).toLocaleDateString() : '—'}
                     </div>
                   </td>
                   <td className="px-3 md:px-6 py-4 whitespace-nowrap text-right">

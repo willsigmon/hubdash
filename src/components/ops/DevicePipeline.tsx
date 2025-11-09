@@ -82,7 +82,7 @@ export default function DevicePipeline() {
         <div className="hidden lg:grid grid-cols-7 gap-2 mb-6">
           {stages.map((stage, index) => (
             <div key={stage.name} className="relative">
-              <div className={`${stageColorClasses[stage.statusKey]} rounded-lg p-4 hover:shadow-lg transition-all cursor-pointer transform hover:scale-105 border`}> 
+              <div className={`${stageColorClasses[stage.statusKey]} rounded-lg p-4 hover:shadow-lg transition-all cursor-pointer transform hover:scale-105 border`}>
                 <div className="text-center">
                   <div className="text-3xl mb-2">{stage.icon}</div>
                   <div className="text-2xl font-bold mb-1 text-white/90">{stage.count}</div>
