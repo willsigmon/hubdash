@@ -237,14 +237,14 @@ export default function MarketingPage() {
       </div>
 
       <main className="relative">
-        <header className="sticky top-0 z-40 border-b border-default bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy text-white shadow-lg">
+        <header className="sticky top-0 z-40 border-b border-default bg-gradient-to-br from-surface via-surface-alt to-surface shadow-lg theme-dim:from-hti-navy theme-dim:via-hti-navy-dark theme-dim:to-hti-navy">
           <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-6 sm:px-6 lg:px-8">
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <div className="min-w-0">
-                <h1 className="text-2xl font-bold leading-tight text-white sm:text-3xl truncate">
+                <h1 className="text-2xl font-bold leading-tight text-primary theme-dim:text-white sm:text-3xl truncate">
                   Partnership Applications
                 </h1>
-                <p className="mt-1 text-xs text-white/80 hidden sm:block">
+                <p className="mt-1 text-xs text-secondary theme-dim:text-white/80 hidden sm:block">
                   Review, filter, and manage partnership applications
                 </p>
               </div>
@@ -254,18 +254,18 @@ export default function MarketingPage() {
                 {heroStats.map((stat) => (
                   <div
                     key={stat.label}
-                    className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 backdrop-blur"
+                    className="rounded-lg border border-default bg-surface-alt theme-dim:border-white/20 theme-dim:bg-white/10 px-3 py-2 backdrop-blur"
                   >
-                    <div className="text-[10px] font-semibold uppercase tracking-wide text-white mb-0.5">
+                    <div className="text-[10px] font-semibold uppercase tracking-wide text-secondary theme-dim:text-white mb-0.5">
                       {stat.label}
                     </div>
-                    <div className="text-lg font-bold text-white">{stat.value}</div>
+                    <div className="text-lg font-bold text-primary theme-dim:text-white">{stat.value}</div>
                   </div>
                 ))}
               </div>
               <Link
                 href="/"
-                className="rounded-lg bg-white/10 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                className="rounded-lg bg-surface-alt theme-dim:bg-white/10 px-4 py-2 text-xs font-semibold text-primary theme-dim:text-white transition hover:bg-surface theme-dim:hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
               >
                 ← HUB
               </Link>
@@ -328,8 +328,8 @@ export default function MarketingPage() {
                         const location = application.county || application.address?.split(',')[1]?.trim() || 'Location Not Provided';
                         const orgName = application.organizationName || 'Unnamed Organization';
                         return (
-                          <li 
-                            key={application.id} 
+                          <li
+                            key={application.id}
                             onClick={() => setSelectedApplication(application)}
                             className="rounded-xl border-2 border-default bg-surface-alt backdrop-blur-sm p-3 sm:p-4 transition-all hover:border-accent hover:bg-surface-elevated hover:shadow-md cursor-pointer"
                           >

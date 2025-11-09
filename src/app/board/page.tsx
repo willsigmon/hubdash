@@ -9,7 +9,7 @@ import Link from "next/link";
 const executiveSignals = [
   {
     label: "Impact Placements",
-    value: "2,540+",
+    value: "2,540",
     description: "Chromebooks delivered lifetime; 85 this quarter.",
   },
   {
@@ -19,7 +19,7 @@ const executiveSignals = [
   },
   {
     label: "Training Graduates",
-    value: "450+",
+    value: "450",
     description: "Community members completing HTI digital literacy sessions.",
   },
 ];
@@ -48,24 +48,24 @@ export default function BoardDashboard() {
       <div className="pointer-events-none absolute inset-x-0 top-0 h-96 bg-gradient-to-br from-hti-navy/25 via-hti-navy/10 to-transparent" />
 
       {/* Header - Compact */}
-      <header className="sticky top-0 z-40 border-b border-default bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy text-white shadow-lg">
+      <header className="sticky top-0 z-40 border-b border-default bg-gradient-to-br from-surface via-surface-alt to-surface shadow-lg theme-dim:from-hti-navy theme-dim:via-hti-navy-dark theme-dim:to-hti-navy">
         <div className="absolute inset-0 overflow-hidden opacity-50">
           <div className="absolute -left-24 top-1/3 h-40 w-40 rounded-full bg-highlight opacity-30 blur-3xl" />
           <div className="absolute right-0 top-0 h-32 w-32 translate-x-1/3 -translate-y-1/3 rounded-full bg-accent opacity-25 blur-3xl" />
         </div>
         <div className="relative mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-6 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 flex-1 min-w-0">
-            <GradientHeading as="h1" variant="white" className="text-2xl sm:text-3xl">
+            <GradientHeading as="h1" variant="default" className="text-2xl sm:text-3xl theme-dim:text-white">
               HTI Board Dashboard
             </GradientHeading>
             <div className="hidden md:flex items-center gap-2 ml-4">
               <span className="h-2 w-2 animate-pulse rounded-full bg-success" />
-              <span className="text-xs font-semibold text-white/90">Live</span>
+              <span className="text-xs font-semibold text-secondary theme-dim:text-white/90">Live</span>
             </div>
           </div>
           <Link
             href="/"
-            className="flex-shrink-0 inline-flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+            className="flex-shrink-0 inline-flex items-center gap-2 rounded-lg bg-surface-alt theme-dim:bg-white/10 px-4 py-2 text-xs font-semibold text-primary theme-dim:text-white transition hover:bg-surface theme-dim:hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
           >
             ← HUB
           </Link>

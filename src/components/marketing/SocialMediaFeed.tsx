@@ -82,7 +82,7 @@ export default function SocialMediaFeed() {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {[1, 2, 3, 4].map((i) => (
           <div key={i} className="rounded-xl border-2 border-default bg-surface p-4 animate-pulse shadow-lg">
             <div className="h-12 bg-surface-alt rounded mb-4" />
@@ -101,7 +101,7 @@ export default function SocialMediaFeed() {
         <p className="text-sm font-medium text-secondary">Latest posts from HTI's social media accounts</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Instagram */}
         <div className={`rounded-xl border-2 ${platformConfig.instagram.borderColor} ${platformConfig.instagram.bgGradient} overflow-hidden shadow-lg hover:shadow-xl transition-all`}>
           <div className={`bg-gradient-to-r ${platformConfig.instagram.gradient} p-4 flex items-center gap-2`}>

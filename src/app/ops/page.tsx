@@ -42,7 +42,7 @@ export default function OpsPage() {
   return (
     <div className="min-h-screen bg-app text-primary">
       {/* Header - Compact */}
-      <header className="sticky top-0 z-40 border-b border-default bg-gradient-to-r from-hti-navy via-hti-navy-dark to-hti-navy text-white shadow-lg">
+      <header className="sticky top-0 z-40 border-b border-default bg-gradient-to-r from-surface via-surface-alt to-surface shadow-lg theme-dim:from-hti-navy theme-dim:via-hti-navy-dark theme-dim:to-hti-navy">
         <div className="absolute inset-0 overflow-hidden opacity-50">
           <div className="absolute -left-20 top-1/3 h-40 w-40 rounded-full bg-hti-orange/20 blur-3xl" />
           <div className="absolute right-0 top-0 h-32 w-32 translate-x-1/3 -translate-y-1/3 rounded-full bg-hti-gold/20 blur-3xl" />
@@ -52,17 +52,17 @@ export default function OpsPage() {
             <div className="flex items-center gap-3 min-w-0">
               <div className="text-2xl">⚡</div>
               <div className="min-w-0">
-                <h1 className="text-2xl font-bold text-white sm:text-3xl truncate">
+                <h1 className="text-2xl font-bold text-primary theme-dim:text-white sm:text-3xl truncate">
                   Operations HUB
                 </h1>
-                <p className="text-xs text-white/80 mt-0.5 hidden sm:block">
+                <p className="text-xs text-secondary theme-dim:text-white/80 mt-0.5 hidden sm:block">
                   Mission control for device intake, refurb, QA, and deployment
                 </p>
               </div>
             </div>
             <div className="hidden md:flex items-center gap-2">
               <span className="h-2 w-2 animate-pulse rounded-full bg-success" />
-              <span className="text-xs font-semibold text-white/90">Live</span>
+              <span className="text-xs font-semibold text-secondary theme-dim:text-white/90">Live</span>
             </div>
           </div>
           <div className="flex items-center gap-3 flex-shrink-0">
@@ -77,8 +77,8 @@ export default function OpsPage() {
                         : "border-highlight/50 bg-soft-highlight/50 text-highlight"
                     }`}
                 >
-                  <span className="font-bold text-white">{signal.value}</span>
-                  <span className="text-[10px] text-white/70 ml-1.5 uppercase tracking-wide hidden xl:inline">
+                  <span className="font-bold text-primary theme-dim:text-white">{signal.value}</span>
+                  <span className="text-[10px] text-secondary theme-dim:text-white/70 ml-1.5 uppercase tracking-wide hidden xl:inline">
                     {signal.label}
                   </span>
                 </div>

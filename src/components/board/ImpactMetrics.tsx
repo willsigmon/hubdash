@@ -43,7 +43,7 @@ export default function ImpactMetrics() {
           {
             label: "Total Laptops (All-Time)",
             value: data.totalLaptopsCollected || 0,
-            suffix: "+",
+            suffix: "",
             icon: "💻",
             color: "accent-gradient",
             description: "Overall collection since inception",
@@ -59,7 +59,7 @@ export default function ImpactMetrics() {
           {
             label: "People Trained",
             value: data.peopleTrained || 0,
-            suffix: "+",
+            suffix: "",
             icon: "👥",
             color: "accent-gradient",
             description: "Digital literacy participants",

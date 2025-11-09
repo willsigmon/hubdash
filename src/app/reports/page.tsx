@@ -42,8 +42,11 @@ export default function ReportsPage() {
   ).length;
 
   // Calculate training hours and participants from training sessions
-  // Training sessions typically last 2 hours each
-  const totalTrainingHours = training.length * 2;
+  // Use actual hours field from training sessions, or default to 2 hours per session
+  const totalTrainingHours = training.reduce((sum: number, t: any) => {
+    const hours = t.hours ? parseFloat(String(t.hours)) : 2; // Default to 2 if not specified
+    return sum + hours;
+  }, 0);
   const totalParticipants = training.reduce((sum: number, t: any) => {
     return sum + (parseInt(String(t.attendees || 0), 10) || 0);
   }, 0);
@@ -139,11 +142,11 @@ export default function ReportsPage() {
   return (
     <div className="min-h-screen bg-app">
       {/* Header - Compact */}
-      <header className="sticky top-0 z-40 bg-surface-alt border-b border-default shadow-lg">
+      <header className="sticky top-0 z-40 border-b border-default bg-gradient-to-br from-surface via-surface-alt to-surface shadow-lg theme-dim:from-hti-navy theme-dim:via-hti-navy-dark theme-dim:to-hti-navy">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex-1 min-w-0">
-            <GradientHeading as="h1" className="text-2xl md:text-3xl mb-1">Grant Reports</GradientHeading>
-            <p className="text-secondary text-xs md:text-sm max-w-2xl hidden md:block">NCDIT Digital Champion Grant tracking and compliance reporting</p>
+            <GradientHeading as="h1" variant="default" className="text-2xl md:text-3xl mb-1 theme-dim:text-white">Grant Reports</GradientHeading>
+            <p className="text-secondary theme-dim:text-white/80 text-xs md:text-sm max-w-2xl hidden md:block">NCDIT Digital Champion Grant tracking and compliance reporting</p>
           </div>
           <Link
             href="/"

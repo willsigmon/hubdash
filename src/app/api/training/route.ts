@@ -34,6 +34,7 @@ export async function GET() {
           sessionDate: r.field_date_raw?.iso_timestamp || r.field_date || null,
           location: r.field_location || '',
           attendees: r.field_attendees || 0,
+          hours: r.field_hours || r.field_duration || 2, // Default to 2 hours if not specified
           instructor: r.field_instructor || '',
           topic: r.field_topic || '',
           notes: r.field_notes || '',
