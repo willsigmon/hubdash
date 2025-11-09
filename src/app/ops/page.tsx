@@ -15,10 +15,10 @@ const commandSignals = [
 
 export default function OpsPage() {
   return (
-    <div className="theme-dim min-h-screen bg-app text-primary">
+    <div className="min-h-screen bg-app text-primary">
       {/* Header */}
-      <header className="relative border-b border-default bg-gradient-to-r from-hti-navy via-[#11162a] to-[#0c1324] shadow">
-        <div className="absolute inset-0">
+      <header className="relative border-b border-default bg-gradient-to-r from-hti-navy via-hti-navy-dark to-hti-navy text-white shadow">
+        <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -left-20 top-1/3 h-60 w-60 rounded-full bg-hti-orange/20 blur-3xl" />
           <div className="absolute right-0 top-0 h-56 w-56 translate-x-1/3 -translate-y-1/3 rounded-full bg-hti-gold/20 blur-3xl" />
         </div>
@@ -27,10 +27,10 @@ export default function OpsPage() {
             <div className="inline-flex items-center gap-2 rounded-full border border-highlight bg-soft-highlight px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-highlight">
               Ops mode • live sync
             </div>
-            <h1 className="flex items-center gap-3 text-4xl font-bold text-primary sm:text-5xl">
+            <h1 className="flex items-center gap-3 text-4xl font-bold text-white sm:text-5xl">
               ⚡ Operations HUB
             </h1>
-            <p className="max-w-xl text-base font-medium text-secondary">
+            <p className="max-w-xl text-base font-medium text-white/80">
               Mission control for device intake, refurb, QA, and deployment. Everything the ops team
               needs without leaving one tab.
             </p>
@@ -38,7 +38,7 @@ export default function OpsPage() {
           <div className="flex flex-wrap items-center gap-4">
             <div className="rounded-2xl border border-success bg-soft-success px-5 py-3 text-left text-success">
               <div className="text-xs font-semibold uppercase tracking-[0.25em]">System status</div>
-              <div className="mt-1 flex items-center gap-2 text-sm font-bold text-primary">
+              <div className="mt-1 flex items-center gap-2 text-sm font-bold text-white">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-success" />
                 All systems operational
               </div>
