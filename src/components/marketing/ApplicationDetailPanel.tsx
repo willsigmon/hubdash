@@ -317,21 +317,6 @@ export default function ApplicationDetailPanel({
                   <div className="text-muted italic text-sm">Not provided</div>
                 )}
               </div>
-
-              {/* Notes */}
-              <div className="rounded-xl border border-danger bg-soft-danger p-4">
-                <h3 className="text-sm font-semibold text-danger mb-2">Internal Notes</h3>
-                <div className="space-y-2 text-sm">
-                  <div>
-                    <div className="text-xs font-semibold text-danger mb-0.5">Notes</div>
-                    <div className="text-primary">{application.notes || <span className="text-muted italic">No notes</span>}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs font-semibold text-danger mb-0.5">Comments</div>
-                    <div className="text-primary">{application.internalComments || <span className="text-muted italic">No comments</span>}</div>
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Right Column - Actions */}
@@ -396,6 +381,21 @@ export default function ApplicationDetailPanel({
                   <div className="pt-2 border-t border-default">
                     <div className="text-xs text-secondary mb-0.5">How they heard</div>
                     <div className="text-sm text-primary">{application.howHeard || <span className="text-muted italic">Not provided</span>}</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Internal Notes */}
+              <div className="rounded-xl border border-danger bg-soft-danger p-4">
+                <h3 className="text-sm font-semibold text-danger mb-3">Internal Notes</h3>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <div className="text-xs font-semibold text-danger mb-1.5">Notes</div>
+                    <div className="text-primary leading-relaxed">{application.notes || <span className="text-muted italic">No notes</span>}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold text-danger mb-1.5">Comments</div>
+                    <div className="text-primary leading-relaxed">{application.internalComments || <span className="text-muted italic">No comments</span>}</div>
                   </div>
                 </div>
               </div>
