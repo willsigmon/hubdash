@@ -95,20 +95,20 @@ export default function ApplicationFilters({
     const isActive = activeSection === id;
 
     return (
-      <div className="border-b border-default last:border-b-0">
+      <div className="border-b border-white/20 last:border-b-0">
         <button
           onClick={() => setActiveSection(isActive ? null : id)}
-          className="w-full px-4 py-3 flex items-center justify-between hover:bg-surface-alt transition-colors"
+          className="w-full px-4 py-3 flex items-center justify-between hover:bg-white/10 transition-colors"
         >
-          <span className="font-semibold text-primary">{title}</span>
+          <span className="font-semibold text-white">{title}</span>
           {isActive ? (
-            <ChevronUp className="w-4 h-4 text-muted" />
+            <ChevronUp className="w-4 h-4 text-white/60" />
           ) : (
-            <ChevronDown className="w-4 h-4 text-muted" />
+            <ChevronDown className="w-4 h-4 text-white/60" />
           )}
         </button>
         {isActive && (
-          <div className="px-4 py-3 bg-surface-alt">
+          <div className="px-4 py-3 bg-white/5 backdrop-blur-sm">
             {children}
           </div>
         )}
@@ -117,14 +117,18 @@ export default function ApplicationFilters({
   };
 
   return (
-    <div className="bg-surface rounded-2xl shadow-xl overflow-hidden border border-default">
+    <div className="rounded-2xl shadow-xl overflow-hidden border-2 border-white/10 backdrop-blur-sm" style={{
+      background: 'linear-gradient(135deg, rgba(27, 54, 93, 0.95), rgba(15, 31, 61, 0.98), rgba(27, 54, 93, 0.95))',
+      backdropFilter: 'blur(12px) saturate(150%)',
+      WebkitBackdropFilter: 'blur(12px) saturate(150%)',
+    }}>
       {/* Header */}
       <div className="accent-gradient text-white px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Filter className="w-5 h-5" />
           <h3 className="font-semibold tracking-wide uppercase text-xs">Filters</h3>
           {getActiveFilterCount() > 0 && (
-            <span className="px-2 py-1 bg-white/20 rounded-full text-xs text-white">
+            <span className="px-2 py-1 bg-white/20 rounded-full text-xs text-white backdrop-blur-sm">
               {getActiveFilterCount()} active
             </span>
           )}
@@ -140,10 +144,10 @@ export default function ApplicationFilters({
       {isExpanded && (
         <>
           {/* Quick Actions */}
-          <div className="px-4 py-3 bg-surface-alt border-b border-default flex gap-2">
+          <div className="px-4 py-3 bg-white/5 backdrop-blur-sm border-b border-white/20 flex gap-2">
             <button
               onClick={clearAllFilters}
-              className="flex-1 px-3 py-2 bg-surface-alt hover:bg-surface border border-default rounded-xl text-sm font-medium text-primary flex items-center justify-center gap-2 transition-colors"
+              className="flex-1 px-3 py-2 bg-white/10 hover:bg-white/20 border-2 border-white/20 rounded-xl text-sm font-medium text-white flex items-center justify-center gap-2 transition-colors backdrop-blur-sm"
             >
               <RotateCcw className="w-4 h-4" />
               Clear All
@@ -169,7 +173,7 @@ export default function ApplicationFilters({
                       onChange={() => toggleStatus(status)}
                       className="w-4 h-4 text-accent rounded focus:ring-accent focus:ring-offset-0 focus:ring-2"
                     />
-                    <span className="text-sm text-secondary">{status}</span>
+                    <span className="text-sm text-white/80">{status}</span>
                     <span className={`ml-auto px-2 py-0.5 rounded-full text-xs font-semibold ${
                       status === 'Approved' ? 'bg-soft-success text-success' :
                       status === 'Pending' ? 'bg-soft-warning text-warning' :
@@ -194,7 +198,7 @@ export default function ApplicationFilters({
                       onChange={() => toggleCounty(county)}
                       className="w-4 h-4 text-accent rounded focus:ring-accent focus:ring-offset-0 focus:ring-2"
                     />
-                    <span className="text-sm text-secondary">{county}</span>
+                    <span className="text-sm text-white/80">{county}</span>
                   </label>
                 ))}
               </div>
@@ -216,7 +220,7 @@ export default function ApplicationFilters({
                         onChange={() => updateFilter('chromebooksRange', { min: range.min, max: range.max })}
                         className="w-4 h-4 text-accent focus:ring-accent focus:ring-offset-0 focus:ring-2"
                       />
-                      <span className="text-sm text-secondary">{range.label}</span>
+                      <span className="text-sm text-white/80">{range.label}</span>
                     </label>
                   );
                 })}
@@ -228,7 +232,7 @@ export default function ApplicationFilters({
                     onChange={() => updateFilter('chromebooksRange', { min: 0, max: 999999 })}
                     className="w-4 h-4 text-accent focus:ring-accent focus:ring-offset-0 focus:ring-2"
                   />
-                  <span className="text-sm text-secondary">All</span>
+                  <span className="text-sm text-white/80">All</span>
                 </label>
               </div>
             </FilterSection>
@@ -252,7 +256,7 @@ export default function ApplicationFilters({
                         onChange={() => setDateRange(range.value)}
                         className="w-4 h-4 text-accent focus:ring-accent focus:ring-offset-0 focus:ring-2"
                       />
-                      <span className="text-sm text-secondary">{range.label}</span>
+                      <span className="text-sm text-white/80">{range.label}</span>
                     </label>
                   );
                 })}
@@ -271,7 +275,7 @@ export default function ApplicationFilters({
                         onChange={() => toggleOrgType(type)}
                         className="w-4 h-4 text-accent rounded focus:ring-accent focus:ring-offset-0 focus:ring-2"
                       />
-                      <span className="text-sm text-secondary">{type}</span>
+                      <span className="text-sm text-white/80">{type}</span>
                     </label>
                   ))}
                 </div>
@@ -289,7 +293,7 @@ export default function ApplicationFilters({
                     onChange={() => updateFilter('firstTimeOnly', null)}
                     className="w-4 h-4 text-accent focus:ring-accent focus:ring-offset-0 focus:ring-2"
                   />
-                  <span className="text-sm text-secondary">All Applicants</span>
+                  <span className="text-sm text-white/80">All Applicants</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
@@ -299,7 +303,7 @@ export default function ApplicationFilters({
                     onChange={() => updateFilter('firstTimeOnly', true)}
                     className="w-4 h-4 text-accent focus:ring-accent focus:ring-offset-0 focus:ring-2"
                   />
-                  <span className="text-sm text-secondary">First-time Only</span>
+                  <span className="text-sm text-white/80">First-time Only</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
@@ -309,7 +313,7 @@ export default function ApplicationFilters({
                     onChange={() => updateFilter('firstTimeOnly', false)}
                     className="w-4 h-4 text-accent focus:ring-accent focus:ring-offset-0 focus:ring-2"
                   />
-                  <span className="text-sm text-secondary">Returning Only</span>
+                  <span className="text-sm text-white/80">Returning Only</span>
                 </label>
               </div>
             </FilterSection>

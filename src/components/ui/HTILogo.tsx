@@ -31,26 +31,26 @@ export default function HTILogo({ size = "md", showText = true, className = "" }
 
   return (
     <div className={`flex flex-col items-center ${config.gap} ${className}`}>
-      {/* Four Circles - Overlapping ~15% like Venn diagram */}
-      <div className={`flex items-center relative`} style={{ gap: size === 'sm' ? '-3px' : size === 'md' ? '-4px' : '-6px' }}>
+      {/* Four Circles - Overlapping ~25% like Venn diagram (10% closer than before) */}
+      <div className={`flex items-center relative`} style={{ gap: size === 'sm' ? '-6px' : size === 'md' ? '-8px' : '-12px' }}>
         {/* Power Symbol Circle - Orange-Red */}
-        <div className={`${config.circle} rounded-full bg-[#E67E50] flex items-center justify-center shadow-md relative z-[4]`}>
-          <Power className="w-1/2 h-1/2 text-white stroke-[3]" />
+        <div className={`${config.circle} rounded-full bg-[#E67E50] flex items-center justify-center shadow-lg relative z-[4]`}>
+          <Power className={`${size === 'sm' ? 'w-4 h-4' : size === 'md' ? 'w-5 h-5' : 'w-6 h-6'} text-white stroke-[3]`} />
         </div>
 
         {/* H Circle - Orange */}
-        <div className={`${config.circle} rounded-full bg-[#F19E3E] flex items-center justify-center shadow-md relative z-[3]`}>
-          <span className="text-white font-bold text-lg">H</span>
+        <div className={`${config.circle} rounded-full bg-[#F19E3E] flex items-center justify-center shadow-lg relative z-[3]`}>
+          <span className={`text-white font-black ${size === 'sm' ? 'text-xl' : size === 'md' ? 'text-2xl' : 'text-3xl'} leading-none`}>H</span>
         </div>
 
         {/* T Circle - Yellow-Orange */}
-        <div className={`${config.circle} rounded-full bg-[#F5BB2D] flex items-center justify-center shadow-md relative z-[2]`}>
-          <span className="text-white font-bold text-lg">T</span>
+        <div className={`${config.circle} rounded-full bg-[#F5BB2D] flex items-center justify-center shadow-lg relative z-[2]`}>
+          <span className={`text-white font-black ${size === 'sm' ? 'text-xl' : size === 'md' ? 'text-2xl' : 'text-3xl'} leading-none`}>T</span>
         </div>
 
         {/* I Circle - Yellow */}
-        <div className={`${config.circle} rounded-full bg-[#F9D71C] flex items-center justify-center shadow-md relative z-[1]`}>
-          <span className="text-white font-bold text-lg">I</span>
+        <div className={`${config.circle} rounded-full bg-[#F9D71C] flex items-center justify-center shadow-lg relative z-[1]`}>
+          <span className={`text-white font-black ${size === 'sm' ? 'text-xl' : size === 'md' ? 'text-2xl' : 'text-3xl'} leading-none`}>I</span>
         </div>
       </div>
 
