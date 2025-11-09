@@ -19,33 +19,37 @@ const platformConfig = {
   instagram: {
     name: "Instagram",
     icon: Instagram,
-    gradient: "from-hti-orange via-hti-amber to-hti-gold",
-    bgTint: "bg-orange-50/60",
-    borderColor: "border-hti-orange/40",
+    // Instagram brand gradient: Pink to Purple
+    gradient: "from-[#E4405F] via-[#C13584] to-[#833AB4]",
+    bgGradient: "bg-gradient-to-br from-[#E4405F]/10 via-[#C13584]/10 to-[#833AB4]/10",
+    borderColor: "border-[#E4405F]/40",
     textColor: "text-primary",
   },
   linkedin: {
     name: "LinkedIn",
     icon: Linkedin,
-    gradient: "from-hti-navy to-hti-navy-light",
-    bgTint: "bg-blue-50/40",
-    borderColor: "border-hti-navy/30",
+    // LinkedIn brand blue
+    gradient: "from-[#0077B5] to-[#004182]",
+    bgGradient: "bg-gradient-to-br from-[#0077B5]/10 to-[#004182]/10",
+    borderColor: "border-[#0077B5]/40",
     textColor: "text-primary",
   },
   tiktok: {
     name: "TikTok",
     icon: Music2,
-    gradient: "from-hti-navy-dark via-hti-navy to-hti-amber",
-    bgTint: "bg-gray-50/50",
-    borderColor: "border-hti-amber/40",
+    // TikTok brand: Black to Red
+    gradient: "from-[#000000] via-[#161823] to-[#FF0050]",
+    bgGradient: "bg-gradient-to-br from-[#000000]/10 via-[#161823]/10 to-[#FF0050]/10",
+    borderColor: "border-[#FF0050]/40",
     textColor: "text-primary",
   },
   facebook: {
     name: "Facebook",
     icon: Facebook,
-    gradient: "from-hti-navy to-hti-navy-light",
-    bgTint: "bg-blue-50/40",
-    borderColor: "border-hti-navy/30",
+    // Facebook brand blue
+    gradient: "from-[#1877F2] to-[#0A5FCC]",
+    bgGradient: "bg-gradient-to-br from-[#1877F2]/10 to-[#0A5FCC]/10",
+    borderColor: "border-[#1877F2]/40",
     textColor: "text-primary",
   },
 };
@@ -91,18 +95,18 @@ export default function SocialMediaFeed() {
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-primary mb-2">Recent Social Media Posts</h2>
-        <p className="text-sm text-secondary">Latest posts from HTI's social media accounts</p>
+    <div className="p-8">
+      <div className="mb-6">
+        <h2 className="text-3xl font-bold text-primary mb-2">Recent Social Media Posts</h2>
+        <p className="text-sm font-medium text-secondary">Latest posts from HTI's social media accounts</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Instagram */}
-        <div className={`rounded-xl border-2 ${platformConfig.instagram.borderColor} ${platformConfig.instagram.bgTint} overflow-hidden`}>
-          <div className={`bg-gradient-to-r ${platformConfig.instagram.gradient} p-3 flex items-center gap-2`}>
+        <div className={`rounded-xl border-2 ${platformConfig.instagram.borderColor} ${platformConfig.instagram.bgGradient} overflow-hidden shadow-lg hover:shadow-xl transition-all`}>
+          <div className={`bg-gradient-to-r ${platformConfig.instagram.gradient} p-4 flex items-center gap-2`}>
             <Instagram className="h-5 w-5 text-white" />
-            <span className="text-white font-semibold text-sm">{platformConfig.instagram.name}</span>
+            <span className="text-white font-bold text-sm">{platformConfig.instagram.name}</span>
           </div>
           <div className="p-4 space-y-3">
             {postsByPlatform.instagram.length > 0 ? (
@@ -142,10 +146,10 @@ export default function SocialMediaFeed() {
         </div>
 
         {/* LinkedIn */}
-        <div className={`rounded-xl border-2 ${platformConfig.linkedin.borderColor} ${platformConfig.linkedin.bgTint} overflow-hidden`}>
-          <div className={`bg-gradient-to-r ${platformConfig.linkedin.gradient} p-3 flex items-center gap-2`}>
+        <div className={`rounded-xl border-2 ${platformConfig.linkedin.borderColor} ${platformConfig.linkedin.bgGradient} overflow-hidden shadow-lg hover:shadow-xl transition-all`}>
+          <div className={`bg-gradient-to-r ${platformConfig.linkedin.gradient} p-4 flex items-center gap-2`}>
             <Linkedin className="h-5 w-5 text-white" />
-            <span className="text-white font-semibold text-sm">{platformConfig.linkedin.name}</span>
+            <span className="text-white font-bold text-sm">{platformConfig.linkedin.name}</span>
           </div>
           <div className="p-4 space-y-3">
             {postsByPlatform.linkedin.length > 0 ? (
@@ -185,10 +189,10 @@ export default function SocialMediaFeed() {
         </div>
 
         {/* TikTok */}
-        <div className={`rounded-xl border-2 ${platformConfig.tiktok.borderColor} ${platformConfig.tiktok.bgTint} overflow-hidden`}>
-          <div className={`bg-gradient-to-r ${platformConfig.tiktok.gradient} p-3 flex items-center gap-2`}>
+        <div className={`rounded-xl border-2 ${platformConfig.tiktok.borderColor} ${platformConfig.tiktok.bgGradient} overflow-hidden shadow-lg hover:shadow-xl transition-all`}>
+          <div className={`bg-gradient-to-r ${platformConfig.tiktok.gradient} p-4 flex items-center gap-2`}>
             <Music2 className="h-5 w-5 text-white" />
-            <span className="text-white font-semibold text-sm">{platformConfig.tiktok.name}</span>
+            <span className="text-white font-bold text-sm">{platformConfig.tiktok.name}</span>
           </div>
           <div className="p-4 space-y-3">
             {postsByPlatform.tiktok.length > 0 ? (
@@ -228,10 +232,10 @@ export default function SocialMediaFeed() {
         </div>
 
         {/* Facebook */}
-        <div className={`rounded-xl border-2 ${platformConfig.facebook.borderColor} ${platformConfig.facebook.bgTint} overflow-hidden`}>
-          <div className={`bg-gradient-to-r ${platformConfig.facebook.gradient} p-3 flex items-center gap-2`}>
+        <div className={`rounded-xl border-2 ${platformConfig.facebook.borderColor} ${platformConfig.facebook.bgGradient} overflow-hidden shadow-lg hover:shadow-xl transition-all`}>
+          <div className={`bg-gradient-to-r ${platformConfig.facebook.gradient} p-4 flex items-center gap-2`}>
             <Facebook className="h-5 w-5 text-white" />
-            <span className="text-white font-semibold text-sm">{platformConfig.facebook.name}</span>
+            <span className="text-white font-bold text-sm">{platformConfig.facebook.name}</span>
           </div>
           <div className="p-4 space-y-3">
             {postsByPlatform.facebook.length > 0 ? (

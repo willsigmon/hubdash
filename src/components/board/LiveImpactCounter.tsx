@@ -156,71 +156,85 @@ export function LiveImpactCounter() {
   }
 
   return (
-    <GlassCard className="relative overflow-hidden">
+    <div className="relative overflow-hidden">
       <Confetti show={showConfetti} />
 
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-4">
-        <Sparkles className="w-4 h-4 text-accent animate-pulse" />
-        <h3 className="text-base font-semibold text-primary">
-          Live Impact
-        </h3>
+      {/* Header - Enhanced */}
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h3 className="text-2xl font-bold text-primary mb-1 flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-accent animate-pulse" />
+            Live Impact Counter
+          </h3>
+          <p className="text-sm font-medium text-secondary">
+            Real-time metrics updating every 30 seconds
+          </p>
+        </div>
+        <span className="rounded-full border-2 border-accent bg-soft-accent px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-accent">
+          Live
+        </span>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Devices Deployed */}
+      {/* Stats Grid - Enhanced */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Devices Deployed - Enhanced */}
         <div className="group relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/15 to-[var(--color-accent-alt)]/15 rounded-lg blur-xl group-hover:blur-2xl transition-all" />
-          <div className="relative bg-surface-alt backdrop-blur-sm rounded-lg p-3 border border-default hover:border-strong transition-all opacity-90">
-            <div className="flex items-center gap-2 mb-2">
-              <Zap className="w-3.5 h-3.5 text-accent" />
-              <span className="text-[10px] text-secondary uppercase tracking-wide font-medium">
+          <div className="absolute inset-0 accent-gradient opacity-10 group-hover:opacity-20 rounded-xl blur-xl transition-all" />
+          <div className="relative rounded-xl border-2 border-default bg-surface p-5 shadow-lg transition-all hover:-translate-y-1 hover:border-accent/50 hover:shadow-xl">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="p-2 rounded-lg accent-gradient">
+                <Zap className="w-5 h-5 text-on-accent" />
+              </div>
+              <span className="text-xs font-bold text-secondary uppercase tracking-wider">
                 Devices Deployed
               </span>
             </div>
-            <div className="text-2xl font-bold text-primary mb-1">
+            <div className="text-4xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
               <AnimatedNumber value={stats.devicesDeployed} />
             </div>
-            <div className="text-[10px] text-muted">
+            <div className="text-xs font-medium text-secondary">
               Bridging the digital divide
             </div>
           </div>
         </div>
 
-        {/* Families Served */}
+        {/* Families Served - Enhanced */}
         <div className="group relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/15 to-[var(--color-accent-alt)]/15 rounded-lg blur-xl group-hover:blur-2xl transition-all" />
-          <div className="relative bg-surface-alt backdrop-blur-sm rounded-lg p-3 border border-default hover:border-strong transition-all opacity-90">
-            <div className="flex items-center gap-2 mb-2">
-              <Users className="w-3.5 h-3.5 text-accent" />
-              <span className="text-[10px] text-secondary uppercase tracking-wide font-medium">
+          <div className="absolute inset-0 accent-gradient opacity-10 group-hover:opacity-20 rounded-xl blur-xl transition-all" />
+          <div className="relative rounded-xl border-2 border-default bg-surface p-5 shadow-lg transition-all hover:-translate-y-1 hover:border-accent/50 hover:shadow-xl">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="p-2 rounded-lg accent-gradient">
+                <Users className="w-5 h-5 text-on-accent" />
+              </div>
+              <span className="text-xs font-bold text-secondary uppercase tracking-wider">
                 Families Served
               </span>
             </div>
-            <div className="text-2xl font-bold text-primary mb-1">
+            <div className="text-4xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
               <AnimatedNumber value={stats.familiesServed} />
             </div>
-            <div className="text-[10px] text-muted">
+            <div className="text-xs font-medium text-secondary">
               People connected to opportunity
             </div>
           </div>
         </div>
 
-        {/* CO2 Saved */}
+        {/* CO2 Saved - Enhanced */}
         <div className="group relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-lg blur-xl group-hover:blur-2xl transition-all" />
-          <div className="relative bg-surface-alt backdrop-blur-sm rounded-lg p-3 border border-default hover:border-strong transition-all opacity-90">
-            <div className="flex items-center gap-2 mb-2">
-              <Leaf className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-[10px] text-secondary uppercase tracking-wide font-medium">
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-green-500/10 rounded-xl blur-xl group-hover:opacity-20 transition-all" />
+          <div className="relative rounded-xl border-2 border-default bg-surface p-5 shadow-lg transition-all hover:-translate-y-1 hover:border-success/50 hover:shadow-xl">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-emerald-500 to-green-500">
+                <Leaf className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xs font-bold text-secondary uppercase tracking-wider">
                 CO₂ Saved
               </span>
             </div>
-            <div className="text-2xl font-bold text-primary mb-1">
+            <div className="text-4xl font-bold text-success mb-2 group-hover:text-success/80 transition-colors">
               <AnimatedNumber value={stats.co2Saved} suffix=" kg" />
             </div>
-            <div className="text-[10px] text-muted">
+            <div className="text-xs font-medium text-secondary">
               E-waste diverted from landfills
             </div>
           </div>

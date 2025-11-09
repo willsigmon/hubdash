@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { getKnackClient } from "@/lib/knack/client";
+import { cacheKeys, getCached } from "@/lib/knack/cache-manager";
 
 interface SocialMediaPost {
   id: string;
@@ -16,16 +18,61 @@ interface SocialMediaPost {
  *
  * Returns recent social media posts from HTI's accounts.
  *
- * TODO: Integrate with actual social media APIs:
+ * First tries to fetch from Knack if a social media object exists,
+ * otherwise falls back to mock data for development.
+ *
+ * Future integrations:
  * - Instagram Basic Display API or Instagram Graph API
  * - LinkedIn API
  * - TikTok API (when available)
  * - Facebook Graph API
- *
- * For now, returns mock data that matches the expected structure.
  */
 export async function GET() {
-  // Mock data - replace with actual API calls
+  try {
+    // Try to fetch from Knack if social media object exists
+    const knack = getKnackClient();
+    const socialMediaObjectKey = process.env.KNACK_SOCIAL_MEDIA_OBJECT;
+    
+    if (socialMediaObjectKey) {
+      const posts = await getCached(
+        cacheKeys.socialMedia || 'social-media',
+        async () => {
+          const knackRecords = await knack.getRecords(socialMediaObjectKey, { 
+            rows_per_page: 20,
+            sort_field: 'field_timestamp',
+            sort_order: 'desc'
+          });
+
+          if (!Array.isArray(knackRecords)) {
+            throw new Error('Invalid data format from Knack');
+          }
+
+          return knackRecords.map((r: any) => ({
+            id: r.id,
+            platform: r.field_platform?.toLowerCase() || 'instagram',
+            text: r.field_text || r.field_caption || '',
+            imageUrl: r.field_image_url || r.field_image?.url || undefined,
+            postUrl: r.field_post_url || r.field_url || '#',
+            timestamp: r.field_timestamp_raw?.iso_timestamp || r.field_timestamp || new Date().toISOString(),
+            likes: r.field_likes || 0,
+            comments: r.field_comments || 0,
+          })) as SocialMediaPost[];
+        },
+        300 // 5 minute cache
+      );
+
+      return NextResponse.json(posts, {
+        headers: {
+          "Cache-Control": "public, s-maxage=300, stale-while-revalidate=60",
+        },
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching social media from Knack:', error);
+    // Fall through to mock data
+  }
+
+  // Fallback to mock data for development/demo
   const mockPosts: SocialMediaPost[] = [
     {
       id: "ig_1",

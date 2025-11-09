@@ -23,10 +23,10 @@ export default function OpsPage() {
       fetch('/api/devices?limit=1000').then(r => r.json()).catch(() => null),
     ]).then(([metrics, devices]) => {
       const deviceData = devices?.data || devices || [];
-      const inPipeline = deviceData.filter((d: any) => 
+      const inPipeline = deviceData.filter((d: any) =>
         d.status && !['Distributed', 'Discarded'].includes(d.status)
       ).length;
-      const qaQueue = deviceData.filter((d: any) => 
+      const qaQueue = deviceData.filter((d: any) =>
         d.status?.toLowerCase().includes('qa') || d.status?.toLowerCase().includes('testing')
       ).length;
       const deployments = metrics?.readyToShip || 0;

@@ -159,24 +159,34 @@ export default function ImpactMetrics() {
   const otherMetrics = metrics.slice(1);
 
   return (
-    <div className="space-y-4">
-      {/* Featured Grant Metrics Card */}
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="mb-6">
+        <h3 className="text-2xl font-bold text-primary mb-2">Impact Metrics</h3>
+        <p className="text-sm font-medium text-secondary">
+          Comprehensive view of HTI's mission impact across all programs
+        </p>
+      </div>
+
+      {/* Featured Grant Metrics Card - Enhanced */}
       {featuredMetric && (
-        <MetricCard
-          label={featuredMetric.label}
-          value={animatedValues[0] ?? 0}
-          suffix={featuredMetric.suffix}
-          icon={featuredMetric.icon}
-          description={featuredMetric.description}
-          highlight
-          gradientClass={featuredMetric.color}
-          progress={animatedProgress}
-          progressLabel={`${animatedProgress}%`}
-        />
+        <div className="mb-6">
+          <MetricCard
+            label={featuredMetric.label}
+            value={animatedValues[0] ?? 0}
+            suffix={featuredMetric.suffix}
+            icon={featuredMetric.icon}
+            description={featuredMetric.description}
+            highlight
+            gradientClass={featuredMetric.color}
+            progress={animatedProgress}
+            progressLabel={`${animatedProgress}%`}
+          />
+        </div>
       )}
 
-      {/* Regular Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Regular Metrics Grid - Perfectly Aligned */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {otherMetrics.map((metric, index) => (
           <MetricCard
             key={metric.label}

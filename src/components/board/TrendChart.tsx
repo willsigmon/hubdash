@@ -63,12 +63,12 @@ export default function TrendChart() {
   }
 
   return (
-    <GlassCard className="p-6 md:p-8">
+    <div className="space-y-6">
       <div className="mb-6">
         <GradientHeading className="text-2xl md:text-3xl mb-2" variant="navy">
           Yearly Device Flow
         </GradientHeading>
-        <p className="text-sm md:text-base text-secondary font-medium">
+        <p className="text-sm font-medium text-secondary">
           Cumulative laptops collected and Chromebooks distributed throughout the year
         </p>
       </div>
@@ -135,16 +135,16 @@ export default function TrendChart() {
         </AreaChart>
       </ResponsiveContainer>
 
-      <div className="mt-6 grid grid-cols-2 gap-4">
-        <div className="p-4 rounded-xl bg-soft-accent border border-default">
-          <div className="text-xs font-bold text-accent uppercase tracking-wide mb-1">Avg/Month</div>
-          <div className="text-2xl md:text-3xl font-bold text-primary">{stats.avgPerMonth.toLocaleString()} <span className="text-lg">devices</span></div>
+      <div className="mt-8 grid grid-cols-2 gap-6">
+        <div className="p-5 rounded-xl border-2 border-default bg-gradient-to-br from-soft-accent to-surface shadow-lg">
+          <div className="text-xs font-bold text-accent uppercase tracking-wider mb-2">Avg/Month</div>
+          <div className="text-3xl font-bold text-primary">{stats.avgPerMonth.toLocaleString()} <span className="text-lg text-secondary">devices</span></div>
         </div>
-        <div className="p-4 rounded-xl bg-soft-warning border border-default">
-          <div className="text-xs font-bold text-warning uppercase tracking-wide mb-1">Conversion Rate</div>
-          <div className="text-2xl md:text-3xl font-bold text-warning">{stats.conversionRate}%</div>
+        <div className="p-5 rounded-xl border-2 border-default bg-gradient-to-br from-soft-warning to-surface shadow-lg">
+          <div className="text-xs font-bold text-warning uppercase tracking-wider mb-2">Conversion Rate</div>
+          <div className="text-3xl font-bold text-warning">{stats.conversionRate}%</div>
         </div>
       </div>
-    </GlassCard>
+    </div>
   );
 }

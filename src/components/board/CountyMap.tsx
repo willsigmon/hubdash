@@ -99,21 +99,21 @@ export default function CountyMap() {
         />
       )}
 
-      <div className="bg-surface rounded-2xl shadow-lg overflow-hidden border border-default">
-        <div className="p-8 bg-gradient-to-br from-[var(--bg-surface-alt)] to-[var(--bg-surface)] border-b border-default">
-          <h3 className="text-2xl font-bold text-primary mb-2">
+      <div className="bg-surface rounded-2xl shadow-lg overflow-hidden border-2 border-default">
+        <div className="p-6 bg-gradient-to-br from-surface-alt to-surface border-b-2 border-default">
+          <h3 className="text-xl font-bold text-primary mb-2">
             📍 {counties.length} Counties Served
           </h3>
-          <p className="text-sm text-secondary font-medium">
+          <p className="text-xs font-medium text-secondary mb-1">
             Digital Champion Grant distribution footprint across North Carolina
           </p>
-          <p className="text-xs text-muted mt-2 italic">
+          <p className="text-[10px] text-muted italic">
             Click county for details • Double-click to filter all data
           </p>
         </div>
 
       {/* County List with Progress Bars */}
-      <div className="space-y-1 mb-0 max-h-80 overflow-y-auto">
+      <div className="space-y-0 mb-0 max-h-80 overflow-y-auto">
         {counties.length === 0 ? (
           <div className="text-center py-12 text-muted">
             No county data available

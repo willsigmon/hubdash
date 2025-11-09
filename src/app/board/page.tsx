@@ -73,93 +73,117 @@ export default function BoardDashboard() {
       </header>
 
       {/* Main Content */}
-      <main className="relative mx-auto max-w-7xl space-y-8 px-4 py-8 sm:px-6 lg:px-8">
-        {/* Hero / Live Impact */}
+      <main className="relative mx-auto max-w-[1600px] space-y-8 px-4 py-8 sm:px-6 lg:px-8">
+        {/* Hero / Live Impact - Redesigned for Maximum Impact */}
         <section className="space-y-6">
-          <div className="grid gap-6 lg:grid-cols-[1.2fr,1fr]">
+          <div className="grid gap-6 lg:grid-cols-[1.3fr,1fr]">
+            {/* Left Column - Main Metrics */}
             <div className="space-y-6">
-              <div className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
-                <div className="mb-4 flex flex-wrap items-center gap-3">
-                  <GradientHeading className="text-2xl md:text-3xl">
-                    Mission Impact Pulse
-                  </GradientHeading>
-                  <span className="rounded-full border border-accent bg-soft-accent px-2.5 py-1 text-[10px] font-semibold text-accent">
+              {/* Mission Impact Pulse - Enhanced */}
+              <div className="rounded-2xl border-2 border-default bg-gradient-to-br from-surface via-surface to-surface-alt p-8 shadow-xl">
+                <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+                  <div>
+                    <GradientHeading className="text-3xl md:text-4xl mb-2">
+                      Mission Impact Pulse
+                    </GradientHeading>
+                    <p className="text-sm font-medium text-secondary">
+                      Real-time metrics across all HTI operations
+                    </p>
+                  </div>
+                  <span className="rounded-full border-2 border-accent bg-soft-accent px-4 py-2 text-xs font-bold uppercase tracking-wide text-accent shadow-sm">
                     Live
                   </span>
                 </div>
-                <p className="mb-6 text-sm text-secondary">
-                  Monitor real-time laptop conversions, training throughput, and partner engagement.
-                </p>
                 <div className="grid gap-4 md:grid-cols-3">
                   {executiveSignals.map((signal) => (
                     <article
                       key={signal.label}
-                      className="group rounded-xl border border-default bg-surface-alt p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-strong hover:shadow-md"
+                      className="group relative overflow-hidden rounded-xl border-2 border-default bg-surface p-5 shadow-lg transition-all hover:-translate-y-1 hover:border-accent/50 hover:shadow-xl"
                     >
-                      <p className="text-[10px] font-semibold uppercase tracking-wide text-muted mb-2">
-                        {signal.label}
-                      </p>
-                      <p className="text-xl font-bold text-primary mb-1">{signal.value}</p>
-                      <p className="text-xs text-secondary">{signal.description}</p>
+                      <div className="absolute inset-0 accent-gradient opacity-0 group-hover:opacity-5 transition-opacity" />
+                      <div className="relative">
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-secondary mb-3">
+                          {signal.label}
+                        </p>
+                        <p className="text-3xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
+                          {signal.value}
+                        </p>
+                        <p className="text-xs font-medium text-secondary leading-relaxed">
+                          {signal.description}
+                        </p>
+                      </div>
                     </article>
                   ))}
                 </div>
               </div>
-              <div className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
+
+              {/* Live Impact Counter - Enhanced */}
+              <div className="rounded-2xl border-2 border-default bg-surface p-8 shadow-xl">
                 <LiveImpactCounter />
               </div>
-              <ImpactMetrics />
+
+              {/* Impact Metrics - Full Width */}
+              <div className="rounded-2xl border-2 border-default bg-surface p-8 shadow-xl">
+                <ImpactMetrics />
+              </div>
             </div>
+
+            {/* Right Column - Executive Signals & Quick Links */}
             <aside className="flex flex-col gap-6">
-              <div className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
-                <h3 className="text-lg font-bold text-primary mb-2">Executive Signals</h3>
-                <p className="mb-4 text-xs text-secondary">
-                  Curated highlights surfaced automatically each morning.
-                </p>
-                <ul className="space-y-3 text-sm">
+              {/* Executive Signals - Enhanced */}
+              <div className="rounded-2xl border-2 border-default bg-gradient-to-br from-surface via-surface to-surface-alt p-6 shadow-xl">
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-primary mb-2">Executive Signals</h3>
+                  <p className="text-xs font-medium text-secondary">
+                    Curated highlights surfaced automatically each morning
+                  </p>
+                </div>
+                <ul className="space-y-4">
                   {momentumPulses.map((pulse) => (
                     <li
                       key={pulse.title}
-                      className={`rounded-xl border px-4 py-3 ${
+                      className={`group rounded-xl border-2 px-5 py-4 shadow-md transition-all hover:shadow-lg ${
                         pulse.tone === "positive"
-                          ? "border-success bg-soft-success text-success"
+                          ? "border-success/50 bg-gradient-to-br from-soft-success to-surface"
                           : pulse.tone === "accent"
-                          ? "border-accent bg-soft-accent text-accent"
-                          : "border-highlight bg-soft-highlight text-highlight"
+                          ? "border-accent/50 bg-gradient-to-br from-soft-accent to-surface"
+                          : "border-highlight/50 bg-gradient-to-br from-soft-highlight to-surface"
                       }`}
                     >
-                      <p className="font-semibold text-sm">{pulse.title}</p>
-                      <p className="mt-1 text-xs text-current/90">{pulse.detail}</p>
+                      <p className="font-bold text-sm text-primary mb-1.5">{pulse.title}</p>
+                      <p className="text-xs font-medium text-secondary leading-relaxed">{pulse.detail}</p>
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="rounded-2xl border border-default bg-surface-alt p-6">
-                <h4 className="text-xs font-bold uppercase tracking-wide text-secondary mb-4">
+
+              {/* Quick Links - Enhanced */}
+              <div className="rounded-2xl border-2 border-default bg-surface-alt p-6 shadow-xl">
+                <h4 className="text-sm font-bold uppercase tracking-wider text-primary mb-5">
                   Quick Links
                 </h4>
-                <div className="grid grid-cols-2 gap-2 text-xs font-semibold">
+                <div className="grid grid-cols-2 gap-3">
                   <Link
                     href="/ops"
-                    className="rounded-lg border border-accent bg-soft-accent px-3 py-2 text-accent transition hover:bg-soft-accent"
+                    className="group rounded-xl border-2 border-accent/50 bg-soft-accent px-4 py-3 text-center text-sm font-bold text-accent transition-all hover:border-accent hover:bg-accent hover:text-on-accent hover:shadow-lg"
                   >
                     Operations
                   </Link>
                   <Link
                     href="/reports"
-                    className="rounded-lg border border-highlight bg-soft-highlight px-3 py-2 text-highlight transition hover:bg-soft-highlight"
+                    className="group rounded-xl border-2 border-highlight/50 bg-soft-highlight px-4 py-3 text-center text-sm font-bold text-highlight transition-all hover:border-highlight hover:bg-highlight hover:text-on-highlight hover:shadow-lg"
                   >
                     Reports
                   </Link>
                   <Link
                     href="/board"
-                    className="rounded-lg border border-success bg-soft-success px-3 py-2 text-success transition hover:bg-soft-success"
+                    className="group rounded-xl border-2 border-success/50 bg-soft-success px-4 py-3 text-center text-sm font-bold text-success transition-all hover:border-success hover:bg-success hover:text-on-success hover:shadow-lg"
                   >
                     Board
                   </Link>
                   <Link
                     href="/marketing"
-                    className="rounded-lg border border-accent bg-soft-accent px-3 py-2 text-accent transition hover:bg-soft-accent"
+                    className="group rounded-xl border-2 border-accent/50 bg-soft-accent px-4 py-3 text-center text-sm font-bold text-accent transition-all hover:border-accent hover:bg-accent hover:text-on-accent hover:shadow-lg"
                   >
                     Marketing
                   </Link>
@@ -169,54 +193,73 @@ export default function BoardDashboard() {
           </div>
         </section>
 
-        {/* Trends & Geography */}
+        {/* Trends & Geography - Perfectly Aligned */}
         <section className="space-y-6">
-          <div className="grid gap-6 lg:grid-cols-3">
-            <div className="space-y-6 lg:col-span-2">
-              <div className="space-y-2">
-                <GradientHeading className="text-2xl md:text-3xl" variant="navy">
+          <div className="grid gap-6 lg:grid-cols-[2fr,1fr]">
+            {/* Left: Trend Chart - Enhanced */}
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <GradientHeading className="text-3xl md:text-4xl" variant="navy">
                   Momentum &amp; Trajectory
                 </GradientHeading>
-                <p className="text-sm text-secondary">
-                  Rolling performance trends to anticipate capacity needs and outreach impact.
+                <p className="text-sm font-medium text-secondary">
+                  Rolling performance trends to anticipate capacity needs and outreach impact
                 </p>
               </div>
-              <div className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
+              <div className="rounded-2xl border-2 border-default bg-surface p-8 shadow-xl">
                 <TrendChart />
               </div>
             </div>
-            <div className="space-y-6">
-              <div className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
-                <h3 className="text-lg font-bold text-primary mb-3">Regional Reach</h3>
-                <p className="mb-4 text-xs text-secondary">
-                  Distribution footprint across served counties highlighting growth corridors.
-                </p>
+
+            {/* Right: County Map & What's Next - Perfectly Stacked */}
+            <div className="flex flex-col gap-6">
+              {/* Regional Reach - Enhanced */}
+              <div className="rounded-2xl border-2 border-default bg-surface p-6 shadow-xl">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-primary mb-2">Regional Reach</h3>
+                  <p className="text-xs font-medium text-secondary">
+                    Distribution footprint across served counties highlighting growth corridors
+                  </p>
+                </div>
                 <CountyMap />
               </div>
-              <div className="rounded-2xl border border-default bg-surface-alt p-6">
-                <h4 className="text-xs font-semibold uppercase tracking-wide text-secondary mb-3">
-                  What's next
+
+              {/* What's Next - Enhanced */}
+              <div className="rounded-2xl border-2 border-default bg-gradient-to-br from-surface-alt to-surface p-6 shadow-xl">
+                <h4 className="text-sm font-bold uppercase tracking-wider text-primary mb-4">
+                  What's Next
                 </h4>
-                <ul className="space-y-2 text-xs text-secondary">
-                  <li>✓ Supabase integration prep for real-time board packets</li>
-                  <li>✓ Partner pipeline automation in progress</li>
-                  <li>▢ Launch county deep-dive briefing cards</li>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-start gap-3">
+                    <span className="text-success font-bold mt-0.5">✓</span>
+                    <span className="text-secondary font-medium">Supabase integration prep for real-time board packets</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-success font-bold mt-0.5">✓</span>
+                    <span className="text-secondary font-medium">Partner pipeline automation in progress</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-accent font-bold mt-0.5">▢</span>
+                    <span className="text-secondary font-medium">Launch county deep-dive briefing cards</span>
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Social Media Feed */}
+        {/* Social Media Feed - Full Width */}
         <section>
-          <SocialMediaFeed />
+          <div className="rounded-2xl border-2 border-default bg-surface shadow-xl overflow-hidden">
+            <SocialMediaFeed />
+          </div>
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="mt-12 border-t border-default bg-surface-alt">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <p className="text-center text-xs font-medium text-secondary">
+      {/* Footer - Enhanced */}
+      <footer className="mt-16 border-t-2 border-default bg-gradient-to-br from-surface-alt to-surface">
+        <div className="mx-auto max-w-[1600px] px-4 py-8 sm:px-6 lg:px-8">
+          <p className="text-center text-sm font-bold text-primary">
             HTI Board Dashboard — Turning donations into opportunities
           </p>
         </div>
