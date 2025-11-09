@@ -14,6 +14,15 @@ interface MetricCardProps {
      * Provide Tailwind gradient utility classes. Defaults to semantic accent gradient.
      */
     gradientClass?: string;
+    /**
+     * Optional inline progress (0-100). When provided, shows a compact progress bar
+     * integrated within the card. Ideal for featured metrics (e.g., grant progress).
+     */
+    progress?: number;
+    /**
+     * Optional label shown on the right side of the progress bar (e.g., "64%" )
+     */
+    progressLabel?: string;
 }
 
 export default function MetricCard({
@@ -24,6 +33,8 @@ export default function MetricCard({
     description,
     highlight = false,
     gradientClass = "accent-gradient",
+    progress,
+    progressLabel,
 }: MetricCardProps) {
     return (
         <GlassCard
@@ -59,6 +70,20 @@ export default function MetricCard({
                     <div className={clsx("font-bold", highlight ? "text-5xl md:text-6xl" : "text-4xl", "text-primary")}>{typeof value === 'number' ? value.toLocaleString() : value}</div>
                     {suffix && <div className={clsx("font-bold", highlight ? "text-2xl" : "text-xl", "text-accent")}>{suffix}</div>}
                 </div>
+                {typeof progress === "number" && progress >= 0 && progress <= 100 && (
+                    <div className="space-y-2 mt-2">
+                        <div className="flex justify-between items-center">
+                            <span className="text-xs font-bold text-primary">Progress</span>
+                            <span className="text-xs font-bold text-accent">{progressLabel ?? `${progress}%`}</span>
+                        </div>
+                        <div className="w-full h-2.5 bg-surface-alt rounded-full overflow-hidden shadow-inner border border-default">
+                            <div
+                                className={clsx("h-full rounded-full transition-all duration-500 ease-out", gradientClass)}
+                                style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
+                            />
+                        </div>
+                    </div>
+                )}
                 {description && (
                     <p className="text-xs md:text-sm text-secondary font-medium leading-relaxed">
                         {description}

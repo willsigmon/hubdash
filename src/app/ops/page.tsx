@@ -4,6 +4,7 @@ import DonationRequests from "@/components/ops/DonationRequests";
 import EquipmentInventory from "@/components/ops/EquipmentInventory";
 import QuickStats from "@/components/ops/QuickStats";
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
+import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import Link from "next/link";
 
 export default function OpsPage() {
@@ -42,38 +43,49 @@ export default function OpsPage() {
 
       {/* Main Content */}
       <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+        {/* Retain a top-level boundary for catastrophic failures */}
         <ErrorBoundary>
-        {/* Quick Stats Section */}
-        <section>
-          <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6 flex items-center gap-3">
-            <span>⚡</span>
-            Key Metrics
-          </h2>
-          <QuickStats />
-        </section>
+          {/* Quick Stats Section */}
+          <SectionErrorBoundary section="Key Metrics">
+            <section>
+              <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6 flex items-center gap-3">
+                <span>⚡</span>
+                Key Metrics
+              </h2>
+              <QuickStats />
+            </section>
+          </SectionErrorBoundary>
 
-        {/* Device Pipeline Section */}
-        <section>
-          <DevicePipelineFlow />
-        </section>
+          {/* Device Pipeline Section */}
+          <SectionErrorBoundary section="Device Pipeline Workflow">
+            <section>
+              <DevicePipelineFlow />
+            </section>
+          </SectionErrorBoundary>
 
-        {/* Two Column Layout - Donation Requests & Activity Feed */}
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Donation Requests */}
-          <section className="h-full">
-            <DonationRequests />
-          </section>
+          {/* Two Column Layout - Donation Requests & Activity Feed */}
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Donation Requests */}
+            <SectionErrorBoundary section="Donation Requests">
+              <section className="h-full">
+                <DonationRequests />
+              </section>
+            </SectionErrorBoundary>
 
-          {/* Activity Feed */}
-          <section className="h-full">
-            <ActivityFeed />
-          </section>
-        </div>
+            {/* Activity Feed */}
+            <SectionErrorBoundary section="Activity Feed">
+              <section className="h-full">
+                <ActivityFeed />
+              </section>
+            </SectionErrorBoundary>
+          </div>
 
-        {/* Inventory Overview Section */}
-        <section>
-          <EquipmentInventory />
-        </section>
+          {/* Inventory Overview Section */}
+          <SectionErrorBoundary section="Equipment Inventory">
+            <section>
+              <EquipmentInventory />
+            </section>
+          </SectionErrorBoundary>
         </ErrorBoundary>
       </main>
     </div>

@@ -162,38 +162,17 @@ export default function ImpactMetrics() {
     <div className="space-y-8">
       {/* Featured Grant Metrics Card */}
       {featuredMetric && (
-        <div className="space-y-6">
-          <MetricCard
-            label={featuredMetric.label}
-            value={animatedValues[0] ?? 0}
-            suffix={featuredMetric.suffix}
-            icon={featuredMetric.icon}
-            description={featuredMetric.description}
-            highlight
-            gradientClass={featuredMetric.color}
-          />
-
-          {/* Progress bar section */}
-          <div className="space-y-3 rounded-2xl p-6 glass border border-default elevation-md">
-            <div className="flex justify-between items-center">
-              <span className="text-sm font-bold text-primary">Grant Progress</span>
-              <span className="text-sm font-bold text-accent">{animatedProgress}%</span>
-            </div>
-            <div className="w-full h-3 bg-surface-alt rounded-full overflow-hidden shadow-inner border border-default">
-              <div
-                className={`h-full ${featuredMetric.color} rounded-full transition-all duration-500 ease-out shadow-md`}
-                style={{ width: `${animatedProgress}%` }}
-              />
-            </div>
-            <div className="flex justify-between text-[10px] text-primary font-bold mt-2">
-              <span>0%</span>
-              <span>25%</span>
-              <span>50%</span>
-              <span>75%</span>
-              <span>100%</span>
-            </div>
-          </div>
-        </div>
+        <MetricCard
+          label={featuredMetric.label}
+          value={animatedValues[0] ?? 0}
+          suffix={featuredMetric.suffix}
+          icon={featuredMetric.icon}
+          description={featuredMetric.description}
+          highlight
+          gradientClass={featuredMetric.color}
+          progress={animatedProgress}
+          progressLabel={`${animatedProgress}%`}
+        />
       )}
 
       {/* Regular Metrics Grid */}

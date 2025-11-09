@@ -22,6 +22,12 @@ export default function ActivityFeed() {
     fetch('/api/activity')
       .then(res => res.json())
       .then(data => {
+        if (!Array.isArray(data)) {
+          console.warn('ActivityFeed: expected array but received', data);
+          setActivities([]);
+          setLoading(false);
+          return;
+        }
         setActivities(data);
         setLoading(false);
       })
@@ -34,7 +40,9 @@ export default function ActivityFeed() {
     const interval = setInterval(() => {
       fetch('/api/activity')
         .then(res => res.json())
-        .then(data => setActivities(data))
+        .then(data => {
+          if (Array.isArray(data)) setActivities(data);
+        })
         .catch(console.error);
     }, 10000);
 

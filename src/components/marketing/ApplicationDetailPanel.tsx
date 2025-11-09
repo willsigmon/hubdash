@@ -2,15 +2,15 @@
 
 import { Partnership } from "@/types/partnership";
 import {
-  AlertCircle,
-  Building2,
-  CheckCircle2,
-  Lightbulb,
-  Mail,
-  Target,
-  TrendingUp,
-  Users,
-  X,
+    AlertCircle,
+    Building2,
+    CheckCircle2,
+    Lightbulb,
+    Mail,
+    Target,
+    TrendingUp,
+    Users,
+    X,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 

@@ -24,9 +24,17 @@ export default function DonationRequests() {
     fetch('/api/donations')
       .then(res => res.json())
       .then(data => {
-        // Filter to only show pending/scheduled (not completed)
+        if (!Array.isArray(data)) {
+          console.warn('DonationRequests: expected array but received', data);
+          setRequests([]);
+          setLoading(false);
+          return;
+        }
+        // Filter to only show pending/scheduled/in-progress (not completed)
         const activeRequests = data.filter((r: DonationRequest) =>
-          r.status === 'pending' || r.status === 'scheduled' || r.status === 'in_progress'
+          r && typeof r === 'object' && (
+            r.status === 'pending' || r.status === 'scheduled' || r.status === 'in_progress'
+          )
         );
         setRequests(activeRequests.slice(0, 4)); // Show top 4
         setLoading(false);
