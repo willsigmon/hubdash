@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Popover from "@/components/ui/Popover";
+import CalendarPopover from "@/components/ui/CalendarPopover";
 
 interface DonationRequest {
   id: string;
@@ -91,15 +92,9 @@ export default function DonationRequests() {
     },
   });
 
-  const handleSchedulePickup = (requestId: string) => {
-    // Set scheduled date to tomorrow by default
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const scheduledDate = tomorrow.toISOString().split('T')[0];
-
-    if (confirm('Schedule pickup for tomorrow?')) {
-      schedulePickupMutation.mutate({ id: requestId, scheduledDate });
-    }
+  const handleSchedulePickup = (requestId: string, date: Date) => {
+    const scheduledDate = date.toISOString().split('T')[0];
+    schedulePickupMutation.mutate({ id: requestId, scheduledDate });
   };
 
   if (loading) {
@@ -209,14 +204,19 @@ export default function DonationRequests() {
 
                 {/* Actions */}
                 <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => handleSchedulePickup(request.id)}
-                    disabled={schedulePickupMutation.isPending}
-                    className="flex items-center justify-center gap-2 px-4 py-2.5 accent-gradient text-on-accent rounded-lg text-sm font-bold shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <Calendar className="w-4 h-4" />
-                    {schedulePickupMutation.isPending ? 'Scheduling...' : 'Schedule'}
-                  </button>
+                  <CalendarPopover
+                    trigger={
+                      <button
+                        disabled={schedulePickupMutation.isPending}
+                        className="flex items-center justify-center gap-2 px-4 py-2.5 accent-gradient text-on-accent rounded-lg text-sm font-bold shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full"
+                      >
+                        <Calendar className="w-4 h-4" />
+                        {schedulePickupMutation.isPending ? 'Scheduling...' : 'Schedule'}
+                      </button>
+                    }
+                    onSelectDate={(date) => handleSchedulePickup(request.id, date)}
+                    minDate={new Date()} // Can't schedule in the past
+                  />
                   <Popover
                     trigger={
                       <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-surface border-2 border-default text-primary rounded-lg text-sm font-semibold hover:bg-surface-alt hover:border-accent transition-all w-full">
