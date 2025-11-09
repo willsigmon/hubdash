@@ -65,8 +65,8 @@ export default function TrendChart() {
   return (
     <GlassCard className="p-6 md:p-8">
       <div className="mb-6">
-        <GradientHeading className="text-2xl md:text-3xl mb-2" variant="plum">
-          Devices Over Time
+        <GradientHeading className="text-2xl md:text-3xl mb-2" variant="navy">
+          Yearly Device Flow
         </GradientHeading>
         <p className="text-sm md:text-base text-secondary font-medium">
           Cumulative laptops collected and Chromebooks distributed throughout the year
@@ -77,12 +77,12 @@ export default function TrendChart() {
         <AreaChart data={data}>
           <defs>
             <linearGradient id="collectedGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#5a1b4a" stopOpacity={0.3}/>
-              <stop offset="95%" stopColor="#5a1b4a" stopOpacity={0.05}/>
+              <stop offset="5%" stopColor="#1B365D" stopOpacity={0.3}/>
+              <stop offset="95%" stopColor="#1B365D" stopOpacity={0.05}/>
             </linearGradient>
             <linearGradient id="distributedGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#d96846" stopOpacity={0.3}/>
-              <stop offset="95%" stopColor="#d96846" stopOpacity={0.05}/>
+              <stop offset="5%" stopColor="#F5BB2D" stopOpacity={0.3}/>
+              <stop offset="95%" stopColor="#F5BB2D" stopOpacity={0.05}/>
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" opacity={0.3} />

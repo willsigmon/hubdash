@@ -192,8 +192,8 @@ export default function EquipmentInventory() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <GradientHeading variant="plum">
-          Equipment & Parts Inventory
+                <GradientHeading variant="navy">
+          Equipment Inventory Overview
         </GradientHeading>
         <button
           onClick={() => setShowCreateModal(true)}

@@ -93,12 +93,12 @@ function Confetti({ show }: { show: boolean }) {
             className="w-2 h-2 rounded-sm"
             style={{
               backgroundColor: [
-                '#7C3AED', // plum
-                '#DC2626', // ember
+                '#F5BB2D', // HTI gold
+                '#E67E50', // HTI orange
                 '#F59E0B', // gold
-                '#10B981', // emerald
-                '#3B82F6', // blue
-              ][Math.floor(Math.random() * 5)],
+                '#F9D71C', // HTI yellow
+                '#1B365D', // HTI navy
+              ][Math.floor(Math.random() * 4)],
               transform: `rotate(${Math.random() * 360}deg)`,
             }}
           />

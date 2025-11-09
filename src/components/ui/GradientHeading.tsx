@@ -2,7 +2,7 @@
 import clsx from "clsx";
 import React from "react";
 
-type GradientVariant = "accent" | "sunrise" | "emerald" | "neutral" | "plum" | "warning";
+type GradientVariant = "accent" | "navy" | "emerald" | "neutral" | "warning";
 
 interface GradientHeadingProps {
     children: React.ReactNode;
@@ -13,11 +13,10 @@ interface GradientHeadingProps {
 
 const variantMap: Record<GradientVariant, string> = {
     accent: "from-accent to-accent-alt",
-    sunrise: "from-[#FF7E5F] to-[#FEB47B]",
+    navy: "from-hti-navy to-hti-navy-light",
     emerald: "from-[#34D399] to-[#10B981]",
     neutral: "from-text-secondary to-text-primary",
-    plum: "from-[#5B2A86] to-[#8A4FFF]",
-    warning: "from-[#F59E0B] to-[#FCD34D]",
+    warning: "from-hti-amber to-hti-yellow",
 };
 
 export default function GradientHeading({

@@ -195,7 +195,7 @@ export function DeviceManagementTable() {
       {/* Header with Actions */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <GradientHeading className="text-3xl mb-2" variant="plum">
+          <GradientHeading className="text-3xl mb-2" variant="navy">
             Device Management
           </GradientHeading>
           <p className="text-secondary text-sm">

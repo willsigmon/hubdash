@@ -10,18 +10,20 @@ export default function BoardDashboard() {
   return (
     <div className="min-h-screen bg-app">
       {/* Header */}
-      <header className="bg-gradient-to-r from-accent via-accent-alt to-[#2E1A47] text-white shadow-xl">
+      <header className="bg-surface-alt border-b border-default shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-2">HTI Board Dashboard</h1>
-              <p className="text-accent-alt text-lg font-medium">
+              <GradientHeading as="h1" className="text-4xl md:text-5xl mb-2">
+                HTI Board Dashboard
+              </GradientHeading>
+              <p className="text-secondary text-lg font-medium">
                 Executive overview of impact and operations
               </p>
             </div>
             <Link
               href="/"
-              className="px-6 py-3 bg-gradient-to-r from-accent to-accent-alt text-white rounded-lg transition-all duration-200 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+              className="px-6 py-3 accent-gradient text-white rounded-lg transition-all duration-200 text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus-ring"
             >
               ← Back to HUB
             </Link>
@@ -43,8 +45,8 @@ export default function BoardDashboard() {
         <section className="mb-20">
           <div className="mb-10">
             <div className="flex items-baseline gap-3">
-              <GradientHeading className="text-3xl md:text-4xl" variant="plum">Impact at a Glance</GradientHeading>
-              <span className="px-3 py-1 bg-accent/10 text-accent text-xs font-bold rounded-full border border-accent/30">Live Data</span>
+              <GradientHeading className="text-3xl md:text-4xl">Impact at a Glance</GradientHeading>
+              <span className="px-3 py-1 bg-soft-accent text-accent text-xs font-bold rounded-full border border-accent/30">Live Data</span>
             </div>
             <p className="text-secondary mt-3 text-lg">
               Key performance indicators for the Digital Champion Grant and overall mission impact
@@ -81,7 +83,7 @@ export default function BoardDashboard() {
         {/* Recent Activity */}
         <section>
           <div className="mb-10">
-            <GradientHeading className="text-3xl md:text-4xl mb-2" variant="plum">Recent Activity</GradientHeading>
+            <GradientHeading className="text-3xl md:text-4xl mb-2" variant="navy">Recent Activity</GradientHeading>
             <p className="text-secondary text-lg">
               Latest updates and milestones from the HTI team
             </p>

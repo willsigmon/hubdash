@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
-import { getKnackClient } from '@/lib/knack/client'
 import { cacheKeys, getCached } from '@/lib/knack/cache-manager'
+import { getKnackClient } from '@/lib/knack/client'
+import { NextResponse } from 'next/server'
 
 /**
  * GET /api/recipients - Fetch individual laptop recipients with quotes

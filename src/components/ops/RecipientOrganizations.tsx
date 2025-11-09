@@ -195,7 +195,7 @@ export default function RecipientOrganizations() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <GradientHeading variant="plum" className="text-3xl">
+        <GradientHeading variant="navy" className="text-3xl">
           Recipient Organizations
         </GradientHeading>
         <button

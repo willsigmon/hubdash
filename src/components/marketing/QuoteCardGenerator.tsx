@@ -13,28 +13,28 @@ interface QuoteCardGeneratorProps {
 
 const themes = [
   {
-    name: "HTI Plum",
-    bg: "linear-gradient(135deg, #2F2D4C 0%, #C05F37 100%)",
-    textColor: "#EEE6DF",
-    accentColor: "#E2A835",
+    name: "HTI Gradient",
+    bg: "linear-gradient(135deg, #E67E50 0%, #F5BB2D 100%)",
+    textColor: "#1B365D",
+    accentColor: "#FFFFFF",
   },
   {
-    name: "Sunrise Ember",
-    bg: "linear-gradient(135deg, #C05F37 0%, #E2A835 100%)",
-    textColor: "#2F2D4C",
-    accentColor: "#0F0C11",
+    name: "Navy Professional",
+    bg: "linear-gradient(135deg, #1B365D 0%, #2A4A7C 100%)",
+    textColor: "#FFFFFF",
+    accentColor: "#F5BB2D",
   },
   {
-    name: "Midnight Impact",
-    bg: "linear-gradient(135deg, #0F0C11 0%, #433D58 100%)",
-    textColor: "#EEE6DF",
-    accentColor: "#C05F37",
+    name: "Warm Amber",
+    bg: "linear-gradient(135deg, #F19E3E 0%, #F9D71C 100%)",
+    textColor: "#1B365D",
+    accentColor: "#E67E50",
   },
   {
-    name: "Minimal Sand",
+    name: "Clean White",
     bg: "#FFFFFF",
-    textColor: "#2F2D4C",
-    accentColor: "#C05F37",
+    textColor: "#1B365D",
+    accentColor: "#E67E50",
   },
 ];
 

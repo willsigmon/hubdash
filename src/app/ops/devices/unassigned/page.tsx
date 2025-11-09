@@ -132,7 +132,7 @@ export default function UnassignedDevicesPage() {
 
           <GradientHeading
             className="text-3xl mb-2"
-            variant="plum"
+            variant="navy"
           >
           Unassigned Devices
         </GradientHeading>
@@ -250,7 +250,7 @@ export default function UnassignedDevicesPage() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between mt-6 pt-6 border-t border-hti-fig/10">
+            <div className="flex items-center justify-between mt-6 pt-6 border-t border-default">
               <div className="text-sm text-secondary">
                 Page {page} of {totalPages} ({data?.total} total)
               </div>

@@ -162,18 +162,18 @@ export default function AssignedDevicesPage() {
     <div className="min-h-screen bg-gradient-to-br from-hti-navy via-hti-gray to-hti-navy/90 p-6">
       {/* Header */}
       <div className="max-w-7xl mx-auto mb-8">
-        <Link href="/ops" className="inline-flex items-center gap-2 text-hti-yellow hover:text-hti-gold mb-4 transition-colors">
+        <Link href="/ops" className="inline-flex items-center gap-2 text-accent hover:text-accent-alt mb-4 transition-colors focus-ring">
           <ArrowLeft className="w-4 h-4" />
           Back to Operations
         </Link>
 
           <GradientHeading
             className="text-3xl mb-2"
-            variant="plum"
+            variant="navy"
           >
           Assigned Devices
         </GradientHeading>
-        <p className="text-hti-mist mt-2">
+        <p className="text-secondary mt-2">
           {data?.total || 0} devices currently with technicians
         </p>
       </div>
@@ -185,13 +185,13 @@ export default function AssignedDevicesPage() {
             {/* Search */}
             <div className="flex-1 min-w-[300px]">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-hti-stone" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted" />
                 <input
                   type="text"
                   placeholder="Search by serial, type, or technician..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-white/50 border border-hti-fig/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-sunset text-hti-plum placeholder-hti-stone/50"
+                  className="w-full pl-10 pr-4 py-3 bg-surface border border-default rounded-lg focus:outline-none focus-ring text-primary placeholder-muted"
                 />
               </div>
             </div>
@@ -200,7 +200,7 @@ export default function AssignedDevicesPage() {
             <select
               value={techFilter}
               onChange={(e) => setTechFilter(e.target.value)}
-              className="px-4 py-3 bg-white/50 border border-hti-fig/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-hti-sunset text-hti-plum"
+              className="px-4 py-3 bg-surface border border-default rounded-lg focus:outline-none focus-ring text-primary"
             >
               <option value="all">All Technicians</option>
               {technicians.map((tech) => (
@@ -213,20 +213,20 @@ export default function AssignedDevicesPage() {
         </GlassCard>
 
         {/* Legend */}
-        <GlassCard className="bg-hti-sunset/5">
-          <div className="flex items-center gap-6 text-sm">
-            <div className="font-semibold text-hti-plum">Progress Checklist:</div>
+        <GlassCard variant="ghost">
+          <div className="space-y-2">
+            <div className="font-semibold text-primary">Progress Checklist:</div>
             <div className="flex items-center gap-2">
-              <Wrench className="w-4 h-4 text-hti-sunset" />
-              <span className="text-hti-stone">Drive Wiped</span>
+              <Wrench className="w-4 h-4 text-accent" />
+              <span className="text-secondary">Drive Wiped</span>
             </div>
             <div className="flex items-center gap-2">
-              <Wrench className="w-4 h-4 text-hti-sunset" />
-              <span className="text-hti-stone">OS Loaded</span>
+              <Wrench className="w-4 h-4 text-accent" />
+              <span className="text-secondary">OS Loaded</span>
             </div>
             <div className="flex items-center gap-2">
-              <Check className="w-4 h-4 text-hti-sunset" />
-              <span className="text-hti-stone">Tested</span>
+              <Check className="w-4 h-4 text-accent" />
+              <span className="text-secondary">Tested</span>
             </div>
           </div>
         </GlassCard>
@@ -241,23 +241,23 @@ export default function AssignedDevicesPage() {
             </div>
           ) : filteredDevices.length === 0 ? (
             <div className="text-center py-12">
-              <Wrench className="w-16 h-16 text-hti-stone/30 mx-auto mb-4" />
-              <p className="text-hti-stone text-lg">No assigned devices found</p>
+              <Wrench className="w-16 h-16 text-muted/30 mx-auto mb-4" />
+              <p className="text-muted text-lg">No assigned devices found</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead>
-                  <tr className="border-b border-hti-fig/10">
-                    <th className="text-left p-3 text-sm font-semibold text-hti-plum">Serial</th>
-                    <th className="text-left p-3 text-sm font-semibold text-hti-plum">Type</th>
-                    <th className="text-left p-3 text-sm font-semibold text-hti-plum">Technician</th>
-                    <th className="text-left p-3 text-sm font-semibold text-hti-plum">Pickup Date</th>
-                    <th className="text-left p-3 text-sm font-semibold text-hti-plum">Progress</th>
-                    <th className="text-center p-3 text-sm font-semibold text-hti-plum">Drive Wiped</th>
-                    <th className="text-center p-3 text-sm font-semibold text-hti-plum">OS Loaded</th>
-                    <th className="text-center p-3 text-sm font-semibold text-hti-plum">Tested</th>
-                    <th className="text-left p-3 text-sm font-semibold text-hti-plum">Actions</th>
+                <thead className="bg-surface-alt border-b border-default">
+                  <tr>
+                    <th className="text-left p-3 text-sm font-semibold text-primary">Serial</th>
+                    <th className="text-left p-3 text-sm font-semibold text-primary">Type</th>
+                    <th className="text-left p-3 text-sm font-semibold text-primary">Technician</th>
+                    <th className="text-left p-3 text-sm font-semibold text-primary">Pickup Date</th>
+                    <th className="text-left p-3 text-sm font-semibold text-primary">Progress</th>
+                    <th className="text-center p-3 text-sm font-semibold text-primary">Drive Wiped</th>
+                    <th className="text-center p-3 text-sm font-semibold text-primary">OS Loaded</th>
+                    <th className="text-center p-3 text-sm font-semibold text-primary">Tested</th>
+                    <th className="text-left p-3 text-sm font-semibold text-primary">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -268,36 +268,36 @@ export default function AssignedDevicesPage() {
                     return (
                       <tr
                         key={device.id}
-                        className="border-b border-hti-fig/5 hover:bg-white/30 transition-colors"
+                        className="border-b border-default hover:bg-surface-alt transition-colors"
                       >
-                        <td className="p-3 font-mono text-sm text-hti-plum">{device.serial}</td>
-                        <td className="p-3 text-sm text-hti-stone">{device.type}</td>
+                        <td className="p-3 font-mono text-sm text-primary">{device.serial}</td>
+                        <td className="p-3 text-sm text-secondary">{device.type}</td>
                         <td className="p-3">
                           <div className="flex items-center gap-2">
-                            <UserCircle className="w-4 h-4 text-hti-sunset" />
-                            <span className="text-sm text-hti-stone">{device.assignedTo}</span>
+                            <UserCircle className="w-4 h-4 text-accent" />
+                            <span className="text-sm text-secondary">{device.assignedTo}</span>
                           </div>
                         </td>
                         <td className="p-3">
-                          <div className="flex items-center gap-2 text-sm text-hti-stone">
-                            <Calendar className="w-4 h-4 text-hti-stone/50" />
+                          <div className="flex items-center gap-2 text-sm text-secondary">
+                            <Calendar className="w-4 h-4 text-muted" />
                             {device.pickupDate || "—"}
                           </div>
                         </td>
                         <td className="p-3">
                           <div className="space-y-1">
                             <div className="flex items-center justify-between text-xs">
-                              <span className="text-hti-stone">{progress.toFixed(0)}%</span>
+                              <span className="text-secondary">{progress.toFixed(0)}%</span>
                               {isComplete && (
                                 <span className="text-emerald-600 font-semibold">Complete!</span>
                               )}
                             </div>
-                            <div className="w-full h-2 bg-hti-stone/10 rounded-full overflow-hidden">
+                            <div className="w-full h-2 bg-surface-alt rounded-full overflow-hidden">
                               <div
                                 className={`h-full transition-all duration-300 ${
                                   isComplete
                                     ? "bg-gradient-to-r from-emerald-500 to-emerald-600"
-                                    : "bg-gradient-to-r from-hti-sunset to-hti-orange"
+                                    : "accent-gradient"
                                 }`}
                                 style={{ width: `${progress}%` }}
                               />
@@ -309,7 +309,7 @@ export default function AssignedDevicesPage() {
                             type="checkbox"
                             checked={device.driveWiped}
                             onChange={() => handleCheckbox(device.id, "driveWiped", device.driveWiped)}
-                            className="w-5 h-5 rounded border-hti-fig/20 text-hti-sunset focus:ring-hti-sunset cursor-pointer"
+                            className="w-5 h-5 rounded border-default text-accent focus-ring cursor-pointer"
                           />
                         </td>
                         <td className="p-3 text-center">
@@ -317,7 +317,7 @@ export default function AssignedDevicesPage() {
                             type="checkbox"
                             checked={device.osLoaded}
                             onChange={() => handleCheckbox(device.id, "osLoaded", device.osLoaded)}
-                            className="w-5 h-5 rounded border-hti-fig/20 text-hti-sunset focus:ring-hti-sunset cursor-pointer"
+                            className="w-5 h-5 rounded border-default text-accent focus-ring cursor-pointer"
                           />
                         </td>
                         <td className="p-3 text-center">
@@ -325,7 +325,7 @@ export default function AssignedDevicesPage() {
                             type="checkbox"
                             checked={device.tested}
                             onChange={() => handleCheckbox(device.id, "tested", device.tested)}
-                            className="w-5 h-5 rounded border-hti-fig/20 text-hti-sunset focus:ring-hti-sunset cursor-pointer"
+                            className="w-5 h-5 rounded border-default text-accent focus-ring cursor-pointer"
                           />
                         </td>
                         <td className="p-3">
@@ -344,10 +344,10 @@ export default function AssignedDevicesPage() {
                                 const newTech = prompt("Enter new technician ID:");
                                 if (newTech) reassignMutation.mutate({ deviceId: device.id, newTechId: newTech });
                               }}
-                              className="p-1.5 hover:bg-hti-stone/10 rounded transition-colors"
+                              className="p-1.5 hover:bg-surface-alt rounded transition-colors"
                               title="Reassign"
                             >
-                              <RotateCcw className="w-4 h-4 text-hti-stone" />
+                              <RotateCcw className="w-4 h-4 text-secondary" />
                             </button>
                           </div>
                         </td>
@@ -361,8 +361,8 @@ export default function AssignedDevicesPage() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between mt-6 pt-6 border-t border-hti-fig/10">
-              <div className="text-sm text-hti-stone">
+            <div className="flex items-center justify-between mt-6 pt-6 border-t border-default">
+              <div className="text-sm text-secondary">
                 Page {page} of {totalPages} ({data?.total} total)
               </div>
               <div className="flex gap-2">
@@ -371,14 +371,14 @@ export default function AssignedDevicesPage() {
                   disabled={page === 1}
                   className="p-2 rounded bg-white/50 hover:bg-white/70 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
-                  <ChevronLeft className="w-5 h-5 text-hti-plum" />
+                  <ChevronLeft className="w-5 h-5 text-primary" />
                 </button>
                 <button
                   onClick={() => setPage(Math.min(totalPages, page + 1))}
                   disabled={page === totalPages}
                   className="p-2 rounded bg-white/50 hover:bg-white/70 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
-                  <ChevronRight className="w-5 h-5 text-hti-plum" />
+                  <ChevronRight className="w-5 h-5 text-primary" />
                 </button>
               </div>
             </div>
@@ -389,18 +389,18 @@ export default function AssignedDevicesPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <GlassCard>
             <div className="text-center">
-              <div className="text-3xl font-bold text-hti-plum mb-1">
+              <div className="text-3xl font-bold text-primary mb-1">
                 {filteredDevices.filter((d: AssignedDevice) => getProgressPercentage(d) === 100).length}
               </div>
-              <div className="text-xs text-hti-stone uppercase tracking-wider">Ready to Convert</div>
+              <div className="text-xs text-secondary uppercase tracking-wider">Ready to Convert</div>
             </div>
           </GlassCard>
           <GlassCard>
             <div className="text-center">
-              <div className="text-3xl font-bold text-hti-sunset mb-1">
+              <div className="text-3xl font-bold text-accent mb-1">
                 {filteredDevices.filter((d: AssignedDevice) => getProgressPercentage(d) > 0 && getProgressPercentage(d) < 100).length}
               </div>
-              <div className="text-xs text-hti-stone uppercase tracking-wider">In Progress</div>
+              <div className="text-xs text-secondary uppercase tracking-wider">In Progress</div>
             </div>
           </GlassCard>
           <GlassCard>
@@ -408,7 +408,7 @@ export default function AssignedDevicesPage() {
               <div className="text-3xl font-bold text-blue-600 mb-1">
                 {filteredDevices.filter((d: AssignedDevice) => getProgressPercentage(d) === 0).length}
               </div>
-              <div className="text-xs text-hti-stone uppercase tracking-wider">Not Started</div>
+              <div className="text-xs text-secondary uppercase tracking-wider">Not Started</div>
             </div>
           </GlassCard>
           <GlassCard>
@@ -418,7 +418,7 @@ export default function AssignedDevicesPage() {
                   ? (filteredDevices.reduce((sum: number, d: AssignedDevice) => sum + getProgressPercentage(d), 0) / filteredDevices.length).toFixed(0)
                   : 0}%
               </div>
-              <div className="text-xs text-hti-stone uppercase tracking-wider">Avg Progress</div>
+              <div className="text-xs text-secondary uppercase tracking-wider">Avg Progress</div>
             </div>
           </GlassCard>
         </div>
