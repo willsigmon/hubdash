@@ -320,8 +320,8 @@ export default function MarketingPage() {
                         const location = application.county || application.address?.split(',')[1]?.trim() || 'Location Not Provided';
                         const orgName = application.organizationName || 'Unnamed Organization';
                         return (
-                          <li 
-                            key={application.id} 
+                          <li
+                            key={application.id}
                             onClick={() => setSelectedApplication(application)}
                             className="rounded-xl border-2 border-default bg-surface-elevated p-3 sm:p-4 transition-all hover:border-accent hover:shadow-md cursor-pointer"
                           >

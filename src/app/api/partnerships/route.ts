@@ -48,7 +48,7 @@ export async function GET(request: Request) {
           const address = typeof r.field_636_raw === 'string' ? r.field_636_raw : (r.field_636_raw?.full || r.field_address || '');
           const email = typeof r.field_425_raw === 'string' ? r.field_425_raw : (r.field_425_raw?.email || r.field_email || '');
           const phone = typeof r.field_658_raw === 'string' ? r.field_658_raw : (r.field_658_raw?.full || r.field_phone || '');
-          
+
           // Extract county - try multiple field sources
           let county = '';
           if (r.field_672_raw) {
@@ -94,7 +94,7 @@ export async function GET(request: Request) {
           }
           if (!contactPerson && email) {
             // Extract name from email as fallback
-            contactPerson = email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+            contactPerson = email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase());
           }
 
           return {

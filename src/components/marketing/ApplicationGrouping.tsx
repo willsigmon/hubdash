@@ -300,9 +300,8 @@ export default function ApplicationGrouping({
                 <div className="flex items-center gap-4 flex-1">
                   <span className="text-2xl">{getGroupIcon(groupKey)}</span>
                   <div>
-                    <div className={`px-3 py-1.5 rounded-full font-bold text-sm ${
-                      groupBy === 'status' ? getStatusColor(groupKey) : 'bg-soft-accent text-accent border border-accent/30'
-                    }`}>
+                    <div className={`px-3 py-1.5 rounded-full font-bold text-sm ${groupBy === 'status' ? getStatusColor(groupKey) : 'bg-soft-accent text-accent border border-accent/30'
+                      }`}>
                       {groupKey}
                     </div>
                   </div>
