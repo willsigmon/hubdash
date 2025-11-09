@@ -126,68 +126,69 @@ export default function BoardDashboard() {
           <div className="rounded-2xl border-2 border-default bg-surface p-6 shadow-xl">
             <ImpactMetrics />
           </div>
+        </section>
 
-            {/* Right Column - Executive Signals & Quick Links */}
-            <aside className="flex flex-col gap-6">
-              {/* Executive Signals - Enhanced */}
-              <div className="rounded-2xl border-2 border-default bg-gradient-to-br from-surface via-surface to-surface-alt p-6 shadow-xl">
-                <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-primary mb-2">Executive Signals</h3>
-                  <p className="text-xs font-medium text-secondary">
-                    Curated highlights surfaced automatically each morning
-                  </p>
-                </div>
-                <ul className="space-y-4">
-                  {momentumPulses.map((pulse) => (
-                    <li
-                      key={pulse.title}
-                      className={`group rounded-xl border-2 px-5 py-4 shadow-md transition-all hover:shadow-lg ${pulse.tone === "positive"
-                          ? "border-success/50 bg-gradient-to-br from-soft-success to-surface"
-                          : pulse.tone === "accent"
-                            ? "border-accent/50 bg-gradient-to-br from-soft-accent to-surface"
-                            : "border-highlight/50 bg-gradient-to-br from-soft-highlight to-surface"
-                        }`}
-                    >
-                      <p className="font-bold text-sm text-primary mb-1.5">{pulse.title}</p>
-                      <p className="text-xs font-medium text-secondary leading-relaxed">{pulse.detail}</p>
-                    </li>
-                  ))}
-                </ul>
+        {/* Executive Signals & Quick Links - Horizontal Row */}
+        <section>
+          <div className="grid gap-6 lg:grid-cols-[1fr,1fr]">
+            {/* Executive Signals - Enhanced */}
+            <div className="rounded-2xl border-2 border-default bg-gradient-to-br from-surface via-surface to-surface-alt p-6 shadow-xl">
+              <div className="mb-4">
+                <h3 className="text-2xl md:text-3xl font-black text-primary mb-2">Executive Signals</h3>
+                <p className="text-sm font-semibold text-secondary">
+                  Curated highlights surfaced automatically each morning
+                </p>
               </div>
+              <ul className="space-y-3">
+                {momentumPulses.map((pulse) => (
+                  <li
+                    key={pulse.title}
+                    className={`group rounded-xl border-2 px-4 py-3 shadow-md transition-all hover:shadow-lg ${pulse.tone === "positive"
+                        ? "border-success/50 bg-gradient-to-br from-soft-success to-surface"
+                        : pulse.tone === "accent"
+                          ? "border-accent/50 bg-gradient-to-br from-soft-accent to-surface"
+                          : "border-highlight/50 bg-gradient-to-br from-soft-highlight to-surface"
+                      }`}
+                  >
+                    <p className="font-black text-sm md:text-base text-primary mb-1">{pulse.title}</p>
+                    <p className="text-xs md:text-sm font-semibold text-secondary leading-relaxed">{pulse.detail}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-              {/* Quick Links - Enhanced */}
-              <div className="rounded-2xl border-2 border-default bg-surface-alt p-6 shadow-xl">
-                <h4 className="text-sm font-bold uppercase tracking-wider text-primary mb-5">
-                  Quick Links
-                </h4>
-                <div className="grid grid-cols-2 gap-3">
-                  <Link
-                    href="/ops"
-                    className="group rounded-xl border-2 border-accent/50 bg-soft-accent px-4 py-3 text-center text-sm font-bold text-accent transition-all hover:border-accent hover:bg-accent hover:text-on-accent hover:shadow-lg"
-                  >
-                    Operations
-                  </Link>
-                  <Link
-                    href="/reports"
-                    className="group rounded-xl border-2 border-highlight/50 bg-soft-highlight px-4 py-3 text-center text-sm font-bold text-highlight transition-all hover:border-highlight hover:bg-highlight hover:text-on-highlight hover:shadow-lg"
-                  >
-                    Reports
-                  </Link>
-                  <Link
-                    href="/board"
-                    className="group rounded-xl border-2 border-success/50 bg-soft-success px-4 py-3 text-center text-sm font-bold text-success transition-all hover:border-success hover:bg-success hover:text-on-success hover:shadow-lg"
-                  >
-                    Board
-                  </Link>
-                  <Link
-                    href="/marketing"
-                    className="group rounded-xl border-2 border-accent/50 bg-soft-accent px-4 py-3 text-center text-sm font-bold text-accent transition-all hover:border-accent hover:bg-accent hover:text-on-accent hover:shadow-lg"
-                  >
-                    Marketing
-                  </Link>
-                </div>
+            {/* Quick Links - Enhanced */}
+            <div className="rounded-2xl border-2 border-default bg-surface-alt p-6 shadow-xl">
+              <h4 className="text-lg md:text-xl font-black uppercase tracking-wider text-primary mb-4">
+                Quick Links
+              </h4>
+              <div className="grid grid-cols-2 gap-3">
+                <Link
+                  href="/ops"
+                  className="group rounded-xl border-2 border-accent/50 bg-soft-accent px-4 py-3 text-center text-sm font-black text-accent transition-all hover:border-accent hover:bg-accent hover:text-on-accent hover:shadow-lg"
+                >
+                  Operations
+                </Link>
+                <Link
+                  href="/reports"
+                  className="group rounded-xl border-2 border-highlight/50 bg-soft-highlight px-4 py-3 text-center text-sm font-black text-highlight transition-all hover:border-highlight hover:bg-highlight hover:text-on-highlight hover:shadow-lg"
+                >
+                  Reports
+                </Link>
+                <Link
+                  href="/board"
+                  className="group rounded-xl border-2 border-success/50 bg-soft-success px-4 py-3 text-center text-sm font-black text-success transition-all hover:border-success hover:bg-success hover:text-on-success hover:shadow-lg"
+                >
+                  Board
+                </Link>
+                <Link
+                  href="/marketing"
+                  className="group rounded-xl border-2 border-accent/50 bg-soft-accent px-4 py-3 text-center text-sm font-black text-accent transition-all hover:border-accent hover:bg-accent hover:text-on-accent hover:shadow-lg"
+                >
+                  Marketing
+                </Link>
               </div>
-            </aside>
+            </div>
           </div>
         </section>
 
@@ -195,16 +196,16 @@ export default function BoardDashboard() {
         <section className="space-y-6">
           <div className="grid gap-6 lg:grid-cols-[2fr,1fr]">
             {/* Left: Trend Chart - Enhanced */}
-            <div className="space-y-6">
-              <div className="space-y-3">
+            <div className="space-y-4">
+              <div className="space-y-2">
                 <GradientHeading className="text-3xl md:text-4xl" variant="navy">
                   Momentum &amp; Trajectory
                 </GradientHeading>
-                <p className="text-sm font-medium text-secondary">
+                <p className="text-base font-semibold text-secondary">
                   Rolling performance trends to anticipate capacity needs and outreach impact
                 </p>
               </div>
-              <div className="rounded-2xl border-2 border-default bg-surface p-8 shadow-xl">
+              <div className="rounded-2xl border-2 border-default bg-surface p-6 shadow-xl">
                 <TrendChart />
               </div>
             </div>
@@ -214,8 +215,8 @@ export default function BoardDashboard() {
               {/* Regional Reach - Enhanced */}
               <div className="rounded-2xl border-2 border-default bg-surface p-6 shadow-xl">
                 <div className="mb-4">
-                  <h3 className="text-xl font-bold text-primary mb-2">Regional Reach</h3>
-                  <p className="text-xs font-medium text-secondary">
+                  <h3 className="text-2xl md:text-3xl font-black text-primary mb-2">Regional Reach</h3>
+                  <p className="text-sm font-semibold text-secondary">
                     Distribution footprint across served counties highlighting growth corridors
                   </p>
                 </div>
@@ -224,21 +225,21 @@ export default function BoardDashboard() {
 
               {/* What's Next - Enhanced */}
               <div className="rounded-2xl border-2 border-default bg-gradient-to-br from-surface-alt to-surface p-6 shadow-xl">
-                <h4 className="text-sm font-bold uppercase tracking-wider text-primary mb-4">
+                <h4 className="text-lg md:text-xl font-black uppercase tracking-wider text-primary mb-4">
                   What's Next
                 </h4>
-                <ul className="space-y-3 text-sm">
+                <ul className="space-y-3">
                   <li className="flex items-start gap-3">
-                    <span className="text-success font-bold mt-0.5">✓</span>
-                    <span className="text-secondary font-medium">Supabase integration prep for real-time board packets</span>
+                    <span className="text-success font-black mt-0.5 text-lg">✓</span>
+                    <span className="text-base font-semibold text-secondary">Supabase integration prep for real-time board packets</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="text-success font-bold mt-0.5">✓</span>
-                    <span className="text-secondary font-medium">Partner pipeline automation in progress</span>
+                    <span className="text-success font-black mt-0.5 text-lg">✓</span>
+                    <span className="text-base font-semibold text-secondary">Partner pipeline automation in progress</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="text-accent font-bold mt-0.5">▢</span>
-                    <span className="text-secondary font-medium">Launch county deep-dive briefing cards</span>
+                    <span className="text-accent font-black mt-0.5 text-lg">▢</span>
+                    <span className="text-base font-semibold text-secondary">Launch county deep-dive briefing cards</span>
                   </li>
                 </ul>
               </div>
