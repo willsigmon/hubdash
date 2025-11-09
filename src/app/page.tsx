@@ -1,5 +1,6 @@
 import GlassCard from "@/components/ui/GlassCard";
 import GradientHeading from "@/components/ui/GradientHeading";
+import HTILogo from "@/components/ui/HTILogo";
 import { ArrowRight, FileText, LayoutDashboard, Megaphone, Zap } from "lucide-react";
 import Link from "next/link";
 
@@ -17,13 +18,16 @@ export default function Home() {
       <div className="w-full max-w-6xl">
         {/* Hero */}
         <div className="text-center mb-10 md:mb-14">
+          <div className="flex justify-center mb-6">
+            <HTILogo size="lg" showText={true} />
+          </div>
           <GradientHeading as="h1" className="text-5xl md:text-6xl">HubDash</GradientHeading>
           <p className="text-lg md:text-xl text-secondary mt-3">HUBZone Technology Initiative Dashboard</p>
           <p className="text-sm text-muted mt-1">Securely repurposing technology. Expanding digital opportunity.</p>
         </div>
 
         {/* Destinations */}
-        <main id="main" className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8" aria-label="Hub destinations">
+        <main id="main" className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8" aria-label="HUB destinations">
           <Link href="/board" aria-label="Open Board Dashboard — executive metrics and trends" className="group">
             <GlassCard interactive elevation="lg" className="p-6 md:p-8 h-full">
               <div className="flex items-start gap-4">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useTheme } from "@/components/providers/ThemeProvider";
+import HTILogo from "@/components/ui/HTILogo";
 import {
     FileText,
     LayoutDashboard,
@@ -66,9 +67,7 @@ export default function AppNav() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 hover:opacity-100 transition-opacity">
-              <div className="w-8 h-8 accent-gradient rounded-lg flex items-center justify-center text-on-accent font-bold text-sm shadow-sm">
-                HTI
-              </div>
+              <HTILogo size="sm" showText={false} />
               <span className={`font-bold text-lg hidden sm:inline text-primary`}>HubDash</span>
             </Link>
 
