@@ -34,13 +34,13 @@ export default function ReportsPage() {
 
   // Calculate exact numbers from real data
   const totalLaptopsReceived = devices.length;
-  const distributedDevices = devices.filter((d: any) => 
+  const distributedDevices = devices.filter((d: any) =>
     d.status === 'Distributed' || d.status === 'Completed-Presented' || d.status?.includes('Presented')
   ).length;
-  const recycledDevices = devices.filter((d: any) => 
+  const recycledDevices = devices.filter((d: any) =>
     d.status === 'Discarded' || d.status === 'Recycled' || d.status?.includes('eCycle')
   ).length;
-  
+
   // Calculate training hours and participants from training sessions
   // Training sessions typically last 2 hours each
   const totalTrainingHours = training.length * 2;
@@ -109,7 +109,7 @@ export default function ReportsPage() {
   <h1>HTI Quarterly Accountability Report</h1>
   <p><strong>Reporting Period:</strong> ${selectedQuarter}</p>
   <p><strong>Generated:</strong> ${new Date().toLocaleDateString()}</p>
-  
+
   <h2>Key Metrics</h2>
   <table>
     <tr><th>Metric</th><th>Value</th></tr>
@@ -117,7 +117,7 @@ export default function ReportsPage() {
     <tr><td>Training Hours</td><td>${GRANT_DATA.trainingHours}</td></tr>
     <tr><td>Participants Trained</td><td>${GRANT_DATA.participants}</td></tr>
   </table>
-  
+
   <h2>Device Metrics</h2>
   <table>
     <tr><th>Metric</th><th>Value</th></tr>
@@ -292,19 +292,19 @@ export default function ReportsPage() {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <button 
+              <button
                 onClick={() => window.scrollTo({ top: document.getElementById('report-preview')?.offsetTop || 0, behavior: 'smooth' })}
                 className="accent-gradient text-on-accent font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg text-sm focus-ring transition-all"
               >
                 Generate Report
               </button>
-              <button 
+              <button
                 onClick={() => window.scrollTo({ top: document.getElementById('report-preview')?.offsetTop || 0, behavior: 'smooth' })}
                 className="bg-surface-alt border border-default text-primary font-semibold px-6 py-3 rounded-xl shadow-sm hover:bg-surface text-sm focus-ring transition-all"
               >
                 Preview Report
               </button>
-              <button 
+              <button
                 onClick={handleExportCSV}
                 className="bg-soft-accent text-accent border border-accent font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md text-sm focus-ring transition-all"
               >
@@ -430,7 +430,7 @@ export default function ReportsPage() {
               <div className="text-4xl sm:text-5xl">📄</div>
               <h3 className="font-bold text-primary text-base sm:text-lg">PDF Report</h3>
               <p className="text-secondary text-sm sm:text-base leading-relaxed">Professional, print-ready report for NCDIT and stakeholder distribution</p>
-              <button 
+              <button
                 onClick={handleExportPDF}
                 className="accent-gradient text-on-accent font-bold px-4 py-2.5 rounded-lg text-sm sm:text-base shadow-md hover:shadow-lg focus-ring w-full transition-all"
               >
@@ -441,7 +441,7 @@ export default function ReportsPage() {
               <div className="text-4xl sm:text-5xl">📊</div>
               <h3 className="font-bold text-primary text-base sm:text-lg">Excel/CSV Data</h3>
               <p className="text-secondary text-sm sm:text-base leading-relaxed">Raw dataset for custom analysis and reporting</p>
-              <button 
+              <button
                 onClick={handleExportCSV}
                 className="accent-gradient text-on-accent font-bold px-4 py-2.5 rounded-lg text-sm sm:text-base shadow-md hover:shadow-lg focus-ring w-full transition-all"
               >
@@ -452,7 +452,7 @@ export default function ReportsPage() {
               <div className="text-4xl sm:text-5xl">🌐</div>
               <h3 className="font-bold text-primary text-base sm:text-lg">HTML Report</h3>
               <p className="text-secondary text-sm sm:text-base leading-relaxed">Web-ready format for online sharing and web viewing</p>
-              <button 
+              <button
                 onClick={handleExportHTML}
                 className="accent-gradient text-on-accent font-bold px-4 py-2.5 rounded-lg text-sm sm:text-base shadow-md hover:shadow-lg focus-ring w-full transition-all"
               >

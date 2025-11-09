@@ -153,54 +153,59 @@ export default function ApplicationGrouping({
       }
     };
 
+    // Extract contact info with better fallbacks
+    const contactPerson = app.contactPerson || app.email?.split('@')[0] || 'Contact Not Provided';
+    const location = app.county || app.address?.split(',')[1]?.trim() || 'Location Not Provided';
+    const orgName = app.organizationName || 'Unnamed Organization';
+
     return (
       <div
         onClick={() => onApplicationClick(app)}
-        className="group bg-surface rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 cursor-pointer border border-default hover:border-strong overflow-hidden"
+        className="group bg-surface rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-default hover:border-accent overflow-hidden flex flex-col h-full"
       >
         {/* Top Accent Bar */}
-        <div className={`h-1.5 ${getCardAccentColor(app.status)}`} />
+        <div className={`h-2 ${getCardAccentColor(app.status)}`} />
 
-        {/* Card Content */}
-        <div className="p-6">
+        {/* Card Content - Flex column to ensure consistent height */}
+        <div className="p-5 sm:p-6 flex flex-col flex-1">
           {/* Header with Status Badge */}
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex-1 min-w-0">
-              <h4 className="font-bold text-primary text-lg mb-2 leading-snug group-hover:text-accent transition-colors truncate">
-                {app.organizationName}
-              </h4>
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className={`px-3 py-1 rounded-full text-xs font-bold border ${getStatusColor(app.status)}`}>
-                  {app.status}
+          <div className="mb-4">
+            <h4 className="font-bold text-primary text-base sm:text-lg mb-3 leading-tight group-hover:text-accent transition-colors line-clamp-2 min-h-[3rem]">
+              {orgName}
+            </h4>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className={`px-3 py-1.5 rounded-full text-xs font-bold border ${getStatusColor(app.status)}`}>
+                {app.status || 'Pending'}
+              </span>
+              {app.is501c3 && (
+                <span className="px-2.5 py-1.5 rounded-full text-xs font-semibold bg-soft-success text-success border border-success">
+                  ✓ 501(c)(3)
                 </span>
-                {app.is501c3 && (
-                  <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-soft-accent text-accent border border-accent">
-                    ✓ 501(c)(3)
-                  </span>
-                )}
-              </div>
+              )}
             </div>
           </div>
 
-          {/* Organization & Contact Info */}
-          <div className="space-y-2 mb-4 pb-4 border-b border-default">
-            <p className="text-sm text-secondary font-medium">
-              <span className="text-muted">Contact:</span> {app.contactPerson || 'Unknown'}
-            </p>
-            <p className="text-sm text-secondary">
-              <span className="text-muted">Location:</span> {app.county || 'Unknown County'}
-            </p>
+          {/* Organization & Contact Info - Larger fonts */}
+          <div className="space-y-2.5 mb-4 pb-4 border-b-2 border-default flex-grow">
+            <div className="flex items-start gap-2">
+              <span className="text-xs text-muted font-semibold uppercase tracking-wide min-w-[60px]">Contact:</span>
+              <span className="text-sm sm:text-base text-primary font-semibold break-words flex-1">{contactPerson}</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="text-xs text-muted font-semibold uppercase tracking-wide min-w-[60px]">Location:</span>
+              <span className="text-sm sm:text-base text-primary font-semibold break-words flex-1">{location}</span>
+            </div>
           </div>
 
           {/* Key Stats - Chromebooks & Date */}
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="p-3 rounded-xl border border-default bg-surface-alt">
-              <div className="text-xs text-secondary font-semibold mb-1 uppercase tracking-wide">Chromebooks</div>
-              <div className="text-2xl font-bold text-primary">{typeof app.chromebooksNeeded === 'number' ? app.chromebooksNeeded : 0}</div>
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <div className="p-3 sm:p-4 rounded-xl border-2 border-default bg-surface-alt">
+              <div className="text-[10px] sm:text-xs text-secondary font-bold mb-1.5 uppercase tracking-wider">Chromebooks</div>
+              <div className="text-xl sm:text-2xl font-bold text-primary">{typeof app.chromebooksNeeded === 'number' ? app.chromebooksNeeded.toLocaleString() : 0}</div>
             </div>
-            <div className="p-3 rounded-xl border border-default bg-surface-alt">
-              <div className="text-xs text-secondary font-semibold mb-1 uppercase tracking-wide">Submitted</div>
-              <div className="text-sm font-semibold text-primary">
+            <div className="p-3 sm:p-4 rounded-xl border-2 border-default bg-surface-alt">
+              <div className="text-[10px] sm:text-xs text-secondary font-bold mb-1.5 uppercase tracking-wider">Submitted</div>
+              <div className="text-sm sm:text-base font-bold text-primary">
                 {app.timestamp ? (() => {
                   try {
                     const date = new Date(app.timestamp);
@@ -216,17 +221,21 @@ export default function ApplicationGrouping({
             </div>
           </div>
 
-          {/* Quote Section - if available */}
-          {app.quote && (
-            <div className="p-4 rounded-xl border-l-4 border-accent bg-soft-accent">
-              <p className="text-sm text-secondary italic font-medium line-clamp-3 leading-relaxed">
-                "{app.quote.substring(0, 140)}..."
-              </p>
-            </div>
-          )}
+          {/* Quote Section - Always show space, but only render if quote exists */}
+          <div className="mb-4 flex-1 flex items-start">
+            {app.quote ? (
+              <div className="p-3 sm:p-4 rounded-xl border-l-4 border-accent bg-soft-accent/50 w-full">
+                <p className="text-xs sm:text-sm text-secondary italic font-medium line-clamp-2 leading-relaxed">
+                  "{app.quote}"
+                </p>
+              </div>
+            ) : (
+              <div className="h-full w-full" /> // Spacer to maintain consistent height
+            )}
+          </div>
 
           {/* Click Indicator */}
-          <div className="mt-4 text-center text-xs text-muted font-medium group-hover:text-accent transition-colors">
+          <div className="mt-auto pt-3 border-t border-default text-center text-xs sm:text-sm text-muted font-semibold group-hover:text-accent transition-colors">
             Click to view details →
           </div>
         </div>
@@ -317,7 +326,7 @@ export default function ApplicationGrouping({
 
               {/* Group Content */}
               {!isCollapsed && (
-                <div className="p-6 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="p-4 sm:p-6 grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {groupApps.map(app => (
                     <ApplicationCard key={app.id} app={app} />
                   ))}

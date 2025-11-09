@@ -311,21 +311,28 @@ export default function MarketingPage() {
                 </div>
 
                 {spotlightApplications.length > 0 && (
-                  <div className="rounded-2xl border border-default bg-surface-alt p-4 shadow-lg">
-                    <h4 className="text-xs font-semibold text-primary mb-3">Recent Applications</h4>
-                    <ul className="space-y-2">
+                  <div className="rounded-2xl border-2 border-default bg-surface-alt p-4 sm:p-5 shadow-lg">
+                    <h4 className="text-sm sm:text-base font-bold text-primary mb-4">Recent Applications</h4>
+                    <ul className="space-y-3">
                       {spotlightApplications.map((application) => {
                         if (!application || !application.id) return null;
+                        const contactPerson = application.contactPerson || application.email?.split('@')[0] || 'Contact Not Provided';
+                        const location = application.county || application.address?.split(',')[1]?.trim() || 'Location Not Provided';
+                        const orgName = application.organizationName || 'Unnamed Organization';
                         return (
-                          <li key={application.id} className="rounded-xl border border-default bg-surface-elevated p-3 transition hover:border-strong">
-                            <p className="text-sm font-semibold text-primary">
-                              {application.organizationName || 'Unknown Organization'}
+                          <li 
+                            key={application.id} 
+                            onClick={() => setSelectedApplication(application)}
+                            className="rounded-xl border-2 border-default bg-surface-elevated p-3 sm:p-4 transition-all hover:border-accent hover:shadow-md cursor-pointer"
+                          >
+                            <p className="text-sm sm:text-base font-bold text-primary mb-1.5 line-clamp-1">
+                              {orgName}
                             </p>
-                            <p className="mt-1 text-xs text-muted">
-                              {application.county || "Unknown County"} • {typeof application.chromebooksNeeded === 'number' ? application.chromebooksNeeded : 0} requested
+                            <p className="text-xs sm:text-sm text-secondary font-medium">
+                              {location} • {typeof application.chromebooksNeeded === 'number' ? application.chromebooksNeeded : 0} requested
                             </p>
                             {application.quote && (
-                              <p className="mt-2 text-xs text-secondary line-clamp-2">
+                              <p className="mt-2 text-xs text-secondary line-clamp-2 italic">
                                 "{application.quote}"
                               </p>
                             )}
