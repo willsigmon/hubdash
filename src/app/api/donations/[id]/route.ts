@@ -109,6 +109,9 @@ export async function PUT(
     if (body.priority !== undefined) {
       knackData.field_568 = body.priority
     }
+    if (body.scheduledDate !== undefined) {
+      knackData.field_scheduled_date = body.scheduledDate
+    }
 
     // Update the record in Knack
     const updatedRecord = await knack.updateRecord(objectKey, id, knackData)
@@ -126,6 +129,17 @@ export async function PUT(
       { status: 500 }
     )
   }
+}
+
+/**
+ * PATCH /api/donations/[id]
+ * Partial update a donation by ID (same as PUT for now)
+ */
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  return PUT(request, { params });
 }
 
 /**

@@ -141,4 +141,3 @@ export async function DELETE(
     return NextResponse.json({ error: error.message || 'Failed to delete inventory item', success: false }, { status: 500 });
   }
 }
-

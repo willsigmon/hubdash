@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "HubDash - HTI Dashboard",
+  title: "HUBDash - HTI Dashboard",
   description: "HUBZone Technology Initiative Dashboard - Track impact, manage operations, and expand digital opportunity",
   icons: {
     icon: '/favicon.svg',

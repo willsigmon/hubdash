@@ -69,20 +69,20 @@ export default function QuickStats() {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="relative overflow-hidden rounded-xl bg-surface-alt backdrop-blur-sm border border-default shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 group"
+          className="relative overflow-hidden rounded-xl bg-surface-alt border border-default shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] group"
         >
           {/* Background Gradient */}
-          <div className="absolute inset-0 accent-gradient opacity-10 group-hover:opacity-20 transition-opacity" />
+          <div className="absolute inset-0 accent-gradient opacity-10 group-hover:opacity-15 transition-opacity" />
 
           {/* Content */}
-          <div className="relative p-5 md:p-6">
+          <div className="relative p-4">
             {/* Header with Icon and Trend */}
-            <div className="flex items-start justify-between mb-4">
-              <div className="text-3xl md:text-4xl group-hover:scale-110 transition-transform origin-left">{stat.icon}</div>
+            <div className="flex items-start justify-between mb-3">
+              <div className="text-2xl group-hover:scale-110 transition-transform origin-left">{stat.icon}</div>
               <div className="flex-shrink-0">
                 {stat.trend === "up" && (
                   <div className="flex items-center gap-1 text-success text-xs font-bold bg-soft-success px-2 py-1 rounded-full border border-success">
@@ -109,17 +109,17 @@ export default function QuickStats() {
             </div>
 
             {/* Main Value and Label */}
-            <div className="mb-3">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-1 group-hover:text-accent transition-colors">
+            <div className="mb-2">
+              <div className="text-2xl font-bold text-primary mb-1 group-hover:text-accent transition-colors">
                 {stat.value}
               </div>
-              <div className="text-xs md:text-sm font-bold text-secondary">
+              <div className="text-xs font-semibold text-secondary">
                 {stat.label}
               </div>
             </div>
 
             {/* Change Indicator */}
-            <div className="text-xs md:text-xs text-accent bg-soft-accent rounded px-3 py-1.5 inline-block font-bold">
+            <div className="text-[10px] text-accent bg-soft-accent rounded px-2 py-1 inline-block font-semibold">
               {stat.change}
             </div>
           </div>

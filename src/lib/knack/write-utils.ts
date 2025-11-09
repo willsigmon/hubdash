@@ -50,34 +50,39 @@ export function mapDevicePayload(dto: DeviceDTO): Record<string, any> {
     payload.field_458 = dto.type;
   }
 
-  // field_56: Status
+  // field_56: Status (from devices/route.ts - confirmed)
   if (dto.status) {
     payload.field_56 = dto.status;
   }
 
-  // field_100: Serial Number (example - verify actual field ID)
+  // field_201_raw: Serial Number (from devices/route.ts - confirmed)
   if (dto.serial) {
-    payload.field_100 = dto.serial;
+    payload.field_201 = dto.serial;
   }
 
-  // field_75: Date Presented
+  // field_75_raw: Date Presented (from devices/route.ts - confirmed)
   if (dto.datePresented) {
     payload.field_75 = dto.datePresented;
   }
 
-  // field_XXX: Date Received (adjust field ID as needed)
+  // field_60_raw: Date Received (from devices/route.ts - confirmed)
   if (dto.dateReceived) {
-    payload.field_59 = dto.dateReceived;
+    payload.field_60 = dto.dateReceived;
   }
 
-  // Connection to organization (adjust field ID)
-  if (dto.orgId) {
-    payload.field_22 = [dto.orgId]; // Connection fields are arrays
-  }
+  // field_147_raw: Assigned To (technician connection - from devices/route.ts)
+  // Note: This is handled separately in batch operations
+  // For org connection, use field_22 or appropriate connection field
 
-  // Notes field (adjust field ID)
+  // field_40_raw: Notes (from devices/route.ts - confirmed)
   if (dto.notes) {
-    payload.field_notes = dto.notes;
+    payload.field_40 = dto.notes;
+  }
+
+  // Connection to organization - verify field ID (may be field_22 or different)
+  if (dto.orgId) {
+    // Connection fields are arrays in Knack
+    payload.field_22 = [dto.orgId];
   }
 
   return payload;
@@ -102,17 +107,36 @@ export interface DonationDTO {
 export function mapDonationPayload(dto: DonationDTO): Record<string, any> {
   const payload: Record<string, any> = {};
 
-  // Adjust field IDs based on actual Knack schema
-  if (dto.donorName) payload.field_donor_name = dto.donorName;
-  if (dto.donorEmail) payload.field_donor_email = dto.donorEmail;
-  if (dto.donorPhone) payload.field_donor_phone = dto.donorPhone;
-  if (dto.pickupAddress) payload.field_pickup_address = dto.pickupAddress;
-  if (dto.pickupCity) payload.field_pickup_city = dto.pickupCity;
-  if (dto.pickupZip) payload.field_pickup_zip = dto.pickupZip;
-  if (dto.status) payload.field_donation_status = dto.status;
-  if (dto.deviceCount !== undefined) payload.field_device_count = dto.deviceCount;
+  // Field mappings based on donations/route.ts structure (object_63)
+  // field_565_raw: Company/Donor Name (confirmed from donations/route.ts)
+  if (dto.donorName) payload.field_565 = dto.donorName;
+  
+  // field_537_raw: Email (confirmed from donations/route.ts)
+  if (dto.donorEmail) payload.field_537 = dto.donorEmail;
+  
+  // field_538_raw: Contact Name (confirmed from donations/route.ts)
+  // Note: Using donorName for company, contactName would be separate field
+  if (dto.donorPhone) payload.field_phone = dto.donorPhone;
+  
+  // field_566_raw: Address/Location (confirmed from donations/route.ts)
+  if (dto.pickupAddress) payload.field_566 = dto.pickupAddress;
+  
+  // City, Zip - verify actual field IDs (may be part of address field)
+  if (dto.pickupCity) payload.field_city = dto.pickupCity;
+  if (dto.pickupZip) payload.field_zip = dto.pickupZip;
+  
+  // Status - verify actual field ID (not seen in GET, may need to check)
+  if (dto.status) payload.field_status = dto.status;
+  
+  // field_542_raw: Device Count (confirmed from donations/route.ts)
+  if (dto.deviceCount !== undefined) payload.field_542 = dto.deviceCount;
+  
+  // field_536_raw: Requested Date (confirmed from donations/route.ts)
+  // Scheduled date may be different field
   if (dto.scheduledDate) payload.field_scheduled_date = dto.scheduledDate;
-  if (dto.notes) payload.field_donation_notes = dto.notes;
+  
+  // Notes - verify actual field ID
+  if (dto.notes) payload.field_notes = dto.notes;
 
   return payload;
 }
@@ -138,19 +162,42 @@ export interface PartnerDTO {
 export function mapPartnerPayload(dto: PartnerDTO): Record<string, any> {
   const payload: Record<string, any> = {};
 
-  // Adjust field IDs based on actual Knack schema for object_22 (organizations)
-  if (dto.name) payload.field_org_name = dto.name;
-  if (dto.email) payload.field_org_email = dto.email;
-  if (dto.phone) payload.field_org_phone = dto.phone;
-  if (dto.address) payload.field_org_address = dto.address;
-  if (dto.city) payload.field_org_city = dto.city;
-  if (dto.state) payload.field_org_state = dto.state;
-  if (dto.zip) payload.field_org_zip = dto.zip;
-  if (dto.county) payload.field_613 = dto.county; // County connection
+  // Field mappings based on partners/route.ts structure (object_22)
+  // field_143_raw: Organization Name (confirmed from partners/route.ts)
+  if (dto.name) payload.field_143 = dto.name;
+  
+  // field_146_raw: Email (confirmed from partners/route.ts)
+  if (dto.email) payload.field_146 = dto.email;
+  
+  // Phone field - verify actual field ID
+  if (dto.phone) payload.field_phone = dto.phone;
+  
+  // field_612_raw: Address (confirmed from partners/route.ts)
+  if (dto.address) payload.field_612 = dto.address;
+  
+  // City, State, Zip - verify actual field IDs
+  if (dto.city) payload.field_city = dto.city;
+  if (dto.state) payload.field_state = dto.state;
+  if (dto.zip) payload.field_zip = dto.zip;
+  
+  // field_613_raw: County connection (confirmed from partners/route.ts)
+  // County connections are arrays in Knack
+  if (dto.county) {
+    // If county is an ID, wrap in array; if it's a name, may need lookup
+    payload.field_613 = Array.isArray(dto.county) ? dto.county : [dto.county];
+  }
+  
+  // Contact name - verify actual field ID
   if (dto.contactName) payload.field_contact_name = dto.contactName;
+  
+  // Partnership type - verify actual field ID
   if (dto.partnershipType) payload.field_partnership_type = dto.partnershipType;
-  if (dto.status) payload.field_partner_status = dto.status;
-  if (dto.notes) payload.field_partner_notes = dto.notes;
+  
+  // Status - verify actual field ID
+  if (dto.status) payload.field_status = dto.status;
+  
+  // Notes - verify actual field ID
+  if (dto.notes) payload.field_notes = dto.notes;
 
   return payload;
 }

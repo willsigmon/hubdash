@@ -70,42 +70,42 @@ export default function ActivityFeed() {
   }
 
   return (
-    <div className="bg-surface rounded-xl border border-default shadow overflow-hidden flex flex-col h-full">
+    <div className="bg-surface rounded-2xl border border-default shadow-lg overflow-hidden flex flex-col h-full">
       {/* Header */}
-      <div className="p-4 md:p-5 bg-surface-alt/60 border-b border-default flex items-center justify-between">
+      <div className="px-6 py-4 bg-gradient-to-r from-surface-alt/80 to-surface-alt/60 border-b border-default flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-warning rounded-full animate-pulse" />
-          <span className="text-xs md:text-sm font-bold text-secondary">Live Updates</span>
+          <span className="text-sm font-bold text-primary">Live Updates</span>
         </div>
-        <button className="text-xs text-muted hover:text-secondary transition-colors font-medium">
+        <button className="text-xs text-muted hover:text-primary transition-colors font-medium">
           Clear All
         </button>
       </div>
 
       {/* Activity List */}
-      <div className="flex-1 overflow-y-auto divide-y divide-default/50">
+      <div className="flex-1 overflow-y-auto divide-y divide-default/50 p-4">
         {activities.length === 0 ? (
           <div className="flex items-center justify-center h-full min-h-[300px]">
             <div className="text-center text-muted py-8">
-              <div className="text-4xl md:text-5xl mb-3">📭</div>
-              <p className="text-xs md:text-sm font-medium text-secondary">No recent activity</p>
+              <div className="text-4xl mb-3 opacity-50">📭</div>
+              <p className="text-sm font-medium text-secondary">No recent activity</p>
             </div>
           </div>
         ) : (
           activities.map((activity) => (
             <div
               key={activity.id}
-              className={`p-4 md:p-5 border-l-4 transition-all hover:bg-surface-alt ${getActivityTypeColor(activity.type)}`}
+              className={`p-4 border-l-4 transition-all hover:bg-surface-alt/50 rounded-r-lg ${getActivityTypeColor(activity.type)}`}
             >
               <div className="flex items-start gap-3">
-                <div className="text-lg md:text-xl flex-shrink-0">{activity.icon}</div>
+                <div className="text-lg flex-shrink-0">{activity.icon}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs md:text-sm text-secondary leading-relaxed">
+                  <p className="text-sm text-secondary leading-relaxed">
                     <span className="font-bold text-primary">{activity.user_name}</span>
                     <span className="text-secondary"> {activity.action} </span>
                     <span className="text-accent font-bold break-words">{activity.target}</span>
                   </p>
-                  <p className="text-xs text-muted mt-2 font-medium">{formatTimeAgo(activity.created_at)}</p>
+                  <p className="text-xs text-muted mt-1.5 font-medium">{formatTimeAgo(activity.created_at)}</p>
                 </div>
               </div>
             </div>

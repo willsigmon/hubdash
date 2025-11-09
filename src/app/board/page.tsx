@@ -47,84 +47,80 @@ export default function BoardDashboard() {
     <div className="relative min-h-screen overflow-hidden bg-app">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-96 bg-gradient-to-br from-hti-navy/25 via-hti-navy/10 to-transparent" />
 
-      {/* Header */}
-      <header className="relative border-b border-default bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy text-white shadow-xl">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -left-24 top-1/3 h-56 w-56 rounded-full bg-highlight opacity-30 blur-3xl" />
-          <div className="absolute right-0 top-0 h-72 w-72 translate-x-1/3 -translate-y-1/3 rounded-full bg-accent opacity-25 blur-3xl" />
+      {/* Header - Compact */}
+      <header className="sticky top-0 z-40 border-b border-default bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy text-white shadow-lg">
+        <div className="absolute inset-0 overflow-hidden opacity-50">
+          <div className="absolute -left-24 top-1/3 h-40 w-40 rounded-full bg-highlight opacity-30 blur-3xl" />
+          <div className="absolute right-0 top-0 h-32 w-32 translate-x-1/3 -translate-y-1/3 rounded-full bg-accent opacity-25 blur-3xl" />
         </div>
-        <div className="relative mx-auto flex max-w-7xl flex-col gap-10 px-4 py-14 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-16 lg:px-8">
-          <div className="max-w-3xl space-y-6">
-            <GradientHeading as="h1" variant="white" className="text-4xl md:text-5xl">
+        <div className="relative mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-6 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-4 flex-1 min-w-0">
+            <GradientHeading as="h1" variant="white" className="text-2xl sm:text-3xl">
               HTI Board Dashboard
             </GradientHeading>
-            <p className="text-lg font-medium text-white">
-              A crisp mission status report showcasing live deployments, community reach, and grant
-              pacing.
-            </p>
-            <div className="inline-flex items-center gap-3 rounded-full border border-highlight bg-soft-highlight px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-highlight">
-              Live signals • auto-refreshing every few minutes
+            <div className="hidden md:flex items-center gap-2 ml-4">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-success" />
+              <span className="text-xs font-semibold text-white/90">Live</span>
             </div>
           </div>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-2xl bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+            className="flex-shrink-0 inline-flex items-center gap-2 rounded-lg bg-white/10 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
           >
-            ← Back to HUB
+            ← HUB
           </Link>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="relative mx-auto max-w-7xl space-y-24 px-4 py-16 sm:px-6 lg:px-8">
+      <main className="relative mx-auto max-w-7xl space-y-8 px-4 py-8 sm:px-6 lg:px-8">
         {/* Hero / Live Impact */}
-        <section className="space-y-12">
-          <div className="grid gap-8 lg:grid-cols-[1.2fr,1fr]">
-            <div className="space-y-8">
-              <div className="rounded-3xl border border-default bg-surface/95 p-8 shadow-xl animate-in slide-up duration-300">
-                <div className="mb-6 flex flex-wrap items-center gap-3">
-                  <GradientHeading className="text-3xl md:text-4xl">
+        <section className="space-y-6">
+          <div className="grid gap-6 lg:grid-cols-[1.2fr,1fr]">
+            <div className="space-y-6">
+              <div className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
+                <div className="mb-4 flex flex-wrap items-center gap-3">
+                  <GradientHeading className="text-2xl md:text-3xl">
                     Mission Impact Pulse
                   </GradientHeading>
-                  <span className="rounded-full border border-accent bg-soft-accent px-3 py-1 text-xs font-semibold text-accent">
-                    Live data
+                  <span className="rounded-full border border-accent bg-soft-accent px-2.5 py-1 text-[10px] font-semibold text-accent">
+                    Live
                   </span>
                 </div>
-                <p className="max-w-2xl text-base text-secondary">
+                <p className="mb-6 text-sm text-secondary">
                   Monitor real-time laptop conversions, training throughput, and partner engagement.
-                  These signals align with quarterly board scorecards.
                 </p>
-                <div className="mt-8 grid gap-4 md:grid-cols-3">
+                <div className="grid gap-4 md:grid-cols-3">
                   {executiveSignals.map((signal) => (
                     <article
                       key={signal.label}
-                      className="group rounded-2xl border border-default bg-surface-alt p-5 shadow-sm transition hover:-translate-y-1 hover:border-strong hover:shadow-md"
+                      className="group rounded-xl border border-default bg-surface-alt p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-strong hover:shadow-md"
                     >
-                      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted">
+                      <p className="text-[10px] font-semibold uppercase tracking-wide text-muted mb-2">
                         {signal.label}
                       </p>
-                      <p className="mt-3 text-2xl font-semibold text-primary">{signal.value}</p>
-                      <p className="mt-2 text-sm text-secondary">{signal.description}</p>
+                      <p className="text-xl font-bold text-primary mb-1">{signal.value}</p>
+                      <p className="text-xs text-secondary">{signal.description}</p>
                     </article>
                   ))}
                 </div>
               </div>
-              <div className="rounded-3xl border border-default bg-surface p-6 shadow-lg">
+              <div className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
                 <LiveImpactCounter />
               </div>
               <ImpactMetrics />
             </div>
             <aside className="flex flex-col gap-6">
-              <div className="rounded-3xl border border-default bg-surface p-6 shadow-lg">
-                <h3 className="text-xl font-bold text-primary">Executive Signals</h3>
-                <p className="mt-2 text-sm text-secondary">
+              <div className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
+                <h3 className="text-lg font-bold text-primary mb-2">Executive Signals</h3>
+                <p className="mb-4 text-xs text-secondary">
                   Curated highlights surfaced automatically each morning.
                 </p>
-                <ul className="mt-5 space-y-4 text-sm text-secondary">
+                <ul className="space-y-3 text-sm">
                   {momentumPulses.map((pulse) => (
                     <li
                       key={pulse.title}
-                      className={`rounded-2xl border px-4 py-3 ${
+                      className={`rounded-xl border px-4 py-3 ${
                         pulse.tone === "positive"
                           ? "border-success bg-soft-success text-success"
                           : pulse.tone === "accent"
@@ -138,32 +134,32 @@ export default function BoardDashboard() {
                   ))}
                 </ul>
               </div>
-              <div className="rounded-3xl border border-default bg-surface-alt p-6 shadow-inner">
-                <h4 className="text-sm font-bold uppercase tracking-[0.3em] text-secondary">
+              <div className="rounded-2xl border border-default bg-surface-alt p-6">
+                <h4 className="text-xs font-bold uppercase tracking-wide text-secondary mb-4">
                   Quick Links
                 </h4>
-                <div className="mt-4 grid grid-cols-2 gap-3 text-sm font-semibold">
+                <div className="grid grid-cols-2 gap-2 text-xs font-semibold">
                   <Link
                     href="/ops"
-                    className="rounded-xl border border-accent bg-soft-accent px-3 py-2 text-accent transition hover:bg-soft-accent"
+                    className="rounded-lg border border-accent bg-soft-accent px-3 py-2 text-accent transition hover:bg-soft-accent"
                   >
                     Operations
                   </Link>
                   <Link
                     href="/reports"
-                    className="rounded-xl border border-highlight bg-soft-highlight px-3 py-2 text-highlight transition hover:bg-soft-highlight"
+                    className="rounded-lg border border-highlight bg-soft-highlight px-3 py-2 text-highlight transition hover:bg-soft-highlight"
                   >
                     Reports
                   </Link>
                   <Link
                     href="/board"
-                    className="rounded-xl border border-success bg-soft-success px-3 py-2 text-success transition hover:bg-soft-success"
+                    className="rounded-lg border border-success bg-soft-success px-3 py-2 text-success transition hover:bg-soft-success"
                   >
                     Board
                   </Link>
                   <Link
                     href="/marketing"
-                    className="rounded-xl border border-accent bg-soft-accent px-3 py-2 text-accent transition hover:bg-soft-accent"
+                    className="rounded-lg border border-accent bg-soft-accent px-3 py-2 text-accent transition hover:bg-soft-accent"
                   >
                     Marketing
                   </Link>
@@ -174,35 +170,34 @@ export default function BoardDashboard() {
         </section>
 
         {/* Trends & Geography */}
-        <section className="space-y-16">
-          <div className="grid gap-12 lg:grid-cols-3">
-            <div className="space-y-10 lg:col-span-2">
-              <div className="space-y-3">
-                <GradientHeading className="text-3xl md:text-4xl" variant="navy">
+        <section className="space-y-6">
+          <div className="grid gap-6 lg:grid-cols-3">
+            <div className="space-y-6 lg:col-span-2">
+              <div className="space-y-2">
+                <GradientHeading className="text-2xl md:text-3xl" variant="navy">
                   Momentum &amp; Trajectory
                 </GradientHeading>
-                <p className="max-w-2xl text-base text-secondary">
+                <p className="text-sm text-secondary">
                   Rolling performance trends to anticipate capacity needs and outreach impact.
-                  Annotations highlight grant milestones and county expansions.
                 </p>
               </div>
-              <div className="rounded-3xl border border-default bg-surface p-6 shadow-lg">
+              <div className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
                 <TrendChart />
               </div>
             </div>
             <div className="space-y-6">
-              <div className="rounded-3xl border border-default bg-surface p-6 shadow-lg">
-                <h3 className="text-xl font-bold text-primary">Regional Reach</h3>
-                <p className="mb-4 text-sm text-secondary">
+              <div className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
+                <h3 className="text-lg font-bold text-primary mb-3">Regional Reach</h3>
+                <p className="mb-4 text-xs text-secondary">
                   Distribution footprint across served counties highlighting growth corridors.
                 </p>
                 <CountyMap />
               </div>
-              <div className="rounded-3xl border border-default bg-surface-alt p-6 shadow-inner">
-                <h4 className="text-sm font-semibold uppercase tracking-[0.3em] text-secondary">
-                  What’s next
+              <div className="rounded-2xl border border-default bg-surface-alt p-6">
+                <h4 className="text-xs font-semibold uppercase tracking-wide text-secondary mb-3">
+                  What's next
                 </h4>
-                <ul className="mt-4 space-y-3 text-sm text-secondary">
+                <ul className="space-y-2 text-xs text-secondary">
                   <li>✓ Supabase integration prep for real-time board packets</li>
                   <li>✓ Partner pipeline automation in progress</li>
                   <li>▢ Launch county deep-dive briefing cards</li>
@@ -219,9 +214,9 @@ export default function BoardDashboard() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-24 border-t border-default bg-surface-alt">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <p className="text-center text-sm font-medium text-secondary">
+      <footer className="mt-12 border-t border-default bg-surface-alt">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <p className="text-center text-xs font-medium text-secondary">
             HTI Board Dashboard — Turning donations into opportunities
           </p>
         </div>

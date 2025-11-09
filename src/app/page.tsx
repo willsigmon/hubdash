@@ -21,7 +21,7 @@ export default function Home() {
           <div className="flex justify-center mb-6">
             <HTILogo size="lg" showText={true} />
           </div>
-          <GradientHeading as="h1" className="text-5xl md:text-6xl">HubDash</GradientHeading>
+          <GradientHeading as="h1" className="text-5xl md:text-6xl">HUBDash</GradientHeading>
           <p className="text-lg md:text-xl text-secondary mt-3">HUBZone Technology Initiative Dashboard</p>
           <p className="text-sm text-muted mt-1">Securely repurposing technology. Expanding digital opportunity.</p>
         </div>

@@ -68,7 +68,7 @@ export default function AppNav() {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 hover:opacity-100 transition-opacity">
               <HTILogo size="sm" showText={false} />
-              <span className={`font-bold text-lg hidden sm:inline text-primary`}>HubDash</span>
+              <span className={`font-bold text-lg hidden sm:inline text-primary`}>HUBDash</span>
             </Link>
 
             {/* Desktop Nav Items */}
