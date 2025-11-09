@@ -39,15 +39,14 @@ export async function GET() {
         async () => {
           const knackRecords = await knack.getRecords(socialMediaObjectKey, {
             rows_per_page: 20,
-            sort_field: 'field_timestamp',
-            sort_order: 'desc'
           });
 
           if (!Array.isArray(knackRecords)) {
             throw new Error('Invalid data format from Knack');
           }
 
-          return knackRecords.map((r: any) => ({
+          // Map and sort by timestamp (most recent first)
+          const mappedPosts = knackRecords.map((r: any) => ({
             id: r.id,
             platform: r.field_platform?.toLowerCase() || 'instagram',
             text: r.field_text || r.field_caption || '',
@@ -57,6 +56,13 @@ export async function GET() {
             likes: r.field_likes || 0,
             comments: r.field_comments || 0,
           })) as SocialMediaPost[];
+
+          // Sort by timestamp descending (most recent first)
+          return mappedPosts.sort((a, b) => {
+            const dateA = new Date(a.timestamp).getTime();
+            const dateB = new Date(b.timestamp).getTime();
+            return dateB - dateA;
+          });
         },
         300 // 5 minute cache
       );
