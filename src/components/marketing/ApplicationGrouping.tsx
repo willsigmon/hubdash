@@ -190,19 +190,34 @@ export default function ApplicationGrouping({
             </div>
           </div>
 
-          {/* Organization & Contact Info - Larger fonts */}
-          <div className="space-y-2.5 mb-4 pb-4 border-b-2 border-default flex-grow">
-            <div className="flex items-start gap-2">
-              <span className="text-xs text-muted font-semibold uppercase tracking-wide min-w-[60px]">Contact:</span>
-              <span className="text-sm sm:text-base text-primary font-semibold break-words flex-1">
-                {contactPerson !== 'Contact Not Provided' ? contactPerson : <span className="text-muted italic">Not provided</span>}
-              </span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-xs text-muted font-semibold uppercase tracking-wide min-w-[60px]">Location:</span>
-              <span className="text-sm sm:text-base text-primary font-semibold break-words flex-1">
-                {location !== 'Location Not Provided' ? location : <span className="text-muted italic">Not provided</span>}
-              </span>
+          {/* Organization & Contact Info - Better line-up with more info */}
+          <div className="space-y-2 mb-4 pb-4 border-b-2 border-default flex-grow">
+            <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 items-start">
+              <span className="text-[10px] sm:text-xs text-muted font-bold uppercase tracking-wider">Contact:</span>
+              <div className="space-y-1">
+                <div className="text-sm sm:text-base text-primary font-semibold break-words">
+                  {contactPerson !== 'Contact Not Provided' ? contactPerson : <span className="text-muted italic">Not provided</span>}
+                </div>
+                {app.email && (
+                  <div className="text-xs text-secondary break-all">{app.email}</div>
+                )}
+                {app.phone && (
+                  <div className="text-xs text-secondary">{app.phone}</div>
+                )}
+              </div>
+              
+              <span className="text-[10px] sm:text-xs text-muted font-bold uppercase tracking-wider">Location:</span>
+              <div className="space-y-1">
+                <div className="text-sm sm:text-base text-primary font-semibold break-words">
+                  {location !== 'Location Not Provided' ? location : <span className="text-muted italic">Not provided</span>}
+                </div>
+                {app.organizationType && (
+                  <div className="text-xs text-secondary">{app.organizationType}</div>
+                )}
+                {app.address && (
+                  <div className="text-xs text-secondary line-clamp-1">{app.address}</div>
+                )}
+              </div>
             </div>
           </div>
 
