@@ -30,7 +30,6 @@ export default class SectionErrorBoundary extends React.Component<SectionErrorBo
   }
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
-    // eslint-disable-next-line no-console
     console.error(`[SectionErrorBoundary] '${this.props.section}' crashed:`, error, info);
   }
 

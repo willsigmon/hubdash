@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "keywords": [],
   "author": "",
@@ -30,5 +30,9 @@
     "tailwindcss": "^4.1.16",
     "typescript": "^5.9.3",
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "eslint": "^9.14.0",
+    "eslint-config-next": "^16.0.1"
   }
 }
