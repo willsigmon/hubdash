@@ -74,59 +74,58 @@ export default function BoardDashboard() {
 
       {/* Main Content */}
       <main className="relative mx-auto max-w-[1600px] space-y-8 px-4 py-8 sm:px-6 lg:px-8">
-        {/* Hero / Live Impact - Redesigned for Maximum Impact */}
+        {/* Hero / Live Impact - Horizontal Compact Layout */}
         <section className="space-y-6">
-          <div className="grid gap-6 lg:grid-cols-[1.3fr,1fr]">
-            {/* Left Column - Main Metrics */}
-            <div className="space-y-6">
-              {/* Mission Impact Pulse - Enhanced */}
-              <div className="rounded-2xl border-2 border-default bg-gradient-to-br from-surface via-surface to-surface-alt p-8 shadow-xl">
-                <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-                  <div>
-                    <GradientHeading className="text-3xl md:text-4xl mb-2">
-                      Mission Impact Pulse
-                    </GradientHeading>
-                    <p className="text-sm font-medium text-secondary">
-                      Real-time metrics across all HTI operations
-                    </p>
-                  </div>
-                  <span className="rounded-full border-2 border-accent bg-soft-accent px-4 py-2 text-xs font-bold uppercase tracking-wide text-accent shadow-sm">
-                    Live
-                  </span>
+          {/* Top Row - Mission Impact Pulse + Live Counter */}
+          <div className="grid gap-6 lg:grid-cols-[2fr,1fr]">
+            {/* Mission Impact Pulse - Enhanced */}
+            <div className="rounded-2xl border-2 border-default bg-gradient-to-br from-surface via-surface to-surface-alt p-6 shadow-xl">
+              <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <GradientHeading className="text-3xl md:text-4xl mb-1">
+                    Mission Impact Pulse
+                  </GradientHeading>
+                  <p className="text-sm font-semibold text-secondary">
+                    Real-time metrics across all HTI operations
+                  </p>
                 </div>
-                <div className="grid gap-4 md:grid-cols-3">
-                  {executiveSignals.map((signal) => (
-                    <article
-                      key={signal.label}
-                      className="group relative overflow-hidden rounded-xl border-2 border-default bg-surface p-5 shadow-lg transition-all hover:-translate-y-1 hover:border-accent/50 hover:shadow-xl"
-                    >
-                      <div className="absolute inset-0 accent-gradient opacity-0 group-hover:opacity-5 transition-opacity" />
-                      <div className="relative">
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-secondary mb-3">
-                          {signal.label}
-                        </p>
-                        <p className="text-3xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
-                          {signal.value}
-                        </p>
-                        <p className="text-xs font-medium text-secondary leading-relaxed">
-                          {signal.description}
-                        </p>
-                      </div>
-                    </article>
-                  ))}
-                </div>
+                <span className="rounded-full border-2 border-accent bg-soft-accent px-3 py-1.5 text-xs font-black uppercase tracking-wide text-accent shadow-sm">
+                  Live
+                </span>
               </div>
-
-              {/* Live Impact Counter - Enhanced */}
-              <div className="rounded-2xl border-2 border-default bg-surface p-8 shadow-xl">
-                <LiveImpactCounter />
-              </div>
-
-              {/* Impact Metrics - Full Width */}
-              <div className="rounded-2xl border-2 border-default bg-surface p-8 shadow-xl">
-                <ImpactMetrics />
+              <div className="grid gap-3 md:grid-cols-3">
+                {executiveSignals.map((signal) => (
+                  <article
+                    key={signal.label}
+                    className="group relative overflow-hidden rounded-xl border-2 border-default bg-surface p-4 shadow-lg transition-all hover:-translate-y-1 hover:border-accent/50 hover:shadow-xl"
+                  >
+                    <div className="absolute inset-0 accent-gradient opacity-0 group-hover:opacity-5 transition-opacity" />
+                    <div className="relative">
+                      <p className="text-[10px] font-black uppercase tracking-wider text-secondary mb-2">
+                        {signal.label}
+                      </p>
+                      <p className="text-3xl md:text-4xl font-black text-primary mb-1 group-hover:text-accent transition-colors">
+                        {signal.value}
+                      </p>
+                      <p className="text-xs font-semibold text-secondary leading-relaxed">
+                        {signal.description}
+                      </p>
+                    </div>
+                  </article>
+                ))}
               </div>
             </div>
+
+            {/* Live Impact Counter - Compact */}
+            <div className="rounded-2xl border-2 border-default bg-surface p-6 shadow-xl">
+              <LiveImpactCounter />
+            </div>
+          </div>
+
+          {/* Impact Metrics - Full Width Row */}
+          <div className="rounded-2xl border-2 border-default bg-surface p-6 shadow-xl">
+            <ImpactMetrics />
+          </div>
 
             {/* Right Column - Executive Signals & Quick Links */}
             <aside className="flex flex-col gap-6">

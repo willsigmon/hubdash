@@ -6,6 +6,7 @@ import { Calendar, MapPin, Package, User, Mail, Phone, ExternalLink } from "luci
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Popover from "@/components/ui/Popover";
 
 interface DonationRequest {
   id: string;
@@ -216,12 +217,64 @@ export default function DonationRequests() {
                     <Calendar className="w-4 h-4" />
                     {schedulePickupMutation.isPending ? 'Scheduling...' : 'Schedule'}
                   </button>
-                  <Link
-                    href={`/ops/donations/${request.id}`}
-                    className="flex items-center justify-center gap-2 px-4 py-2.5 bg-surface border-2 border-default text-primary rounded-lg text-sm font-semibold hover:bg-surface-alt hover:border-accent transition-all"
+                  <Popover
+                    trigger={
+                      <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-surface border-2 border-default text-primary rounded-lg text-sm font-semibold hover:bg-surface-alt hover:border-accent transition-all w-full">
+                        Details
+                      </button>
+                    }
+                    title={`${request.company} - Donation Details`}
+                    size="lg"
                   >
-                    Details
-                  </Link>
+                    <div className="space-y-6">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <div className="text-xs font-bold text-secondary uppercase tracking-wide mb-1">Company</div>
+                          <div className="text-lg font-black text-primary">{request.company}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-secondary uppercase tracking-wide mb-1">Contact</div>
+                          <div className="text-lg font-black text-primary">{request.contact_name}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-secondary uppercase tracking-wide mb-1">Devices</div>
+                          <div className="text-2xl font-black text-accent">{request.device_count}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-secondary uppercase tracking-wide mb-1">Location</div>
+                          <div className="text-lg font-semibold text-primary">{request.location}</div>
+                        </div>
+                      </div>
+                      {request.contact_email && (
+                        <div>
+                          <div className="text-xs font-bold text-secondary uppercase tracking-wide mb-1">Email</div>
+                          <a href={`mailto:${request.contact_email}`} className="text-lg font-semibold text-accent hover:underline">
+                            {request.contact_email}
+                          </a>
+                        </div>
+                      )}
+                      {request.contact_phone && (
+                        <div>
+                          <div className="text-xs font-bold text-secondary uppercase tracking-wide mb-1">Phone</div>
+                          <a href={`tel:${request.contact_phone}`} className="text-lg font-semibold text-accent hover:underline">
+                            {request.contact_phone}
+                          </a>
+                        </div>
+                      )}
+                      <div>
+                        <div className="text-xs font-bold text-secondary uppercase tracking-wide mb-1">Requested Date</div>
+                        <div className="text-lg font-semibold text-primary">{formatDate(request.requested_date)}</div>
+                      </div>
+                      <div className="pt-4 border-t border-default flex gap-3">
+                        <Link
+                          href={`/ops/donations/${request.id}`}
+                          className="flex-1 accent-gradient text-on-accent px-4 py-2.5 rounded-lg text-sm font-black text-center hover:shadow-lg transition-all"
+                        >
+                          View Full Details
+                        </Link>
+                      </div>
+                    </div>
+                  </Popover>
                   {request.contact_email && (
                     <Link
                       href={`mailto:${request.contact_email}?subject=Donation Pickup - ${request.company}`}

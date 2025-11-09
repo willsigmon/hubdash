@@ -185,19 +185,27 @@ export default function ImpactMetrics() {
         </div>
       )}
 
-      {/* Regular Metrics Grid - Perfectly Aligned */}
+      {/* Regular Metrics Grid - Asymmetric Modern Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {otherMetrics.map((metric, index) => (
-          <MetricCard
-            key={metric.label}
-            label={metric.label}
-            value={animatedValues[index + 1] ?? 0}
-            suffix={metric.suffix}
-            icon={metric.icon}
-            description={metric.description}
-            gradientClass={metric.color}
-          />
-        ))}
+        {otherMetrics.map((metric, index) => {
+          // Create asymmetric layout - larger cards for first 2, then smaller
+          const isLarge = index < 2;
+          return (
+            <div
+              key={metric.label}
+              className={isLarge ? "md:col-span-1 lg:col-span-1" : ""}
+            >
+              <MetricCard
+                label={metric.label}
+                value={animatedValues[index + 1] ?? 0}
+                suffix={metric.suffix}
+                icon={metric.icon}
+                description={metric.description}
+                gradientClass={metric.color}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import GlassCard from "../ui/GlassCard";
+import Popover from "../ui/Popover";
 
 interface DeviceStats {
   total: number;
@@ -187,47 +188,71 @@ export default function DevicePipelineFlow() {
                   </div>
                 )}
 
-                <Link href={stage.route}>
-                  <div
-                    className={`group relative cursor-pointer transition-all duration-300 ${
-                      isSelected ? 'scale-105' : 'hover:scale-105'
-                    }`}
-                    onMouseEnter={() => setSelectedStage(stage.key)}
-                    onMouseLeave={() => setSelectedStage(null)}
-                  >
-                    {/* Glow effect */}
-                    <div className={`absolute inset-0 ${stage.color} rounded-xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity`} />
+                <Popover
+                  trigger={
+                    <div
+                      className={`group relative cursor-pointer transition-all duration-300 ${
+                        isSelected ? 'scale-105' : 'hover:scale-105'
+                      }`}
+                      onMouseEnter={() => setSelectedStage(stage.key)}
+                      onMouseLeave={() => setSelectedStage(null)}
+                    >
+                      {/* Glow effect */}
+                      <div className={`absolute inset-0 ${stage.color} rounded-xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity`} />
 
-                    {/* Card */}
-                    <div className={`relative bg-surface rounded-xl p-4 border-2 ${stage.borderColor} ${stage.bgColor} transition-all shadow-sm group-hover:shadow-xl`}>
-                      {/* Icon */}
-                      <div className={`w-12 h-12 rounded-lg ${stage.color} flex items-center justify-center mb-3 shadow-lg`}>
-                        <Icon className="w-6 h-6 text-on-accent" />
-                      </div>
+                      {/* Card */}
+                      <div className={`relative bg-surface rounded-xl p-4 border-2 ${stage.borderColor} ${stage.bgColor} transition-all shadow-sm group-hover:shadow-xl`}>
+                        {/* Icon */}
+                        <div className={`w-12 h-12 rounded-lg ${stage.color} flex items-center justify-center mb-3 shadow-lg`}>
+                          <Icon className="w-6 h-6 text-on-accent" />
+                        </div>
 
-                      {/* Count */}
-                      <div className="text-3xl font-bold text-primary mb-1">
-                        {typeof count === 'number' ? count.toLocaleString() : '—'}
-                      </div>
+                        {/* Count */}
+                        <div className="text-3xl font-bold text-primary mb-1">
+                          {typeof count === 'number' ? count.toLocaleString() : '—'}
+                        </div>
 
-                      {/* Label */}
-                      <div className={`font-semibold ${stage.textColor} text-sm mb-1`}>
-                        {stage.label}
-                      </div>
+                        {/* Label */}
+                        <div className={`font-semibold ${stage.textColor} text-sm mb-1`}>
+                          {stage.label}
+                        </div>
 
-                      {/* Description */}
-                      <div className="text-xs text-muted">
-                        {stage.description}
-                      </div>
+                        {/* Description */}
+                        <div className="text-xs text-muted">
+                          {stage.description}
+                        </div>
 
-                      {/* Hover indicator */}
-                      <div className="mt-3 flex items-center gap-1 text-xs text-secondary group-hover:text-primary transition-colors">
-                        <span>View details</span>
-                        <ChevronRight className="w-3 h-3" />
+                        {/* Hover indicator */}
+                        <div className="mt-3 flex items-center gap-1 text-xs text-secondary group-hover:text-primary transition-colors">
+                          <span>View details</span>
+                          <ChevronRight className="w-3 h-3" />
+                        </div>
                       </div>
                     </div>
+                  }
+                  title={`${stage.label} - ${count} Devices`}
+                  size="lg"
+                >
+                  <div className="space-y-4">
+                    <p className="text-base font-semibold text-secondary">{stage.description}</p>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="p-4 rounded-xl bg-surface-alt border border-default">
+                        <div className="text-xs font-bold text-secondary uppercase tracking-wide mb-2">Total Devices</div>
+                        <div className="text-3xl font-black text-primary">{typeof count === 'number' ? count.toLocaleString() : '—'}</div>
+                      </div>
+                      <div className="p-4 rounded-xl bg-surface-alt border border-default">
+                        <div className="text-xs font-bold text-secondary uppercase tracking-wide mb-2">Status</div>
+                        <div className={`text-lg font-black ${stage.textColor}`}>{stage.label}</div>
+                      </div>
+                    </div>
+                    <Link
+                      href={stage.route}
+                      className="block accent-gradient text-on-accent px-6 py-3 rounded-xl text-center font-black hover:shadow-lg transition-all"
+                    >
+                      View All {stage.label} Devices →
+                    </Link>
                   </div>
-                </Link>
+                </Popover>
               </div>
             );
           })}
