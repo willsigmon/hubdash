@@ -144,10 +144,10 @@ export default function BoardDashboard() {
                   <li
                     key={pulse.title}
                     className={`group rounded-xl border-2 px-4 py-3 shadow-md transition-all hover:shadow-lg ${pulse.tone === "positive"
-                        ? "border-success/50 bg-gradient-to-br from-soft-success to-surface"
-                        : pulse.tone === "accent"
-                          ? "border-accent/50 bg-gradient-to-br from-soft-accent to-surface"
-                          : "border-highlight/50 bg-gradient-to-br from-soft-highlight to-surface"
+                      ? "border-success/50 bg-gradient-to-br from-soft-success to-surface"
+                      : pulse.tone === "accent"
+                        ? "border-accent/50 bg-gradient-to-br from-soft-accent to-surface"
+                        : "border-highlight/50 bg-gradient-to-br from-soft-highlight to-surface"
                       }`}
                   >
                     <p className="font-black text-sm md:text-base text-primary mb-1">{pulse.title}</p>
