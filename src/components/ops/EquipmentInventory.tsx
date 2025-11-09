@@ -393,26 +393,58 @@ export default function EquipmentInventory() {
         </div>
       </div>
 
-          {/* Low Stock Alert */}
+          {/* Low Stock Alert - Improved Clarity */}
           {lowStockItems.length > 0 && (
-            <div className="rounded-xl border border-highlight bg-soft-highlight p-4">
-              <div className="flex items-start gap-3">
-                <AlertTriangle className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
-                <div className="flex-1">
-                  <h4 className="font-semibold text-warning mb-1 text-sm">Low Stock Alert</h4>
-                  <p className="text-xs text-secondary mb-2">
-                    {lowStockItems.length} item{lowStockItems.length !== 1 ? "s" : ""} below minimum threshold
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {lowStockItems.map((item) => (
-                      <span
-                        key={item.id}
-                        className="px-2.5 py-1 bg-surface-alt rounded-full text-xs font-medium text-accent border border-default"
-                      >
-                        {item.name} ({item.quantity}/{item.minThreshold})
-                      </span>
-                    ))}
+            <div className="rounded-xl border-2 border-warning/50 bg-gradient-to-br from-soft-warning/80 to-soft-warning/40 p-5 shadow-lg">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-warning/20 flex items-center justify-center border-2 border-warning/50">
+                    <AlertTriangle className="w-6 h-6 text-warning" />
                   </div>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-bold text-warning mb-1 text-base">Low Stock Alert</h4>
+                  <p className="text-sm text-primary mb-3 font-medium">
+                    {lowStockItems.length} item{lowStockItems.length !== 1 ? "s" : ""} need{lowStockItems.length === 1 ? "s" : ""} restocking
+                  </p>
+                  <p className="text-xs text-secondary mb-4">
+                    These items are below their minimum threshold and may run out soon. Click any item to update quantity.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    {lowStockItems.slice(0, 6).map((item) => {
+                      const stockPercent = Math.round((item.quantity / item.minThreshold) * 100);
+                      return (
+                        <button
+                          key={item.id}
+                          onClick={() => setEditingId(item.id)}
+                          className="group text-left px-3 py-2.5 bg-surface rounded-lg border border-default hover:border-warning hover:shadow-md transition-all"
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-sm font-semibold text-primary group-hover:text-warning transition-colors truncate">
+                              {item.name}
+                            </span>
+                            <span className="text-xs font-bold text-warning ml-2 flex-shrink-0">
+                              {item.quantity}/{item.minThreshold}
+                            </span>
+                          </div>
+                          <div className="w-full h-1.5 bg-muted/20 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-warning transition-all"
+                              style={{ width: `${Math.min(stockPercent, 100)}%` }}
+                            />
+                          </div>
+                          <div className="text-[10px] text-muted mt-1">
+                            {stockPercent}% of minimum
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {lowStockItems.length > 6 && (
+                    <p className="text-xs text-muted mt-3 text-center">
+                      +{lowStockItems.length - 6} more item{lowStockItems.length - 6 !== 1 ? "s" : ""} below threshold
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

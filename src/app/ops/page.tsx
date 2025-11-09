@@ -1,4 +1,3 @@
-import ActivityFeed from "@/components/ops/ActivityFeed";
 import DevicePipelineFlow from "@/components/ops/DevicePipelineFlow";
 import DonationRequests from "@/components/ops/DonationRequests";
 import EquipmentInventory from "@/components/ops/EquipmentInventory";
@@ -73,40 +72,33 @@ export default function OpsPage() {
       {/* Main Content */}
       <main className="mx-auto max-w-[1600px] space-y-6 px-4 py-8 sm:px-6 lg:px-8">
         <ErrorBoundary>
+          {/* Key Metrics - Compact */}
           <SectionErrorBoundary section="Key Metrics">
             <section className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="text-xl font-bold text-primary">
                   Key Metrics
                 </h2>
-                <span className="rounded-full border border-highlight bg-soft-highlight px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-highlight">
-                  Live
-                </span>
               </div>
               <QuickStats />
             </section>
           </SectionErrorBoundary>
 
+          {/* Device Pipeline - Prominent */}
           <SectionErrorBoundary section="Device Pipeline Workflow">
             <section className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
               <DevicePipelineFlow />
             </section>
           </SectionErrorBoundary>
 
-          <div className="grid gap-6 lg:grid-cols-2">
-            <SectionErrorBoundary section="Donation Requests">
-              <section className="rounded-2xl border border-default bg-surface shadow-lg">
-                <DonationRequests />
-              </section>
-            </SectionErrorBoundary>
+          {/* Donation Requests - Full Width */}
+          <SectionErrorBoundary section="Donation Requests">
+            <section className="rounded-2xl border border-default bg-surface shadow-lg">
+              <DonationRequests />
+            </section>
+          </SectionErrorBoundary>
 
-            <SectionErrorBoundary section="Activity Feed">
-              <section className="rounded-2xl border border-default bg-surface shadow-lg">
-                <ActivityFeed />
-              </section>
-            </SectionErrorBoundary>
-          </div>
-
+          {/* Equipment Inventory */}
           <SectionErrorBoundary section="Equipment Inventory">
             <section className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
               <EquipmentInventory />

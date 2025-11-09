@@ -119,7 +119,7 @@ export default function QuickStats() {
             </div>
 
             {/* Change Indicator */}
-            <div className="text-[10px] text-accent bg-soft-accent rounded px-2 py-1 inline-block font-semibold">
+            <div className="text-[10px] text-primary bg-surface-alt border border-default rounded px-2 py-1 inline-block font-semibold">
               {stat.change}
             </div>
           </div>

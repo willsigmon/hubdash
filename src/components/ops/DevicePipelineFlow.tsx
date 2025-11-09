@@ -161,13 +161,13 @@ export default function DevicePipelineFlow() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="mb-4">
-        <h3 className="text-xl font-bold text-primary mb-1">
+        <h3 className="text-2xl font-bold text-primary mb-2">
           Device Pipeline Workflow
         </h3>
-        <p className="text-secondary text-xs">
-          Track devices through the complete lifecycle from donation to presentation
+        <p className="text-sm text-secondary">
+          Track devices through the complete lifecycle from donation to presentation. Click any stage to view and manage devices.
         </p>
       </div>
 
