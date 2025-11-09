@@ -55,7 +55,7 @@ export default function BoardDashboard() {
         </div>
         <div className="relative mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-6 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 flex-1 min-w-0">
-            <GradientHeading as="h1" variant="default" className="text-2xl sm:text-3xl theme-dim:text-white">
+            <GradientHeading as="h1" variant="accent" className="text-2xl sm:text-3xl theme-dim:text-white">
               HTI Board Dashboard
             </GradientHeading>
             <div className="hidden md:flex items-center gap-2 ml-4">
