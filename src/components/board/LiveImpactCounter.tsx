@@ -243,7 +243,7 @@ export function LiveImpactCounter() {
 
       {/* Milestone Message */}
       {showConfetti && (
-        <div className="mt-4 text-center">
+        <div className="mt-6 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-soft-warning border border-warning rounded-full animate-bounce">
             <Sparkles className="w-4 h-4 text-warning" />
             <span className="text-sm font-semibold text-warning">
@@ -252,6 +252,6 @@ export function LiveImpactCounter() {
           </div>
         </div>
       )}
-    </GlassCard>
+    </div>
   );
 }

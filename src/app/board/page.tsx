@@ -53,7 +53,7 @@ export default function BoardDashboard() {
           <div className="absolute -left-24 top-1/3 h-40 w-40 rounded-full bg-highlight opacity-30 blur-3xl" />
           <div className="absolute right-0 top-0 h-32 w-32 translate-x-1/3 -translate-y-1/3 rounded-full bg-accent opacity-25 blur-3xl" />
         </div>
-        <div className="relative mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-6 sm:px-6 lg:px-8">
+        <div className="relative mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-6 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 flex-1 min-w-0">
             <GradientHeading as="h1" variant="white" className="text-2xl sm:text-3xl">
               HTI Board Dashboard
@@ -251,7 +251,9 @@ export default function BoardDashboard() {
         {/* Social Media Feed - Full Width */}
         <section>
           <div className="rounded-2xl border-2 border-default bg-surface shadow-xl overflow-hidden">
-            <SocialMediaFeed />
+            <div className="p-8">
+              <SocialMediaFeed />
+            </div>
           </div>
         </section>
       </main>

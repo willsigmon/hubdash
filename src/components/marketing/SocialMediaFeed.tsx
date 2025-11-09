@@ -82,10 +82,10 @@ export default function SocialMediaFeed() {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="rounded-xl border border-default bg-surface p-4 animate-pulse">
-            <div className="h-6 bg-surface-alt rounded mb-4" />
+          <div key={i} className="rounded-xl border-2 border-default bg-surface p-4 animate-pulse shadow-lg">
+            <div className="h-12 bg-surface-alt rounded mb-4" />
             <div className="h-32 bg-surface-alt rounded mb-3" />
             <div className="h-4 bg-surface-alt rounded w-3/4" />
           </div>
@@ -95,7 +95,7 @@ export default function SocialMediaFeed() {
   }
 
   return (
-    <div className="p-8">
+    <>
       <div className="mb-6">
         <h2 className="text-3xl font-bold text-primary mb-2">Recent Social Media Posts</h2>
         <p className="text-sm font-medium text-secondary">Latest posts from HTI's social media accounts</p>
@@ -274,7 +274,6 @@ export default function SocialMediaFeed() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
-

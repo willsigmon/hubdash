@@ -32,12 +32,12 @@ export async function GET() {
     // Try to fetch from Knack if social media object exists
     const knack = getKnackClient();
     const socialMediaObjectKey = process.env.KNACK_SOCIAL_MEDIA_OBJECT;
-    
+
     if (socialMediaObjectKey) {
       const posts = await getCached(
-        cacheKeys.socialMedia || 'social-media',
+        'social-media',
         async () => {
-          const knackRecords = await knack.getRecords(socialMediaObjectKey, { 
+          const knackRecords = await knack.getRecords(socialMediaObjectKey, {
             rows_per_page: 20,
             sort_field: 'field_timestamp',
             sort_order: 'desc'
