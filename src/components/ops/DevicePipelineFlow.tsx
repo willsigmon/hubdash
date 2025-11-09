@@ -33,7 +33,7 @@ const WORKFLOW_STAGES = [
     color: "accent-gradient",
     bgColor: "bg-soft-accent",
     textColor: "text-accent",
-    borderColor: "border-accent/20",
+    borderColor: "border-accent",
     route: "/ops/devices/unassigned"
   },
   {
@@ -44,7 +44,7 @@ const WORKFLOW_STAGES = [
     color: "accent-gradient",
     bgColor: "bg-soft-warning",
     textColor: "text-warning",
-    borderColor: "border-warning/20",
+    borderColor: "border-warning",
     route: "/ops/devices/assigned"
   },
   {
@@ -55,7 +55,7 @@ const WORKFLOW_STAGES = [
     color: "accent-gradient",
     bgColor: "bg-soft-accent",
     textColor: "text-accent",
-    borderColor: "border-accent/20",
+    borderColor: "border-accent",
     route: "/ops/devices/converted"
   },
   {
@@ -66,7 +66,7 @@ const WORKFLOW_STAGES = [
     color: "accent-gradient",
     bgColor: "bg-soft-success",
     textColor: "text-success",
-    borderColor: "border-success/20",
+    borderColor: "border-success",
     route: "/ops/devices/presented"
   },
   {
@@ -77,7 +77,7 @@ const WORKFLOW_STAGES = [
     color: "accent-gradient",
     bgColor: "bg-soft-danger",
     textColor: "text-danger",
-    borderColor: "border-danger/20",
+    borderColor: "border-danger",
     route: "/ops/devices/discarded"
   },
 ];
@@ -105,10 +105,10 @@ export default function DevicePipelineFlow() {
     return (
       <GlassCard>
         <div className="animate-pulse space-y-4">
-          <div className="h-8 w-48 bg-white/20 rounded" />
+          <div className="h-8 w-48 bg-surface-alt rounded" />
           <div className="grid grid-cols-5 gap-4">
             {[1,2,3,4,5].map(i => (
-              <div key={i} className="h-32 bg-white/20 rounded-xl" />
+              <div key={i} className="h-32 bg-surface-alt rounded-xl" />
             ))}
           </div>
         </div>
@@ -159,7 +159,7 @@ export default function DevicePipelineFlow() {
                     <div className={`relative bg-surface rounded-xl p-4 border-2 ${stage.borderColor} ${stage.bgColor} transition-all shadow-sm group-hover:shadow-xl`}>
                       {/* Icon */}
                       <div className={`w-12 h-12 rounded-lg ${stage.color} flex items-center justify-center mb-3 shadow-lg`}>
-                        <Icon className="w-6 h-6 text-white" />
+                        <Icon className="w-6 h-6 text-on-accent" />
                       </div>
 
                       {/* Count */}

@@ -111,7 +111,7 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
 
             {/* Action Buttons */}
             <div className="grid grid-cols-2 gap-2 mt-6">
-              <button className="px-3 py-2 accent-gradient hover:shadow-lg text-white font-bold rounded-lg text-sm transition-all hover:scale-105">
+              <button className="px-3 py-2 accent-gradient hover:shadow-lg text-on-accent font-bold rounded-lg text-sm transition-all hover:scale-105">
                 Schedule
               </button>
             <button className="px-3 py-2 bg-soft-accent text-accent border border-accent hover:bg-soft-accent font-bold rounded-lg text-sm transition-all">
@@ -153,7 +153,7 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
                   onClick={() => setActiveTab(tab)}
                   className={`px-4 py-2 rounded-lg font-bold text-sm transition-all ${
                     activeTab === tab
-                      ? "accent-gradient text-white shadow"
+                      ? "accent-gradient text-on-accent shadow"
                       : "bg-surface text-secondary hover:bg-surface-alt border border-default"
                   }`}
                 >
@@ -239,7 +239,7 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
                       ].map((event, idx) => (
                         <div key={idx} className="flex items-center gap-4 pb-4 border-b border-default last:border-b-0">
                           <div className="flex-shrink-0">
-                            <div className="w-12 h-12 rounded-full accent-gradient flex items-center justify-center text-lg font-bold text-white">
+                            <div className="w-12 h-12 rounded-full accent-gradient flex items-center justify-center text-lg font-bold text-on-accent">
                               {event.devices}
                             </div>
                           </div>

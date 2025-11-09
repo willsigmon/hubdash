@@ -85,8 +85,8 @@ export default function DevicePipeline() {
               <div className={`${stageColorClasses[stage.statusKey]} rounded-lg p-4 hover:shadow-lg transition-all cursor-pointer transform hover:scale-105 border`}>
                 <div className="text-center">
                   <div className="text-3xl mb-2">{stage.icon}</div>
-                  <div className="text-2xl font-bold mb-1 text-white/90">{stage.count}</div>
-                  <div className="text-xs font-semibold opacity-100 text-white/90">{stage.name}</div>
+                  <div className="text-2xl font-bold mb-1 text-primary">{stage.count}</div>
+                  <div className="text-xs font-semibold text-primary">{stage.name}</div>
                 </div>
               </div>
               {index < stages.length - 1 && (
@@ -104,8 +104,8 @@ export default function DevicePipeline() {
             {stages.map((stage) => (
               <div key={stage.name} className={`${stageColorClasses[stage.statusKey]} rounded-lg p-3 text-center hover:shadow transition-all cursor-pointer border`}>
                 <div className="text-2xl mb-1">{stage.icon}</div>
-                <div className="text-xl font-bold mb-0.5 text-white/90">{stage.count}</div>
-                <div className="text-xs font-semibold opacity-100 text-white/90">{stage.name}</div>
+                <div className="text-xl font-bold mb-0.5 text-primary">{stage.count}</div>
+                <div className="text-xs font-semibold text-primary">{stage.name}</div>
               </div>
             ))}
           </div>

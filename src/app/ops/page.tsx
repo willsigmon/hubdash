@@ -15,7 +15,7 @@ const commandSignals = [
 
 export default function OpsPage() {
   return (
-    <div className="theme-dim min-h-screen bg-app text-white">
+    <div className="theme-dim min-h-screen bg-app text-primary">
       {/* Header */}
       <header className="relative border-b border-default bg-gradient-to-r from-hti-navy via-[#11162a] to-[#0c1324] shadow">
         <div className="absolute inset-0">
@@ -27,10 +27,10 @@ export default function OpsPage() {
             <div className="inline-flex items-center gap-2 rounded-full border border-highlight bg-soft-highlight px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-highlight">
               Ops mode • live sync
             </div>
-            <h1 className="flex items-center gap-3 text-4xl font-bold text-white sm:text-5xl">
+            <h1 className="flex items-center gap-3 text-4xl font-bold text-primary sm:text-5xl">
               ⚡ Operations HUB
             </h1>
-            <p className="max-w-xl text-base font-medium text-white/70">
+            <p className="max-w-xl text-base font-medium text-secondary">
               Mission control for device intake, refurb, QA, and deployment. Everything the ops team
               needs without leaving one tab.
             </p>
@@ -38,14 +38,14 @@ export default function OpsPage() {
           <div className="flex flex-wrap items-center gap-4">
             <div className="rounded-2xl border border-success bg-soft-success px-5 py-3 text-left text-success">
               <div className="text-xs font-semibold uppercase tracking-[0.25em]">System status</div>
-              <div className="mt-1 flex items-center gap-2 text-sm font-bold text-white">
+              <div className="mt-1 flex items-center gap-2 text-sm font-bold text-primary">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-success" />
                 All systems operational
               </div>
             </div>
             <Link
               href="/"
-              className="rounded-2xl accent-gradient px-4 py-2 text-sm font-bold text-on-accent shadow transition hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+              className="rounded-2xl accent-gradient px-4 py-2 text-sm font-bold text-on-accent shadow transition hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
             >
               ← Back to HUB
             </Link>
@@ -86,7 +86,7 @@ export default function OpsPage() {
           <SectionErrorBoundary section="Key Metrics">
             <section className="rounded-3xl border border-default bg-surface-elevated p-6 shadow-lg backdrop-blur">
               <div className="mb-6 flex items-center justify-between">
-                <h2 className="flex items-center gap-3 text-2xl font-bold text-white">
+                <h2 className="flex items-center gap-3 text-2xl font-bold text-primary">
                   <span role="img" aria-hidden="true">
                     ⚡
                   </span>

@@ -115,7 +115,7 @@ export default function DonationRequests() {
 
                 {/* Actions */}
                 <div className="flex gap-2 ml-6 md:ml-8">
-                  <button className="flex-1 px-3 md:px-4 py-2 accent-gradient hover:shadow-lg rounded-lg text-white text-xs md:text-sm font-bold transition-all hover:scale-105">
+                  <button className="flex-1 px-3 md:px-4 py-2 accent-gradient hover:shadow-lg rounded-lg text-on-accent text-xs md:text-sm font-bold transition-all hover:scale-105">
                     Schedule Pickup
                   </button>
                   <Link

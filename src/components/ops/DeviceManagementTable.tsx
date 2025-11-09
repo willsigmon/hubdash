@@ -212,7 +212,7 @@ export function DeviceManagementTable() {
           </button>
           <button
             onClick={() => setShowCreateForm(true)}
-            className="px-4 py-2 accent-gradient text-white rounded-lg hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center gap-2 font-semibold"
+            className="px-4 py-2 accent-gradient text-on-accent rounded-lg hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center gap-2 font-semibold"
           >
             <Plus className="w-4 h-4" />
             Add Device
@@ -332,7 +332,7 @@ export function DeviceManagementTable() {
               <button
                 onClick={handleCreate}
                 disabled={createMutation.isPending}
-                className="px-4 py-2 accent-gradient text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50"
+                className="px-4 py-2 accent-gradient text-on-accent rounded-lg hover:shadow-lg transition-all disabled:opacity-50"
               >
                 {createMutation.isPending ? "Creating..." : "Create Device"}
               </button>

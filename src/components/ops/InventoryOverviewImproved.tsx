@@ -117,7 +117,7 @@ export default function InventoryOverviewImproved() {
             <div className="flex gap-2 w-full md:w-auto">
               <button
                 onClick={handleAddDevice}
-                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 accent-gradient rounded-lg text-white text-sm font-medium transition-all hover:shadow-lg"
+                className="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 accent-gradient rounded-lg text-on-accent text-sm font-medium transition-all hover:shadow-lg"
               >
                 <Plus className="w-4 h-4" />
                 <span className="hidden sm:inline">Add Device</span>
@@ -200,7 +200,7 @@ export default function InventoryOverviewImproved() {
                             setSearchQuery("");
                             setStatusFilter("all");
                           }}
-                          className="mt-4 px-4 py-2 accent-gradient rounded-lg text-white text-sm font-medium transition-colors"
+                          className="mt-4 px-4 py-2 accent-gradient rounded-lg text-on-accent text-sm font-medium transition-colors"
                         >
                           Clear Filters
                         </button>
@@ -213,7 +213,7 @@ export default function InventoryOverviewImproved() {
                         </p>
                         <button
                           onClick={handleAddDevice}
-                          className="px-4 py-2 accent-gradient rounded-lg text-white text-sm font-medium transition-colors inline-flex items-center gap-2"
+                          className="px-4 py-2 accent-gradient rounded-lg text-on-accent text-sm font-medium transition-colors inline-flex items-center gap-2"
                         >
                           <Plus className="w-4 h-4" />
                           Add Device
@@ -363,7 +363,7 @@ export default function InventoryOverviewImproved() {
                   alert(`Editing ${selectedDevice.serial_number}`);
                   setSelectedDevice(null);
                 }}
-                className="flex-1 px-4 py-2 accent-gradient rounded-lg text-white font-medium transition-colors"
+                className="flex-1 px-4 py-2 accent-gradient rounded-lg text-on-accent font-medium transition-colors"
               >
                 Edit Device
               </button>

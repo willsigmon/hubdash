@@ -197,7 +197,7 @@ export default function EquipmentInventory() {
         </GradientHeading>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 px-6 py-3 accent-gradient text-white rounded-lg font-semibold hover:shadow-xl transition-all"
+          className="flex items-center gap-2 px-6 py-3 accent-gradient text-on-accent rounded-lg font-semibold hover:shadow-xl transition-all"
         >
           <Plus className="w-5 h-5" />
           Add Item
@@ -270,7 +270,7 @@ export default function EquipmentInventory() {
               onClick={() => setActiveTab("equipment")}
               className={`px-6 py-3 rounded-lg font-semibold transition-all ${
                 activeTab === "equipment"
-                  ? "accent-gradient text-white"
+                  ? "accent-gradient text-on-accent"
                   : "bg-surface-alt text-secondary hover:bg-surface"
               }`}
             >
@@ -280,7 +280,7 @@ export default function EquipmentInventory() {
               onClick={() => setActiveTab("parts")}
               className={`px-6 py-3 rounded-lg font-semibold transition-all ${
                 activeTab === "parts"
-                  ? "accent-gradient text-white"
+                  ? "accent-gradient text-on-accent"
                   : "bg-surface-alt text-secondary hover:bg-surface"
               }`}
             >
@@ -325,9 +325,9 @@ export default function EquipmentInventory() {
             {[1, 2, 3].map((i) => (
               <GlassCard key={i}>
                 <div className="animate-pulse space-y-3">
-                  <div className="h-6 bg-white/20 rounded w-3/4" />
-                  <div className="h-4 bg-white/20 rounded w-1/2" />
-                  <div className="h-8 bg-white/20 rounded" />
+                  <div className="h-6 bg-surface-alt rounded w-3/4" />
+                  <div className="h-4 bg-surface-alt rounded w-1/2" />
+                  <div className="h-8 bg-surface-alt rounded" />
                 </div>
               </GlassCard>
             ))}
@@ -351,7 +351,7 @@ export default function EquipmentInventory() {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className={`p-3 rounded-lg ${activeTab === "equipment" ? "accent-gradient" : "accent-gradient"}`}>
-                      <Icon className="w-6 h-6 text-white" />
+                      <Icon className="w-6 h-6 text-on-accent" />
                     </div>
                     <div>
                       <h4 className="font-semibold text-primary">{item.name}</h4>

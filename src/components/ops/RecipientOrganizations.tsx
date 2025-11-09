@@ -200,7 +200,7 @@ export default function RecipientOrganizations() {
         </GradientHeading>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 px-6 py-3 accent-gradient text-white rounded-lg font-semibold hover:shadow-xl transition-all"
+          className="flex items-center gap-2 px-6 py-3 accent-gradient text-on-accent rounded-lg font-semibold hover:shadow-xl transition-all"
         >
           <Plus className="w-5 h-5" />
           Add Organization
@@ -319,7 +319,7 @@ export default function RecipientOrganizations() {
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-start gap-3">
                   <div className="p-3 accent-gradient rounded-lg">
-                    <Building className="w-6 h-6 text-white" />
+                    <Building className="w-6 h-6 text-on-accent" />
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-primary mb-1">{org.name}</h3>
@@ -412,7 +412,7 @@ export default function RecipientOrganizations() {
 
               {/* Notes */}
               {org.notes && (
-                <div className="mt-4 p-3 bg-soft-accent rounded-lg border border-accent/20">
+                <div className="mt-4 p-3 bg-soft-accent rounded-lg border border-accent">
                   <div className="text-xs text-secondary italic">{org.notes}</div>
                 </div>
               )}

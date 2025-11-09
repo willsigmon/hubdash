@@ -159,7 +159,7 @@ export function DeviceJourneyTimeline({ deviceId, serialNumber, deviceType, onCl
           <div className="p-6">
             {loading ? (
               <div className="space-y-4">
-                {[1,2,3,4,5].map(i => (
+                {[1, 2, 3, 4, 5].map(i => (
                   <div key={i} className="bg-white/5 rounded-lg p-4 animate-pulse h-24" />
                 ))}
               </div>
