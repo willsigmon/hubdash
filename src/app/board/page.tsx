@@ -1,7 +1,7 @@
 import CountyMap from "@/components/board/CountyMap";
 import ImpactMetrics from "@/components/board/ImpactMetrics";
 import { LiveImpactCounter } from "@/components/board/LiveImpactCounter";
-import RecentActivity from "@/components/board/RecentActivity";
+import SocialMediaFeed from "@/components/marketing/SocialMediaFeed";
 import TrendChart from "@/components/board/TrendChart";
 import GradientHeading from "@/components/ui/GradientHeading";
 import Link from "next/link";
@@ -212,27 +212,9 @@ export default function BoardDashboard() {
           </div>
         </section>
 
-        {/* Recent Activity */}
-        <section className="space-y-8">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="space-y-2">
-              <GradientHeading className="mb-1 text-3xl md:text-4xl" variant="accent">
-                Recent Activity
-              </GradientHeading>
-              <p className="text-base text-secondary">
-                Latest operational and impact milestones (auto-refreshing).
-              </p>
-            </div>
-            <Link
-              href="/reports"
-              className="rounded-xl border border-default bg-surface-alt px-5 py-3 text-sm font-semibold text-secondary transition hover:text-primary"
-            >
-              View Detailed Reports →
-            </Link>
-          </div>
-          <div className="rounded-3xl border border-default bg-surface p-6 shadow-lg">
-            <RecentActivity />
-          </div>
+        {/* Social Media Feed */}
+        <section>
+          <SocialMediaFeed />
         </section>
       </main>
 

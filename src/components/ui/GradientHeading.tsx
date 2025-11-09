@@ -28,13 +28,13 @@ export default function GradientHeading({
 }: GradientHeadingProps) {
     // For white variant, don't use text-transparent (it's already white)
     const isWhiteVariant = variant === "white";
-    
+
     return (
         <Tag
             className={clsx(
                 "font-bold tracking-tight inline-block",
-                isWhiteVariant 
-                    ? "text-white" 
+                isWhiteVariant
+                    ? "text-white"
                     : clsx("bg-gradient-to-r text-transparent bg-clip-text", variantMap[variant]),
                 className
             )}
