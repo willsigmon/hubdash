@@ -53,7 +53,7 @@ export default function ReportsPage() {
           </div>
           <Link
             href="/"
-            className="accent-gradient px-6 py-3 rounded-xl text-white text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus-ring"
+            className="accent-gradient px-6 py-3 rounded-xl text-on-accent text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus-ring"
           >
             ← Back to HUB
           </Link>
@@ -198,7 +198,7 @@ export default function ReportsPage() {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <button className="accent-gradient text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg text-sm focus-ring">Generate Report</button>
+              <button className="accent-gradient text-on-accent font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg text-sm focus-ring">Generate Report</button>
               <button className="bg-surface-alt border border-default text-primary font-semibold px-6 py-3 rounded-xl shadow-sm hover:bg-surface text-sm focus-ring">Preview Report</button>
               <button className="bg-soft-accent text-accent border border-accent font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md text-sm focus-ring">Export CSV</button>
             </div>
@@ -321,19 +321,19 @@ export default function ReportsPage() {
               <div className="text-4xl">📄</div>
               <h3 className="font-semibold text-primary text-base md:text-lg">PDF Report</h3>
               <p className="text-secondary text-xs md:text-sm">Professional, print-ready report for NCDIT and stakeholder distribution</p>
-              <button className="accent-gradient text-white font-semibold px-5 py-3 rounded-xl text-sm shadow-md hover:shadow-lg focus-ring w-full">Download PDF</button>
+              <button className="accent-gradient text-on-accent font-semibold px-5 py-3 rounded-xl text-sm shadow-md hover:shadow-lg focus-ring w-full">Download PDF</button>
             </GlassCard>
             <GlassCard interactive elevation="sm" className="p-8 text-center space-y-4">
               <div className="text-4xl">📊</div>
               <h3 className="font-semibold text-primary text-base md:text-lg">Excel/CSV Data</h3>
               <p className="text-secondary text-xs md:text-sm">Raw dataset for custom analysis and reporting</p>
-              <button className="accent-gradient text-white font-semibold px-5 py-3 rounded-xl text-sm shadow-md hover:shadow-lg focus-ring w-full">Download CSV</button>
+              <button className="accent-gradient text-on-accent font-semibold px-5 py-3 rounded-xl text-sm shadow-md hover:shadow-lg focus-ring w-full">Download CSV</button>
             </GlassCard>
             <GlassCard interactive elevation="sm" className="p-8 text-center space-y-4">
               <div className="text-4xl">🌐</div>
               <h3 className="font-semibold text-primary text-base md:text-lg">HTML Report</h3>
               <p className="text-secondary text-xs md:text-sm">Web-ready format for online sharing and web viewing</p>
-              <button className="accent-gradient text-white font-semibold px-5 py-3 rounded-xl text-sm shadow-md hover:shadow-lg focus-ring w-full">Download HTML</button>
+              <button className="accent-gradient text-on-accent font-semibold px-5 py-3 rounded-xl text-sm shadow-md hover:shadow-lg focus-ring w-full">Download HTML</button>
             </GlassCard>
           </div>
         </section>

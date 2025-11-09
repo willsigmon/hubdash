@@ -47,7 +47,7 @@ export default class SectionErrorBoundary extends React.Component<SectionErrorBo
           <p className="text-sm text-secondary">A problem occurred rendering this section. Other sections continue to function.</p>
           <button
             onClick={this.handleRetry}
-            className="px-4 py-2 accent-gradient text-white font-semibold rounded-lg shadow hover:shadow-md transition-all text-sm"
+            className="px-4 py-2 accent-gradient text-on-accent font-semibold rounded-lg shadow hover:shadow-md transition-all text-sm"
           >
             Retry Section ↻
           </button>

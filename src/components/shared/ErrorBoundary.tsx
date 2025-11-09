@@ -34,7 +34,7 @@ export default class ErrorBoundary extends React.Component<Props, State> {
           <h3 className="text-xl font-bold text-primary mb-2">Something went wrong</h3>
           <p className="text-secondary mb-4">Please refresh the page. If the issue persists, contact support.</p>
           <button
-            className="px-4 py-2 accent-gradient text-white rounded-lg font-semibold"
+            className="px-4 py-2 accent-gradient text-on-accent rounded-lg font-semibold"
             onClick={() => (window.location.href = window.location.href)}
           >
             Refresh

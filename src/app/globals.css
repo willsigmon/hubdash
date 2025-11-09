@@ -12,9 +12,6 @@
   --hti-navy-dark: #0F1F3D;
   --hti-gray: #6B7280;
   --hti-gray-light: #F3F4F6;
-  --hti-teal: #0F5C64;
-  --hti-teal-medium: #318FA0;
-  --hti-teal-light: #6DB3B7;
 }
 
 body {
@@ -92,7 +89,7 @@ body {
 
 .btn-primary {
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, var(--hti-teal), var(--hti-teal-light));
+  background: linear-gradient(135deg, var(--hti-orange), var(--hti-amber));
   color: white;
   font-weight: 600;
   border-radius: 0.5rem;
@@ -266,9 +263,9 @@ dt {
   --color-text-muted: #5F738D;
   --color-border: rgba(16, 36, 59, 0.12);
   --color-border-strong: rgba(16, 36, 59, 0.26);
-  --color-accent: var(--hti-teal);
-  --color-accent-alt: var(--hti-teal-medium);
-  --color-accent-soft: rgba(15, 92, 100, 0.12);
+  --color-accent: var(--hti-orange);
+  --color-accent-alt: var(--hti-amber);
+  --color-accent-soft: rgba(230, 126, 80, 0.12);
   --color-highlight: var(--hti-amber);
   --color-highlight-soft: rgba(241, 158, 62, 0.18);
   --color-danger: #C53030;
@@ -295,9 +292,9 @@ dt {
   --color-text-muted: #7F94B8;
   --color-border: rgba(176, 202, 232, 0.18);
   --color-border-strong: rgba(176, 202, 232, 0.35);
-  --color-accent: var(--hti-teal-medium);
-  --color-accent-alt: var(--hti-teal-light);
-  --color-accent-soft: rgba(109, 179, 183, 0.22);
+  --color-accent: var(--hti-amber);
+  --color-accent-alt: var(--hti-gold);
+  --color-accent-soft: rgba(241, 158, 62, 0.22);
   --color-highlight: var(--hti-amber);
   --color-highlight-soft: rgba(241, 158, 62, 0.24);
   --color-danger: #F87171;
@@ -345,7 +342,7 @@ body {
 .text-warning { color: var(--color-warning); }
 .text-danger { color: var(--color-danger); }
 
-.bg-soft-accent { background: rgba(15, 92, 100, 0.12); }
+.bg-soft-accent { background: rgba(230, 126, 80, 0.12); }
 .bg-soft-success { background: rgba(15, 123, 87, 0.16); }
 .bg-soft-warning { background: rgba(241, 158, 62, 0.18); }
 .bg-soft-danger { background: rgba(197, 48, 48, 0.14); }
@@ -354,7 +351,7 @@ body {
 .bg-accent { background: var(--color-accent); }
 .text-on-accent { color: #ffffff; }
 
-.theme-dim .bg-soft-accent { background: rgba(109, 179, 183, 0.24); }
+.theme-dim .bg-soft-accent { background: rgba(241, 158, 62, 0.24); }
 .theme-dim .bg-soft-success { background: rgba(52, 211, 153, 0.24); }
 .theme-dim .bg-soft-warning { background: rgba(253, 224, 71, 0.26); color: #1f2937; }
 .theme-dim .bg-soft-danger { background: rgba(248, 113, 113, 0.26); }

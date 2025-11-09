@@ -16,7 +16,7 @@ export default function DevicesPage() {
             </div>
             <Link
               href="/ops"
-              className="px-6 py-3 accent-gradient text-white rounded-lg transition-all duration-200 text-sm font-semibold shadow hover:-translate-y-0.5"
+              className="px-6 py-3 accent-gradient text-on-accent rounded-lg transition-all duration-200 text-sm font-semibold shadow hover:-translate-y-0.5"
             >
               ← Back to Ops
             </Link>

@@ -27,7 +27,7 @@ export default function Home() {
           <Link href="/board" aria-label="Open Board Dashboard — executive metrics and trends" className="group">
             <GlassCard interactive elevation="lg" className="p-6 md:p-8 h-full">
               <div className="flex items-start gap-4">
-                <div className="p-3 rounded-xl accent-gradient text-white shadow">
+                <div className="p-3 rounded-xl accent-gradient text-on-accent shadow">
                   <LayoutDashboard className="w-6 h-6" />
                 </div>
                 <div className="flex-1">
@@ -45,7 +45,7 @@ export default function Home() {
           <Link href="/ops" aria-label="Launch Operations HUB — inventory, donations, distributions, training" className="group">
             <GlassCard interactive elevation="lg" className="p-6 md:p-8 h-full">
               <div className="flex items-start gap-4">
-                <div className="p-3 rounded-xl accent-gradient text-white shadow">
+                <div className="p-3 rounded-xl accent-gradient text-on-accent shadow">
                   <Zap className="w-6 h-6" />
                 </div>
                 <div className="flex-1">
@@ -63,7 +63,7 @@ export default function Home() {
           <Link href="/reports" aria-label="Generate Grant Reports — quarterly reports, goals, NCDIT exports" className="group">
             <GlassCard interactive elevation="lg" className="p-6 md:p-8 h-full">
               <div className="flex items-start gap-4">
-                <div className="p-3 rounded-xl accent-gradient text-white shadow">
+                <div className="p-3 rounded-xl accent-gradient text-on-accent shadow">
                   <FileText className="w-6 h-6" />
                 </div>
                 <div className="flex-1">
@@ -81,7 +81,7 @@ export default function Home() {
           <Link href="/marketing" aria-label="Open Marketing HUB — recipient stories and partnership applications" className="group">
             <GlassCard interactive elevation="lg" className="p-6 md:p-8 h-full">
               <div className="flex items-start gap-4">
-                <div className="p-3 rounded-xl accent-gradient text-white shadow">
+                <div className="p-3 rounded-xl accent-gradient text-on-accent shadow">
                   <Megaphone className="w-6 h-6" />
                 </div>
                 <div className="flex-1">
