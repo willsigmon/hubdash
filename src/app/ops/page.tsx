@@ -71,10 +71,10 @@ export default function OpsPage() {
                 <div
                   key={signal.label}
                   className={`rounded-lg border px-3 py-1.5 text-xs font-semibold ${signal.status === "healthy"
-                      ? "border-success/50 bg-soft-success/50 text-success"
-                      : signal.status === "processing"
-                        ? "border-accent/50 bg-soft-accent/50 text-accent"
-                        : "border-highlight/50 bg-soft-highlight/50 text-highlight"
+                    ? "border-success/50 bg-soft-success/50 text-success"
+                    : signal.status === "processing"
+                      ? "border-accent/50 bg-soft-accent/50 text-accent"
+                      : "border-highlight/50 bg-soft-highlight/50 text-highlight"
                     }`}
                 >
                   <span className="font-bold text-primary theme-dim:text-white">{signal.value}</span>

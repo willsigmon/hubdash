@@ -97,20 +97,20 @@ export default function SocialMediaFeed() {
   return (
     <>
       <div className="mb-6">
-        <h2 className="text-3xl font-bold text-primary mb-2">Recent Social Media Posts</h2>
-        <p className="text-sm font-medium text-secondary">Latest posts from HTI's social media accounts</p>
+        <h2 className="text-4xl md:text-5xl font-black text-primary mb-3">Recent Social Media Posts</h2>
+        <p className="text-base md:text-lg font-semibold text-secondary">Latest posts from HTI's social media accounts</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Instagram */}
-        <div className={`rounded-xl border-2 ${platformConfig.instagram.borderColor} ${platformConfig.instagram.bgGradient} overflow-hidden shadow-lg hover:shadow-xl transition-all`}>
-          <div className={`bg-gradient-to-r ${platformConfig.instagram.gradient} p-4 flex items-center gap-2`}>
-            <Instagram className="h-5 w-5 text-white" />
-            <span className="text-white font-bold text-sm">{platformConfig.instagram.name}</span>
+        <div className={`rounded-2xl border-2 ${platformConfig.instagram.borderColor} ${platformConfig.instagram.bgGradient} overflow-hidden shadow-xl hover:shadow-2xl transition-all`}>
+          <div className={`bg-gradient-to-r ${platformConfig.instagram.gradient} p-5 flex items-center gap-3`}>
+            <Instagram className="h-6 w-6 text-white" />
+            <span className="text-white font-black text-lg">{platformConfig.instagram.name}</span>
           </div>
-          <div className="p-4 space-y-3">
+          <div className="p-5 space-y-4">
             {postsByPlatform.instagram.length > 0 ? (
-              postsByPlatform.instagram.slice(0, 1).map((post) => (
+              postsByPlatform.instagram.slice(0, 2).map((post) => (
                 <a
                   key={post.id}
                   href={post.postUrl}
@@ -119,7 +119,7 @@ export default function SocialMediaFeed() {
                   className="block group"
                 >
                   {post.imageUrl && (
-                    <div className="rounded-lg overflow-hidden mb-2 aspect-square bg-surface-alt">
+                    <div className="rounded-xl overflow-hidden mb-3 aspect-square bg-surface-alt">
                       <img
                         src={post.imageUrl}
                         alt="Instagram post"
@@ -127,33 +127,33 @@ export default function SocialMediaFeed() {
                       />
                     </div>
                   )}
-                  <p className="text-sm text-primary line-clamp-3 mb-2">
+                  <p className="text-base font-semibold text-primary line-clamp-2 mb-2 leading-relaxed">
                     {post.text}
                   </p>
-                  <div className="flex items-center justify-between text-xs text-secondary">
+                  <div className="flex items-center justify-between text-sm font-medium text-secondary">
                     <span>{formatTimeAgo(post.timestamp)}</span>
-                    {post.likes && <span>❤️ {post.likes}</span>}
+                    {post.likes && <span className="font-bold">❤️ {post.likes.toLocaleString()}</span>}
                   </div>
                 </a>
               ))
             ) : (
-              <div className="text-center py-8 text-secondary text-sm">
-                <Instagram className="h-8 w-8 mx-auto mb-2 text-muted" />
-                <p>No recent posts</p>
+              <div className="text-center py-12 text-secondary text-base">
+                <Instagram className="h-12 w-12 mx-auto mb-3 text-muted" />
+                <p className="font-semibold">No recent posts</p>
               </div>
             )}
           </div>
         </div>
 
         {/* LinkedIn */}
-        <div className={`rounded-xl border-2 ${platformConfig.linkedin.borderColor} ${platformConfig.linkedin.bgGradient} overflow-hidden shadow-lg hover:shadow-xl transition-all`}>
-          <div className={`bg-gradient-to-r ${platformConfig.linkedin.gradient} p-4 flex items-center gap-2`}>
-            <Linkedin className="h-5 w-5 text-white" />
-            <span className="text-white font-bold text-sm">{platformConfig.linkedin.name}</span>
+        <div className={`rounded-2xl border-2 ${platformConfig.linkedin.borderColor} ${platformConfig.linkedin.bgGradient} overflow-hidden shadow-xl hover:shadow-2xl transition-all`}>
+          <div className={`bg-gradient-to-r ${platformConfig.linkedin.gradient} p-5 flex items-center gap-3`}>
+            <Linkedin className="h-6 w-6 text-white" />
+            <span className="text-white font-black text-lg">{platformConfig.linkedin.name}</span>
           </div>
-          <div className="p-4 space-y-3">
+          <div className="p-5 space-y-4">
             {postsByPlatform.linkedin.length > 0 ? (
-              postsByPlatform.linkedin.slice(0, 1).map((post) => (
+              postsByPlatform.linkedin.slice(0, 2).map((post) => (
                 <a
                   key={post.id}
                   href={post.postUrl}
@@ -162,7 +162,7 @@ export default function SocialMediaFeed() {
                   className="block group"
                 >
                   {post.imageUrl && (
-                    <div className="rounded-lg overflow-hidden mb-2 aspect-video bg-surface-alt">
+                    <div className="rounded-xl overflow-hidden mb-3 aspect-video bg-surface-alt">
                       <img
                         src={post.imageUrl}
                         alt="LinkedIn post"
@@ -170,33 +170,33 @@ export default function SocialMediaFeed() {
                       />
                     </div>
                   )}
-                  <p className="text-sm text-primary line-clamp-3 mb-2">
+                  <p className="text-base font-semibold text-primary line-clamp-2 mb-2 leading-relaxed">
                     {post.text}
                   </p>
-                  <div className="flex items-center justify-between text-xs text-secondary">
+                  <div className="flex items-center justify-between text-sm font-medium text-secondary">
                     <span>{formatTimeAgo(post.timestamp)}</span>
-                    {post.likes && <span>👍 {post.likes}</span>}
+                    {post.likes && <span className="font-bold">👍 {post.likes.toLocaleString()}</span>}
                   </div>
                 </a>
               ))
             ) : (
-              <div className="text-center py-8 text-secondary text-sm">
-                <Linkedin className="h-8 w-8 mx-auto mb-2 text-muted" />
-                <p>No recent posts</p>
+              <div className="text-center py-12 text-secondary text-base">
+                <Linkedin className="h-12 w-12 mx-auto mb-3 text-muted" />
+                <p className="font-semibold">No recent posts</p>
               </div>
             )}
           </div>
         </div>
 
         {/* TikTok */}
-        <div className={`rounded-xl border-2 ${platformConfig.tiktok.borderColor} ${platformConfig.tiktok.bgGradient} overflow-hidden shadow-lg hover:shadow-xl transition-all`}>
-          <div className={`bg-gradient-to-r ${platformConfig.tiktok.gradient} p-4 flex items-center gap-2`}>
-            <Music2 className="h-5 w-5 text-white" />
-            <span className="text-white font-bold text-sm">{platformConfig.tiktok.name}</span>
+        <div className={`rounded-2xl border-2 ${platformConfig.tiktok.borderColor} ${platformConfig.tiktok.bgGradient} overflow-hidden shadow-xl hover:shadow-2xl transition-all`}>
+          <div className={`bg-gradient-to-r ${platformConfig.tiktok.gradient} p-5 flex items-center gap-3`}>
+            <Music2 className="h-6 w-6 text-white" />
+            <span className="text-white font-black text-lg">{platformConfig.tiktok.name}</span>
           </div>
-          <div className="p-4 space-y-3">
+          <div className="p-5 space-y-4">
             {postsByPlatform.tiktok.length > 0 ? (
-              postsByPlatform.tiktok.slice(0, 1).map((post) => (
+              postsByPlatform.tiktok.slice(0, 2).map((post) => (
                 <a
                   key={post.id}
                   href={post.postUrl}
@@ -205,7 +205,7 @@ export default function SocialMediaFeed() {
                   className="block group"
                 >
                   {post.imageUrl && (
-                    <div className="rounded-lg overflow-hidden mb-2 aspect-[9/16] bg-surface-alt">
+                    <div className="rounded-xl overflow-hidden mb-3 aspect-[9/16] bg-surface-alt">
                       <img
                         src={post.imageUrl}
                         alt="TikTok post"
@@ -213,33 +213,33 @@ export default function SocialMediaFeed() {
                       />
                     </div>
                   )}
-                  <p className="text-sm text-primary line-clamp-3 mb-2">
+                  <p className="text-base font-semibold text-primary line-clamp-2 mb-2 leading-relaxed">
                     {post.text}
                   </p>
-                  <div className="flex items-center justify-between text-xs text-secondary">
+                  <div className="flex items-center justify-between text-sm font-medium text-secondary">
                     <span>{formatTimeAgo(post.timestamp)}</span>
-                    {post.likes && <span>❤️ {post.likes}</span>}
+                    {post.likes && <span className="font-bold">❤️ {post.likes.toLocaleString()}</span>}
                   </div>
                 </a>
               ))
             ) : (
-              <div className="text-center py-8 text-secondary text-sm">
-                <Music2 className="h-8 w-8 mx-auto mb-2 text-muted" />
-                <p>No recent posts</p>
+              <div className="text-center py-12 text-secondary text-base">
+                <Music2 className="h-12 w-12 mx-auto mb-3 text-muted" />
+                <p className="font-semibold">No recent posts</p>
               </div>
             )}
           </div>
         </div>
 
         {/* Facebook */}
-        <div className={`rounded-xl border-2 ${platformConfig.facebook.borderColor} ${platformConfig.facebook.bgGradient} overflow-hidden shadow-lg hover:shadow-xl transition-all`}>
-          <div className={`bg-gradient-to-r ${platformConfig.facebook.gradient} p-4 flex items-center gap-2`}>
-            <Facebook className="h-5 w-5 text-white" />
-            <span className="text-white font-bold text-sm">{platformConfig.facebook.name}</span>
+        <div className={`rounded-2xl border-2 ${platformConfig.facebook.borderColor} ${platformConfig.facebook.bgGradient} overflow-hidden shadow-xl hover:shadow-2xl transition-all`}>
+          <div className={`bg-gradient-to-r ${platformConfig.facebook.gradient} p-5 flex items-center gap-3`}>
+            <Facebook className="h-6 w-6 text-white" />
+            <span className="text-white font-black text-lg">{platformConfig.facebook.name}</span>
           </div>
-          <div className="p-4 space-y-3">
+          <div className="p-5 space-y-4">
             {postsByPlatform.facebook.length > 0 ? (
-              postsByPlatform.facebook.slice(0, 1).map((post) => (
+              postsByPlatform.facebook.slice(0, 2).map((post) => (
                 <a
                   key={post.id}
                   href={post.postUrl}
@@ -248,7 +248,7 @@ export default function SocialMediaFeed() {
                   className="block group"
                 >
                   {post.imageUrl && (
-                    <div className="rounded-lg overflow-hidden mb-2 aspect-video bg-surface-alt">
+                    <div className="rounded-xl overflow-hidden mb-3 aspect-video bg-surface-alt">
                       <img
                         src={post.imageUrl}
                         alt="Facebook post"
@@ -256,19 +256,19 @@ export default function SocialMediaFeed() {
                       />
                     </div>
                   )}
-                  <p className="text-sm text-primary line-clamp-3 mb-2">
+                  <p className="text-base font-semibold text-primary line-clamp-2 mb-2 leading-relaxed">
                     {post.text}
                   </p>
-                  <div className="flex items-center justify-between text-xs text-secondary">
+                  <div className="flex items-center justify-between text-sm font-medium text-secondary">
                     <span>{formatTimeAgo(post.timestamp)}</span>
-                    {post.likes && <span>👍 {post.likes}</span>}
+                    {post.likes && <span className="font-bold">👍 {post.likes.toLocaleString()}</span>}
                   </div>
                 </a>
               ))
             ) : (
-              <div className="text-center py-8 text-secondary text-sm">
-                <Facebook className="h-8 w-8 mx-auto mb-2 text-muted" />
-                <p>No recent posts</p>
+              <div className="text-center py-12 text-secondary text-base">
+                <Facebook className="h-12 w-12 mx-auto mb-3 text-muted" />
+                <p className="font-semibold">No recent posts</p>
               </div>
             )}
           </div>

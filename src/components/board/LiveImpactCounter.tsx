@@ -160,17 +160,17 @@ export function LiveImpactCounter() {
       <Confetti show={showConfetti} />
 
       {/* Header - Enhanced */}
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-8 flex items-center justify-between">
         <div>
-          <h3 className="text-2xl font-bold text-primary mb-1 flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-accent animate-pulse" />
+          <h3 className="text-4xl md:text-5xl font-black text-primary mb-2 flex items-center gap-3">
+            <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-accent animate-pulse" />
             Live Impact Counter
           </h3>
-          <p className="text-sm font-medium text-secondary">
+          <p className="text-lg md:text-xl font-semibold text-secondary">
             Real-time metrics updating every 30 seconds
           </p>
         </div>
-        <span className="rounded-full border-2 border-accent bg-soft-accent px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-accent">
+        <span className="rounded-full border-2 border-accent bg-soft-accent px-4 py-2 text-sm font-black uppercase tracking-wide text-accent shadow-lg animate-pulse">
           Live
         </span>
       </div>
@@ -189,10 +189,10 @@ export function LiveImpactCounter() {
                 Devices Deployed
               </span>
             </div>
-            <div className="text-4xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
+            <div className="text-5xl md:text-6xl font-black text-primary mb-2 group-hover:text-accent transition-colors">
               <AnimatedNumber value={stats.devicesDeployed} />
             </div>
-            <div className="text-xs font-medium text-secondary">
+            <div className="text-sm md:text-base font-semibold text-secondary">
               Bridging the digital divide
             </div>
           </div>

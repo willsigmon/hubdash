@@ -54,21 +54,21 @@ export default function MetricCard({
             />
             <div className="relative z-10 space-y-2">
                 <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-2">
-                        {icon && <span className="text-2xl" aria-hidden>{icon}</span>}
-                        <span className="font-bold text-xs tracking-wide uppercase text-secondary">
+                    <div className="flex items-center gap-3">
+                        {icon && <span className="text-3xl md:text-4xl" aria-hidden>{icon}</span>}
+                        <span className="font-black text-sm md:text-base tracking-wide uppercase text-secondary">
                             {label}
                         </span>
                     </div>
                     {highlight && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold accent-gradient text-white shadow">
+                        <span className="px-3 py-1 rounded-full text-xs font-black accent-gradient text-white shadow-lg">
                             Live
                         </span>
                     )}
                 </div>
-                <div className="flex items-end gap-1">
-                    <div className={clsx("font-bold", highlight ? "text-3xl md:text-4xl" : "text-2xl md:text-3xl", "text-primary")}>{typeof value === 'number' ? value.toLocaleString() : value}</div>
-                    {suffix && <div className={clsx("font-bold", highlight ? "text-xl" : "text-lg", "text-accent")}>{suffix}</div>}
+                <div className="flex items-end gap-2">
+                    <div className={clsx("font-black", highlight ? "text-5xl md:text-6xl" : "text-4xl md:text-5xl", "text-primary")}>{typeof value === 'number' ? value.toLocaleString() : value}</div>
+                    {suffix && <div className={clsx("font-black", highlight ? "text-2xl md:text-3xl" : "text-xl md:text-2xl", "text-accent")}>{suffix}</div>}
                 </div>
                 {typeof progress === "number" && progress >= 0 && progress <= 100 && (
                     <div className="space-y-2 mt-2">
@@ -85,7 +85,7 @@ export default function MetricCard({
                     </div>
                 )}
                 {description && (
-                    <p className="text-xs md:text-sm text-secondary font-medium leading-relaxed">
+                    <p className="text-sm md:text-base text-secondary font-semibold leading-relaxed">
                         {description}
                     </p>
                 )}

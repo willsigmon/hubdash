@@ -142,13 +142,12 @@ export default function BoardDashboard() {
                   {momentumPulses.map((pulse) => (
                     <li
                       key={pulse.title}
-                      className={`group rounded-xl border-2 px-5 py-4 shadow-md transition-all hover:shadow-lg ${
-                        pulse.tone === "positive"
+                      className={`group rounded-xl border-2 px-5 py-4 shadow-md transition-all hover:shadow-lg ${pulse.tone === "positive"
                           ? "border-success/50 bg-gradient-to-br from-soft-success to-surface"
                           : pulse.tone === "accent"
-                          ? "border-accent/50 bg-gradient-to-br from-soft-accent to-surface"
-                          : "border-highlight/50 bg-gradient-to-br from-soft-highlight to-surface"
-                      }`}
+                            ? "border-accent/50 bg-gradient-to-br from-soft-accent to-surface"
+                            : "border-highlight/50 bg-gradient-to-br from-soft-highlight to-surface"
+                        }`}
                     >
                       <p className="font-bold text-sm text-primary mb-1.5">{pulse.title}</p>
                       <p className="text-xs font-medium text-secondary leading-relaxed">{pulse.detail}</p>

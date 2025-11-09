@@ -161,9 +161,9 @@ export default function ImpactMetrics() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="mb-6">
-        <h3 className="text-2xl font-bold text-primary mb-2">Impact Metrics</h3>
-        <p className="text-sm font-medium text-secondary">
+      <div className="mb-8">
+        <h3 className="text-4xl md:text-5xl font-black text-primary mb-3">Impact Metrics</h3>
+        <p className="text-lg md:text-xl font-semibold text-secondary">
           Comprehensive view of HTI's mission impact across all programs
         </p>
       </div>

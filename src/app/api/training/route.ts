@@ -1,12 +1,12 @@
 import { cacheKeys, getCached, invalidateCache } from '@/lib/knack/cache-manager'
 import { getKnackClient } from '@/lib/knack/client'
 import {
-    errorResponse,
-    requireAuth,
-    safeKnack,
-    successResponse,
-    type TrainingDTO,
-    mapTrainingPayload
+  errorResponse,
+  requireAuth,
+  safeKnack,
+  successResponse,
+  type TrainingDTO,
+  mapTrainingPayload
 } from '@/lib/knack/write-utils'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
