@@ -3,6 +3,7 @@ import DevicePipelineFlow from "@/components/ops/DevicePipelineFlow";
 import DonationRequests from "@/components/ops/DonationRequests";
 import EquipmentInventory from "@/components/ops/EquipmentInventory";
 import QuickStats from "@/components/ops/QuickStats";
+import ErrorBoundary from "@/components/shared/ErrorBoundary";
 import Link from "next/link";
 
 export default function OpsPage() {
@@ -41,6 +42,7 @@ export default function OpsPage() {
 
       {/* Main Content */}
       <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+        <ErrorBoundary>
         {/* Quick Stats Section */}
         <section>
           <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6 flex items-center gap-3">
@@ -72,6 +74,7 @@ export default function OpsPage() {
         <section>
           <EquipmentInventory />
         </section>
+        </ErrorBoundary>
       </main>
     </div>
   );
