@@ -16,11 +16,11 @@ const config: Config = {
           amber: '#F19E3E',         // Circle 2
           gold: '#F5BB2D',          // Circle 3
           yellow: '#F9D71C',        // Circle 4 (rightmost/brightest)
-          
+
           // Logo text and backgrounds
           navy: '#1B365D',          // Primary text color from logo
           white: '#FFFFFF',         // Background/contrast
-          
+
           // Extended palette for UI needs
           'navy-light': '#2A4A7C',  // Lighter navy for borders
           'navy-dark': '#0F1F3D',   // Darker navy for depth
