@@ -1,3 +1,5 @@
+"use client";
+
 import DevicePipelineFlow from "@/components/ops/DevicePipelineFlow";
 import DonationRequests from "@/components/ops/DonationRequests";
 import EquipmentInventory from "@/components/ops/EquipmentInventory";
@@ -5,14 +7,37 @@ import QuickStats from "@/components/ops/QuickStats";
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import Link from "next/link";
-
-const commandSignals = [
-  { label: "Devices in pipeline", value: "128", status: "processing" as const },
-  { label: "QA queue", value: "14", status: "attention" as const },
-  { label: "Deployments today", value: "36", status: "healthy" as const },
-];
+import { useEffect, useState } from "react";
 
 export default function OpsPage() {
+  const [commandSignals, setCommandSignals] = useState([
+    { label: "Devices in pipeline", value: "—", status: "processing" as const },
+    { label: "QA queue", value: "—", status: "attention" as const },
+    { label: "Deployments today", value: "—", status: "healthy" as const },
+  ]);
+
+  useEffect(() => {
+    // Fetch real metrics for command signals
+    Promise.all([
+      fetch('/api/metrics').then(r => r.json()).catch(() => null),
+      fetch('/api/devices?limit=1000').then(r => r.json()).catch(() => null),
+    ]).then(([metrics, devices]) => {
+      const deviceData = devices?.data || devices || [];
+      const inPipeline = deviceData.filter((d: any) => 
+        d.status && !['Distributed', 'Discarded'].includes(d.status)
+      ).length;
+      const qaQueue = deviceData.filter((d: any) => 
+        d.status?.toLowerCase().includes('qa') || d.status?.toLowerCase().includes('testing')
+      ).length;
+      const deployments = metrics?.readyToShip || 0;
+
+      setCommandSignals([
+        { label: "Devices in pipeline", value: String(inPipeline), status: "processing" as const },
+        { label: "QA queue", value: String(qaQueue), status: "attention" as const },
+        { label: "Ready to ship", value: String(deployments), status: "healthy" as const },
+      ]);
+    });
+  }, []);
   return (
     <div className="min-h-screen bg-app text-primary">
       {/* Header - Compact */}
@@ -52,8 +77,8 @@ export default function OpsPage() {
                       : "border-highlight/50 bg-soft-highlight/50 text-highlight"
                   }`}
                 >
-                  <span className="font-bold">{signal.value}</span>
-                  <span className="text-[10px] text-muted ml-1.5 uppercase tracking-wide hidden xl:inline">
+                  <span className="font-bold text-white">{signal.value}</span>
+                  <span className="text-[10px] text-white/70 ml-1.5 uppercase tracking-wide hidden xl:inline">
                     {signal.label}
                   </span>
                 </div>
