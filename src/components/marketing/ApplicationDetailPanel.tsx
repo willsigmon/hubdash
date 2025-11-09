@@ -26,6 +26,12 @@ export default function ApplicationDetailPanel({
   onClose,
   onAction,
 }: ApplicationDetailPanelProps) {
+  // Validate application object
+  if (!application || !application.id) {
+    console.error('ApplicationDetailPanel: Invalid application object', application);
+    return null;
+  }
+
   const overlayRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const titleId = useMemo(() => `app-detail-title-${application.id}`, [application.id]);
@@ -104,10 +110,10 @@ export default function ApplicationDetailPanel({
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 mb-2">
                 <h2 id={titleId} className="text-xl font-bold text-primary truncate">
-                {application.organizationName}
+                {application.organizationName || 'Unknown Organization'}
               </h2>
-                <span className={`px-2.5 py-1 rounded-md text-xs font-bold border ${getStatusColor(application.status)}`}>
-                  {application.status}
+                <span className={`px-2.5 py-1 rounded-md text-xs font-bold border ${getStatusColor(application.status || 'Pending')}`}>
+                  {application.status || 'Pending'}
                 </span>
                 {application.is501c3 && (
                   <span className="px-2.5 py-1 rounded-md text-xs font-bold border border-success bg-soft-success text-success">
@@ -122,13 +128,23 @@ export default function ApplicationDetailPanel({
                 </span>
                 <span className="flex items-center gap-1.5">
                   <Users className="h-3.5 w-3.5" />
-                  {application.chromebooksNeeded} requested
+                  {typeof application.chromebooksNeeded === 'number' ? application.chromebooksNeeded : 0} requested
                 </span>
                 <span className="flex items-center gap-1.5">
                   <CalendarDays className="h-3.5 w-3.5" />
-                  {new Date(application.timestamp).toLocaleDateString()}
+                  {application.timestamp ? (() => {
+                    try {
+                      const date = new Date(application.timestamp);
+                      if (!isNaN(date.getTime())) {
+                        return date.toLocaleDateString();
+                      }
+                    } catch (e) {
+                      // Fall through
+                    }
+                    return 'Unknown Date';
+                  })() : 'Unknown Date'}
                 </span>
-                {application.firstTime && (
+                {typeof application.firstTime === 'boolean' && application.firstTime && (
                   <span className="px-2 py-0.5 rounded text-xs font-semibold border border-highlight bg-soft-highlight text-highlight">
                     First-time
                   </span>
@@ -159,11 +175,11 @@ export default function ApplicationDetailPanel({
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   <div>
                     <div className="text-xs font-semibold text-secondary mb-0.5">Person</div>
-                    <div className="text-primary font-medium">{application.contactPerson}</div>
+                    <div className="text-primary font-medium">{application.contactPerson || 'Unknown'}</div>
                   </div>
                   <div>
                     <div className="text-xs font-semibold text-secondary mb-0.5">Email</div>
-                    <div className="text-primary font-medium break-all">{application.email}</div>
+                    <div className="text-primary font-medium break-all">{application.email || 'No email provided'}</div>
                   </div>
                   {application.phone && (
                     <div>
@@ -277,18 +293,18 @@ export default function ApplicationDetailPanel({
                       <div className="text-primary">{application.positiveImpact}</div>
                     </div>
                   )}
-                  {application.howClientsUseLaptops && (
-                    <div>
-                      <div className="text-xs font-semibold text-secondary mb-1.5">Client Usage</div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {application.howClientsUseLaptops.split(',').map((item, idx) => (
-                          <span key={idx} className="px-2 py-1 rounded border border-accent bg-soft-accent text-accent text-xs font-medium">
-                            {item.trim()}
-                          </span>
-                        ))}
+                    {application.howClientsUseLaptops && typeof application.howClientsUseLaptops === 'string' && (
+                      <div>
+                        <div className="text-xs font-semibold text-secondary mb-1.5">Client Usage</div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {application.howClientsUseLaptops.split(',').map((item, idx) => (
+                            <span key={idx} className="px-2 py-1 rounded border border-accent bg-soft-accent text-accent text-xs font-medium">
+                              {item.trim()}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                 </div>
               </div>
 

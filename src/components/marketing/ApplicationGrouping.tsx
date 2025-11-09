@@ -156,7 +156,7 @@ export default function ApplicationGrouping({
     return (
       <div
         onClick={() => onApplicationClick(app)}
-        className="group bg-surface rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer border border-default hover:border-strong overflow-hidden hover:-translate-y-1"
+        className="group bg-surface rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 cursor-pointer border border-default hover:border-strong overflow-hidden"
       >
         {/* Top Accent Bar */}
         <div className={`h-1.5 ${getCardAccentColor(app.status)}`} />

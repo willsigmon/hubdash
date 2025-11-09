@@ -70,7 +70,7 @@ export default function QuoteCardGenerator({
       canvas.width = 1080;
       canvas.height = 1080;
       const ctx = canvas.getContext('2d');
-      
+
       if (!ctx) {
         alert('Canvas not supported');
         setDownloading(false);
@@ -80,7 +80,7 @@ export default function QuoteCardGenerator({
       // Get computed styles
       const styles = window.getComputedStyle(previewElement);
       const bg = currentTheme.bg;
-      
+
       // Draw background
       if (bg.includes('gradient')) {
         // Extract gradient colors
@@ -110,7 +110,7 @@ export default function QuoteCardGenerator({
       ctx.font = 'bold 48px Arial';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      
+
       const maxWidth = 900;
       const lineHeight = 60;
       const words = quote.split(' ');

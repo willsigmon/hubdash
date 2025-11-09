@@ -76,7 +76,7 @@ export default function MarketingPage() {
     if (!Array.isArray(partnerships)) {
       return [];
     }
-    
+
     return partnerships.filter((app) => {
       // Validate app object
       if (!app || typeof app !== 'object') {
@@ -368,7 +368,7 @@ export default function MarketingPage() {
         </section>
       </main>
 
-      {selectedApplication && (
+      {selectedApplication && selectedApplication.id && (
         <ApplicationDetailPanel
           application={selectedApplication}
           onClose={() => setSelectedApplication(null)}
