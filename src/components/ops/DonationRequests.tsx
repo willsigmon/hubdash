@@ -161,13 +161,12 @@ export default function DonationRequests() {
               >
                 {/* Status Badge */}
                 <div className="absolute top-4 right-4">
-                  <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border-2 ${
-                    request.status === 'scheduled'
+                  <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide border-2 ${request.status === 'scheduled'
                       ? 'bg-soft-success text-success border-success/50'
                       : request.status === 'in_progress'
-                      ? 'bg-soft-warning text-warning border-warning/50'
-                      : 'bg-soft-accent text-accent border-accent/50'
-                  }`}>
+                        ? 'bg-soft-warning text-warning border-warning/50'
+                        : 'bg-soft-accent text-accent border-accent/50'
+                    }`}>
                     {request.status.replace('_', ' ')}
                   </span>
                 </div>

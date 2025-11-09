@@ -3,15 +3,15 @@
 import { useTheme } from "@/components/providers/ThemeProvider";
 import HTILogo from "@/components/ui/HTILogo";
 import {
-    FileText,
-    LayoutDashboard,
-    Megaphone,
-    Menu,
-    Moon,
-    Search,
-    Sun,
-    X,
-    Zap
+  FileText,
+  LayoutDashboard,
+  Megaphone,
+  Menu,
+  Moon,
+  Search,
+  Sun,
+  X,
+  Zap
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -68,7 +68,7 @@ export default function AppNav() {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 hover:opacity-100 transition-opacity">
               <HTILogo size="sm" showText={false} />
-              <span className={`font-black text-xl hidden sm:inline text-primary tracking-tight`} style={{ 
+              <span className={`font-black text-xl hidden sm:inline text-primary tracking-tight`} style={{
                 fontFamily: 'system-ui, -apple-system, sans-serif',
                 letterSpacing: '-0.02em',
                 fontWeight: 800

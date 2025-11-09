@@ -2,16 +2,16 @@
 
 import { Partnership } from "@/types/partnership";
 import {
-    Building2,
+  Building2,
   CalendarDays,
-    CheckCircle2,
+  CheckCircle2,
   FileText,
-    Mail,
+  Mail,
   MapPin,
   Phone,
   Quote,
-    Users,
-    X,
+  Users,
+  X,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
@@ -110,8 +110,8 @@ export default function ApplicationDetailPanel({
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 mb-2">
                 <h2 id={titleId} className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary truncate">
-                {application.organizationName || 'Unknown Organization'}
-              </h2>
+                  {application.organizationName || 'Unknown Organization'}
+                </h2>
                 <span className={`px-2.5 py-1 rounded-md text-xs font-bold border ${getStatusColor(application.status || 'Pending')}`}>
                   {application.status || 'Pending'}
                 </span>
@@ -293,23 +293,23 @@ export default function ApplicationDetailPanel({
                       <div className="text-primary">{application.positiveImpact}</div>
                     </div>
                   )}
-                    {application.howClientsUseLaptops && typeof application.howClientsUseLaptops === 'string' && (
-                      <div>
-                        <div className="text-xs font-semibold text-secondary mb-1.5">Client Usage</div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {application.howClientsUseLaptops.split(',').map((item, idx) => (
-                            <span key={idx} className="px-2 py-1 rounded border border-accent bg-soft-accent text-accent text-xs font-medium">
-                              {item.trim()}
-                            </span>
-                          ))}
-                        </div>
+                  {application.howClientsUseLaptops && typeof application.howClientsUseLaptops === 'string' && (
+                    <div>
+                      <div className="text-xs font-semibold text-secondary mb-1.5">Client Usage</div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {application.howClientsUseLaptops.split(',').map((item, idx) => (
+                          <span key={idx} className="px-2 py-1 rounded border border-accent bg-soft-accent text-accent text-xs font-medium">
+                            {item.trim()}
+                          </span>
+                        ))}
                       </div>
-                    )}
+                    </div>
+                  )}
                 </div>
               </div>
 
               {/* Quote if available */}
-                {application.quote && (
+              {application.quote && (
                 <div className="rounded-xl border border-accent bg-soft-accent p-4">
                   <div className="flex items-center gap-2 mb-2">
                     <Quote className="h-4 w-4 text-accent" />
@@ -319,13 +319,13 @@ export default function ApplicationDetailPanel({
                   {application.oneWord && (
                     <div className="mt-2 text-xs text-secondary">
                       <span className="font-semibold">One word:</span> {application.oneWord}
-                  </div>
-                )}
+                    </div>
+                  )}
                 </div>
-          )}
+              )}
 
               {/* Notes */}
-          {(application.notes || application.internalComments) && (
+              {(application.notes || application.internalComments) && (
                 <div className="rounded-xl border border-danger bg-soft-danger p-4">
                   <h3 className="text-sm font-semibold text-danger mb-2">Internal Notes</h3>
                   <div className="space-y-2 text-sm">
@@ -343,51 +343,51 @@ export default function ApplicationDetailPanel({
                     )}
                   </div>
                 </div>
-          )}
-        </div>
+              )}
+            </div>
 
             {/* Right Column - Actions */}
             <div className="space-y-4">
               <div className="rounded-xl border border-default bg-surface p-4">
                 <h3 className="text-sm font-semibold text-primary mb-3">Actions</h3>
                 <div className="space-y-2">
-            <button
-              onClick={() => onAction?.("approve", application.id)}
+                  <button
+                    onClick={() => onAction?.("approve", application.id)}
                     className="w-full flex items-center justify-center gap-2 rounded-lg border border-success bg-soft-success px-3 py-2 text-sm font-semibold text-success transition hover:shadow-md"
-            >
+                  >
                     <CheckCircle2 className="h-4 w-4" />
                     Approve
-            </button>
-            <button
-              onClick={() => onAction?.("request-info", application.id)}
+                  </button>
+                  <button
+                    onClick={() => onAction?.("request-info", application.id)}
                     className="w-full flex items-center justify-center gap-2 rounded-lg border border-accent bg-soft-accent px-3 py-2 text-sm font-semibold text-accent transition hover:shadow-md"
-            >
+                  >
                     Request Info
-            </button>
-            <button
-              onClick={() => onAction?.("schedule", application.id)}
+                  </button>
+                  <button
+                    onClick={() => onAction?.("schedule", application.id)}
                     className="w-full flex items-center justify-center gap-2 rounded-lg border border-default bg-surface px-3 py-2 text-sm font-semibold text-primary transition hover:border-strong hover:shadow-md"
-            >
-              Schedule
-            </button>
-            <button
-              onClick={() => onAction?.("contact", application.id)}
+                  >
+                    Schedule
+                  </button>
+                  <button
+                    onClick={() => onAction?.("contact", application.id)}
                     className="w-full flex items-center justify-center gap-2 rounded-lg border border-highlight bg-soft-highlight px-3 py-2 text-sm font-semibold text-highlight transition hover:shadow-md"
-            >
+                  >
                     Mark Contacted
-            </button>
-            <button
-              onClick={() => onAction?.("quote-card", application.id)}
+                  </button>
+                  <button
+                    onClick={() => onAction?.("quote-card", application.id)}
                     className="w-full flex items-center justify-center gap-2 rounded-lg highlight-gradient px-3 py-2 text-sm font-semibold text-primary shadow transition hover:shadow-md"
-            >
+                  >
                     Generate Quote Card
-            </button>
-            <button
-              onClick={() => onAction?.("export", application.id)}
+                  </button>
+                  <button
+                    onClick={() => onAction?.("export", application.id)}
                     className="w-full flex items-center justify-center gap-2 rounded-lg border border-default bg-surface px-3 py-2 text-sm font-semibold text-primary transition hover:border-strong hover:shadow-md"
-            >
+                  >
                     Export PDF
-            </button>
+                  </button>
                 </div>
               </div>
 

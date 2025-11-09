@@ -12,14 +12,49 @@ export default function ReportsPage() {
 
   // State for live data from API
   const [metrics, setMetrics] = useState<any>(null);
+  const [devices, setDevices] = useState<any[]>([]);
+  const [training, setTraining] = useState<any[]>([]);
+  const [partners, setPartners] = useState<any[]>([]);
+
+  // Fetch all data
+  useEffect(() => {
+    Promise.all([
+      fetch('/api/metrics').then(r => r.json()).catch(() => null),
+      fetch('/api/devices?limit=10000').then(r => r.json()).then(d => Array.isArray(d.data) ? d.data : Array.isArray(d) ? d : []).catch(() => []),
+      fetch('/api/training').then(r => r.json()).then(d => Array.isArray(d) ? d : []).catch(() => []),
+      fetch('/api/partners').then(r => r.json()).then(d => Array.isArray(d) ? d : []).catch(() => []),
+    ]).then(([metricsData, devicesData, trainingData, partnersData]) => {
+      setMetrics(metricsData);
+      setDevices(devicesData);
+      setTraining(trainingData);
+      setPartners(partnersData);
+      setLoading(false);
+    });
+  }, []);
+
+  // Calculate exact numbers from real data
+  const totalLaptopsReceived = devices.length;
+  const distributedDevices = devices.filter((d: any) => 
+    d.status === 'Distributed' || d.status === 'Completed-Presented' || d.status?.includes('Presented')
+  ).length;
+  const recycledDevices = devices.filter((d: any) => 
+    d.status === 'Discarded' || d.status === 'Recycled' || d.status?.includes('eCycle')
+  ).length;
+  
+  // Calculate training hours and participants from training sessions
+  // Training sessions typically last 2 hours each
+  const totalTrainingHours = training.length * 2;
+  const totalParticipants = training.reduce((sum: number, t: any) => {
+    return sum + (parseInt(String(t.attendees || 0), 10) || 0);
+  }, 0);
 
   // Default grant data
   const GRANT_DATA = {
     laptopsConverted: metrics?.grantLaptopsPresented || 0,
     laptopsGoal: metrics?.grantLaptopGoal || 1500,
-    trainingHours: metrics?.trainingHoursDelivered || 0, // Pull from actual training data
-    trainingHoursGoal: metrics?.trainingHoursGoal || 125,
-    participants: metrics?.peopleTrained || 0,
+    trainingHours: totalTrainingHours,
+    trainingHoursGoal: metrics?.grantTrainingHoursGoal || 125,
+    participants: totalParticipants,
     participantsGoal: 600,
   };
 
@@ -28,19 +63,78 @@ export default function ReportsPage() {
   const trainingProgress = Math.round((GRANT_DATA.trainingHours / GRANT_DATA.trainingHoursGoal) * 100);
   const participantProgress = Math.round((GRANT_DATA.participants / GRANT_DATA.participantsGoal) * 100);
 
-  // Fetch live metrics
-  useEffect(() => {
-    fetch('/api/metrics')
-      .then(res => res.json())
-      .then(data => {
-        setMetrics(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching metrics:', error);
-        setLoading(false);
-      });
-  }, []);
+  // Export functions
+  const handleExportPDF = () => {
+    window.print();
+  };
+
+  const handleExportCSV = () => {
+    const csvData = [
+      ['Metric', 'Value'],
+      ['Laptops Converted', GRANT_DATA.laptopsConverted],
+      ['Training Hours', GRANT_DATA.trainingHours],
+      ['Participants Trained', GRANT_DATA.participants],
+      ['Total Laptops Received', totalLaptopsReceived],
+      ['Distributed to Partners', distributedDevices],
+      ['Responsibly Recycled', recycledDevices],
+      ['Counties Served', metrics?.countiesServed || 0],
+      ['Partner Organizations', partners.length],
+    ];
+    const csv = csvData.map(row => row.map(cell => `"${cell}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `hti-report-${selectedQuarter.replace(' ', '-')}-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleExportHTML = () => {
+    const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HTI Quarterly Accountability Report - ${selectedQuarter}</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+    h1 { color: #1e3a5f; }
+    h2 { color: #4a9b9f; margin-top: 30px; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+    th { background-color: #f5f5f5; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>HTI Quarterly Accountability Report</h1>
+  <p><strong>Reporting Period:</strong> ${selectedQuarter}</p>
+  <p><strong>Generated:</strong> ${new Date().toLocaleDateString()}</p>
+  
+  <h2>Key Metrics</h2>
+  <table>
+    <tr><th>Metric</th><th>Value</th></tr>
+    <tr><td>Laptops Converted</td><td>${GRANT_DATA.laptopsConverted}</td></tr>
+    <tr><td>Training Hours</td><td>${GRANT_DATA.trainingHours}</td></tr>
+    <tr><td>Participants Trained</td><td>${GRANT_DATA.participants}</td></tr>
+  </table>
+  
+  <h2>Device Metrics</h2>
+  <table>
+    <tr><th>Metric</th><th>Value</th></tr>
+    <tr><td>Total Laptops Received</td><td>${totalLaptopsReceived}</td></tr>
+    <tr><td>Distributed to Partners</td><td>${distributedDevices}</td></tr>
+    <tr><td>Responsibly Recycled</td><td>${recycledDevices}</td></tr>
+  </table>
+</body>
+</html>`;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `hti-report-${selectedQuarter.replace(' ', '-')}-${new Date().toISOString().split('T')[0]}.html`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div className="min-h-screen bg-app">
@@ -198,15 +292,30 @@ export default function ReportsPage() {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <button className="accent-gradient text-on-accent font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg text-sm focus-ring">Generate Report</button>
-              <button className="bg-surface-alt border border-default text-primary font-semibold px-6 py-3 rounded-xl shadow-sm hover:bg-surface text-sm focus-ring">Preview Report</button>
-              <button className="bg-soft-accent text-accent border border-accent font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md text-sm focus-ring">Export CSV</button>
+              <button 
+                onClick={() => window.scrollTo({ top: document.getElementById('report-preview')?.offsetTop || 0, behavior: 'smooth' })}
+                className="accent-gradient text-on-accent font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg text-sm focus-ring transition-all"
+              >
+                Generate Report
+              </button>
+              <button 
+                onClick={() => window.scrollTo({ top: document.getElementById('report-preview')?.offsetTop || 0, behavior: 'smooth' })}
+                className="bg-surface-alt border border-default text-primary font-semibold px-6 py-3 rounded-xl shadow-sm hover:bg-surface text-sm focus-ring transition-all"
+              >
+                Preview Report
+              </button>
+              <button 
+                onClick={handleExportCSV}
+                className="bg-soft-accent text-accent border border-accent font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md text-sm focus-ring transition-all"
+              >
+                Export CSV
+              </button>
             </div>
           </GlassCard>
         </section>
 
         {/* Report Preview */}
-        <section>
+        <section id="report-preview">
           <GlassCard elevation="md" className="p-6 space-y-6">
             <div className="space-y-2">
               <h2 className="text-xl md:text-2xl font-bold text-primary tracking-tight">HTI Quarterly Accountability Report</h2>
@@ -246,20 +355,20 @@ export default function ReportsPage() {
                 <div className="rounded-lg overflow-hidden border border-default bg-surface-alt">
                   <ul className="divide-y divide-default">
                     <li className="flex justify-between items-center py-3 px-4 hover:bg-surface transition-colors">
-                      <span className="text-secondary font-medium">Total Laptops Received (Grant Cycle)</span>
-                      <span className="text-lg font-bold text-primary">3,500+</span>
+                      <span className="text-secondary font-medium text-sm sm:text-base">Total Laptops Received (Grant Cycle)</span>
+                      <span className="text-lg sm:text-xl font-bold text-primary">{loading ? '—' : totalLaptopsReceived.toLocaleString()}</span>
                     </li>
                     <li className="flex justify-between items-center py-3 px-4 hover:bg-surface transition-colors">
-                      <span className="text-secondary font-medium">Successfully Converted to Chromebooks</span>
-                      <span className="text-lg font-bold text-primary">{GRANT_DATA.laptopsConverted}</span>
+                      <span className="text-secondary font-medium text-sm sm:text-base">Successfully Converted to Chromebooks</span>
+                      <span className="text-lg sm:text-xl font-bold text-primary">{GRANT_DATA.laptopsConverted.toLocaleString()}</span>
                     </li>
                     <li className="flex justify-between items-center py-3 px-4 hover:bg-surface transition-colors">
-                      <span className="text-secondary font-medium">Distributed to Community Partners</span>
-                      <span className="text-lg font-bold text-primary">2,500+</span>
+                      <span className="text-secondary font-medium text-sm sm:text-base">Distributed to Community Partners</span>
+                      <span className="text-lg sm:text-xl font-bold text-primary">{loading ? '—' : distributedDevices.toLocaleString()}</span>
                     </li>
                     <li className="flex justify-between items-center py-3 px-4 hover:bg-surface transition-colors">
-                      <span className="text-secondary font-medium">Responsibly Recycled</span>
-                      <span className="text-lg font-bold text-primary">350+</span>
+                      <span className="text-secondary font-medium text-sm sm:text-base">Responsibly Recycled</span>
+                      <span className="text-lg sm:text-xl font-bold text-primary">{loading ? '—' : recycledDevices.toLocaleString()}</span>
                     </li>
                   </ul>
                 </div>
@@ -271,20 +380,20 @@ export default function ReportsPage() {
                 <div className="rounded-lg overflow-hidden border border-default bg-surface-alt">
                   <ul className="divide-y divide-default">
                     <li className="flex justify-between items-center py-3 px-4 hover:bg-surface transition-colors">
-                      <span className="text-secondary font-medium">Training Hours Delivered</span>
-                      <span className="text-lg font-bold text-primary">{GRANT_DATA.trainingHours} hours</span>
+                      <span className="text-secondary font-medium text-sm sm:text-base">Training Hours Delivered</span>
+                      <span className="text-lg sm:text-xl font-bold text-primary">{GRANT_DATA.trainingHours} hours</span>
                     </li>
                     <li className="flex justify-between items-center py-3 px-4 hover:bg-surface transition-colors">
-                      <span className="text-secondary font-medium">Individuals Trained</span>
-                      <span className="text-lg font-bold text-primary">{GRANT_DATA.participants} people</span>
+                      <span className="text-secondary font-medium text-sm sm:text-base">Individuals Trained</span>
+                      <span className="text-lg sm:text-xl font-bold text-primary">{GRANT_DATA.participants} people</span>
                     </li>
                     <li className="flex justify-between items-center py-3 px-4 hover:bg-surface transition-colors">
-                      <span className="text-secondary font-medium">Counties Served</span>
-                      <span className="text-lg font-bold text-primary">15 counties</span>
+                      <span className="text-secondary font-medium text-sm sm:text-base">Counties Served</span>
+                      <span className="text-lg sm:text-xl font-bold text-primary">{loading ? '—' : (metrics?.countiesServed || 0)} counties</span>
                     </li>
                     <li className="flex justify-between items-center py-3 px-4 hover:bg-surface transition-colors">
-                      <span className="text-secondary font-medium">Partner Organizations</span>
-                      <span className="text-lg font-bold text-primary">35+ partners</span>
+                      <span className="text-secondary font-medium text-sm sm:text-base">Partner Organizations</span>
+                      <span className="text-lg sm:text-xl font-bold text-primary">{loading ? '—' : partners.length} partners</span>
                     </li>
                   </ul>
                 </div>
@@ -317,23 +426,38 @@ export default function ReportsPage() {
             <h2 className="text-xl md:text-2xl font-bold text-primary">Export & Share Options</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <GlassCard interactive elevation="sm" className="p-4 text-center space-y-3">
-              <div className="text-3xl">📄</div>
-              <h3 className="font-semibold text-primary text-sm">PDF Report</h3>
-              <p className="text-secondary text-xs">Professional, print-ready report for NCDIT and stakeholder distribution</p>
-              <button className="accent-gradient text-on-accent font-semibold px-4 py-2 rounded-lg text-xs shadow-md hover:shadow-lg focus-ring w-full">Download PDF</button>
+            <GlassCard interactive elevation="sm" className="p-4 sm:p-6 text-center space-y-3">
+              <div className="text-4xl sm:text-5xl">📄</div>
+              <h3 className="font-bold text-primary text-base sm:text-lg">PDF Report</h3>
+              <p className="text-secondary text-sm sm:text-base leading-relaxed">Professional, print-ready report for NCDIT and stakeholder distribution</p>
+              <button 
+                onClick={handleExportPDF}
+                className="accent-gradient text-on-accent font-bold px-4 py-2.5 rounded-lg text-sm sm:text-base shadow-md hover:shadow-lg focus-ring w-full transition-all"
+              >
+                Download PDF
+              </button>
             </GlassCard>
-            <GlassCard interactive elevation="sm" className="p-4 text-center space-y-3">
-              <div className="text-3xl">📊</div>
-              <h3 className="font-semibold text-primary text-sm">Excel/CSV Data</h3>
-              <p className="text-secondary text-xs">Raw dataset for custom analysis and reporting</p>
-              <button className="accent-gradient text-on-accent font-semibold px-4 py-2 rounded-lg text-xs shadow-md hover:shadow-lg focus-ring w-full">Download CSV</button>
+            <GlassCard interactive elevation="sm" className="p-4 sm:p-6 text-center space-y-3">
+              <div className="text-4xl sm:text-5xl">📊</div>
+              <h3 className="font-bold text-primary text-base sm:text-lg">Excel/CSV Data</h3>
+              <p className="text-secondary text-sm sm:text-base leading-relaxed">Raw dataset for custom analysis and reporting</p>
+              <button 
+                onClick={handleExportCSV}
+                className="accent-gradient text-on-accent font-bold px-4 py-2.5 rounded-lg text-sm sm:text-base shadow-md hover:shadow-lg focus-ring w-full transition-all"
+              >
+                Download CSV
+              </button>
             </GlassCard>
-            <GlassCard interactive elevation="sm" className="p-4 text-center space-y-3">
-              <div className="text-3xl">🌐</div>
-              <h3 className="font-semibold text-primary text-sm">HTML Report</h3>
-              <p className="text-secondary text-xs">Web-ready format for online sharing and web viewing</p>
-              <button className="accent-gradient text-on-accent font-semibold px-4 py-2 rounded-lg text-xs shadow-md hover:shadow-lg focus-ring w-full">Download HTML</button>
+            <GlassCard interactive elevation="sm" className="p-4 sm:p-6 text-center space-y-3">
+              <div className="text-4xl sm:text-5xl">🌐</div>
+              <h3 className="font-bold text-primary text-base sm:text-lg">HTML Report</h3>
+              <p className="text-secondary text-sm sm:text-base leading-relaxed">Web-ready format for online sharing and web viewing</p>
+              <button 
+                onClick={handleExportHTML}
+                className="accent-gradient text-on-accent font-bold px-4 py-2.5 rounded-lg text-sm sm:text-base shadow-md hover:shadow-lg focus-ring w-full transition-all"
+              >
+                Download HTML
+              </button>
             </GlassCard>
           </div>
         </section>

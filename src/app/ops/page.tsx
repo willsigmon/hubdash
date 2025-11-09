@@ -70,13 +70,12 @@ export default function OpsPage() {
               {commandSignals.map((signal) => (
                 <div
                   key={signal.label}
-                  className={`rounded-lg border px-3 py-1.5 text-xs font-semibold ${
-                    signal.status === "healthy"
+                  className={`rounded-lg border px-3 py-1.5 text-xs font-semibold ${signal.status === "healthy"
                       ? "border-success/50 bg-soft-success/50 text-success"
                       : signal.status === "processing"
-                      ? "border-accent/50 bg-soft-accent/50 text-accent"
-                      : "border-highlight/50 bg-soft-highlight/50 text-highlight"
-                  }`}
+                        ? "border-accent/50 bg-soft-accent/50 text-accent"
+                        : "border-highlight/50 bg-soft-highlight/50 text-highlight"
+                    }`}
                 >
                   <span className="font-bold text-white">{signal.value}</span>
                   <span className="text-[10px] text-white/70 ml-1.5 uppercase tracking-wide hidden xl:inline">
