@@ -210,7 +210,7 @@ export function LiveImpactCounter() {
                 Families Served
               </span>
             </div>
-            <div className="text-4xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
+            <div className="text-5xl md:text-6xl font-black text-primary mb-2 group-hover:text-accent transition-colors">
               <AnimatedNumber value={stats.familiesServed} />
             </div>
             <div className="text-xs font-medium text-secondary">
@@ -231,7 +231,7 @@ export function LiveImpactCounter() {
                 CO₂ Saved
               </span>
             </div>
-            <div className="text-4xl font-bold text-success mb-2 group-hover:text-success/80 transition-colors">
+            <div className="text-5xl md:text-6xl font-black text-success mb-2 group-hover:text-success/80 transition-colors">
               <AnimatedNumber value={stats.co2Saved} suffix=" kg" />
             </div>
             <div className="text-xs font-medium text-secondary">
