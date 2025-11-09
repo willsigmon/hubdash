@@ -36,40 +36,65 @@ export default function ApplicationGrouping({
   const groupApplications = (): GroupedApplications => {
     const grouped: GroupedApplications = {};
 
+    if (!Array.isArray(applications)) {
+      return grouped;
+    }
+
     applications.forEach(app => {
+      if (!app || typeof app !== 'object') {
+        return;
+      }
+
       let groupKey: string;
 
       switch (groupBy) {
         case 'status':
-          groupKey = app.status;
+          groupKey = app.status || 'Unknown';
           break;
         case 'county':
           groupKey = app.county || 'Unknown County';
           break;
         case 'chromebooks':
+          const chromebooksNeeded = typeof app.chromebooksNeeded === 'number' ? app.chromebooksNeeded : 0;
           const range = CHROMEBOOK_RANGES.find(r =>
-            app.chromebooksNeeded >= r.min && app.chromebooksNeeded <= r.max
+            chromebooksNeeded >= r.min && chromebooksNeeded <= r.max
           );
           groupKey = range ? range.label : 'Other';
           break;
         case 'date':
-          const date = new Date(app.timestamp);
-          const now = new Date();
-          const daysDiff = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+          if (!app.timestamp) {
+            groupKey = 'Unknown';
+            break;
+          }
+          try {
+            const date = new Date(app.timestamp);
+            if (isNaN(date.getTime())) {
+              groupKey = 'Unknown';
+              break;
+            }
+            const now = new Date();
+            const daysDiff = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
 
-          if (daysDiff <= 7) groupKey = 'This Week';
-          else if (daysDiff <= 30) groupKey = 'This Month';
-          else if (daysDiff <= 90) groupKey = 'This Quarter';
-          else groupKey = 'Older';
+            if (daysDiff <= 7) groupKey = 'This Week';
+            else if (daysDiff <= 30) groupKey = 'This Month';
+            else if (daysDiff <= 90) groupKey = 'This Quarter';
+            else groupKey = 'Older';
+          } catch (e) {
+            groupKey = 'Unknown';
+          }
           break;
         case 'orgType':
           groupKey = app.organizationType || 'Unknown Type';
           break;
         case 'firstTime':
-          groupKey = app.firstTime ? 'First-time Applicants' : 'Returning Applicants';
+          groupKey = typeof app.firstTime === 'boolean' ? (app.firstTime ? 'First-time Applicants' : 'Returning Applicants') : 'Unknown';
           break;
         default:
           groupKey = 'All';
+      }
+
+      if (!groupKey) {
+        groupKey = 'All';
       }
 
       if (!grouped[groupKey]) {

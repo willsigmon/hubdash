@@ -27,21 +27,32 @@ export default function MarketingPage() {
   useEffect(() => {
     setLoading(true);
     fetch("/api/partnerships?filter=all")
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error(`HTTP error! status: ${r.status}`);
+        }
+        return r.json();
+      })
       .then((data) => {
-        setPartnerships(data);
+        // Ensure data is an array
+        const partnershipsData = Array.isArray(data) ? data : [];
+        setPartnerships(partnershipsData);
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error loading partnerships:", error);
+        setPartnerships([]); // Set empty array on error
         setLoading(false);
       });
   }, []);
 
   const availableCounties = useMemo(() => {
+    if (!Array.isArray(partnerships)) {
+      return [];
+    }
     const counties = new Set<string>();
     partnerships.forEach((p) => {
-      if (p.county && p.county !== "Unknown") {
+      if (p && typeof p === 'object' && p.county && p.county !== "Unknown") {
         counties.add(p.county);
       }
     });
@@ -49,9 +60,12 @@ export default function MarketingPage() {
   }, [partnerships]);
 
   const availableOrgTypes = useMemo(() => {
+    if (!Array.isArray(partnerships)) {
+      return [];
+    }
     const types = new Set<string>();
     partnerships.forEach((p) => {
-      if (p.organizationType) {
+      if (p && typeof p === 'object' && p.organizationType) {
         types.add(p.organizationType);
       }
     });
@@ -59,40 +73,61 @@ export default function MarketingPage() {
   }, [partnerships]);
 
   const filteredApplications = useMemo(() => {
+    if (!Array.isArray(partnerships)) {
+      return [];
+    }
+    
     return partnerships.filter((app) => {
-      if (filters.statuses.length > 0 && !filters.statuses.includes(app.status)) {
+      // Validate app object
+      if (!app || typeof app !== 'object') {
         return false;
       }
 
-      if (filters.counties.length > 0 && !filters.counties.includes(app.county)) {
+      if (filters.statuses.length > 0 && app.status && !filters.statuses.includes(app.status)) {
         return false;
       }
 
+      if (filters.counties.length > 0 && app.county && !filters.counties.includes(app.county)) {
+        return false;
+      }
+
+      const chromebooksNeeded = typeof app.chromebooksNeeded === 'number' ? app.chromebooksNeeded : 0;
       if (
-        app.chromebooksNeeded < filters.chromebooksRange.min ||
-        app.chromebooksNeeded > filters.chromebooksRange.max
+        chromebooksNeeded < filters.chromebooksRange.min ||
+        chromebooksNeeded > filters.chromebooksRange.max
       ) {
         return false;
       }
 
       if (filters.dateRange.start || filters.dateRange.end) {
-        const appDate = new Date(app.timestamp);
-        if (filters.dateRange.start && appDate < filters.dateRange.start) {
+        if (!app.timestamp) {
           return false;
         }
-        if (filters.dateRange.end && appDate > filters.dateRange.end) {
+        try {
+          const appDate = new Date(app.timestamp);
+          if (isNaN(appDate.getTime())) {
+            return false;
+          }
+          if (filters.dateRange.start && appDate < filters.dateRange.start) {
+            return false;
+          }
+          if (filters.dateRange.end && appDate > filters.dateRange.end) {
+            return false;
+          }
+        } catch (e) {
           return false;
         }
       }
 
       if (
         filters.organizationTypes.length > 0 &&
-        !filters.organizationTypes.includes(app.organizationType || "")
+        app.organizationType &&
+        !filters.organizationTypes.includes(app.organizationType)
       ) {
         return false;
       }
 
-      if (filters.firstTimeOnly !== null && app.firstTime !== filters.firstTimeOnly) {
+      if (filters.firstTimeOnly !== null && typeof app.firstTime === 'boolean' && app.firstTime !== filters.firstTimeOnly) {
         return false;
       }
 
@@ -106,9 +141,11 @@ export default function MarketingPage() {
           app.howWillUse,
           app.positiveImpact,
           app.clientGoals,
-          ...(app.workssWith || []),
-          ...(app.clientStruggles || []),
+          app.quote,
+          ...(Array.isArray(app.workssWith) ? app.workssWith : []),
+          ...(Array.isArray(app.clientStruggles) ? app.clientStruggles : []),
         ]
+          .filter(Boolean) // Remove any null/undefined values
           .join(" ")
           .toLowerCase();
 
@@ -122,13 +159,21 @@ export default function MarketingPage() {
   }, [partnerships, filters]);
 
   const stats = useMemo(() => {
+    if (!Array.isArray(filteredApplications)) {
+      return { total: 0, pending: 0, approved: 0, inReview: 0, rejected: 0, totalChromebooks: 0 };
+    }
+
     const total = filteredApplications.length;
-    const pending = filteredApplications.filter((a) => a.status === "Pending").length;
-    const approved = filteredApplications.filter((a) => a.status === "Approved").length;
-    const inReview = filteredApplications.filter((a) => a.status === "In Review").length;
-    const rejected = filteredApplications.filter((a) => a.status === "Rejected").length;
+    const pending = filteredApplications.filter((a) => a && a.status === "Pending").length;
+    const approved = filteredApplications.filter((a) => a && a.status === "Approved").length;
+    const inReview = filteredApplications.filter((a) => a && a.status === "In Review").length;
+    const rejected = filteredApplications.filter((a) => a && a.status === "Rejected").length;
     const totalChromebooks = filteredApplications.reduce(
-      (sum, a) => sum + a.chromebooksNeeded,
+      (sum, a) => {
+        if (!a) return sum;
+        const chromebooks = typeof a.chromebooksNeeded === 'number' ? a.chromebooksNeeded : 0;
+        return sum + chromebooks;
+      },
       0,
     );
 
@@ -154,7 +199,10 @@ export default function MarketingPage() {
   ];
 
   const spotlightApplications = useMemo(() => {
-    return filteredApplications.slice(0, 3);
+    if (!Array.isArray(filteredApplications)) {
+      return [];
+    }
+    return filteredApplications.filter(app => app && app.id).slice(0, 3);
   }, [filteredApplications]);
 
   const handleAction = (action: string, applicationId: string) => {
@@ -266,21 +314,24 @@ export default function MarketingPage() {
                   <div className="rounded-2xl border border-default bg-surface-alt p-4 shadow-lg">
                     <h4 className="text-xs font-semibold text-primary mb-3">Recent Applications</h4>
                     <ul className="space-y-2">
-                      {spotlightApplications.map((application) => (
-                        <li key={application.id} className="rounded-xl border border-default bg-surface-elevated p-3 transition hover:border-strong">
-                          <p className="text-sm font-semibold text-primary">
-                            {application.organizationName}
-                          </p>
-                          <p className="mt-1 text-xs text-muted">
-                            {application.county || "Unknown County"} • {application.chromebooksNeeded} requested
-                          </p>
-                          {application.quote && (
-                            <p className="mt-2 text-xs text-secondary line-clamp-2">
-                              "{application.quote}"
+                      {spotlightApplications.map((application) => {
+                        if (!application || !application.id) return null;
+                        return (
+                          <li key={application.id} className="rounded-xl border border-default bg-surface-elevated p-3 transition hover:border-strong">
+                            <p className="text-sm font-semibold text-primary">
+                              {application.organizationName || 'Unknown Organization'}
                             </p>
-                          )}
-                        </li>
-                      ))}
+                            <p className="mt-1 text-xs text-muted">
+                              {application.county || "Unknown County"} • {typeof application.chromebooksNeeded === 'number' ? application.chromebooksNeeded : 0} requested
+                            </p>
+                            {application.quote && (
+                              <p className="mt-2 text-xs text-secondary line-clamp-2">
+                                "{application.quote}"
+                              </p>
+                            )}
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 )}
