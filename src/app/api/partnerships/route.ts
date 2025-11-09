@@ -44,23 +44,68 @@ export async function GET(request: Request) {
         }
 
         const partnerships = knackRecords.map((r: any) => {
-          // Extract all the rich application data
-          const address = typeof r.field_636_raw === 'string' ? r.field_636_raw : (r.field_636_raw?.full || '');
-          const email = typeof r.field_425_raw === 'string' ? r.field_425_raw : (r.field_425_raw?.email || '');
-          const phone = typeof r.field_658_raw === 'string' ? r.field_658_raw : (r.field_658_raw?.full || '');
-          const county = r.field_672_raw && Array.isArray(r.field_672_raw) && r.field_672_raw.length > 0
-            ? (r.field_672_raw[0].identifier || r.field_672_raw[0].id)
-            : 'Unknown';
+          // Extract all the rich application data with better fallbacks
+          const address = typeof r.field_636_raw === 'string' ? r.field_636_raw : (r.field_636_raw?.full || r.field_address || '');
+          const email = typeof r.field_425_raw === 'string' ? r.field_425_raw : (r.field_425_raw?.email || r.field_email || '');
+          const phone = typeof r.field_658_raw === 'string' ? r.field_658_raw : (r.field_658_raw?.full || r.field_phone || '');
+          
+          // Extract county - try multiple field sources
+          let county = '';
+          if (r.field_672_raw) {
+            if (Array.isArray(r.field_672_raw) && r.field_672_raw.length > 0) {
+              county = r.field_672_raw[0].identifier || r.field_672_raw[0].id || r.field_672_raw[0].name || '';
+            } else if (typeof r.field_672_raw === 'string') {
+              county = r.field_672_raw;
+            }
+          }
+          if (!county && r.field_county) {
+            county = typeof r.field_county === 'string' ? r.field_county : r.field_county.name || '';
+          }
+          if (!county && address) {
+            // Try to extract county from address
+            const addressParts = address.split(',');
+            if (addressParts.length > 1) {
+              county = addressParts[addressParts.length - 2]?.trim() || '';
+            }
+          }
+
+          // Extract organization name - try multiple sources
+          let organizationName = '';
+          if (r.field_426_raw) {
+            organizationName = typeof r.field_426_raw === 'string' ? r.field_426_raw : r.field_426_raw.name || '';
+          }
+          if (!organizationName && r.field_organization_name) {
+            organizationName = typeof r.field_organization_name === 'string' ? r.field_organization_name : r.field_organization_name.name || '';
+          }
+          if (!organizationName && r.field_org_name) {
+            organizationName = typeof r.field_org_name === 'string' ? r.field_org_name : r.field_org_name.name || '';
+          }
+
+          // Extract contact person - try multiple sources
+          let contactPerson = '';
+          if (r.field_427_raw) {
+            contactPerson = typeof r.field_427_raw === 'string' ? r.field_427_raw : r.field_427_raw.name || '';
+          }
+          if (!contactPerson && r.field_contact_person) {
+            contactPerson = typeof r.field_contact_person === 'string' ? r.field_contact_person : r.field_contact_person.name || '';
+          }
+          if (!contactPerson && r.field_contact_name) {
+            contactPerson = typeof r.field_contact_name === 'string' ? r.field_contact_name : r.field_contact_name.name || '';
+          }
+          if (!contactPerson && email) {
+            // Extract name from email as fallback
+            contactPerson = email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+          }
 
           return {
             id: r.id,
             timestamp: r.field_424_raw?.iso_timestamp || r.field_424_raw || new Date().toISOString(),
-            organizationName: r.field_426_raw || 'Unknown',
+            organizationName: organizationName || 'Unnamed Organization',
             status: r.field_679_raw || 'Pending',
             email,
             address,
-            county,
-            contactPerson: r.field_427_raw || '',
+            county: county || '',
+            contactPerson: contactPerson || '',
             phone,
             preferredContactMethod: r.field_428_raw || '',
             is501c3: r.field_430_raw === true || r.field_430_raw === 'Yes',
