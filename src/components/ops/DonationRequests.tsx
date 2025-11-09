@@ -54,7 +54,6 @@ export default function DonationRequests() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_WRITE_API_TOKEN || ''}`,
         },
         body: JSON.stringify({
           status: 'scheduled',
