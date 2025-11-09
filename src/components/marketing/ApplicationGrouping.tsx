@@ -185,7 +185,7 @@ export default function ApplicationGrouping({
           {/* Organization & Contact Info */}
           <div className="space-y-2 mb-4 pb-4 border-b border-default">
             <p className="text-sm text-secondary font-medium">
-              <span className="text-muted">Contact:</span> {app.contactPerson}
+              <span className="text-muted">Contact:</span> {app.contactPerson || 'Unknown'}
             </p>
             <p className="text-sm text-secondary">
               <span className="text-muted">Location:</span> {app.county || 'Unknown County'}
@@ -196,12 +196,22 @@ export default function ApplicationGrouping({
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div className="p-3 rounded-xl border border-default bg-surface-alt">
               <div className="text-xs text-secondary font-semibold mb-1 uppercase tracking-wide">Chromebooks</div>
-              <div className="text-2xl font-bold text-primary">{app.chromebooksNeeded}</div>
+              <div className="text-2xl font-bold text-primary">{typeof app.chromebooksNeeded === 'number' ? app.chromebooksNeeded : 0}</div>
             </div>
             <div className="p-3 rounded-xl border border-default bg-surface-alt">
               <div className="text-xs text-secondary font-semibold mb-1 uppercase tracking-wide">Submitted</div>
               <div className="text-sm font-semibold text-primary">
-                {new Date(app.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                {app.timestamp ? (() => {
+                  try {
+                    const date = new Date(app.timestamp);
+                    if (!isNaN(date.getTime())) {
+                      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    }
+                  } catch (e) {
+                    // Fall through to return '—'
+                  }
+                  return '—';
+                })() : '—'}
               </div>
             </div>
           </div>
