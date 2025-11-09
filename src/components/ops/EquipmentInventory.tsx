@@ -238,7 +238,7 @@ export default function EquipmentInventory() {
 
       {/* Low Stock Alert */}
       {lowStockItems.length > 0 && (
-        <GlassCard className="border-2 border-warning/30 bg-soft-warning">
+        <GlassCard className="border border-highlight bg-soft-highlight">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-6 h-6 text-warning flex-shrink-0 mt-1" />
             <div>
@@ -346,7 +346,7 @@ export default function EquipmentInventory() {
             return (
               <GlassCard
                 key={item.id}
-                className={`${isLowStock ? "border-2 border-warning/30" : ""}`}
+                className={isLowStock ? "border-highlight" : ""}
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
@@ -411,7 +411,7 @@ export default function EquipmentInventory() {
                   <div className="text-xs text-secondary">
                     <span className="font-semibold text-primary">Condition:</span>{" "}
                     <span className={`inline-flex px-2 py-0.5 rounded ${
-                      item.condition === "New" ? "bg-soft-success text-success border border-success/30" : "bg-soft-accent text-accent border border-accent/30"
+                      item.condition === "New" ? "bg-soft-success text-success border border-success" : "bg-soft-accent text-accent border border-accent"
                     }`}>
                       {item.condition}
                     </span>
@@ -438,7 +438,7 @@ export default function EquipmentInventory() {
             </p>
             <button
               onClick={() => setShowCreateModal(false)}
-              className="px-6 py-3 bg-soft-accent text-accent rounded-lg font-semibold hover:bg-soft-accent/70 transition-colors border border-accent/30"
+              className="px-6 py-3 bg-soft-accent text-accent rounded-lg font-semibold hover:bg-soft-accent transition-colors border border-accent"
             >
               Close
             </button>

@@ -36,13 +36,13 @@ export default function ApplicationDetailPanel({
   const getStatusColor = (status: string) => {
     switch (status) {
       case "Approved":
-        return "bg-soft-success text-success border-success/40";
+        return "bg-soft-success text-success border-success";
       case "Pending":
-        return "bg-soft-warning text-warning border-warning/40";
+        return "bg-soft-highlight text-highlight border-highlight";
       case "In Review":
-        return "bg-soft-accent text-accent border-accent/40";
+        return "bg-soft-accent text-accent border-accent";
       case "Rejected":
-        return "bg-soft-danger text-danger border-danger/40";
+        return "bg-soft-danger text-danger border-danger";
       default:
         return "bg-surface-alt text-secondary border-default";
     }
@@ -121,15 +121,14 @@ export default function ApplicationDetailPanel({
   }) => {
     const backgrounds = {
       default: "bg-surface border-default",
-      accent: "bg-soft-accent border-accent/40",
+      accent: "bg-soft-accent border-accent",
       muted: "bg-surface-alt border-default",
     } as const;
 
     return (
       <section
-        className={`rounded-2xl border p-6 shadow-sm transition hover:shadow-md ${
-          backgrounds[tone]
-        }`}
+        className={`rounded-2xl border p-6 shadow-sm transition hover:shadow-md ${backgrounds[tone]
+          }`}
       >
         <header className="mb-5 flex items-center gap-3">
           <span className="rounded-xl bg-soft-accent p-3 text-accent shadow-sm">
@@ -161,7 +160,7 @@ export default function ApplicationDetailPanel({
           {Array.isArray(value) ? (
             <div className="flex flex-wrap gap-1.5">
               {value.map((item, idx) => (
-                <Badge key={idx} className="border-accent/40 bg-soft-accent text-accent">
+                <Badge key={idx} className="border-accent bg-soft-accent text-accent">
                   {item}
                 </Badge>
               ))}
@@ -197,10 +196,10 @@ export default function ApplicationDetailPanel({
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge className={getStatusColor(application.status)}>{application.status}</Badge>
                   {application.is501c3 && (
-                    <Badge className="border-success/40 bg-soft-success text-success">✓ 501(c)(3)</Badge>
+                    <Badge className="border-success bg-soft-success text-success">✓ 501(c)(3)</Badge>
                   )}
                   {application.firstTime && (
-                    <Badge className="border-white/40 bg-white/10 text-white">First-time Applicant</Badge>
+                    <Badge className="border-highlight bg-soft-highlight text-highlight">First-time Applicant</Badge>
                   )}
                 </div>
                 <h2
@@ -246,8 +245,8 @@ export default function ApplicationDetailPanel({
                   {application.status === "Approved"
                     ? "Ready for spotlight"
                     : application.status === "Pending"
-                    ? "Marketing review needed"
-                    : application.status}
+                      ? "Marketing review needed"
+                      : application.status}
                 </p>
               </div>
               <div className="rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur">
@@ -353,7 +352,7 @@ export default function ApplicationDetailPanel({
                 <Section icon={Quote} title="Ready-to-Share Quotes" tone="accent">
                   <dl className="grid grid-cols-1 gap-4">
                     {application.quote && (
-                      <div className="rounded-2xl border border-accent/40 bg-white/80 p-5 shadow-sm">
+                      <div className="rounded-2xl border border-accent bg-white/80 p-5 shadow-sm">
                         <p className="text-base font-semibold leading-relaxed text-primary">
                           “{application.quote}”
                         </p>
@@ -402,7 +401,7 @@ export default function ApplicationDetailPanel({
               </div>
 
               {(application.notes || application.internalComments) && (
-                <section className="rounded-3xl border border-danger/40 bg-soft-danger p-6">
+                <section className="rounded-3xl border border-danger bg-soft-danger p-6">
                   <header className="mb-3 flex items-center gap-3">
                     <span className="rounded-lg bg-danger/10 p-2 text-danger">
                       <AlertCircle className="h-4 w-4" />
@@ -429,7 +428,7 @@ export default function ApplicationDetailPanel({
                   <button
                     aria-label="Approve application"
                     onClick={() => onAction?.("approve", application.id)}
-                    className="flex items-center justify-center gap-2 rounded-2xl border border-success/40 bg-soft-success px-4 py-3 text-sm font-semibold text-success transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-4 focus-visible:ring-success/30"
+                    className="flex items-center justify-center gap-2 rounded-2xl border border-success bg-soft-success px-4 py-3 text-sm font-semibold text-success transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-ring"
                   >
                     <CheckCircle2 className="h-4 w-4" />
                     Approve for spotlight
@@ -437,35 +436,35 @@ export default function ApplicationDetailPanel({
                   <button
                     aria-label="Request more info"
                     onClick={() => onAction?.("request-info", application.id)}
-                    className="flex items-center justify-center gap-2 rounded-2xl border border-accent/40 bg-soft-accent px-4 py-3 text-sm font-semibold text-accent transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/30"
+                    className="flex items-center justify-center gap-2 rounded-2xl border border-accent bg-soft-accent px-4 py-3 text-sm font-semibold text-accent transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-ring"
                   >
                     Request more info
                   </button>
                   <button
                     aria-label="Schedule"
                     onClick={() => onAction?.("schedule", application.id)}
-                    className="flex items-center justify-center gap-2 rounded-2xl border border-default bg-surface px-4 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:border-strong hover:shadow-md focus:outline-none focus-visible:ring-4 focus-visible:ring-hti-gold/40"
+                    className="flex items-center justify-center gap-2 rounded-2xl border border-default bg-surface px-4 py-3 text-sm font-semibold text-primary transition hover:-translate-y-0.5 hover:border-strong hover:shadow-md focus:outline-none focus-ring"
                   >
                     Schedule delivery touchpoint
                   </button>
                   <button
                     aria-label="Mark contacted"
                     onClick={() => onAction?.("contact", application.id)}
-                    className="flex items-center justify-center gap-2 rounded-2xl border border-warning/40 bg-soft-warning px-4 py-3 text-sm font-semibold text-warning transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-4 focus-visible:ring-warning/30"
+                    className="flex items-center justify-center gap-2 rounded-2xl border border-highlight bg-soft-highlight px-4 py-3 text-sm font-semibold text-highlight transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-ring"
                   >
                     Mark as contacted
                   </button>
                   <button
                     aria-label="Generate quote card"
                     onClick={() => onAction?.("quote-card", application.id)}
-                    className="flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-hti-orange to-hti-gold px-4 py-3 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus-visible:ring-4 focus-visible:ring-hti-gold/40"
+                    className="flex items-center justify-center gap-2 rounded-2xl highlight-gradient px-4 py-3 text-sm font-semibold text-primary shadow-md transition hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus-ring"
                   >
                     Generate quote card
                   </button>
                   <button
                     aria-label="Export PDF"
                     onClick={() => onAction?.("export", application.id)}
-                    className="flex items-center justify-center gap-2 rounded-2xl border border-danger/40 bg-soft-danger px-4 py-3 text-sm font-semibold text-danger transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-visible:ring-4 focus-visible:ring-danger/30"
+                    className="flex items-center justify-center gap-2 rounded-2xl border border-danger bg-soft-danger px-4 py-3 text-sm font-semibold text-danger transition hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus-ring"
                   >
                     Export story PDF
                   </button>

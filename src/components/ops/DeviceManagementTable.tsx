@@ -265,7 +265,7 @@ export function DeviceManagementTable() {
 
       {/* Create Form Modal */}
       {showCreateForm && (
-        <GlassCard className="border-2 border-accent/30">
+        <GlassCard className="border border-accent">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-primary">Add New Device</h3>
@@ -428,7 +428,7 @@ export function DeviceManagementTable() {
                           <div className="flex gap-1 justify-end">
                             <button
                               onClick={() => handleSaveEdit(device.id)}
-                              className="p-2 bg-soft-success text-success rounded-lg hover:bg-soft-success/80 transition-colors"
+                              className="p-2 bg-soft-success text-success rounded-lg hover:bg-soft-success transition-colors"
                             >
                               <Check className="w-4 h-4" />
                             </button>
@@ -437,7 +437,7 @@ export function DeviceManagementTable() {
                                 setEditingId(null);
                                 setEditForm({});
                               }}
-                              className="p-2 bg-soft-danger text-danger rounded-lg hover:bg-soft-danger/80 transition-colors"
+                              className="p-2 bg-soft-danger text-danger rounded-lg hover:bg-soft-danger transition-colors"
                             >
                               <X className="w-4 h-4" />
                             </button>

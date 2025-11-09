@@ -120,7 +120,7 @@ export default function DonationRequests() {
                   </button>
                   <Link
                     href={`/ops/partners/${request.id}`}
-                    className="px-3 md:px-4 py-2 bg-soft-warning hover:bg-soft-warning rounded-lg text-warning text-xs md:text-sm font-bold transition-all border border-warning/40 text-center"
+                    className="px-3 md:px-4 py-2 bg-soft-highlight hover:bg-soft-highlight rounded-lg text-highlight text-xs md:text-sm font-bold transition-all border border-highlight text-center"
                   >
                     View Partner →
                   </Link>

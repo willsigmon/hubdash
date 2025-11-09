@@ -78,7 +78,7 @@ export default function InventoryOverview() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-1 px-3 md:px-4 py-2 bg-surface-alt border border-default rounded-lg text-primary placeholder:text-muted text-sm focus:outline-none focus-ring transition-all"
           />
-          <button className="px-3 md:px-4 py-2 bg-soft-accent hover:bg-soft-accent rounded-lg text-accent text-xs md:text-sm font-bold transition-all whitespace-nowrap border border-accent/40">
+          <button className="px-3 md:px-4 py-2 bg-soft-accent hover:bg-soft-accent rounded-lg text-accent text-xs md:text-sm font-bold transition-all whitespace-nowrap border border-accent">
             Search
           </button>
         </div>

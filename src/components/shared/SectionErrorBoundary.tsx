@@ -42,7 +42,7 @@ export default class SectionErrorBoundary extends React.Component<SectionErrorBo
     if (this.state.hasError) {
       if (this.props.fallback) return this.props.fallback;
       return (
-        <div className="bg-surface-alt border border-danger/40 rounded-xl p-6 text-center space-y-3">
+        <div className="bg-surface-alt border border-danger rounded-xl p-6 text-center space-y-3">
           <h4 className="text-lg font-bold text-danger">{this.props.section} failed to load</h4>
           <p className="text-sm text-secondary">A problem occurred rendering this section. Other sections continue to function.</p>
           <button

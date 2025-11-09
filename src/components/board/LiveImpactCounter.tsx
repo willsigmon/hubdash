@@ -172,7 +172,7 @@ export function LiveImpactCounter() {
         {/* Devices Deployed */}
         <div className="group relative">
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/15 to-[var(--color-accent-alt)]/15 rounded-lg blur-xl group-hover:blur-2xl transition-all" />
-          <div className="relative bg-surface-alt/40 backdrop-blur-sm rounded-lg p-4 border border-default hover:border-strong transition-all">
+          <div className="relative bg-surface-alt backdrop-blur-sm rounded-lg p-4 border border-default hover:border-strong transition-all opacity-90">
             <div className="flex items-center gap-2 mb-2">
               <Zap className="w-4 h-4 text-accent" />
               <span className="text-xs text-secondary uppercase tracking-wider font-medium">
@@ -191,7 +191,7 @@ export function LiveImpactCounter() {
         {/* Families Served */}
         <div className="group relative">
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/15 to-[var(--color-accent-alt)]/15 rounded-lg blur-xl group-hover:blur-2xl transition-all" />
-          <div className="relative bg-surface-alt/40 backdrop-blur-sm rounded-lg p-4 border border-default hover:border-strong transition-all">
+          <div className="relative bg-surface-alt backdrop-blur-sm rounded-lg p-4 border border-default hover:border-strong transition-all opacity-90">
             <div className="flex items-center gap-2 mb-2">
               <Users className="w-4 h-4 text-accent" />
               <span className="text-xs text-secondary uppercase tracking-wider font-medium">
@@ -210,7 +210,7 @@ export function LiveImpactCounter() {
         {/* CO2 Saved */}
         <div className="group relative">
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-lg blur-xl group-hover:blur-2xl transition-all" />
-          <div className="relative bg-surface-alt/40 backdrop-blur-sm rounded-lg p-4 border border-default hover:border-strong transition-all">
+          <div className="relative bg-surface-alt backdrop-blur-sm rounded-lg p-4 border border-default hover:border-strong transition-all opacity-90">
             <div className="flex items-center gap-2 mb-2">
               <Leaf className="w-4 h-4 text-emerald-400" />
               <span className="text-xs text-secondary uppercase tracking-wider font-medium">

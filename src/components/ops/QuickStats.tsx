@@ -85,7 +85,7 @@ export default function QuickStats() {
               <div className="text-3xl md:text-4xl group-hover:scale-110 transition-transform origin-left">{stat.icon}</div>
               <div className="flex-shrink-0">
                 {stat.trend === "up" && (
-                  <div className="flex items-center gap-1 text-success text-xs font-bold bg-soft-success px-2 py-1 rounded-full border border-success/40">
+                  <div className="flex items-center gap-1 text-success text-xs font-bold bg-soft-success px-2 py-1 rounded-full border border-success">
                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M12 5.293l5.354-5.354a1 1 0 011.414 1.414L13.414 7l5.354 5.354a1 1 0 01-1.414 1.414L12 8.414l-5.354 5.354a1 1 0 11-1.414-1.414L10.586 7 5.232 1.646a1 1 0 111.414-1.414L12 5.293z" clipRule="evenodd" />
                     </svg>
@@ -93,7 +93,7 @@ export default function QuickStats() {
                   </div>
                 )}
                 {stat.trend === "down" && (
-                  <div className="flex items-center gap-1 text-danger text-xs font-bold bg-soft-danger px-2 py-1 rounded-full border border-danger/40">
+                  <div className="flex items-center gap-1 text-danger text-xs font-bold bg-soft-danger px-2 py-1 rounded-full border border-danger">
                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M12 15.707l5.354 5.354a1 1 0 001.414-1.414L13.414 15l5.354-5.354a1 1 0 10-1.414-1.414L12 13.586l-5.354-5.354a1 1 0 10-1.414 1.414L10.586 15l-5.354 5.354a1 1 0 001.414 1.414L12 15.707z" clipRule="evenodd" />
                     </svg>
@@ -101,7 +101,7 @@ export default function QuickStats() {
                   </div>
                 )}
                 {stat.trend === "neutral" && (
-                  <div className="flex items-center gap-1 text-accent text-xs font-bold bg-soft-accent px-2 py-1 rounded-full border border-accent/40">
+                  <div className="flex items-center gap-1 text-accent text-xs font-bold bg-soft-accent px-2 py-1 rounded-full border border-accent">
                     ⏸
                   </div>
                 )}

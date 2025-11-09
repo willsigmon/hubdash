@@ -91,7 +91,7 @@ export default function ReportsPage() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-xs font-bold text-accent">{laptopProgress}% Complete</span>
-                  <span className="text-[10px] px-2 py-1 bg-soft-warning text-warning border border-warning/40 rounded-full font-bold">{GRANT_DATA.laptopsGoal - GRANT_DATA.laptopsConverted} remaining</span>
+                  <span className="text-[10px] px-2 py-1 bg-soft-highlight text-highlight border border-highlight rounded-full font-bold">{GRANT_DATA.laptopsGoal - GRANT_DATA.laptopsConverted} remaining</span>
                 </div>
               </div>
 
@@ -112,7 +112,7 @@ export default function ReportsPage() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-xs font-bold text-accent">{trainingProgress}% Complete</span>
-                  <span className="text-[10px] px-2 py-1 bg-soft-accent text-accent border border-accent/40 rounded-full font-bold">{GRANT_DATA.trainingHoursGoal - GRANT_DATA.trainingHours} hours left</span>
+                  <span className="text-[10px] px-2 py-1 bg-soft-accent text-accent border border-accent rounded-full font-bold">{GRANT_DATA.trainingHoursGoal - GRANT_DATA.trainingHours} hours left</span>
                 </div>
               </div>
 
@@ -133,7 +133,7 @@ export default function ReportsPage() {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-xs font-bold text-accent">{participantProgress}% Complete</span>
-                  <span className="text-[10px] px-2 py-1 bg-soft-warning text-warning border border-warning/40 rounded-full font-bold">{GRANT_DATA.participantsGoal - GRANT_DATA.participants} more</span>
+                  <span className="text-[10px] px-2 py-1 bg-soft-highlight text-highlight border border-highlight rounded-full font-bold">{GRANT_DATA.participantsGoal - GRANT_DATA.participants} more</span>
                 </div>
               </div>
             </div>
@@ -200,7 +200,7 @@ export default function ReportsPage() {
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <button className="accent-gradient text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg text-sm focus-ring">Generate Report</button>
               <button className="bg-surface-alt border border-default text-primary font-semibold px-6 py-3 rounded-xl shadow-sm hover:bg-surface text-sm focus-ring">Preview Report</button>
-              <button className="bg-soft-accent text-accent border border-accent/40 font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md text-sm focus-ring">Export CSV</button>
+              <button className="bg-soft-accent text-accent border border-accent font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md text-sm focus-ring">Export CSV</button>
             </div>
           </GlassCard>
         </section>
@@ -233,8 +233,8 @@ export default function ReportsPage() {
                     <p className="text-muted text-[10px] uppercase font-bold tracking-wider mb-1">Training Hours</p>
                     <p className="text-2xl md:text-3xl font-bold text-primary">{GRANT_DATA.trainingHours}</p>
                   </div>
-                  <div className="rounded-xl p-4 bg-soft-warning border border-warning/30">
-                    <p className="text-warning text-[10px] uppercase font-bold tracking-wider mb-1">Participants</p>
+                  <div className="rounded-xl p-4 bg-soft-highlight border border-highlight">
+                    <p className="text-highlight text-[10px] uppercase font-bold tracking-wider mb-1">Participants</p>
                     <p className="text-2xl md:text-3xl font-bold text-primary">{GRANT_DATA.participants}</p>
                   </div>
                 </div>
@@ -291,8 +291,8 @@ export default function ReportsPage() {
               </div>
 
               {/* Compliance Statement */}
-              <div className="rounded-xl p-6 border border-warning/40 bg-soft-warning">
-                <h4 className="font-bold text-warning mb-3 text-base md:text-lg">Compliance & Audit Statement</h4>
+              <div className="rounded-xl p-6 border border-highlight bg-soft-highlight">
+                <h4 className="font-bold text-highlight mb-3 text-base md:text-lg">Compliance & Audit Statement</h4>
                 <p className="text-secondary text-xs md:text-sm leading-relaxed">
                   All activities conducted in full accordance with NCDIT Digital Champion Grant requirements and American Rescue Plan Act (ARPA) guidelines. HTI maintains comprehensive financial records, device tracking documentation, and training participant registries. Supporting documentation available for audit upon request. Grant period: January 1, 2024 – December 31, 2026.
                 </p>

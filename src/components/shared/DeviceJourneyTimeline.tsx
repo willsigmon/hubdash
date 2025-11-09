@@ -164,7 +164,7 @@ export function DeviceJourneyTimeline({ deviceId, serialNumber, deviceType, onCl
                 ))}
               </div>
             ) : events.length === 0 ? (
-              <div className="text-center py-12 text-white/40">
+              <div className="text-center py-12 text-muted">
                 No timeline events found for this device
               </div>
             ) : (

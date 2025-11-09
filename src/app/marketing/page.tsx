@@ -256,7 +256,7 @@ export default function MarketingPage() {
                     className="group rounded-2xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur transition-transform duration-300 hover:-translate-y-1"
                   >
                     <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-white/70">
-                      <span className="h-2 w-2 rounded-full bg-hti-gold" />
+                      <span className="h-2 w-2 rounded-full bg-highlight" />
                       {stat.label}
                     </div>
                     <p className="mt-3 text-4xl font-bold text-white">{stat.value}</p>
@@ -283,8 +283,8 @@ export default function MarketingPage() {
                   launch campaigns at the pace our partners deserve.
                 </p>
               </div>
-              <div className="flex items-center gap-3 rounded-full bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wide text-primary shadow-md">
-                <BarChart3 className="h-4 w-4 text-accent" />
+              <div className="flex items-center gap-3 rounded-full border border-highlight bg-soft-highlight px-4 py-2 text-xs font-semibold uppercase tracking-wide text-highlight shadow-sm">
+                <BarChart3 className="h-4 w-4 text-highlight" />
                 Live data fuel
               </div>
             </div>
@@ -301,7 +301,7 @@ export default function MarketingPage() {
                     </div>
                     <h3 className="text-lg font-semibold text-primary">{moment.title}</h3>
                     <p className="mt-2 text-sm text-secondary">{moment.description}</p>
-                    <div className="mt-auto pt-4 text-xs font-semibold uppercase tracking-wide text-accent/80">
+                    <div className="mt-auto pt-4 text-xs font-semibold uppercase tracking-wide text-highlight">
                       Story booster
                     </div>
                   </div>
@@ -369,7 +369,7 @@ export default function MarketingPage() {
                     </div>
                     <ul className="space-y-4">
                       {spotlightApplications.map((application) => (
-                        <li key={application.id} className="rounded-2xl border border-default bg-surface p-4 transition hover:border-strong">
+                        <li key={application.id} className="rounded-2xl border border-default bg-surface-elevated p-4 transition hover:border-strong">
                           <p className="text-sm font-semibold text-primary">
                             {application.organizationName}
                           </p>

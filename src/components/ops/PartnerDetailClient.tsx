@@ -114,7 +114,7 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
               <button className="px-3 py-2 accent-gradient hover:shadow-lg text-white font-bold rounded-lg text-sm transition-all hover:scale-105">
                 Schedule
               </button>
-              <button className="px-3 py-2 bg-soft-accent text-accent border border-accent/30 hover:bg-soft-accent/70 font-bold rounded-lg text-sm transition-all">
+            <button className="px-3 py-2 bg-soft-accent text-accent border border-accent hover:bg-soft-accent font-bold rounded-lg text-sm transition-all">
                 Message
               </button>
             </div>
@@ -206,7 +206,7 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
                         <p className="text-sm font-bold text-secondary mb-2">Works With</p>
                         <div className="flex flex-wrap gap-2">
                           {["Adults", "Families", "Job Seekers"].map((group) => (
-                            <span key={group} className="px-3 py-1 bg-soft-accent border border-accent/30 text-accent rounded-full text-xs font-bold">
+                            <span key={group} className="px-3 py-1 bg-soft-accent border border-accent text-accent rounded-full text-xs font-bold">
                               {group}
                             </span>
                           ))}
@@ -216,7 +216,7 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
                         <p className="text-sm font-bold text-secondary mb-2">Struggles Being Addressed</p>
                         <div className="flex flex-wrap gap-2">
                           {["Digital Literacy", "Access", "Employment"].map((struggle) => (
-                            <span key={struggle} className="px-3 py-1 bg-soft-warning border border-warning/30 text-warning rounded-full text-xs font-bold">
+                            <span key={struggle} className="px-3 py-1 bg-soft-highlight border border-highlight text-highlight rounded-full text-xs font-bold">
                               {struggle}
                             </span>
                           ))}
@@ -247,7 +247,7 @@ export default function PartnerDetailClient({ partnerId }: { partnerId: string }
                             <p className="font-bold text-primary">{event.devices} Device{event.devices > 1 ? "s" : ""}</p>
                             <p className="text-sm text-secondary">{event.date}</p>
                           </div>
-                          <span className="px-3 py-1 bg-soft-success text-success rounded-full text-xs font-bold border border-success/40">
+                          <span className="px-3 py-1 bg-soft-success text-success rounded-full text-xs font-bold border border-success">
                             {event.status}
                           </span>
                         </div>

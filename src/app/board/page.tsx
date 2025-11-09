@@ -50,8 +50,8 @@ export default function BoardDashboard() {
       {/* Header */}
       <header className="relative border-b border-default bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy text-white shadow-xl">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -left-24 top-1/3 h-56 w-56 rounded-full bg-hti-gold/25 blur-3xl" />
-          <div className="absolute right-0 top-0 h-72 w-72 translate-x-1/3 -translate-y-1/3 rounded-full bg-hti-orange/20 blur-3xl" />
+          <div className="absolute -left-24 top-1/3 h-56 w-56 rounded-full bg-highlight opacity-30 blur-3xl" />
+          <div className="absolute right-0 top-0 h-72 w-72 translate-x-1/3 -translate-y-1/3 rounded-full bg-accent opacity-25 blur-3xl" />
         </div>
         <div className="relative mx-auto flex max-w-7xl flex-col gap-10 px-4 py-14 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-16 lg:px-8">
           <div className="max-w-3xl space-y-6">
@@ -62,7 +62,7 @@ export default function BoardDashboard() {
               A crisp mission status report showcasing live deployments, community reach, and grant
               pacing.
             </p>
-            <div className="inline-flex items-center gap-3 rounded-full bg-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white/70">
+            <div className="inline-flex items-center gap-3 rounded-full border border-highlight bg-soft-highlight px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-highlight">
               Live signals • auto-refreshing every few minutes
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function BoardDashboard() {
                   <GradientHeading className="text-3xl md:text-4xl">
                     Mission Impact Pulse
                   </GradientHeading>
-                  <span className="rounded-full border border-accent/40 bg-soft-accent px-3 py-1 text-xs font-semibold text-accent">
+                  <span className="rounded-full border border-accent bg-soft-accent px-3 py-1 text-xs font-semibold text-accent">
                     Live data
                   </span>
                 </div>
@@ -124,12 +124,13 @@ export default function BoardDashboard() {
                   {momentumPulses.map((pulse) => (
                     <li
                       key={pulse.title}
-                      className={`rounded-2xl border px-4 py-3 ${pulse.tone === "positive"
-                        ? "border-success/40 bg-soft-success text-success"
-                        : pulse.tone === "accent"
-                        ? "border-accent/40 bg-soft-accent text-accent"
-                        : "border-warning/40 bg-soft-warning text-warning"
-                        }`}
+                      className={`rounded-2xl border px-4 py-3 ${
+                        pulse.tone === "positive"
+                          ? "border-success bg-soft-success text-success"
+                          : pulse.tone === "accent"
+                          ? "border-accent bg-soft-accent text-accent"
+                          : "border-highlight bg-soft-highlight text-highlight"
+                      }`}
                     >
                       <p className="font-semibold text-sm">{pulse.title}</p>
                       <p className="mt-1 text-xs text-current/90">{pulse.detail}</p>
@@ -144,25 +145,25 @@ export default function BoardDashboard() {
                 <div className="mt-4 grid grid-cols-2 gap-3 text-sm font-semibold">
                   <Link
                     href="/ops"
-                    className="rounded-xl border border-accent/40 bg-soft-accent px-3 py-2 text-accent transition hover:bg-soft-accent/70"
+                    className="rounded-xl border border-accent bg-soft-accent px-3 py-2 text-accent transition hover:bg-soft-accent"
                   >
                     Operations
                   </Link>
                   <Link
                     href="/reports"
-                    className="rounded-xl border border-warning/40 bg-soft-warning px-3 py-2 text-warning transition hover:bg-soft-warning/70"
+                    className="rounded-xl border border-highlight bg-soft-highlight px-3 py-2 text-highlight transition hover:bg-soft-highlight"
                   >
                     Reports
                   </Link>
                   <Link
                     href="/board"
-                    className="rounded-xl border border-success/40 bg-soft-success px-3 py-2 text-success transition hover:bg-soft-success/70"
+                    className="rounded-xl border border-success bg-soft-success px-3 py-2 text-success transition hover:bg-soft-success"
                   >
                     Board
                   </Link>
                   <Link
                     href="/marketing"
-                    className="rounded-xl border border-accent/40 bg-soft-accent px-3 py-2 text-accent transition hover:bg-soft-accent/70"
+                    className="rounded-xl border border-accent bg-soft-accent px-3 py-2 text-accent transition hover:bg-soft-accent"
                   >
                     Marketing
                   </Link>

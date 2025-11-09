@@ -81,7 +81,7 @@ export default function AppNav() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all border ${active ? 'bg-accent/10 text-accent border-accent/40 shadow-sm' : 'border-transparent text-secondary hover:bg-surface-hover hover:text-primary'} `}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all border ${active ? 'bg-soft-accent text-accent border-accent shadow-sm' : 'border-transparent text-secondary hover:bg-surface-hover hover:text-primary'} `}
                   >
                     <Icon className="w-4 h-4" />
                     {item.label}
@@ -166,7 +166,7 @@ export default function AppNav() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all border ${active ? 'bg-accent/10 text-accent border-accent/40 shadow-sm' : 'border-transparent text-secondary hover:bg-surface-hover hover:text-primary'}`}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all border ${active ? 'bg-soft-accent text-accent border-accent shadow-sm' : 'border-transparent text-secondary hover:bg-surface-hover hover:text-primary'}`}
                   >
                     <Icon className="w-5 h-5" />
                     {item.label}

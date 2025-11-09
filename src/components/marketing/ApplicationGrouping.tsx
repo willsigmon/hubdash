@@ -99,13 +99,13 @@ export default function ApplicationGrouping({
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Approved':
-        return 'bg-soft-success text-success border-success/30';
+        return 'bg-soft-success text-success border-success';
       case 'Pending':
-        return 'bg-soft-warning text-warning border-warning/30';
+        return 'bg-soft-highlight text-highlight border-highlight';
       case 'In Review':
-        return 'bg-soft-accent text-accent border-accent/30';
+        return 'bg-soft-accent text-accent border-accent';
       case 'Rejected':
-        return 'bg-soft-danger text-danger border-danger/30';
+        return 'bg-soft-danger text-danger border-danger';
       default:
         return 'bg-surface-alt text-secondary border-default';
     }
@@ -149,7 +149,7 @@ export default function ApplicationGrouping({
                   {app.status}
                 </span>
                 {app.is501c3 && (
-                  <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-soft-accent text-accent border border-accent/40">
+                  <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-soft-accent text-accent border border-accent">
                     ✓ 501(c)(3)
                   </span>
                 )}

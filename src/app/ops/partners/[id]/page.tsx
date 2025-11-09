@@ -9,20 +9,20 @@ interface PartnerDetailPageProps {
 
 export default function PartnerDetailPage({ params }: PartnerDetailPageProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-hti-yellow/5 via-white to-hti-orange/5">
+    <div className="min-h-screen bg-app">
       {/* Header Navigation */}
-      <header className="bg-gradient-to-r from-hti-yellow to-hti-orange shadow-lg border-b-4 border-hti-red">
+      <header className="accent-gradient text-on-accent shadow-lg border-b border-default">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <Link
                 href="/ops"
-                className="text-hti-navy hover:text-hti-red transition-colors font-bold"
+                className="font-bold transition-colors text-on-accent hover:text-highlight"
               >
                 ← Back to Ops
               </Link>
-              <span className="text-hti-navy/40">•</span>
-              <h1 className="text-2xl font-bold text-hti-navy">Partner Profile</h1>
+              <span className="text-on-accent opacity-70">•</span>
+              <h1 className="text-2xl font-bold text-on-accent">Partner Profile</h1>
             </div>
           </div>
         </div>
