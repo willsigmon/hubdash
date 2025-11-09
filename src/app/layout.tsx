@@ -19,7 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased bg-app text-primary">
+      <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geomanist@1.0.0/geomanist.min.css" />
+      </head>
+      <body className="font-sans antialiased bg-app text-primary">
         <ThemeProvider>
           <QueryProvider>
             <AppNav />

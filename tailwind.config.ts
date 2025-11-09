@@ -9,39 +9,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // HTI Brand Colors (2025 Palette)
+        // HTI Brand Colors (from logo)
         hti: {
-          // Core Palette
-          midnight: '#0F0C11',      // Deep anchor
-          plum: '#2F2D4C',          // Primary brand tone
-          fig: '#433D58',           // Secondary depth
-          dusk: '#4D4965',          // Muted accent
-          ember: '#C05F37',         // Warm accent
-          sunset: '#C65B32',        // Secondary warm accent
-          gold: '#E2A835',          // Signature gold
-          soleil: '#EACF3A',        // Highlight gold
-          clay: '#B4ABA3',          // Neutral midtone
-          sand: '#EEE6DF',          // Soft background neutral
-          mist: '#757A87',          // Muted typographic support
-          stone: '#615E5C',         // Dark neutral
-
-          // Legacy aliases mapped to new palette (for existing classes)
-          navy: '#2F2D4C',          // Alias → plum
-          red: '#C05F37',           // Alias → ember
-          orange: '#C65B32',        // Alias → sunset
-          yellow: '#E2A835',        // Alias → gold
-          'yellow-bright': '#EACF3A', // Alias → soleil
-          gray: '#615E5C',          // Alias → stone
-          'gray-light': '#EEE6DF',  // Alias → sand
-          teal: '#433D58',          // Alias → fig
-          'teal-light': '#615C7B',  // Softened secondary
+          // Logo gradient circles (left to right)
+          orange: '#E67E50',        // Circle 1 (leftmost)
+          amber: '#F19E3E',         // Circle 2
+          gold: '#F5BB2D',          // Circle 3
+          yellow: '#F9D71C',        // Circle 4 (rightmost/brightest)
+          
+          // Logo text and backgrounds
+          navy: '#1B365D',          // Primary text color from logo
+          white: '#FFFFFF',         // Background/contrast
+          
+          // Extended palette for UI needs
+          'navy-light': '#2A4A7C',  // Lighter navy for borders
+          'navy-dark': '#0F1F3D',   // Darker navy for depth
+          'gray': '#6B7280',        // Neutral gray
+          'gray-light': '#F3F4F6',  // Light backgrounds
         },
       },
+      fontFamily: {
+        sans: ['Geomanist', 'system-ui', '-apple-system', 'sans-serif'],
+      },
       borderColor: {
-        DEFAULT: '#433D5829', // Subtle plum tint for default borders
+        DEFAULT: 'rgba(27, 54, 93, 0.12)', // Subtle navy tint for default borders
       },
       divideColor: {
-        DEFAULT: '#433D5829',
+        DEFAULT: 'rgba(27, 54, 93, 0.12)',
       },
       animation: {
         'counter': 'counter 2s ease-out forwards',
