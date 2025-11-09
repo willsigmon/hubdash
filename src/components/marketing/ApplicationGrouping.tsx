@@ -161,9 +161,9 @@ export default function ApplicationGrouping({
     return (
       <div
         onClick={() => onApplicationClick(app)}
-        className="group bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-white/10 hover:border-accent/50 overflow-hidden flex flex-col h-full backdrop-blur-sm"
+        className="group bg-surface rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-default hover:border-accent overflow-hidden flex flex-col h-full backdrop-blur-sm"
         style={{
-          background: 'linear-gradient(135deg, rgba(27, 54, 93, 0.95), rgba(15, 31, 61, 0.98), rgba(27, 54, 93, 0.95))',
+          background: 'var(--bg-surface)',
           backdropFilter: 'blur(12px) saturate(150%)',
           WebkitBackdropFilter: 'blur(12px) saturate(150%)',
         }}
@@ -172,10 +172,10 @@ export default function ApplicationGrouping({
         <div className={`h-2 ${getCardAccentColor(app.status)}`} />
 
         {/* Card Content - Flex column to ensure consistent height */}
-        <div className="p-5 sm:p-6 flex flex-col flex-1 bg-gradient-to-br from-white/5 via-transparent to-white/5">
+        <div className="p-5 sm:p-6 flex flex-col flex-1 bg-gradient-to-br from-surface-alt/50 via-transparent to-surface-alt/50">
           {/* Header with Status Badge */}
           <div className="mb-4">
-            <h4 className="font-bold text-white text-base sm:text-lg mb-3 leading-tight group-hover:text-hti-gold transition-colors line-clamp-2 min-h-[3rem]">
+            <h4 className="font-bold text-primary text-base sm:text-lg mb-3 leading-tight group-hover:text-accent transition-colors line-clamp-2 min-h-[3rem]">
               {orgName}
             </h4>
             <div className="flex flex-wrap items-center gap-2">
@@ -183,7 +183,7 @@ export default function ApplicationGrouping({
                 {app.status || 'Pending'}
               </span>
               {app.is501c3 && (
-                <span className="px-2.5 py-1.5 rounded-full text-xs font-semibold bg-green-500/30 text-green-300 border border-green-500/50 backdrop-blur-sm">
+                <span className="px-2.5 py-1.5 rounded-full text-xs font-semibold bg-soft-success text-success border border-success backdrop-blur-sm">
                   ✓ 501(c)(3)
                 </span>
               )}
@@ -191,26 +191,30 @@ export default function ApplicationGrouping({
           </div>
 
           {/* Organization & Contact Info - Larger fonts */}
-          <div className="space-y-2.5 mb-4 pb-4 border-b-2 border-white/20 flex-grow">
+          <div className="space-y-2.5 mb-4 pb-4 border-b-2 border-default flex-grow">
             <div className="flex items-start gap-2">
-              <span className="text-xs text-white/60 font-semibold uppercase tracking-wide min-w-[60px]">Contact:</span>
-              <span className="text-sm sm:text-base text-white font-semibold break-words flex-1">{contactPerson}</span>
+              <span className="text-xs text-muted font-semibold uppercase tracking-wide min-w-[60px]">Contact:</span>
+              <span className="text-sm sm:text-base text-primary font-semibold break-words flex-1">
+                {contactPerson !== 'Contact Not Provided' ? contactPerson : <span className="text-muted italic">Not provided</span>}
+              </span>
             </div>
             <div className="flex items-start gap-2">
-              <span className="text-xs text-white/60 font-semibold uppercase tracking-wide min-w-[60px]">Location:</span>
-              <span className="text-sm sm:text-base text-white font-semibold break-words flex-1">{location}</span>
+              <span className="text-xs text-muted font-semibold uppercase tracking-wide min-w-[60px]">Location:</span>
+              <span className="text-sm sm:text-base text-primary font-semibold break-words flex-1">
+                {location !== 'Location Not Provided' ? location : <span className="text-muted italic">Not provided</span>}
+              </span>
             </div>
           </div>
 
           {/* Key Stats - Chromebooks & Date */}
           <div className="grid grid-cols-2 gap-3 mb-4">
-            <div className="p-3 sm:p-4 rounded-xl border-2 border-white/20 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm">
-              <div className="text-[10px] sm:text-xs text-white/70 font-bold mb-1.5 uppercase tracking-wider">Chromebooks</div>
-              <div className="text-xl sm:text-2xl font-bold text-white">{typeof app.chromebooksNeeded === 'number' ? app.chromebooksNeeded.toLocaleString() : 0}</div>
+            <div className="p-3 sm:p-4 rounded-xl border-2 border-default bg-surface-alt backdrop-blur-sm">
+              <div className="text-[10px] sm:text-xs text-secondary font-bold mb-1.5 uppercase tracking-wider">Chromebooks</div>
+              <div className="text-xl sm:text-2xl font-bold text-primary">{typeof app.chromebooksNeeded === 'number' ? app.chromebooksNeeded.toLocaleString() : 0}</div>
             </div>
-            <div className="p-3 sm:p-4 rounded-xl border-2 border-white/20 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm">
-              <div className="text-[10px] sm:text-xs text-white/70 font-bold mb-1.5 uppercase tracking-wider">Submitted</div>
-              <div className="text-sm sm:text-base font-bold text-white">
+            <div className="p-3 sm:p-4 rounded-xl border-2 border-default bg-surface-alt backdrop-blur-sm">
+              <div className="text-[10px] sm:text-xs text-secondary font-bold mb-1.5 uppercase tracking-wider">Submitted</div>
+              <div className="text-sm sm:text-base font-bold text-primary">
                 {app.timestamp ? (() => {
                   try {
                     const date = new Date(app.timestamp);
@@ -229,8 +233,8 @@ export default function ApplicationGrouping({
           {/* Quote Section - Always show space, but only render if quote exists */}
           <div className="mb-4 flex-1 flex items-start">
             {app.quote ? (
-              <div className="p-3 sm:p-4 rounded-xl border-l-4 border-hti-gold bg-gradient-to-r from-hti-gold/20 via-hti-gold/10 to-transparent backdrop-blur-sm w-full">
-                <p className="text-xs sm:text-sm text-white/90 italic font-medium line-clamp-2 leading-relaxed">
+              <div className="p-3 sm:p-4 rounded-xl border-l-4 border-accent bg-soft-accent backdrop-blur-sm w-full">
+                <p className="text-xs sm:text-sm text-secondary italic font-medium line-clamp-2 leading-relaxed">
                   "{app.quote}"
                 </p>
               </div>
@@ -240,7 +244,7 @@ export default function ApplicationGrouping({
           </div>
 
           {/* Click Indicator */}
-          <div className="mt-auto pt-3 border-t border-white/20 text-center text-xs sm:text-sm text-white/70 font-semibold group-hover:text-hti-gold transition-colors">
+          <div className="mt-auto pt-3 border-t border-default text-center text-xs sm:text-sm text-muted font-semibold group-hover:text-accent transition-colors">
             Click to view details →
           </div>
         </div>
@@ -271,18 +275,18 @@ export default function ApplicationGrouping({
   return (
     <div className="space-y-6">
       {/* Group By Selector */}
-      <div className="bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy rounded-2xl shadow-xl p-4 border-2 border-white/10 backdrop-blur-sm" style={{
-        background: 'linear-gradient(135deg, rgba(27, 54, 93, 0.95), rgba(15, 31, 61, 0.98), rgba(27, 54, 93, 0.95))',
+      <div className="bg-surface rounded-2xl shadow-xl p-4 border-2 border-default backdrop-blur-sm" style={{
+        background: 'var(--bg-surface)',
         backdropFilter: 'blur(12px) saturate(150%)',
         WebkitBackdropFilter: 'blur(12px) saturate(150%)',
       }}>
         <div className="flex items-center gap-3">
-          <Layers className="w-5 h-5 text-hti-gold" />
-          <label className="text-sm font-semibold text-white">Group by:</label>
+          <Layers className="w-5 h-5 text-accent" />
+          <label className="text-sm font-semibold text-primary">Group by:</label>
           <select
             value={groupBy}
             onChange={(e) => onGroupByChange(e.target.value as GroupingOption['value'])}
-            className="flex-1 px-4 py-2 border-2 border-white/20 rounded-xl focus-ring text-white bg-white/10 backdrop-blur-sm"
+            className="flex-1 px-4 py-2 border-2 border-default rounded-xl focus-ring text-primary bg-surface-alt backdrop-blur-sm"
           >
             {GROUPING_OPTIONS.map(option => (
               <option key={option.value} value={option.value}>
@@ -300,15 +304,15 @@ export default function ApplicationGrouping({
           const isCollapsed = collapsedGroups.has(groupKey);
 
           return (
-            <div key={groupKey} className="bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy rounded-2xl shadow-xl overflow-hidden border-2 border-white/10 hover:border-white/20 transition-all backdrop-blur-sm" style={{
-              background: 'linear-gradient(135deg, rgba(27, 54, 93, 0.95), rgba(15, 31, 61, 0.98), rgba(27, 54, 93, 0.95))',
+            <div key={groupKey} className="bg-surface rounded-2xl shadow-xl overflow-hidden border-2 border-default hover:border-strong transition-all backdrop-blur-sm" style={{
+              background: 'var(--bg-surface)',
               backdropFilter: 'blur(12px) saturate(150%)',
               WebkitBackdropFilter: 'blur(12px) saturate(150%)',
             }}>
               {/* Group Header with pizzazz */}
               <button
                 onClick={() => toggleGroup(groupKey)}
-                className={`w-full px-6 py-5 flex items-center justify-between ${getGroupColor(groupKey)} hover:shadow-md transition-all border-b-2 border-white/20 group cursor-pointer rounded-t-2xl backdrop-blur-sm`}
+                className={`w-full px-6 py-5 flex items-center justify-between ${getGroupColor(groupKey)} hover:shadow-md transition-all border-b-2 border-default group cursor-pointer rounded-t-2xl backdrop-blur-sm`}
               >
                 <div className="flex items-center gap-4 flex-1">
                   <span className="text-2xl">{getGroupIcon(groupKey)}</span>
@@ -338,7 +342,7 @@ export default function ApplicationGrouping({
 
               {/* Group Content */}
               {!isCollapsed && (
-                <div className="p-4 sm:p-6 grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   {groupApps.map(app => (
                     <ApplicationCard key={app.id} app={app} />
                   ))}

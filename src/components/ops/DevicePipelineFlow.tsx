@@ -133,14 +133,14 @@ export default function DevicePipelineFlow() {
       } catch (error) {
         console.error('Error fetching device stats:', error);
         // Return zeros on error
-        return {
+      return {
           total: 0,
           unassigned: 0,
           assigned: 0,
           converted: 0,
           presented: 0,
           discarded: 0,
-        };
+      };
       }
     },
   });
@@ -163,13 +163,13 @@ export default function DevicePipelineFlow() {
   return (
     <div className="space-y-6">
       <div className="mb-4">
-        <h3 className="text-2xl font-bold text-primary mb-2">
-          Device Pipeline Workflow
-        </h3>
+          <h3 className="text-2xl font-bold text-primary mb-2">
+            Device Pipeline Workflow
+          </h3>
         <p className="text-sm text-secondary">
           Track devices through the complete lifecycle from donation to presentation. Click any stage to view and manage devices.
-        </p>
-      </div>
+          </p>
+        </div>
 
         {/* Pipeline Flow */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-4">

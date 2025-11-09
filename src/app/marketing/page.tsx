@@ -293,16 +293,16 @@ export default function MarketingPage() {
           <div className="flex flex-col gap-6 lg:flex-row">
             <aside className="lg:w-[320px]">
               <div className="sticky top-20 space-y-4">
-                <div className="rounded-2xl border-2 border-white/10 bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy p-4 shadow-xl backdrop-blur-sm" style={{
-                  background: 'linear-gradient(135deg, rgba(27, 54, 93, 0.95), rgba(15, 31, 61, 0.98), rgba(27, 54, 93, 0.95))',
+                <div className="rounded-2xl border-2 border-default bg-surface p-4 shadow-xl backdrop-blur-sm" style={{
+                  background: 'var(--bg-surface)',
                   backdropFilter: 'blur(12px) saturate(150%)',
                   WebkitBackdropFilter: 'blur(12px) saturate(150%)',
                 }}>
                   <div className="mb-4">
-                    <h3 className="text-base font-semibold text-white">
+                    <h3 className="text-base font-semibold text-primary">
                       Filters
                     </h3>
-                    <p className="mt-1 text-xs text-white/70">
+                    <p className="mt-1 text-xs text-secondary">
                       Narrow down applications by status, county, organization type, and more.
                     </p>
                   </div>
@@ -315,12 +315,12 @@ export default function MarketingPage() {
                 </div>
 
                 {spotlightApplications.length > 0 && (
-                  <div className="rounded-2xl border-2 border-white/10 bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy p-4 sm:p-5 shadow-xl backdrop-blur-sm" style={{
-                    background: 'linear-gradient(135deg, rgba(27, 54, 93, 0.95), rgba(15, 31, 61, 0.98), rgba(27, 54, 93, 0.95))',
+                  <div className="rounded-2xl border-2 border-default bg-surface p-4 sm:p-5 shadow-xl backdrop-blur-sm" style={{
+                    background: 'var(--bg-surface)',
                     backdropFilter: 'blur(12px) saturate(150%)',
                     WebkitBackdropFilter: 'blur(12px) saturate(150%)',
                   }}>
-                    <h4 className="text-sm sm:text-base font-bold text-white mb-4">Recent Applications</h4>
+                    <h4 className="text-sm sm:text-base font-bold text-primary mb-4">Recent Applications</h4>
                     <ul className="space-y-3">
                       {spotlightApplications.map((application) => {
                         if (!application || !application.id) return null;
@@ -331,16 +331,16 @@ export default function MarketingPage() {
                           <li 
                             key={application.id} 
                             onClick={() => setSelectedApplication(application)}
-                            className="rounded-xl border-2 border-white/20 bg-white/5 backdrop-blur-sm p-3 sm:p-4 transition-all hover:border-hti-gold/50 hover:bg-white/10 hover:shadow-md cursor-pointer"
+                            className="rounded-xl border-2 border-default bg-surface-alt backdrop-blur-sm p-3 sm:p-4 transition-all hover:border-accent hover:bg-surface-elevated hover:shadow-md cursor-pointer"
                           >
-                            <p className="text-sm sm:text-base font-bold text-white mb-1.5 line-clamp-1">
+                            <p className="text-sm sm:text-base font-bold text-primary mb-1.5 line-clamp-1">
                               {orgName}
                             </p>
-                            <p className="text-xs sm:text-sm text-white/70 font-medium">
+                            <p className="text-xs sm:text-sm text-secondary font-medium">
                               {location} • {typeof application.chromebooksNeeded === 'number' ? application.chromebooksNeeded : 0} requested
                             </p>
                             {application.quote && (
-                              <p className="mt-2 text-xs text-white/80 line-clamp-2 italic">
+                              <p className="mt-2 text-xs text-secondary line-clamp-2 italic">
                                 "{application.quote}"
                               </p>
                             )}

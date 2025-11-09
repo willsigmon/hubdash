@@ -175,24 +175,20 @@ export default function ApplicationDetailPanel({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
                   <div>
                     <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Person</div>
-                    <div className="text-base sm:text-lg text-primary font-semibold">{application.contactPerson || 'Unknown'}</div>
+                    <div className="text-base sm:text-lg text-primary font-semibold">{application.contactPerson || <span className="text-muted italic">Not provided</span>}</div>
                   </div>
                   <div>
                     <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Email</div>
-                    <div className="text-base sm:text-lg text-primary font-semibold break-all">{application.email || 'No email provided'}</div>
+                    <div className="text-base sm:text-lg text-primary font-semibold break-all">{application.email || <span className="text-muted italic">Not provided</span>}</div>
                   </div>
-                  {application.phone && (
-                    <div>
-                      <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Phone</div>
-                      <div className="text-base sm:text-lg text-primary font-semibold">{application.phone}</div>
-                    </div>
-                  )}
-                  {application.preferredContactMethod && (
-                    <div>
-                      <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Preferred</div>
-                      <div className="text-base sm:text-lg text-primary font-semibold">{application.preferredContactMethod}</div>
-                    </div>
-                  )}
+                  <div>
+                    <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Phone</div>
+                    <div className="text-base sm:text-lg text-primary font-semibold">{application.phone || <span className="text-muted italic">Not provided</span>}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Preferred</div>
+                    <div className="text-base sm:text-lg text-primary font-semibold">{application.preferredContactMethod || <span className="text-muted italic">Not specified</span>}</div>
+                  </div>
                 </div>
               </div>
 
@@ -203,76 +199,72 @@ export default function ApplicationDetailPanel({
                   <h3 className="text-base sm:text-lg font-bold text-primary">Organization</h3>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
-                  {application.organizationType && (
-                    <div>
-                      <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Type</div>
-                      <div className="text-base sm:text-lg text-primary font-semibold">{application.organizationType}</div>
-                    </div>
-                  )}
-                  {application.county && (
-                    <div>
-                      <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">County</div>
-                      <div className="text-base sm:text-lg text-primary font-semibold">{application.county}</div>
-                    </div>
-                  )}
-                  {application.website && (
-                    <div className="col-span-1 sm:col-span-2">
-                      <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Website</div>
+                  <div>
+                    <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Type</div>
+                    <div className="text-base sm:text-lg text-primary font-semibold">{application.organizationType || <span className="text-muted italic">Not provided</span>}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">County</div>
+                    <div className="text-base sm:text-lg text-primary font-semibold">{application.county || <span className="text-muted italic">Not provided</span>}</div>
+                  </div>
+                  <div className="col-span-1 sm:col-span-2">
+                    <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Website</div>
+                    {application.website ? (
                       <a href={application.website} target="_blank" rel="noopener noreferrer" className="text-base sm:text-lg text-accent hover:underline font-semibold break-all">
                         {application.website}
                       </a>
-                    </div>
-                  )}
-                  {application.address && (
-                    <div className="col-span-1 sm:col-span-2">
-                      <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Address</div>
-                      <div className="text-base sm:text-lg text-primary font-semibold">{application.address}</div>
-                    </div>
-                  )}
+                    ) : (
+                      <div className="text-base sm:text-lg text-primary font-semibold"><span className="text-muted italic">Not provided</span></div>
+                    )}
+                  </div>
+                  <div className="col-span-1 sm:col-span-2">
+                    <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Address</div>
+                    <div className="text-base sm:text-lg text-primary font-semibold">{application.address || <span className="text-muted italic">Not provided</span>}</div>
+                  </div>
                 </div>
               </div>
 
               {/* Client Info */}
-              {(application.workssWith?.length > 0 || application.clientStruggles?.length > 0 || application.clientGoals) && (
-                <div className="rounded-xl border border-default bg-surface p-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Users className="h-4 w-4 text-accent" />
-                    <h3 className="text-sm font-semibold text-primary">Client Info</h3>
+              <div className="rounded-xl border border-default bg-surface p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <Users className="h-4 w-4 text-accent" />
+                  <h3 className="text-sm font-semibold text-primary">Client Info</h3>
+                </div>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <div className="text-xs font-semibold text-secondary mb-1.5">Communities Served</div>
+                    {application.workssWith?.length > 0 ? (
+                      <div className="flex flex-wrap gap-1.5">
+                        {application.workssWith.map((item, idx) => (
+                          <span key={idx} className="px-2 py-1 rounded border border-accent bg-soft-accent text-accent text-xs font-medium">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-muted italic text-xs">Not provided</div>
+                    )}
                   </div>
-                  <div className="space-y-3 text-sm">
-                    {application.workssWith?.length > 0 && (
-                      <div>
-                        <div className="text-xs font-semibold text-secondary mb-1.5">Communities Served</div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {application.workssWith.map((item, idx) => (
-                            <span key={idx} className="px-2 py-1 rounded border border-accent bg-soft-accent text-accent text-xs font-medium">
-                              {item}
-                            </span>
-                          ))}
-                        </div>
+                  <div>
+                    <div className="text-xs font-semibold text-secondary mb-1.5">Challenges</div>
+                    {application.clientStruggles?.length > 0 ? (
+                      <div className="flex flex-wrap gap-1.5">
+                        {application.clientStruggles.map((item, idx) => (
+                          <span key={idx} className="px-2 py-1 rounded border border-warning bg-soft-warning text-warning text-xs font-medium">
+                            {item}
+                          </span>
+                        ))}
                       </div>
+                    ) : (
+                      <div className="text-muted italic text-xs">Not provided</div>
                     )}
-                    {application.clientStruggles?.length > 0 && (
-                      <div>
-                        <div className="text-xs font-semibold text-secondary mb-1.5">Challenges</div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {application.clientStruggles.map((item, idx) => (
-                            <span key={idx} className="px-2 py-1 rounded border border-warning bg-soft-warning text-warning text-xs font-medium">
-                              {item}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    {application.clientGoals && (
-                      <div>
-                        <div className="text-xs font-semibold text-secondary mb-0.5">Goals</div>
-                        <div className="text-primary">{application.clientGoals}</div>
-                      </div>
-                    )}
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold text-secondary mb-0.5">Goals</div>
+                    <div className="text-primary">{application.clientGoals || <span className="text-muted italic">Not provided</span>}</div>
                   </div>
                 </div>
-              )}
+              </div>
 
               {/* Usage & Impact */}
               <div className="rounded-xl border border-default bg-surface p-4">
@@ -281,21 +273,17 @@ export default function ApplicationDetailPanel({
                   <h3 className="text-sm font-semibold text-primary">Usage & Impact</h3>
                 </div>
                 <div className="space-y-3 text-sm">
-                  {application.howWillUse && (
-                    <div>
-                      <div className="text-xs font-semibold text-secondary mb-0.5">How They'll Use</div>
-                      <div className="text-primary">{application.howWillUse}</div>
-                    </div>
-                  )}
-                  {application.positiveImpact && (
-                    <div>
-                      <div className="text-xs font-semibold text-secondary mb-0.5">Expected Impact</div>
-                      <div className="text-primary">{application.positiveImpact}</div>
-                    </div>
-                  )}
-                  {application.howClientsUseLaptops && typeof application.howClientsUseLaptops === 'string' && (
-                    <div>
-                      <div className="text-xs font-semibold text-secondary mb-1.5">Client Usage</div>
+                  <div>
+                    <div className="text-xs font-semibold text-secondary mb-0.5">How They'll Use</div>
+                    <div className="text-primary">{application.howWillUse || <span className="text-muted italic">Not provided</span>}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold text-secondary mb-0.5">Expected Impact</div>
+                    <div className="text-primary">{application.positiveImpact || <span className="text-muted italic">Not provided</span>}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold text-secondary mb-1.5">Client Usage</div>
+                    {application.howClientsUseLaptops && typeof application.howClientsUseLaptops === 'string' ? (
                       <div className="flex flex-wrap gap-1.5">
                         {application.howClientsUseLaptops.split(',').map((item, idx) => (
                           <span key={idx} className="px-2 py-1 rounded border border-accent bg-soft-accent text-accent text-xs font-medium">
@@ -303,47 +291,47 @@ export default function ApplicationDetailPanel({
                           </span>
                         ))}
                       </div>
-                    </div>
-                  )}
+                    ) : (
+                      <div className="text-muted italic text-xs">Not provided</div>
+                    )}
+                  </div>
                 </div>
               </div>
 
-              {/* Quote if available */}
-              {application.quote && (
-                <div className="rounded-xl border border-accent bg-soft-accent p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Quote className="h-4 w-4 text-accent" />
-                    <h3 className="text-sm font-semibold text-accent">Quote</h3>
-                  </div>
-                  <p className="text-sm text-primary italic">"{application.quote}"</p>
-                  {application.oneWord && (
-                    <div className="mt-2 text-xs text-secondary">
-                      <span className="font-semibold">One word:</span> {application.oneWord}
-                    </div>
-                  )}
+              {/* Quote */}
+              <div className="rounded-xl border border-accent bg-soft-accent p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <Quote className="h-4 w-4 text-accent" />
+                  <h3 className="text-sm font-semibold text-accent">Quote</h3>
                 </div>
-              )}
+                {application.quote ? (
+                  <>
+                    <p className="text-sm text-primary italic">"{application.quote}"</p>
+                    {application.oneWord && (
+                      <div className="mt-2 text-xs text-secondary">
+                        <span className="font-semibold">One word:</span> {application.oneWord}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="text-muted italic text-sm">Not provided</div>
+                )}
+              </div>
 
               {/* Notes */}
-              {(application.notes || application.internalComments) && (
-                <div className="rounded-xl border border-danger bg-soft-danger p-4">
-                  <h3 className="text-sm font-semibold text-danger mb-2">Internal Notes</h3>
-                  <div className="space-y-2 text-sm">
-                    {application.notes && (
-                      <div>
-                        <div className="text-xs font-semibold text-danger mb-0.5">Notes</div>
-                        <div className="text-primary">{application.notes}</div>
-                      </div>
-                    )}
-                    {application.internalComments && (
-                      <div>
-                        <div className="text-xs font-semibold text-danger mb-0.5">Comments</div>
-                        <div className="text-primary">{application.internalComments}</div>
-                      </div>
-                    )}
+              <div className="rounded-xl border border-danger bg-soft-danger p-4">
+                <h3 className="text-sm font-semibold text-danger mb-2">Internal Notes</h3>
+                <div className="space-y-2 text-sm">
+                  <div>
+                    <div className="text-xs font-semibold text-danger mb-0.5">Notes</div>
+                    <div className="text-primary">{application.notes || <span className="text-muted italic">No notes</span>}</div>
+                  </div>
+                  <div>
+                    <div className="text-xs font-semibold text-danger mb-0.5">Comments</div>
+                    <div className="text-primary">{application.internalComments || <span className="text-muted italic">No comments</span>}</div>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Right Column - Actions */}
@@ -405,12 +393,10 @@ export default function ApplicationDetailPanel({
                       {application.status}
                     </span>
                   </div>
-                  {application.howHeard && (
-                    <div className="pt-2 border-t border-default">
-                      <div className="text-xs text-secondary mb-0.5">How they heard</div>
-                      <div className="text-sm text-primary">{application.howHeard}</div>
-                    </div>
-                  )}
+                  <div className="pt-2 border-t border-default">
+                    <div className="text-xs text-secondary mb-0.5">How they heard</div>
+                    <div className="text-sm text-primary">{application.howHeard || <span className="text-muted italic">Not provided</span>}</div>
+                  </div>
                 </div>
               </div>
             </div>
