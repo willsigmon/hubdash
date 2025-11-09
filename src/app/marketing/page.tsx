@@ -189,66 +189,68 @@ export default function MarketingPage() {
       </div>
 
       <main className="relative">
-        <header className="border-b border-default bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy text-white">
-          <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-10 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-12 lg:px-8">
-            <div className="flex-1">
-              <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
-                Partnership Applications
-              </h1>
-              <p className="mt-3 max-w-2xl text-base text-white/90">
-                Review, filter, and manage partnership applications. Track quotes and impact stories for marketing use.
-              </p>
-              <div className="mt-6 flex flex-wrap items-center gap-4">
-                <Link
-                  href="/"
-                  className="flex items-center gap-2 rounded-xl bg-white/20 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-                >
-                  ← Return to HUB
-                </Link>
+        <header className="sticky top-0 z-40 border-b border-default bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy text-white shadow-lg">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-6 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-4 flex-1 min-w-0">
+              <div className="min-w-0">
+                <h1 className="text-2xl font-bold leading-tight text-white sm:text-3xl truncate">
+                  Partnership Applications
+                </h1>
+                <p className="mt-1 text-xs text-white/80 hidden sm:block">
+                  Review, filter, and manage partnership applications
+                </p>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-4 lg:flex-1">
-              {heroStats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-xl border border-white/20 bg-white/10 p-4 backdrop-blur"
-                >
-                  <div className="text-xs font-semibold uppercase tracking-wide text-white mb-1">
-                    {stat.label}
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <div className="hidden lg:grid grid-cols-3 gap-2">
+                {heroStats.map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="rounded-lg border border-white/20 bg-white/10 px-3 py-2 backdrop-blur"
+                  >
+                    <div className="text-[10px] font-semibold uppercase tracking-wide text-white mb-0.5">
+                      {stat.label}
+                    </div>
+                    <div className="text-lg font-bold text-white">{stat.value}</div>
                   </div>
-                  <div className="text-2xl font-bold text-white">{stat.value}</div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <Link
+                href="/"
+                className="rounded-lg bg-white/10 px-4 py-2 text-xs font-semibold text-white transition hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+              >
+                ← HUB
+              </Link>
             </div>
           </div>
         </header>
 
 
-        <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h2 className="text-2xl font-bold text-primary md:text-3xl">
+              <h2 className="text-xl font-bold text-primary md:text-2xl">
                 Applications & Filters
               </h2>
-              <p className="mt-2 max-w-3xl text-secondary">
+              <p className="mt-1 max-w-3xl text-xs text-secondary">
                 Filter by county, status, organization type, or search by keywords. Click any application to view details and generate quote cards.
               </p>
             </div>
-            <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-wide text-muted">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-success" />
+            <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-wide text-muted">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
               {loading ? "Loading…" : `${filteredApplications.length} of ${partnerships.length} applications`}
             </div>
           </div>
 
-          <div className="flex flex-col gap-8 lg:flex-row">
-            <aside className="lg:w-[360px]">
-              <div className="sticky top-24 space-y-6">
-                <div className="rounded-3xl border border-default bg-surface p-6 shadow-xl">
-                  <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-primary">
+          <div className="flex flex-col gap-6 lg:flex-row">
+            <aside className="lg:w-[320px]">
+              <div className="sticky top-20 space-y-4">
+                <div className="rounded-2xl border border-default bg-surface p-4 shadow-lg">
+                  <div className="mb-4">
+                    <h3 className="text-base font-semibold text-primary">
                       Filters
                     </h3>
-                    <p className="mt-1 text-sm text-secondary">
+                    <p className="mt-1 text-xs text-secondary">
                       Narrow down applications by status, county, organization type, and more.
                     </p>
                   </div>
@@ -261,9 +263,9 @@ export default function MarketingPage() {
                 </div>
 
                 {spotlightApplications.length > 0 && (
-                  <div className="rounded-3xl border border-default bg-surface-alt p-6 shadow-lg">
-                    <h4 className="text-sm font-semibold text-primary mb-4">Recent Applications</h4>
-                    <ul className="space-y-3">
+                  <div className="rounded-2xl border border-default bg-surface-alt p-4 shadow-lg">
+                    <h4 className="text-xs font-semibold text-primary mb-3">Recent Applications</h4>
+                    <ul className="space-y-2">
                       {spotlightApplications.map((application) => (
                         <li key={application.id} className="rounded-xl border border-default bg-surface-elevated p-3 transition hover:border-strong">
                           <p className="text-sm font-semibold text-primary">
@@ -285,7 +287,7 @@ export default function MarketingPage() {
               </div>
             </aside>
 
-            <div className="flex-1 space-y-6">
+            <div className="flex-1 space-y-4">
               <ApplicationSearch
                 searchQuery={filters.searchQuery}
                 onSearchChange={(query) => setFilters({ ...filters, searchQuery: query })}

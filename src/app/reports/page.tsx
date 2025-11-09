@@ -44,28 +44,28 @@ export default function ReportsPage() {
 
   return (
     <div className="min-h-screen bg-app">
-      {/* Header */}
-      <header className="bg-surface-alt border-b border-default">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div>
-            <GradientHeading as="h1" className="text-3xl md:text-4xl mb-3">Grant Reports</GradientHeading>
-            <p className="text-secondary text-base md:text-lg max-w-2xl">NCDIT Digital Champion Grant tracking and compliance reporting</p>
+      {/* Header - Compact */}
+      <header className="sticky top-0 z-40 bg-surface-alt border-b border-default shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="flex-1 min-w-0">
+            <GradientHeading as="h1" className="text-2xl md:text-3xl mb-1">Grant Reports</GradientHeading>
+            <p className="text-secondary text-xs md:text-sm max-w-2xl hidden md:block">NCDIT Digital Champion Grant tracking and compliance reporting</p>
           </div>
           <Link
             href="/"
-            className="accent-gradient px-6 py-3 rounded-xl text-on-accent text-sm font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus-ring"
+            className="flex-shrink-0 accent-gradient px-4 py-2 rounded-lg text-on-accent text-xs font-semibold shadow-sm hover:shadow-md focus-ring"
           >
-            ← Back to HUB
+            ← HUB
           </Link>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
 
         {/* Grant Progress */}
         <section>
-          <GlassCard elevation="lg" className="p-8 space-y-8">
+          <GlassCard elevation="lg" className="p-6 space-y-4">
             <div>
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-3xl">🎯</span>
@@ -163,7 +163,7 @@ export default function ReportsPage() {
 
         {/* Report Configuration */}
         <section>
-          <GlassCard elevation="md" className="p-8 space-y-8">
+          <GlassCard elevation="md" className="p-6 space-y-4">
             <div className="flex items-center gap-3">
               <span className="text-2xl">⚙️</span>
               <h2 className="text-xl md:text-2xl font-bold text-primary">Report Configuration</h2>
@@ -207,12 +207,12 @@ export default function ReportsPage() {
 
         {/* Report Preview */}
         <section>
-          <GlassCard elevation="md" className="p-10 space-y-10">
-            <div className="space-y-3">
-              <h2 className="text-2xl md:text-3xl font-bold text-primary tracking-tight">HTI Quarterly Accountability Report</h2>
-              <p className="text-secondary text-sm md:text-base font-medium">Reporting Period: <span className="text-primary font-bold">{selectedQuarter}</span> • Generated: <span className="text-primary font-bold">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span></p>
+          <GlassCard elevation="md" className="p-6 space-y-6">
+            <div className="space-y-2">
+              <h2 className="text-xl md:text-2xl font-bold text-primary tracking-tight">HTI Quarterly Accountability Report</h2>
+              <p className="text-secondary text-xs md:text-sm font-medium">Reporting Period: <span className="text-primary font-bold">{selectedQuarter}</span> • Generated: <span className="text-primary font-bold">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span></p>
             </div>
-            <div className="space-y-12">
+            <div className="space-y-6">
               {/* Executive Summary */}
               <div>
                 <h3 className="text-lg md:text-xl font-bold text-primary mb-4">Executive Summary</h3>
@@ -317,23 +317,23 @@ export default function ReportsPage() {
             <h2 className="text-xl md:text-2xl font-bold text-primary">Export & Share Options</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <GlassCard interactive elevation="sm" className="p-8 text-center space-y-4">
-              <div className="text-4xl">📄</div>
-              <h3 className="font-semibold text-primary text-base md:text-lg">PDF Report</h3>
-              <p className="text-secondary text-xs md:text-sm">Professional, print-ready report for NCDIT and stakeholder distribution</p>
-              <button className="accent-gradient text-on-accent font-semibold px-5 py-3 rounded-xl text-sm shadow-md hover:shadow-lg focus-ring w-full">Download PDF</button>
+            <GlassCard interactive elevation="sm" className="p-4 text-center space-y-3">
+              <div className="text-3xl">📄</div>
+              <h3 className="font-semibold text-primary text-sm">PDF Report</h3>
+              <p className="text-secondary text-xs">Professional, print-ready report for NCDIT and stakeholder distribution</p>
+              <button className="accent-gradient text-on-accent font-semibold px-4 py-2 rounded-lg text-xs shadow-md hover:shadow-lg focus-ring w-full">Download PDF</button>
             </GlassCard>
-            <GlassCard interactive elevation="sm" className="p-8 text-center space-y-4">
-              <div className="text-4xl">📊</div>
-              <h3 className="font-semibold text-primary text-base md:text-lg">Excel/CSV Data</h3>
-              <p className="text-secondary text-xs md:text-sm">Raw dataset for custom analysis and reporting</p>
-              <button className="accent-gradient text-on-accent font-semibold px-5 py-3 rounded-xl text-sm shadow-md hover:shadow-lg focus-ring w-full">Download CSV</button>
+            <GlassCard interactive elevation="sm" className="p-4 text-center space-y-3">
+              <div className="text-3xl">📊</div>
+              <h3 className="font-semibold text-primary text-sm">Excel/CSV Data</h3>
+              <p className="text-secondary text-xs">Raw dataset for custom analysis and reporting</p>
+              <button className="accent-gradient text-on-accent font-semibold px-4 py-2 rounded-lg text-xs shadow-md hover:shadow-lg focus-ring w-full">Download CSV</button>
             </GlassCard>
-            <GlassCard interactive elevation="sm" className="p-8 text-center space-y-4">
-              <div className="text-4xl">🌐</div>
-              <h3 className="font-semibold text-primary text-base md:text-lg">HTML Report</h3>
-              <p className="text-secondary text-xs md:text-sm">Web-ready format for online sharing and web viewing</p>
-              <button className="accent-gradient text-on-accent font-semibold px-5 py-3 rounded-xl text-sm shadow-md hover:shadow-lg focus-ring w-full">Download HTML</button>
+            <GlassCard interactive elevation="sm" className="p-4 text-center space-y-3">
+              <div className="text-3xl">🌐</div>
+              <h3 className="font-semibold text-primary text-sm">HTML Report</h3>
+              <p className="text-secondary text-xs">Web-ready format for online sharing and web viewing</p>
+              <button className="accent-gradient text-on-accent font-semibold px-4 py-2 rounded-lg text-xs shadow-md hover:shadow-lg focus-ring w-full">Download HTML</button>
             </GlassCard>
           </div>
         </section>
