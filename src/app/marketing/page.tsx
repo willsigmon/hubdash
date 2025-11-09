@@ -192,7 +192,7 @@ export default function MarketingPage() {
         <header className="border-b border-default bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy text-white">
           <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-10 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-12 lg:px-8">
             <div className="flex-1">
-              <h1 className="text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
+              <h1 className="text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
                 Partnership Applications
               </h1>
               <p className="mt-3 max-w-2xl text-base text-white/90">
@@ -213,7 +213,7 @@ export default function MarketingPage() {
                   key={stat.label}
                   className="rounded-xl border border-white/20 bg-white/10 p-4 backdrop-blur"
                 >
-                  <div className="text-xs font-semibold uppercase tracking-wide text-white/80 mb-1">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-white/90 mb-1">
                     {stat.label}
                   </div>
                   <div className="text-2xl font-bold text-white">{stat.value}</div>

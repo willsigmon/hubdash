@@ -59,7 +59,7 @@ export default function EquipmentInventory() {
 
   const queryClient = useQueryClient();
 
-  const { data: inventory, isLoading } = useQuery<InventoryItem[]>({
+  const { data: inventoryData, isLoading } = useQuery<InventoryItem[] | { inventory?: InventoryItem[] } | null>({
     queryKey: queryKeys.devices, // TODO: Create queryKeys.inventory
     queryFn: async () => {
       // In production: GET /api/inventory
@@ -114,6 +114,13 @@ export default function EquipmentInventory() {
       ];
     },
   });
+
+  // Safely extract inventory array from various possible response shapes
+  const inventory: InventoryItem[] = Array.isArray(inventoryData)
+    ? inventoryData
+    : inventoryData && typeof inventoryData === 'object' && 'inventory' in inventoryData && Array.isArray(inventoryData.inventory)
+    ? inventoryData.inventory
+    : [];
 
   const createMutation = useMutation({
     mutationFn: async (newItem: Partial<InventoryItem>) => {
@@ -172,7 +179,7 @@ export default function EquipmentInventory() {
     },
   });
 
-  const filteredItems = (inventory || [])
+  const filteredItems = inventory
     .filter((item) => item.category === activeTab)
     .filter((item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
