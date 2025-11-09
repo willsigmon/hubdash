@@ -213,7 +213,7 @@ export default function MarketingPage() {
                   key={stat.label}
                   className="rounded-xl border border-white/20 bg-white/10 p-4 backdrop-blur"
                 >
-                  <div className="text-xs font-semibold uppercase tracking-wide text-white/90 mb-1">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-white mb-1">
                     {stat.label}
                   </div>
                   <div className="text-2xl font-bold text-white">{stat.value}</div>
