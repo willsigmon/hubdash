@@ -104,7 +104,7 @@ export default function DevicePipelineFlow() {
         devices.forEach((device: any) => {
           total++;
           const status = device.status?.toLowerCase() || 'unknown';
-          
+
           // Map statuses to pipeline stages
           if (status.includes('unassigned') || status.includes('ready') || status.includes('donated') || status.includes('received')) {
             statusCounts.unassigned = (statusCounts.unassigned || 0) + 1;

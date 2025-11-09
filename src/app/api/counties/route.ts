@@ -14,7 +14,7 @@ export async function GET() {
       async () => {
         const knack = getKnackClient()
         const objectKey = process.env.KNACK_COUNTIES_OBJECT || 'object_10'
-        
+
         try {
           const knackRecords = await knack.getRecords(objectKey, { rows_per_page: 1000 })
 
@@ -156,4 +156,3 @@ function getNCCountiesList() {
     { id: '100', name: 'Yancey', code: 'YAN', region: 'Mountains' },
   ];
 }
-

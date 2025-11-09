@@ -160,29 +160,29 @@ export function LiveImpactCounter() {
       <Confetti show={showConfetti} />
 
       {/* Header */}
-      <div className="flex items-center gap-2 mb-6">
-        <Sparkles className="w-5 h-5 text-accent animate-pulse" />
-        <h3 className="text-lg font-semibold text-primary">
+      <div className="flex items-center gap-2 mb-4">
+        <Sparkles className="w-4 h-4 text-accent animate-pulse" />
+        <h3 className="text-base font-semibold text-primary">
           Live Impact
         </h3>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* Devices Deployed */}
         <div className="group relative">
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/15 to-[var(--color-accent-alt)]/15 rounded-lg blur-xl group-hover:blur-2xl transition-all" />
-          <div className="relative bg-surface-alt backdrop-blur-sm rounded-lg p-4 border border-default hover:border-strong transition-all opacity-90">
+          <div className="relative bg-surface-alt backdrop-blur-sm rounded-lg p-3 border border-default hover:border-strong transition-all opacity-90">
             <div className="flex items-center gap-2 mb-2">
-              <Zap className="w-4 h-4 text-accent" />
-              <span className="text-xs text-secondary uppercase tracking-wider font-medium">
+              <Zap className="w-3.5 h-3.5 text-accent" />
+              <span className="text-[10px] text-secondary uppercase tracking-wide font-medium">
                 Devices Deployed
               </span>
             </div>
-            <div className="text-3xl font-bold text-primary mb-1">
+            <div className="text-2xl font-bold text-primary mb-1">
               <AnimatedNumber value={stats.devicesDeployed} />
             </div>
-            <div className="text-xs text-muted">
+            <div className="text-[10px] text-muted">
               Bridging the digital divide
             </div>
           </div>
@@ -191,17 +191,17 @@ export function LiveImpactCounter() {
         {/* Families Served */}
         <div className="group relative">
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/15 to-[var(--color-accent-alt)]/15 rounded-lg blur-xl group-hover:blur-2xl transition-all" />
-          <div className="relative bg-surface-alt backdrop-blur-sm rounded-lg p-4 border border-default hover:border-strong transition-all opacity-90">
+          <div className="relative bg-surface-alt backdrop-blur-sm rounded-lg p-3 border border-default hover:border-strong transition-all opacity-90">
             <div className="flex items-center gap-2 mb-2">
-              <Users className="w-4 h-4 text-accent" />
-              <span className="text-xs text-secondary uppercase tracking-wider font-medium">
+              <Users className="w-3.5 h-3.5 text-accent" />
+              <span className="text-[10px] text-secondary uppercase tracking-wide font-medium">
                 Families Served
               </span>
             </div>
-            <div className="text-3xl font-bold text-primary mb-1">
+            <div className="text-2xl font-bold text-primary mb-1">
               <AnimatedNumber value={stats.familiesServed} />
             </div>
-            <div className="text-xs text-muted">
+            <div className="text-[10px] text-muted">
               People connected to opportunity
             </div>
           </div>
@@ -210,17 +210,17 @@ export function LiveImpactCounter() {
         {/* CO2 Saved */}
         <div className="group relative">
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-lg blur-xl group-hover:blur-2xl transition-all" />
-          <div className="relative bg-surface-alt backdrop-blur-sm rounded-lg p-4 border border-default hover:border-strong transition-all opacity-90">
+          <div className="relative bg-surface-alt backdrop-blur-sm rounded-lg p-3 border border-default hover:border-strong transition-all opacity-90">
             <div className="flex items-center gap-2 mb-2">
-              <Leaf className="w-4 h-4 text-emerald-400" />
-              <span className="text-xs text-secondary uppercase tracking-wider font-medium">
+              <Leaf className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="text-[10px] text-secondary uppercase tracking-wide font-medium">
                 CO₂ Saved
               </span>
             </div>
-            <div className="text-3xl font-bold text-primary mb-1">
+            <div className="text-2xl font-bold text-primary mb-1">
               <AnimatedNumber value={stats.co2Saved} suffix=" kg" />
             </div>
-            <div className="text-xs text-muted">
+            <div className="text-[10px] text-muted">
               E-waste diverted from landfills
             </div>
           </div>

@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
 
     const knack = getKnackClient();
     const objectKey = process.env.KNACK_DEVICES_OBJECT || 'object_7';
-    
+
     // Map updates to device DTO format
     const deviceDTO: DeviceDTO = {
       status: validated.updates.status,
@@ -91,4 +91,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(errorResponse(error.message || 'Failed to batch update devices'), { status: 500 });
   }
 }
-

@@ -219,4 +219,3 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json(errorResponse(error.message || 'Failed to delete organization'), { status: 500 });
   }
 }
-

@@ -355,134 +355,126 @@ export default function EquipmentInventory() {
   const totalValue = filteredItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <GradientHeading variant="navy">
+        <GradientHeading variant="navy" className="text-xl">
           Equipment Inventory Overview
         </GradientHeading>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 px-6 py-3 accent-gradient text-on-accent rounded-lg font-semibold hover:shadow-xl transition-all"
+          className="flex items-center gap-2 px-4 py-2 accent-gradient text-on-accent rounded-lg text-sm font-semibold hover:shadow-lg transition-all"
         >
-          <Plus className="w-5 h-5" />
+          <Plus className="w-4 h-4" />
           Add Item
         </button>
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <GlassCard className="p-4">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary mb-1">{totalValue}</div>
-            <div className="text-xs text-secondary uppercase tracking-wider">Total Items</div>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+        <div className="rounded-xl border border-default bg-surface p-3 text-center shadow-lg">
+          <div className="text-2xl font-bold text-primary mb-1">{totalValue}</div>
+          <div className="text-[10px] text-secondary uppercase tracking-wide">Total Items</div>
+        </div>
+        <div className="rounded-xl border border-default bg-surface p-3 text-center shadow-lg">
+          <div className="text-2xl font-bold text-success mb-1">
+            {filteredItems.filter(i => i.quantity >= i.minThreshold).length}
           </div>
-        </GlassCard>
-        <GlassCard className="p-4">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-success mb-1">
-              {filteredItems.filter(i => i.quantity >= i.minThreshold).length}
-            </div>
-            <div className="text-xs text-secondary uppercase tracking-wider">In Stock</div>
+          <div className="text-[10px] text-secondary uppercase tracking-wide">In Stock</div>
+        </div>
+        <div className="rounded-xl border border-default bg-surface p-3 text-center shadow-lg">
+          <div className="text-2xl font-bold text-warning mb-1">{lowStockItems.length}</div>
+          <div className="text-[10px] text-secondary uppercase tracking-wide">Low Stock</div>
+        </div>
+        <div className="rounded-xl border border-default bg-surface p-3 text-center shadow-lg">
+          <div className="text-2xl font-bold text-danger mb-1">
+            {filteredItems.filter(i => i.quantity === 0).length}
           </div>
-        </GlassCard>
-        <GlassCard className="p-4">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-warning mb-1">{lowStockItems.length}</div>
-            <div className="text-xs text-secondary uppercase tracking-wider">Low Stock</div>
-          </div>
-        </GlassCard>
-        <GlassCard className="p-4">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-danger mb-1">
-              {filteredItems.filter(i => i.quantity === 0).length}
-            </div>
-            <div className="text-xs text-secondary uppercase tracking-wider">Out of Stock</div>
-          </div>
-        </GlassCard>
+          <div className="text-[10px] text-secondary uppercase tracking-wide">Out of Stock</div>
+        </div>
       </div>
 
-      {/* Low Stock Alert */}
-      {lowStockItems.length > 0 && (
-        <GlassCard className="border border-highlight bg-soft-highlight">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="w-6 h-6 text-warning flex-shrink-0 mt-1" />
-            <div>
-              <h4 className="font-semibold text-warning mb-1">Low Stock Alert</h4>
-              <p className="text-sm text-secondary mb-2">
-                {lowStockItems.length} item{lowStockItems.length !== 1 ? "s" : ""} below minimum threshold
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {lowStockItems.map((item) => (
-                  <span
-                    key={item.id}
-                    className="px-3 py-1 bg-surface-alt rounded-full text-xs font-medium text-accent border border-default"
-                  >
-                    {item.name} ({item.quantity}/{item.minThreshold})
-                  </span>
-                ))}
+          {/* Low Stock Alert */}
+          {lowStockItems.length > 0 && (
+            <div className="rounded-xl border border-highlight bg-soft-highlight p-4">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-5 h-5 text-warning flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <h4 className="font-semibold text-warning mb-1 text-sm">Low Stock Alert</h4>
+                  <p className="text-xs text-secondary mb-2">
+                    {lowStockItems.length} item{lowStockItems.length !== 1 ? "s" : ""} below minimum threshold
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {lowStockItems.map((item) => (
+                      <span
+                        key={item.id}
+                        className="px-2.5 py-1 bg-surface-alt rounded-full text-xs font-medium text-accent border border-default"
+                      >
+                        {item.name} ({item.quantity}/{item.minThreshold})
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Tabs & Search */}
+          <div className="rounded-xl border border-default bg-surface p-4">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              {/* Tabs */}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setActiveTab("equipment")}
+                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${activeTab === "equipment"
+                      ? "accent-gradient text-on-accent"
+                      : "bg-surface-alt text-secondary hover:bg-surface"
+                    }`}
+                >
+                  Equipment
+                </button>
+                <button
+                  onClick={() => setActiveTab("parts")}
+                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${activeTab === "parts"
+                      ? "accent-gradient text-on-accent"
+                      : "bg-surface-alt text-secondary hover:bg-surface"
+                    }`}
+                >
+                  Parts
+                </button>
+              </div>
+
+              {/* Search & Sort */}
+              <div className="flex items-center gap-2 flex-1 min-w-[300px]">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted" />
+                  <input
+                    type="text"
+                    placeholder="Search inventory..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-9 pr-4 py-2 bg-surface-alt border border-default rounded-lg focus:outline-none focus-ring text-sm text-primary placeholder:text-muted"
+                  />
+                </div>
+                <button
+                  onClick={() => {
+                    if (sortBy === "quantity") {
+                      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+                    } else {
+                      setSortBy("quantity");
+                      setSortOrder("desc");
+                    }
+                  }}
+                  className="flex items-center gap-1.5 px-3 py-2 bg-surface-alt hover:bg-surface rounded-lg text-xs font-medium text-primary transition-colors"
+                >
+                  <TrendingDown className="w-3.5 h-3.5" />
+                  {sortBy === "quantity" ? (sortOrder === "desc" ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />) : "Sort"}
+                </button>
               </div>
             </div>
           </div>
-        </GlassCard>
-      )}
 
-      {/* Tabs & Search */}
-      <GlassCard>
-        <div className="flex items-center justify-between gap-4 flex-wrap">
-          {/* Tabs */}
-          <div className="flex gap-2">
-            <button
-              onClick={() => setActiveTab("equipment")}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${activeTab === "equipment"
-                  ? "accent-gradient text-on-accent"
-                  : "bg-surface-alt text-secondary hover:bg-surface"
-                }`}
-            >
-              Equipment
-            </button>
-            <button
-              onClick={() => setActiveTab("parts")}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${activeTab === "parts"
-                  ? "accent-gradient text-on-accent"
-                  : "bg-surface-alt text-secondary hover:bg-surface"
-                }`}
-            >
-              Parts
-            </button>
-          </div>
-
-          {/* Search & Sort */}
-          <div className="flex items-center gap-3 flex-1 min-w-[300px]">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted" />
-              <input
-                type="text"
-                placeholder="Search inventory..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-surface-alt border border-default rounded-lg focus:outline-none focus-ring text-primary placeholder:text-muted"
-              />
-            </div>
-            <button
-              onClick={() => {
-                if (sortBy === "quantity") {
-                  setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-                } else {
-                  setSortBy("quantity");
-                  setSortOrder("desc");
-                }
-              }}
-              className="flex items-center gap-2 px-4 py-3 bg-surface-alt hover:bg-surface rounded-lg text-sm font-medium text-primary transition-colors"
-            >
-              <TrendingDown className="w-4 h-4" />
-              {sortBy === "quantity" ? (sortOrder === "desc" ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />) : "Sort"}
-            </button>
-          </div>
-        </div>
-      </GlassCard>
-
-      {/* Inventory Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {/* Inventory Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {isLoading ? (
           <>
             {[1, 2, 3].map((i) => (
@@ -507,26 +499,26 @@ export default function EquipmentInventory() {
             const stockPercent = Math.min((item.quantity / item.minThreshold) * 100, 100);
 
             return (
-              <GlassCard
+              <div
                 key={item.id}
-                className={isLowStock ? "border-highlight" : ""}
+                className={`rounded-xl border border-default bg-surface p-4 shadow-lg hover:shadow-xl transition-all ${isLowStock ? "border-highlight" : ""}`}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className={`p-3 rounded-lg ${activeTab === "equipment" ? "accent-gradient" : "accent-gradient"}`}>
-                      <Icon className="w-6 h-6 text-on-accent" />
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <div className={`p-2 rounded-lg accent-gradient`}>
+                      <Icon className="w-4 h-4 text-on-accent" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-primary">{item.name}</h4>
-                      <p className="text-xs text-secondary">{item.type}</p>
+                      <h4 className="font-semibold text-sm text-primary">{item.name}</h4>
+                      <p className="text-[10px] text-secondary">{item.type}</p>
                     </div>
                   </div>
                   <div className="flex gap-1">
                     <button
                       onClick={() => setEditingId(item.id)}
-                      className="p-1.5 hover:bg-surface-alt rounded transition-colors"
+                      className="p-1 hover:bg-surface-alt rounded transition-colors"
                     >
-                      <Edit2 className="w-4 h-4 text-muted" />
+                      <Edit2 className="w-3.5 h-3.5 text-muted" />
                     </button>
                     <button
                       onClick={() => {
@@ -534,55 +526,55 @@ export default function EquipmentInventory() {
                           deleteMutation.mutate(item.id);
                         }
                       }}
-                      className="p-1.5 hover:bg-soft-danger rounded transition-colors"
+                      className="p-1 hover:bg-soft-danger rounded transition-colors"
                     >
-                      <Trash2 className="w-4 h-4 text-danger" />
+                      <Trash2 className="w-3.5 h-3.5 text-danger" />
                     </button>
                   </div>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-2">
                   {/* Quantity */}
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs text-secondary">Quantity</span>
-                      <span className={`text-2xl font-bold ${item.quantity === 0 ? "text-danger" : isLowStock ? "text-warning" : "text-success"
+                      <span className="text-[10px] text-secondary uppercase tracking-wide">Quantity</span>
+                      <span className={`text-xl font-bold ${item.quantity === 0 ? "text-danger" : isLowStock ? "text-warning" : "text-success"
                         }`}>
                         {item.quantity}
                       </span>
                     </div>
-                    <div className="w-full h-2 bg-muted/20 rounded-full overflow-hidden">
+                    <div className="w-full h-1.5 bg-muted/20 rounded-full overflow-hidden">
                       <div
                         className={`h-full transition-all ${item.quantity === 0 ? "bg-danger" : isLowStock ? "bg-warning" : "bg-success"
                           }`}
                         style={{ width: `${stockPercent}%` }}
                       />
                     </div>
-                    <div className="text-xs text-muted mt-1">
+                    <div className="text-[10px] text-muted mt-0.5">
                       Min: {item.minThreshold}
                     </div>
                   </div>
 
                   {/* Details */}
                   {item.location && (
-                    <div className="text-xs text-secondary">
+                    <div className="text-[10px] text-secondary">
                       <span className="font-semibold text-primary">Location:</span> {item.location}
                     </div>
                   )}
-                  <div className="text-xs text-secondary">
+                  <div className="text-[10px] text-secondary">
                     <span className="font-semibold text-primary">Condition:</span>{" "}
-                    <span className={`inline-flex px-2 py-0.5 rounded ${item.condition === "New" ? "bg-soft-success text-success border border-success" : "bg-soft-accent text-accent border border-accent"
+                    <span className={`inline-flex px-1.5 py-0.5 rounded text-[10px] ${item.condition === "New" ? "bg-soft-success text-success border border-success" : "bg-soft-accent text-accent border border-accent"
                       }`}>
                       {item.condition}
                     </span>
                   </div>
                   {item.notes && (
-                    <div className="text-xs text-muted italic">
+                    <div className="text-[10px] text-muted italic">
                       {item.notes}
                     </div>
                   )}
                 </div>
-              </GlassCard>
+              </div>
             );
           })
         )}

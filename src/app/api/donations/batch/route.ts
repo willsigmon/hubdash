@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     const knack = getKnackClient();
     const objectKey = process.env.KNACK_DONATION_INFO_OBJECT || 'object_63';
-    
+
     // Map updates to donation DTO format
     const donationDTO: DonationDTO = {
       status: validated.updates.status,
@@ -85,4 +85,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(errorResponse(error.message || 'Failed to batch update donations'), { status: 500 });
   }
 }
-

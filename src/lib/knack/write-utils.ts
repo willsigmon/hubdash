@@ -110,31 +110,31 @@ export function mapDonationPayload(dto: DonationDTO): Record<string, any> {
   // Field mappings based on donations/route.ts structure (object_63)
   // field_565_raw: Company/Donor Name (confirmed from donations/route.ts)
   if (dto.donorName) payload.field_565 = dto.donorName;
-  
+
   // field_537_raw: Email (confirmed from donations/route.ts)
   if (dto.donorEmail) payload.field_537 = dto.donorEmail;
-  
+
   // field_538_raw: Contact Name (confirmed from donations/route.ts)
   // Note: Using donorName for company, contactName would be separate field
   if (dto.donorPhone) payload.field_phone = dto.donorPhone;
-  
+
   // field_566_raw: Address/Location (confirmed from donations/route.ts)
   if (dto.pickupAddress) payload.field_566 = dto.pickupAddress;
-  
+
   // City, Zip - verify actual field IDs (may be part of address field)
   if (dto.pickupCity) payload.field_city = dto.pickupCity;
   if (dto.pickupZip) payload.field_zip = dto.pickupZip;
-  
+
   // Status - verify actual field ID (not seen in GET, may need to check)
   if (dto.status) payload.field_status = dto.status;
-  
+
   // field_542_raw: Device Count (confirmed from donations/route.ts)
   if (dto.deviceCount !== undefined) payload.field_542 = dto.deviceCount;
-  
+
   // field_536_raw: Requested Date (confirmed from donations/route.ts)
   // Scheduled date may be different field
   if (dto.scheduledDate) payload.field_scheduled_date = dto.scheduledDate;
-  
+
   // Notes - verify actual field ID
   if (dto.notes) payload.field_notes = dto.notes;
 
@@ -165,37 +165,37 @@ export function mapPartnerPayload(dto: PartnerDTO): Record<string, any> {
   // Field mappings based on partners/route.ts structure (object_22)
   // field_143_raw: Organization Name (confirmed from partners/route.ts)
   if (dto.name) payload.field_143 = dto.name;
-  
+
   // field_146_raw: Email (confirmed from partners/route.ts)
   if (dto.email) payload.field_146 = dto.email;
-  
+
   // Phone field - verify actual field ID
   if (dto.phone) payload.field_phone = dto.phone;
-  
+
   // field_612_raw: Address (confirmed from partners/route.ts)
   if (dto.address) payload.field_612 = dto.address;
-  
+
   // City, State, Zip - verify actual field IDs
   if (dto.city) payload.field_city = dto.city;
   if (dto.state) payload.field_state = dto.state;
   if (dto.zip) payload.field_zip = dto.zip;
-  
+
   // field_613_raw: County connection (confirmed from partners/route.ts)
   // County connections are arrays in Knack
   if (dto.county) {
     // If county is an ID, wrap in array; if it's a name, may need lookup
     payload.field_613 = Array.isArray(dto.county) ? dto.county : [dto.county];
   }
-  
+
   // Contact name - verify actual field ID
   if (dto.contactName) payload.field_contact_name = dto.contactName;
-  
+
   // Partnership type - verify actual field ID
   if (dto.partnershipType) payload.field_partnership_type = dto.partnershipType;
-  
+
   // Status - verify actual field ID
   if (dto.status) payload.field_status = dto.status;
-  
+
   // Notes - verify actual field ID
   if (dto.notes) payload.field_notes = dto.notes;
 

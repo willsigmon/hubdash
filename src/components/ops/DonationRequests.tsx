@@ -89,7 +89,7 @@ export default function DonationRequests() {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     const scheduledDate = tomorrow.toISOString().split('T')[0];
-    
+
     if (confirm('Schedule pickup for tomorrow?')) {
       schedulePickupMutation.mutate({ id: requestId, scheduledDate });
     }
@@ -143,7 +143,7 @@ export default function DonationRequests() {
                 {/* Status Badge */}
                 <div className="absolute top-4 right-4">
                   <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide border ${
-                    request.status === 'scheduled' 
+                    request.status === 'scheduled'
                       ? 'bg-soft-success text-success border-success/30'
                       : request.status === 'in_progress'
                       ? 'bg-soft-warning text-warning border-warning/30'

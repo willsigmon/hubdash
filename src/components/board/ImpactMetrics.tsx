@@ -159,7 +159,7 @@ export default function ImpactMetrics() {
   const otherMetrics = metrics.slice(1);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4">
       {/* Featured Grant Metrics Card */}
       {featuredMetric && (
         <MetricCard
@@ -176,7 +176,7 @@ export default function ImpactMetrics() {
       )}
 
       {/* Regular Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {otherMetrics.map((metric, index) => (
           <MetricCard
             key={metric.label}

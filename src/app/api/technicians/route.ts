@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
 
     const knack = getKnackClient();
     const objectKey = process.env.KNACK_TECHNICIANS_OBJECT || 'object_9';
-    
+
     const payload: Record<string, any> = {};
     if (validated.name) payload.field_name = validated.name;
     if (validated.email) payload.field_email = validated.email;
@@ -122,7 +122,7 @@ export async function PUT(request: NextRequest) {
 
     const knack = getKnackClient();
     const objectKey = process.env.KNACK_TECHNICIANS_OBJECT || 'object_9';
-    
+
     const payload: Record<string, any> = {};
     if (updates.name) payload.field_name = updates.name;
     if (updates.email) payload.field_email = updates.email;
@@ -187,4 +187,3 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json(errorResponse(error.message || 'Failed to delete technician'), { status: 500 });
   }
 }
-

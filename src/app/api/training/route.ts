@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
 
     const knack = getKnackClient();
     const objectKey = process.env.KNACK_TRAINING_OBJECT || 'object_8';
-    
+
     // Map to Knack fields (adjust field IDs based on actual schema)
     const payload: Record<string, any> = {};
     if (validated.sessionDate) payload.field_date = validated.sessionDate;
@@ -126,7 +126,7 @@ export async function PUT(request: NextRequest) {
 
     const knack = getKnackClient();
     const objectKey = process.env.KNACK_TRAINING_OBJECT || 'object_8';
-    
+
     const payload: Record<string, any> = {};
     if (updates.sessionDate) payload.field_date = updates.sessionDate;
     if (updates.location) payload.field_location = updates.location;
@@ -192,4 +192,3 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json(errorResponse(error.message || 'Failed to delete training session'), { status: 500 });
   }
 }
-

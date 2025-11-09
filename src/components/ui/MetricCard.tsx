@@ -40,7 +40,7 @@ export default function MetricCard({
         <GlassCard
             className={clsx(
                 "relative overflow-hidden transition group",
-                highlight ? "p-8" : "p-6",
+                highlight ? "p-6" : "p-4",
                 "focus-ring"
             )}
             elevation={highlight ? "lg" : "md"}
@@ -52,23 +52,23 @@ export default function MetricCard({
                     gradientClass
                 )}
             />
-            <div className="relative z-10 space-y-3">
+            <div className="relative z-10 space-y-2">
                 <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                        {icon && <span className="text-3xl md:text-4xl" aria-hidden>{icon}</span>}
-                        <span className="font-bold text-sm tracking-wide uppercase text-secondary">
+                    <div className="flex items-center gap-2">
+                        {icon && <span className="text-2xl" aria-hidden>{icon}</span>}
+                        <span className="font-bold text-xs tracking-wide uppercase text-secondary">
                             {label}
                         </span>
                     </div>
                     {highlight && (
-                        <span className="px-3 py-1 rounded-full text-xs font-bold accent-gradient text-white shadow">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold accent-gradient text-white shadow">
                             Live
                         </span>
                     )}
                 </div>
                 <div className="flex items-end gap-1">
-                    <div className={clsx("font-bold", highlight ? "text-5xl md:text-6xl" : "text-4xl", "text-primary")}>{typeof value === 'number' ? value.toLocaleString() : value}</div>
-                    {suffix && <div className={clsx("font-bold", highlight ? "text-2xl" : "text-xl", "text-accent")}>{suffix}</div>}
+                    <div className={clsx("font-bold", highlight ? "text-3xl md:text-4xl" : "text-2xl md:text-3xl", "text-primary")}>{typeof value === 'number' ? value.toLocaleString() : value}</div>
+                    {suffix && <div className={clsx("font-bold", highlight ? "text-xl" : "text-lg", "text-accent")}>{suffix}</div>}
                 </div>
                 {typeof progress === "number" && progress >= 0 && progress <= 100 && (
                     <div className="space-y-2 mt-2">
