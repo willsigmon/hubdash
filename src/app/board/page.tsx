@@ -55,10 +55,10 @@ export default function BoardDashboard() {
         </div>
         <div className="relative mx-auto flex max-w-7xl flex-col gap-10 px-4 py-14 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-16 lg:px-8">
           <div className="max-w-3xl space-y-6">
-            <GradientHeading as="h1" className="text-4xl md:text-5xl">
+            <GradientHeading as="h1" variant="white" className="text-4xl md:text-5xl">
               HTI Board Dashboard
             </GradientHeading>
-            <p className="text-lg font-medium text-white/80">
+            <p className="text-lg font-medium text-white">
               A crisp mission status report showcasing live deployments, community reach, and grant
               pacing.
             </p>

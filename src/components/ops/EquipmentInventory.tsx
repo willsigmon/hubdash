@@ -3,20 +3,20 @@
 import { queryKeys } from "@/lib/query-client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-    AlertTriangle,
-    Battery,
-    Cable,
-    ChevronDown,
-    ChevronUp,
-    Cpu,
-    Edit2,
-    HardDrive,
-    Monitor,
-    Plus,
-    Search,
-    Trash2,
-    TrendingDown,
-    Wifi
+  AlertTriangle,
+  Battery,
+  Cable,
+  ChevronDown,
+  ChevronUp,
+  Cpu,
+  Edit2,
+  HardDrive,
+  Monitor,
+  Plus,
+  Search,
+  Trash2,
+  TrendingDown,
+  Wifi
 } from "lucide-react";
 import { useState } from "react";
 import GlassCard from "../ui/GlassCard";
@@ -119,8 +119,8 @@ export default function EquipmentInventory() {
   const inventory: InventoryItem[] = Array.isArray(inventoryData)
     ? inventoryData
     : inventoryData && typeof inventoryData === 'object' && 'inventory' in inventoryData && Array.isArray(inventoryData.inventory)
-    ? inventoryData.inventory
-    : [];
+      ? inventoryData.inventory
+      : [];
 
   const createMutation = useMutation({
     mutationFn: async (newItem: Partial<InventoryItem>) => {
@@ -199,7 +199,7 @@ export default function EquipmentInventory() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-                <GradientHeading variant="navy">
+        <GradientHeading variant="navy">
           Equipment Inventory Overview
         </GradientHeading>
         <button
@@ -275,21 +275,19 @@ export default function EquipmentInventory() {
           <div className="flex gap-2">
             <button
               onClick={() => setActiveTab("equipment")}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                activeTab === "equipment"
+              className={`px-6 py-3 rounded-lg font-semibold transition-all ${activeTab === "equipment"
                   ? "accent-gradient text-on-accent"
                   : "bg-surface-alt text-secondary hover:bg-surface"
-              }`}
+                }`}
             >
               Equipment
             </button>
             <button
               onClick={() => setActiveTab("parts")}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                activeTab === "parts"
+              className={`px-6 py-3 rounded-lg font-semibold transition-all ${activeTab === "parts"
                   ? "accent-gradient text-on-accent"
                   : "bg-surface-alt text-secondary hover:bg-surface"
-              }`}
+                }`}
             >
               Parts
             </button>
@@ -390,17 +388,15 @@ export default function EquipmentInventory() {
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs text-secondary">Quantity</span>
-                      <span className={`text-2xl font-bold ${
-                        item.quantity === 0 ? "text-danger" : isLowStock ? "text-warning" : "text-success"
-                      }`}>
+                      <span className={`text-2xl font-bold ${item.quantity === 0 ? "text-danger" : isLowStock ? "text-warning" : "text-success"
+                        }`}>
                         {item.quantity}
                       </span>
                     </div>
                     <div className="w-full h-2 bg-muted/20 rounded-full overflow-hidden">
                       <div
-                        className={`h-full transition-all ${
-                          item.quantity === 0 ? "bg-danger" : isLowStock ? "bg-warning" : "bg-success"
-                        }`}
+                        className={`h-full transition-all ${item.quantity === 0 ? "bg-danger" : isLowStock ? "bg-warning" : "bg-success"
+                          }`}
                         style={{ width: `${stockPercent}%` }}
                       />
                     </div>
@@ -417,9 +413,8 @@ export default function EquipmentInventory() {
                   )}
                   <div className="text-xs text-secondary">
                     <span className="font-semibold text-primary">Condition:</span>{" "}
-                    <span className={`inline-flex px-2 py-0.5 rounded ${
-                      item.condition === "New" ? "bg-soft-success text-success border border-success" : "bg-soft-accent text-accent border border-accent"
-                    }`}>
+                    <span className={`inline-flex px-2 py-0.5 rounded ${item.condition === "New" ? "bg-soft-success text-success border border-success" : "bg-soft-accent text-accent border border-accent"
+                      }`}>
                       {item.condition}
                     </span>
                   </div>

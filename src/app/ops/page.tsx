@@ -30,7 +30,7 @@ export default function OpsPage() {
             <h1 className="flex items-center gap-3 text-4xl font-bold text-white sm:text-5xl">
               ⚡ Operations HUB
             </h1>
-            <p className="max-w-xl text-base font-medium text-white/80">
+            <p className="max-w-xl text-base font-medium text-white">
               Mission control for device intake, refurb, QA, and deployment. Everything the ops team
               needs without leaving one tab.
             </p>
