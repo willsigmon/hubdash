@@ -354,8 +354,42 @@ export function DeviceManagementTable() {
             Error loading devices. Please try again.
           </div>
         ) : filteredDevices.length === 0 ? (
-          <div className="text-center py-12 text-muted">
-            No devices found matching your filters.
+          <div className="text-center py-12">
+            <Laptop className="w-16 h-16 text-muted/30 mx-auto mb-4" />
+            <p className="text-lg font-semibold text-primary mb-2">No devices match your filters</p>
+            <p className="text-sm text-secondary mb-4">Try adjusting your search or filters, or view all devices</p>
+            <div className="flex gap-2 justify-center">
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setStatusFilter("all");
+                  setTypeFilter("all");
+                }}
+                className="px-4 py-2 accent-gradient text-on-accent rounded-lg text-sm font-semibold hover:shadow-lg transition-all"
+              >
+                Clear Filters
+              </button>
+              <button
+                onClick={() => setPage(1)}
+                className="px-4 py-2 bg-surface border border-default rounded-lg text-sm font-semibold text-primary hover:bg-surface-alt transition-colors"
+              >
+                View All Devices
+              </button>
+            </div>
+            {devices.length > 0 && (
+              <div className="mt-6 pt-6 border-t border-default">
+                <p className="text-xs text-secondary mb-3">Showing {devices.length} total devices in system</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-left">
+                  {devices.slice(0, 4).map((device) => (
+                    <div key={device.id} className="p-3 bg-surface-alt rounded-lg border border-default">
+                      <div className="text-xs font-semibold text-secondary mb-1">Serial</div>
+                      <div className="text-sm font-mono text-primary">{device.serial_number || "N/A"}</div>
+                      <div className="text-xs text-muted mt-1">{device.device_type || "Unknown"}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div className="overflow-x-auto">

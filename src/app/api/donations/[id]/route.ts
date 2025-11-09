@@ -26,7 +26,7 @@ export async function GET(
       )
     }
 
-    // Transform Knack record to our format
+    // Extract email - Knack returns objects
     let email = '';
     if (typeof knackRecord.field_537_raw === 'string') {
       email = knackRecord.field_537_raw;
@@ -34,7 +34,8 @@ export async function GET(
       email = knackRecord.field_537_raw.email;
     }
 
-    let location = 'Unknown';
+    // Extract address - Knack returns objects
+    let location = 'Location Not Provided';
     if (typeof knackRecord.field_566_raw === 'string') {
       location = knackRecord.field_566_raw;
     } else if (knackRecord.field_566_raw?.full) {
@@ -43,6 +44,7 @@ export async function GET(
       location = `${knackRecord.field_566_raw.city}, ${knackRecord.field_566_raw.state}`;
     }
 
+    // Extract date - validate to prevent Invalid Date
     let requestedDate = new Date().toISOString();
     if (knackRecord.field_536_raw) {
       const date = new Date(typeof knackRecord.field_536_raw === 'string' ? knackRecord.field_536_raw : knackRecord.field_536_raw.iso_timestamp);
@@ -51,15 +53,59 @@ export async function GET(
       }
     }
 
+    // Extract company name - try multiple fields
+    let company = '';
+    if (knackRecord.field_565_raw) {
+      company = typeof knackRecord.field_565_raw === 'string' ? knackRecord.field_565_raw : knackRecord.field_565_raw.name || knackRecord.field_565_raw.full || '';
+    }
+    if (!company && knackRecord.field_company) {
+      company = typeof knackRecord.field_company === 'string' ? knackRecord.field_company : knackRecord.field_company.name || '';
+    }
+    if (!company && knackRecord.field_donor_name) {
+      company = typeof knackRecord.field_donor_name === 'string' ? knackRecord.field_donor_name : knackRecord.field_donor_name.name || '';
+    }
+
+    // Extract contact name - try multiple fields
+    let contactName = '';
+    if (knackRecord.field_538_raw) {
+      contactName = typeof knackRecord.field_538_raw === 'string' ? knackRecord.field_538_raw : knackRecord.field_538_raw.name || knackRecord.field_538_raw.full || '';
+    }
+    if (!contactName && knackRecord.field_contact_name) {
+      contactName = typeof knackRecord.field_contact_name === 'string' ? knackRecord.field_contact_name : knackRecord.field_contact_name.name || '';
+    }
+    if (!contactName && knackRecord.field_contact) {
+      contactName = typeof knackRecord.field_contact === 'string' ? knackRecord.field_contact : knackRecord.field_contact.name || '';
+    }
+
+    // Extract device count - ensure it's a valid number
+    const deviceCount = parseInt(String(knackRecord.field_542_raw || knackRecord.field_device_count || knackRecord.field_count || '0'), 10) || 0;
+
+    // Extract status - check multiple fields
+    let status = 'pending';
+    if (knackRecord.field_status) {
+      const statusValue = typeof knackRecord.field_status === 'string' ? knackRecord.field_status.toLowerCase() : String(knackRecord.field_status).toLowerCase();
+      if (statusValue.includes('scheduled')) status = 'scheduled';
+      else if (statusValue.includes('in_progress') || statusValue.includes('in progress')) status = 'in_progress';
+      else if (statusValue.includes('completed') || statusValue.includes('done')) status = 'completed';
+    }
+
+    // Extract priority
+    let priority: 'urgent' | 'high' | 'normal' = 'normal';
+    if (knackRecord.field_priority) {
+      const priorityValue = typeof knackRecord.field_priority === 'string' ? knackRecord.field_priority.toLowerCase() : String(knackRecord.field_priority).toLowerCase();
+      if (priorityValue.includes('urgent')) priority = 'urgent';
+      else if (priorityValue.includes('high')) priority = 'high';
+    }
+
     const donation = {
       id: knackRecord.id,
-      company: knackRecord.field_565_raw || 'Unknown',
-      contact_name: knackRecord.field_538_raw || 'Unknown',
-      contact_email: email,
-      device_count: parseInt(knackRecord.field_542_raw || '0', 10),
-      location,
-      priority: 'normal' as const,
-      status: 'pending' as const,
+      company: company || 'Unnamed Donor',
+      contact_name: contactName || 'Contact Not Provided',
+      contact_email: email || '',
+      device_count: deviceCount,
+      location: location || 'Location Not Provided',
+      priority,
+      status: status as 'pending' | 'scheduled' | 'in_progress' | 'completed',
       requested_date: requestedDate,
     }
 

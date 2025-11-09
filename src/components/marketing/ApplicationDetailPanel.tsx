@@ -109,7 +109,7 @@ export default function ApplicationDetailPanel({
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 mb-2">
-                <h2 id={titleId} className="text-xl font-bold text-primary truncate">
+                <h2 id={titleId} className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary truncate">
                 {application.organizationName || 'Unknown Organization'}
               </h2>
                 <span className={`px-2.5 py-1 rounded-md text-xs font-bold border ${getStatusColor(application.status || 'Pending')}`}>
@@ -121,7 +121,7 @@ export default function ApplicationDetailPanel({
                   </span>
                 )}
               </div>
-              <div className="flex flex-wrap items-center gap-4 text-sm text-secondary">
+              <div className="flex flex-wrap items-center gap-4 text-sm sm:text-base text-secondary">
                 <span className="flex items-center gap-1.5">
                   <MapPin className="h-3.5 w-3.5" />
                   {application.county || "Unknown County"}
@@ -169,64 +169,64 @@ export default function ApplicationDetailPanel({
               {/* Contact */}
               <div className="rounded-xl border border-default bg-surface p-4">
                 <div className="flex items-center gap-2 mb-3">
-                  <Mail className="h-4 w-4 text-accent" />
-                  <h3 className="text-sm font-semibold text-primary">Contact</h3>
+                  <Mail className="h-5 w-5 sm:h-6 sm:w-6 text-accent" />
+                  <h3 className="text-base sm:text-lg font-bold text-primary">Contact</h3>
                 </div>
-                <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
                   <div>
-                    <div className="text-xs font-semibold text-secondary mb-0.5">Person</div>
-                    <div className="text-primary font-medium">{application.contactPerson || 'Unknown'}</div>
+                    <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Person</div>
+                    <div className="text-base sm:text-lg text-primary font-semibold">{application.contactPerson || 'Unknown'}</div>
                   </div>
                   <div>
-                    <div className="text-xs font-semibold text-secondary mb-0.5">Email</div>
-                    <div className="text-primary font-medium break-all">{application.email || 'No email provided'}</div>
+                    <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Email</div>
+                    <div className="text-base sm:text-lg text-primary font-semibold break-all">{application.email || 'No email provided'}</div>
                   </div>
                   {application.phone && (
                     <div>
-                      <div className="text-xs font-semibold text-secondary mb-0.5">Phone</div>
-                      <div className="text-primary font-medium">{application.phone}</div>
+                      <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Phone</div>
+                      <div className="text-base sm:text-lg text-primary font-semibold">{application.phone}</div>
                     </div>
                   )}
                   {application.preferredContactMethod && (
                     <div>
-                      <div className="text-xs font-semibold text-secondary mb-0.5">Preferred</div>
-                      <div className="text-primary font-medium">{application.preferredContactMethod}</div>
+                      <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Preferred</div>
+                      <div className="text-base sm:text-lg text-primary font-semibold">{application.preferredContactMethod}</div>
                     </div>
                   )}
                 </div>
               </div>
 
               {/* Organization */}
-              <div className="rounded-xl border border-default bg-surface p-4">
+              <div className="rounded-xl border border-default bg-surface p-4 sm:p-6">
                 <div className="flex items-center gap-2 mb-3">
-                  <Building2 className="h-4 w-4 text-accent" />
-                  <h3 className="text-sm font-semibold text-primary">Organization</h3>
+                  <Building2 className="h-5 w-5 sm:h-6 sm:w-6 text-accent" />
+                  <h3 className="text-base sm:text-lg font-bold text-primary">Organization</h3>
                 </div>
-                <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
                   {application.organizationType && (
                     <div>
-                      <div className="text-xs font-semibold text-secondary mb-0.5">Type</div>
-                      <div className="text-primary font-medium">{application.organizationType}</div>
+                      <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Type</div>
+                      <div className="text-base sm:text-lg text-primary font-semibold">{application.organizationType}</div>
                     </div>
                   )}
                   {application.county && (
                     <div>
-                      <div className="text-xs font-semibold text-secondary mb-0.5">County</div>
-                      <div className="text-primary font-medium">{application.county}</div>
+                      <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">County</div>
+                      <div className="text-base sm:text-lg text-primary font-semibold">{application.county}</div>
                     </div>
                   )}
                   {application.website && (
-                    <div className="col-span-2">
-                      <div className="text-xs font-semibold text-secondary mb-0.5">Website</div>
-                      <a href={application.website} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline font-medium">
+                    <div className="col-span-1 sm:col-span-2">
+                      <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Website</div>
+                      <a href={application.website} target="_blank" rel="noopener noreferrer" className="text-base sm:text-lg text-accent hover:underline font-semibold break-all">
                         {application.website}
                       </a>
                     </div>
                   )}
                   {application.address && (
-                    <div className="col-span-2">
-                      <div className="text-xs font-semibold text-secondary mb-0.5">Address</div>
-                      <div className="text-primary font-medium">{application.address}</div>
+                    <div className="col-span-1 sm:col-span-2">
+                      <div className="text-xs sm:text-sm font-semibold text-secondary mb-1">Address</div>
+                      <div className="text-base sm:text-lg text-primary font-semibold">{application.address}</div>
                     </div>
                   )}
                 </div>

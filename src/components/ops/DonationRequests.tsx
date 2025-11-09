@@ -2,7 +2,7 @@
 
 import { formatDate } from "@/lib/utils/date-formatters";
 import { getPriorityColor, getRequestStatusColor } from "@/lib/utils/status-colors";
-import { Calendar, MapPin, Package, User } from "lucide-react";
+import { Calendar, MapPin, Package, User, Mail, Phone, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -11,6 +11,8 @@ interface DonationRequest {
   id: string;
   company: string;
   contact_name: string;
+  contact_email?: string;
+  contact_phone?: string;
   device_count: number;
   location: string;
   priority: "urgent" | "high" | "normal";
@@ -38,7 +40,11 @@ export default function DonationRequests() {
           r && typeof r === 'object' && (
             r.status === 'pending' || r.status === 'scheduled' || r.status === 'in_progress'
           )
-        );
+        ).map((r: any) => ({
+          ...r,
+          contact_email: r.contact_email || r.contactEmail || '',
+          contact_phone: r.contact_phone || r.contactPhone || '',
+        }));
         setRequests(activeRequests.slice(0, 6)); // Show top 6
         setLoading(false);
       })
@@ -202,21 +208,30 @@ export default function DonationRequests() {
                 </div>
 
                 {/* Actions */}
-                <div className="flex gap-2">
+                <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => handleSchedulePickup(request.id)}
                     disabled={schedulePickupMutation.isPending}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 accent-gradient text-on-accent rounded-lg text-sm font-bold shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center justify-center gap-2 px-4 py-2.5 accent-gradient text-on-accent rounded-lg text-sm font-bold shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Calendar className="w-4 h-4" />
-                    {schedulePickupMutation.isPending ? 'Scheduling...' : 'Schedule Pickup'}
+                    {schedulePickupMutation.isPending ? 'Scheduling...' : 'Schedule'}
                   </button>
                   <Link
                     href={`/ops/donations/${request.id}`}
-                    className="flex items-center justify-center gap-2 px-4 py-2.5 bg-surface border-2 border-default text-primary rounded-lg text-sm font-semibold hover:bg-surface-alt hover:border-strong transition-all"
+                    className="flex items-center justify-center gap-2 px-4 py-2.5 bg-surface border-2 border-default text-primary rounded-lg text-sm font-semibold hover:bg-surface-alt hover:border-accent transition-all"
                   >
                     Details
                   </Link>
+                  {request.contact_email && (
+                    <Link
+                      href={`mailto:${request.contact_email}?subject=Donation Pickup - ${request.company}`}
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 bg-surface border-2 border-default text-primary rounded-lg text-sm font-semibold hover:bg-surface-alt hover:border-accent transition-all col-span-2"
+                    >
+                      <Mail className="w-4 h-4" />
+                      Contact Donor
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}

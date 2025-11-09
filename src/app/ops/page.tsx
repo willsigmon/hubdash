@@ -4,6 +4,7 @@ import DevicePipelineFlow from "@/components/ops/DevicePipelineFlow";
 import DonationRequests from "@/components/ops/DonationRequests";
 import EquipmentInventory from "@/components/ops/EquipmentInventory";
 import QuickStats from "@/components/ops/QuickStats";
+import LowStockAlert from "@/components/ops/LowStockAlert";
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import Link from "next/link";
@@ -93,6 +94,9 @@ export default function OpsPage() {
           </div>
         </div>
       </header>
+
+      {/* Low Stock Alert - Top Right */}
+      <LowStockAlert />
 
       {/* Main Content */}
       <main className="mx-auto max-w-[1600px] space-y-6 px-4 py-8 sm:px-6 lg:px-8">

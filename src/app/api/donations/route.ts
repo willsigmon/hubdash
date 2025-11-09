@@ -51,15 +51,59 @@ export async function GET() {
         }
       }
 
+      // Extract company name - try multiple fields
+      let company = '';
+      if (r.field_565_raw) {
+        company = typeof r.field_565_raw === 'string' ? r.field_565_raw : r.field_565_raw.name || r.field_565_raw.full || '';
+      }
+      if (!company && r.field_company) {
+        company = typeof r.field_company === 'string' ? r.field_company : r.field_company.name || '';
+      }
+      if (!company && r.field_donor_name) {
+        company = typeof r.field_donor_name === 'string' ? r.field_donor_name : r.field_donor_name.name || '';
+      }
+
+      // Extract contact name - try multiple fields
+      let contactName = '';
+      if (r.field_538_raw) {
+        contactName = typeof r.field_538_raw === 'string' ? r.field_538_raw : r.field_538_raw.name || r.field_538_raw.full || '';
+      }
+      if (!contactName && r.field_contact_name) {
+        contactName = typeof r.field_contact_name === 'string' ? r.field_contact_name : r.field_contact_name.name || '';
+      }
+      if (!contactName && r.field_contact) {
+        contactName = typeof r.field_contact === 'string' ? r.field_contact : r.field_contact.name || '';
+      }
+
+      // Extract device count - ensure it's a valid number
+      const deviceCount = parseInt(String(r.field_542_raw || r.field_device_count || r.field_count || '0'), 10) || 0;
+
+      // Extract status - check multiple fields
+      let status = 'pending';
+      if (r.field_status) {
+        const statusValue = typeof r.field_status === 'string' ? r.field_status.toLowerCase() : String(r.field_status).toLowerCase();
+        if (statusValue.includes('scheduled')) status = 'scheduled';
+        else if (statusValue.includes('in_progress') || statusValue.includes('in progress')) status = 'in_progress';
+        else if (statusValue.includes('completed') || statusValue.includes('done')) status = 'completed';
+      }
+
+      // Extract priority
+      let priority: 'urgent' | 'high' | 'normal' = 'normal';
+      if (r.field_priority) {
+        const priorityValue = typeof r.field_priority === 'string' ? r.field_priority.toLowerCase() : String(r.field_priority).toLowerCase();
+        if (priorityValue.includes('urgent')) priority = 'urgent';
+        else if (priorityValue.includes('high')) priority = 'high';
+      }
+
       return {
         id: r.id,
-        company: r.field_565_raw || 'Unknown',
-        contact_name: r.field_538_raw || 'Unknown',
-        contact_email: email,
-        device_count: parseInt(r.field_542_raw || '0', 10),
-        location,
-        priority: 'normal' as const,
-        status: 'pending' as const,
+        company: company || 'Unnamed Donor',
+        contact_name: contactName || 'Contact Not Provided',
+        contact_email: email || '',
+        device_count: deviceCount,
+        location: location || 'Location Not Provided',
+        priority,
+        status: status as 'pending' | 'scheduled' | 'in_progress' | 'completed',
         requested_date: requestedDate,
       };
     })
