@@ -55,13 +55,119 @@ export default function QuoteCardGenerator({
   const handleDownload = async () => {
     setDownloading(true);
 
-    // Simulate download delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      // Find the preview element
+      const previewElement = document.querySelector('[data-quote-preview]') as HTMLElement;
+      if (!previewElement) {
+        alert('Preview element not found');
+        setDownloading(false);
+        return;
+      }
 
-    // TODO: Implement actual canvas-to-image conversion
-    alert("Quote card download would start here. This will generate a 1080x1080 PNG optimized for social media.");
+      // Use html2canvas if available, otherwise fallback to simple download
+      // For now, create a simple canvas-based solution
+      const canvas = document.createElement('canvas');
+      canvas.width = 1080;
+      canvas.height = 1080;
+      const ctx = canvas.getContext('2d');
+      
+      if (!ctx) {
+        alert('Canvas not supported');
+        setDownloading(false);
+        return;
+      }
 
-    setDownloading(false);
+      // Get computed styles
+      const styles = window.getComputedStyle(previewElement);
+      const bg = currentTheme.bg;
+      
+      // Draw background
+      if (bg.includes('gradient')) {
+        // Extract gradient colors
+        const gradient = ctx.createLinearGradient(0, 0, 1080, 1080);
+        if (bg.includes('#E67E50')) {
+          gradient.addColorStop(0, '#E67E50');
+          gradient.addColorStop(1, '#F5BB2D');
+        } else if (bg.includes('#1B365D')) {
+          gradient.addColorStop(0, '#1B365D');
+          gradient.addColorStop(1, '#2A4A7C');
+        } else if (bg.includes('#F19E3E')) {
+          gradient.addColorStop(0, '#F19E3E');
+          gradient.addColorStop(1, '#F9D71C');
+        } else {
+          ctx.fillStyle = bg;
+          ctx.fillRect(0, 0, 1080, 1080);
+        }
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 1080, 1080);
+      } else {
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, 1080, 1080);
+      }
+
+      // Draw quote text
+      ctx.fillStyle = currentTheme.textColor;
+      ctx.font = 'bold 48px Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      
+      const maxWidth = 900;
+      const lineHeight = 60;
+      const words = quote.split(' ');
+      const lines: string[] = [];
+      let currentLine = '';
+
+      words.forEach(word => {
+        const testLine = currentLine + word + ' ';
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && currentLine !== '') {
+          lines.push(currentLine);
+          currentLine = word + ' ';
+        } else {
+          currentLine = testLine;
+        }
+      });
+      if (currentLine) lines.push(currentLine.trim());
+
+      // Draw quote lines
+      const startY = 400 - (lines.length * lineHeight) / 2;
+      lines.forEach((line, i) => {
+        ctx.fillText(line, 540, startY + i * lineHeight);
+      });
+
+      // Draw author info
+      ctx.font = 'bold 36px Arial';
+      ctx.fillText(authorName, 540, 800);
+      if (authorTitle) {
+        ctx.font = '24px Arial';
+        ctx.fillText(authorTitle, 540, 850);
+      }
+      if (county) {
+        ctx.fillText(`${county} County, NC`, 540, 900);
+      }
+
+      // Download
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          alert('Failed to generate image');
+          setDownloading(false);
+          return;
+        }
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `quote-card-${authorName.replace(/\s+/g, '-').toLowerCase()}-${Date.now()}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        setDownloading(false);
+      }, 'image/png');
+    } catch (error) {
+      console.error('Download error:', error);
+      alert('Failed to download quote card. Please try again.');
+      setDownloading(false);
+    }
   };
 
   const handleCopy = () => {
@@ -104,6 +210,7 @@ export default function QuoteCardGenerator({
             <h3 className="text-lg font-semibold text-primary mb-4">Preview</h3>
             <div className="aspect-square rounded-xl shadow-2xl overflow-hidden border-4 border-default">
               <div
+                data-quote-preview
                 style={{
                   background: currentTheme.bg,
                   color: currentTheme.textColor,

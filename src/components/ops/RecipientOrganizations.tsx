@@ -440,20 +440,140 @@ export default function RecipientOrganizations() {
         )}
       </div>
 
-      {/* Create Modal Placeholder */}
+      {/* Create Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-surface rounded-2xl shadow-2xl max-w-lg w-full p-6">
-            <h3 className="text-2xl font-bold text-primary mb-4">Add Organization</h3>
-            <p className="text-secondary text-sm mb-4">
-              Create form coming soon - full CRUD implementation
-            </p>
-            <button
-              onClick={() => setShowCreateModal(false)}
-              className="px-6 py-3 bg-surface-alt text-secondary rounded-lg font-semibold hover:bg-surface transition-colors"
+          <div className="bg-surface rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-default">
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-bold text-primary">Add Organization</h3>
+                <button
+                  onClick={() => setShowCreateModal(false)}
+                  className="text-muted hover:text-accent text-2xl transition-colors"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.currentTarget);
+                const newOrg: Partial<RecipientOrg> = {
+                  name: formData.get('name') as string,
+                  email: formData.get('email') as string,
+                  phone: formData.get('phone') as string,
+                  address: formData.get('address') as string,
+                  county: formData.get('county') as string,
+                  contactName: formData.get('contactName') as string,
+                  focusAreas: formData.get('focusAreas')?.toString().split(',').map(s => s.trim()).filter(Boolean) || [],
+                  status: 'Active',
+                };
+                createMutation.mutate(newOrg);
+              }}
+              className="p-6 space-y-4"
             >
-              Close
-            </button>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-semibold text-primary mb-2">
+                    Organization Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    className="w-full px-4 py-2 bg-surface-alt border border-default rounded-lg focus-ring text-primary"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contactName" className="block text-sm font-semibold text-primary mb-2">
+                    Contact Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="contactName"
+                    name="contactName"
+                    required
+                    className="w-full px-4 py-2 bg-surface-alt border border-default rounded-lg focus-ring text-primary"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-semibold text-primary mb-2">
+                    Email *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    className="w-full px-4 py-2 bg-surface-alt border border-default rounded-lg focus-ring text-primary"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-semibold text-primary mb-2">
+                    Phone
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    className="w-full px-4 py-2 bg-surface-alt border border-default rounded-lg focus-ring text-primary"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="county" className="block text-sm font-semibold text-primary mb-2">
+                    County *
+                  </label>
+                  <input
+                    type="text"
+                    id="county"
+                    name="county"
+                    required
+                    className="w-full px-4 py-2 bg-surface-alt border border-default rounded-lg focus-ring text-primary"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="address" className="block text-sm font-semibold text-primary mb-2">
+                    Address
+                  </label>
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    className="w-full px-4 py-2 bg-surface-alt border border-default rounded-lg focus-ring text-primary"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label htmlFor="focusAreas" className="block text-sm font-semibold text-primary mb-2">
+                    Focus Areas (comma-separated)
+                  </label>
+                  <input
+                    type="text"
+                    id="focusAreas"
+                    name="focusAreas"
+                    placeholder="e.g., After School Programs, Youth Development"
+                    className="w-full px-4 py-2 bg-surface-alt border border-default rounded-lg focus-ring text-primary"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-3 pt-4 border-t border-default">
+                <button
+                  type="submit"
+                  disabled={createMutation.isPending}
+                  className="flex-1 accent-gradient text-on-accent px-6 py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {createMutation.isPending ? 'Creating...' : 'Create Organization'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowCreateModal(false)}
+                  className="px-6 py-3 bg-surface-alt text-secondary rounded-lg font-semibold hover:bg-surface transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

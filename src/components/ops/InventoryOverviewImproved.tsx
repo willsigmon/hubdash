@@ -77,13 +77,36 @@ export default function InventoryOverviewImproved() {
   });
 
   const handleExport = () => {
-    // TODO: Implement actual export
-    alert("Export feature coming soon! This will download a CSV of all devices.");
+    const headers = ["Serial Number", "Model", "Manufacturer", "Status", "Location", "Assigned To", "Date Received"];
+    const rows = filteredDevices.map(d => [
+      d.serial_number || "",
+      d.model || "",
+      d.manufacturer || "",
+      statusLabels[d.status] || d.status || "",
+      d.location || "",
+      d.assigned_to || "",
+      d.received_date || "",
+    ]);
+
+    const csv = [
+      headers.join(","),
+      ...rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(","))
+    ].join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `devices-inventory-${new Date().toISOString().split("T")[0]}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const handleAddDevice = () => {
-    // TODO: Open add device modal
-    alert("Add Device modal would open here");
+    // Navigate to device creation page or open modal
+    window.location.href = '/ops/devices?action=create';
   };
 
   if (loading) {
