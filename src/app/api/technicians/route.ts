@@ -4,7 +4,9 @@ import {
     errorResponse,
     requireAuth,
     safeKnack,
-    successResponse
+    successResponse,
+    type TechnicianDTO,
+    mapTechnicianPayload
 } from '@/lib/knack/write-utils'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
@@ -71,13 +73,7 @@ export async function POST(request: NextRequest) {
 
     const knack = getKnackClient();
     const objectKey = process.env.KNACK_TECHNICIANS_OBJECT || 'object_9';
-
-    const payload: Record<string, any> = {};
-    if (validated.name) payload.field_name = validated.name;
-    if (validated.email) payload.field_email = validated.email;
-    if (validated.phone) payload.field_phone = validated.phone;
-    if (validated.active !== undefined) payload.field_active = validated.active;
-    if (validated.notes) payload.field_notes = validated.notes;
+    const payload = mapTechnicianPayload(validated as TechnicianDTO);
 
     const newRecord = await safeKnack(
       () => knack.createRecord(objectKey, payload),
@@ -122,13 +118,7 @@ export async function PUT(request: NextRequest) {
 
     const knack = getKnackClient();
     const objectKey = process.env.KNACK_TECHNICIANS_OBJECT || 'object_9';
-
-    const payload: Record<string, any> = {};
-    if (updates.name) payload.field_name = updates.name;
-    if (updates.email) payload.field_email = updates.email;
-    if (updates.phone) payload.field_phone = updates.phone;
-    if (updates.active !== undefined) payload.field_active = updates.active;
-    if (updates.notes) payload.field_notes = updates.notes;
+    const payload = mapTechnicianPayload(updates as TechnicianDTO);
 
     const updatedRecord = await safeKnack(
       () => knack.updateRecord(objectKey, id, payload),

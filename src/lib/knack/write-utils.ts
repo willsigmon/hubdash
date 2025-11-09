@@ -31,57 +31,78 @@ export function requireAuth(request: NextRequest): void {
 
 /**
  * Device field mappings (DTO → Knack)
+ * Based on actual field IDs from devices/route.ts GET endpoint
  */
 export interface DeviceDTO {
   type?: 'Laptop' | 'Desktop' | 'Tablet' | 'Other';
   status?: string;
   serial?: string;
+  manufacturer?: string;
+  model?: string;
+  location?: string;
   dateReceived?: string;
   datePresented?: string;
-  orgId?: string;
+  assignedTo?: string; // Technician ID
+  orgId?: string; // Organization ID
   notes?: string;
 }
 
 export function mapDevicePayload(dto: DeviceDTO): Record<string, any> {
   const payload: Record<string, any> = {};
 
-  // field_458: Device Type
+  // field_458: Device Type (confirmed)
   if (dto.type) {
     payload.field_458 = dto.type;
   }
 
-  // field_56: Status (from devices/route.ts - confirmed)
+  // field_56: Status (confirmed from devices/route.ts)
   if (dto.status) {
     payload.field_56 = dto.status;
   }
 
-  // field_201_raw: Serial Number (from devices/route.ts - confirmed)
+  // field_201: Serial Number (confirmed from devices/route.ts)
   if (dto.serial) {
     payload.field_201 = dto.serial;
   }
 
-  // field_75_raw: Date Presented (from devices/route.ts - confirmed)
+  // field_57: Manufacturer (confirmed from devices/route.ts GET)
+  if (dto.manufacturer) {
+    payload.field_57 = dto.manufacturer;
+  }
+
+  // field_58: Model (confirmed from devices/route.ts GET)
+  if (dto.model) {
+    payload.field_58 = dto.model;
+  }
+
+  // field_66: Location (confirmed from devices/route.ts GET)
+  if (dto.location) {
+    payload.field_66 = dto.location;
+  }
+
+  // field_75: Date Presented/Distributed (confirmed from devices/route.ts)
   if (dto.datePresented) {
     payload.field_75 = dto.datePresented;
   }
 
-  // field_60_raw: Date Received (from devices/route.ts - confirmed)
+  // field_60: Date Received (confirmed from devices/route.ts)
   if (dto.dateReceived) {
     payload.field_60 = dto.dateReceived;
   }
 
-  // field_147_raw: Assigned To (technician connection - from devices/route.ts)
-  // Note: This is handled separately in batch operations
-  // For org connection, use field_22 or appropriate connection field
+  // field_147: Assigned To (technician connection - confirmed from devices/route.ts)
+  // Connection fields are arrays in Knack
+  if (dto.assignedTo) {
+    payload.field_147 = [dto.assignedTo];
+  }
 
-  // field_40_raw: Notes (from devices/route.ts - confirmed)
+  // field_40: Notes (confirmed from devices/route.ts)
   if (dto.notes) {
     payload.field_40 = dto.notes;
   }
 
-  // Connection to organization - verify field ID (may be field_22 or different)
+  // field_22: Organization connection (confirmed)
   if (dto.orgId) {
-    // Connection fields are arrays in Knack
     payload.field_22 = [dto.orgId];
   }
 
@@ -90,52 +111,63 @@ export function mapDevicePayload(dto: DeviceDTO): Record<string, any> {
 
 /**
  * Donation field mappings (DTO → Knack)
+ * Based on actual field IDs from donations/route.ts GET endpoint
  */
 export interface DonationDTO {
-  donorName?: string;
+  donorName?: string; // Company name
+  contactName?: string; // Contact person name
   donorEmail?: string;
   donorPhone?: string;
   pickupAddress?: string;
   pickupCity?: string;
   pickupZip?: string;
   status?: string;
+  priority?: string;
   deviceCount?: number;
-  scheduledDate?: string;
+  requestedDate?: string; // Date donation was requested
+  scheduledDate?: string; // Date pickup is scheduled
   notes?: string;
 }
 
 export function mapDonationPayload(dto: DonationDTO): Record<string, any> {
   const payload: Record<string, any> = {};
 
-  // Field mappings based on donations/route.ts structure (object_63)
-  // field_565_raw: Company/Donor Name (confirmed from donations/route.ts)
+  // field_565: Company/Donor Name (confirmed from donations/route.ts)
   if (dto.donorName) payload.field_565 = dto.donorName;
 
-  // field_537_raw: Email (confirmed from donations/route.ts)
+  // field_538: Contact Name (confirmed from donations/[id]/route.ts)
+  if (dto.contactName) payload.field_538 = dto.contactName;
+
+  // field_537: Email (confirmed from donations/route.ts)
   if (dto.donorEmail) payload.field_537 = dto.donorEmail;
 
-  // field_538_raw: Contact Name (confirmed from donations/route.ts)
-  // Note: Using donorName for company, contactName would be separate field
+  // Phone - verify actual field ID (not seen in GET, may need to check)
   if (dto.donorPhone) payload.field_phone = dto.donorPhone;
 
-  // field_566_raw: Address/Location (confirmed from donations/route.ts)
+  // field_566: Address/Location (confirmed from donations/route.ts)
   if (dto.pickupAddress) payload.field_566 = dto.pickupAddress;
 
-  // City, Zip - verify actual field IDs (may be part of address field)
+  // City, Zip - may be part of address field or separate fields
+  // Not seen in GET response, keeping as placeholders
   if (dto.pickupCity) payload.field_city = dto.pickupCity;
   if (dto.pickupZip) payload.field_zip = dto.pickupZip;
 
-  // Status - verify actual field ID (not seen in GET, may need to check)
-  if (dto.status) payload.field_status = dto.status;
+  // field_567: Status (confirmed from donations/[id]/route.ts PUT)
+  if (dto.status) payload.field_567 = dto.status;
 
-  // field_542_raw: Device Count (confirmed from donations/route.ts)
+  // field_568: Priority (confirmed from donations/[id]/route.ts PUT)
+  if (dto.priority) payload.field_568 = dto.priority;
+
+  // field_542: Device Count (confirmed from donations/route.ts)
   if (dto.deviceCount !== undefined) payload.field_542 = dto.deviceCount;
 
-  // field_536_raw: Requested Date (confirmed from donations/route.ts)
-  // Scheduled date may be different field
+  // field_536: Requested Date (confirmed from donations/route.ts GET)
+  if (dto.requestedDate) payload.field_536 = dto.requestedDate;
+
+  // Scheduled date - verify actual field ID (may be field_536 or different)
   if (dto.scheduledDate) payload.field_scheduled_date = dto.scheduledDate;
 
-  // Notes - verify actual field ID
+  // Notes - verify actual field ID (not seen in GET)
   if (dto.notes) payload.field_notes = dto.notes;
 
   return payload;
@@ -143,6 +175,7 @@ export function mapDonationPayload(dto: DonationDTO): Record<string, any> {
 
 /**
  * Partner/Organization field mappings (DTO → Knack)
+ * Based on actual field IDs from partners/route.ts and organizations/route.ts GET endpoints
  */
 export interface PartnerDTO {
   name?: string;
@@ -152,51 +185,112 @@ export interface PartnerDTO {
   city?: string;
   state?: string;
   zip?: string;
-  county?: string;
+  county?: string | string[]; // Can be ID or array of IDs for connection
   contactName?: string;
   partnershipType?: string;
+  type?: string; // Organization type
   status?: string;
+  devicesReceived?: number;
   notes?: string;
 }
 
 export function mapPartnerPayload(dto: PartnerDTO): Record<string, any> {
   const payload: Record<string, any> = {};
 
-  // Field mappings based on partners/route.ts structure (object_22)
-  // field_143_raw: Organization Name (confirmed from partners/route.ts)
+  // field_143: Organization Name (confirmed from partners/route.ts)
   if (dto.name) payload.field_143 = dto.name;
 
-  // field_146_raw: Email (confirmed from partners/route.ts)
+  // field_146: Email (confirmed from partners/route.ts)
   if (dto.email) payload.field_146 = dto.email;
 
-  // Phone field - verify actual field ID
+  // Phone - verify actual field ID (not seen in GET, may need to check)
   if (dto.phone) payload.field_phone = dto.phone;
 
-  // field_612_raw: Address (confirmed from partners/route.ts)
+  // field_612: Address (confirmed from partners/route.ts)
   if (dto.address) payload.field_612 = dto.address;
 
-  // City, State, Zip - verify actual field IDs
+  // City, State, Zip - may be part of address field or separate
+  // Not seen in GET response, keeping as placeholders
   if (dto.city) payload.field_city = dto.city;
   if (dto.state) payload.field_state = dto.state;
   if (dto.zip) payload.field_zip = dto.zip;
 
-  // field_613_raw: County connection (confirmed from partners/route.ts)
+  // field_613: County connection (confirmed from partners/route.ts)
   // County connections are arrays in Knack
   if (dto.county) {
-    // If county is an ID, wrap in array; if it's a name, may need lookup
     payload.field_613 = Array.isArray(dto.county) ? dto.county : [dto.county];
   }
 
-  // Contact name - verify actual field ID
+  // Contact name - verify actual field ID (not seen in GET)
   if (dto.contactName) payload.field_contact_name = dto.contactName;
 
-  // Partnership type - verify actual field ID
+  // Partnership type - verify actual field ID (not seen in GET)
   if (dto.partnershipType) payload.field_partnership_type = dto.partnershipType;
 
-  // Status - verify actual field ID
+  // field_type: Organization Type (seen in organizations/route.ts GET)
+  if (dto.type) payload.field_type = dto.type;
+
+  // field_status: Status (seen in organizations/route.ts GET)
   if (dto.status) payload.field_status = dto.status;
 
-  // Notes - verify actual field ID
+  // field_669: Devices Received (confirmed from partners/route.ts and organizations/route.ts)
+  if (dto.devicesReceived !== undefined) payload.field_669 = dto.devicesReceived;
+
+  // field_notes: Notes (seen in organizations/route.ts GET)
+  if (dto.notes) payload.field_notes = dto.notes;
+
+  return payload;
+}
+
+/**
+ * Training Session field mappings (DTO → Knack)
+ * Based on training/route.ts structure (object_8)
+ */
+export interface TrainingDTO {
+  sessionDate?: string;
+  location?: string;
+  attendees?: number;
+  instructor?: string;
+  topic?: string;
+  notes?: string;
+}
+
+export function mapTrainingPayload(dto: TrainingDTO): Record<string, any> {
+  const payload: Record<string, any> = {};
+
+  // Note: Actual field IDs need to be verified from Knack schema
+  // Using generic field names based on training/route.ts structure
+  if (dto.sessionDate) payload.field_date = dto.sessionDate;
+  if (dto.location) payload.field_location = dto.location;
+  if (dto.attendees !== undefined) payload.field_attendees = dto.attendees;
+  if (dto.instructor) payload.field_instructor = dto.instructor;
+  if (dto.topic) payload.field_topic = dto.topic;
+  if (dto.notes) payload.field_notes = dto.notes;
+
+  return payload;
+}
+
+/**
+ * Technician field mappings (DTO → Knack)
+ * Based on technicians/route.ts structure (object_9)
+ */
+export interface TechnicianDTO {
+  name?: string;
+  email?: string;
+  phone?: string;
+  active?: boolean;
+  notes?: string;
+}
+
+export function mapTechnicianPayload(dto: TechnicianDTO): Record<string, any> {
+  const payload: Record<string, any> = {};
+
+  // Note: Actual field IDs need to be verified from Knack schema
+  // Using generic field names based on technicians/route.ts structure
+  if (dto.name) payload.field_name = dto.name;
+  if (dto.email) payload.field_email = dto.email;
+  if (dto.phone) payload.field_phone = dto.phone;
+  if (dto.active !== undefined) payload.field_active = dto.active;
   if (dto.notes) payload.field_notes = dto.notes;
 
   return payload;

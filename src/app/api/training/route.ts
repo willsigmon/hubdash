@@ -4,7 +4,9 @@ import {
     errorResponse,
     requireAuth,
     safeKnack,
-    successResponse
+    successResponse,
+    type TrainingDTO,
+    mapTrainingPayload
 } from '@/lib/knack/write-utils'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
@@ -72,15 +74,7 @@ export async function POST(request: NextRequest) {
 
     const knack = getKnackClient();
     const objectKey = process.env.KNACK_TRAINING_OBJECT || 'object_8';
-
-    // Map to Knack fields (adjust field IDs based on actual schema)
-    const payload: Record<string, any> = {};
-    if (validated.sessionDate) payload.field_date = validated.sessionDate;
-    if (validated.location) payload.field_location = validated.location;
-    if (validated.attendees !== undefined) payload.field_attendees = validated.attendees;
-    if (validated.instructor) payload.field_instructor = validated.instructor;
-    if (validated.topic) payload.field_topic = validated.topic;
-    if (validated.notes) payload.field_notes = validated.notes;
+    const payload = mapTrainingPayload(validated as TrainingDTO);
 
     const newRecord = await safeKnack(
       () => knack.createRecord(objectKey, payload),
@@ -126,14 +120,7 @@ export async function PUT(request: NextRequest) {
 
     const knack = getKnackClient();
     const objectKey = process.env.KNACK_TRAINING_OBJECT || 'object_8';
-
-    const payload: Record<string, any> = {};
-    if (updates.sessionDate) payload.field_date = updates.sessionDate;
-    if (updates.location) payload.field_location = updates.location;
-    if (updates.attendees !== undefined) payload.field_attendees = updates.attendees;
-    if (updates.instructor) payload.field_instructor = updates.instructor;
-    if (updates.topic) payload.field_topic = updates.topic;
-    if (updates.notes) payload.field_notes = updates.notes;
+    const payload = mapTrainingPayload(updates as TrainingDTO);
 
     const updatedRecord = await safeKnack(
       () => knack.updateRecord(objectKey, id, payload),

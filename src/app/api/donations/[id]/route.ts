@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server'
 import { getKnackClient } from '@/lib/knack/client'
+import { mapDonationPayload } from '@/lib/knack/write-utils'
 
 /**
  * GET /api/donations/[id]
@@ -85,33 +86,17 @@ export async function PUT(
     const knack = getKnackClient()
     const objectKey = process.env.KNACK_DONATION_INFO_OBJECT || 'object_63'
 
-    // Map our fields to Knack fields
-    const knackData: Record<string, any> = {}
-
-    if (body.company !== undefined) {
-      knackData.field_565 = body.company
-    }
-    if (body.contact_name !== undefined) {
-      knackData.field_538 = body.contact_name
-    }
-    if (body.contact_email !== undefined) {
-      knackData.field_537 = body.contact_email
-    }
-    if (body.device_count !== undefined) {
-      knackData.field_542 = body.device_count
-    }
-    if (body.location !== undefined) {
-      knackData.field_566 = body.location
-    }
-    if (body.status !== undefined) {
-      knackData.field_567 = body.status
-    }
-    if (body.priority !== undefined) {
-      knackData.field_568 = body.priority
-    }
-    if (body.scheduledDate !== undefined) {
-      knackData.field_scheduled_date = body.scheduledDate
-    }
+    // Map our fields to Knack fields using write-utils
+    const knackData = mapDonationPayload({
+      donorName: body.company,
+      contactName: body.contact_name,
+      donorEmail: body.contact_email,
+      pickupAddress: body.location,
+      status: body.status,
+      priority: body.priority,
+      deviceCount: body.device_count,
+      scheduledDate: body.scheduledDate,
+    });
 
     // Update the record in Knack
     const updatedRecord = await knack.updateRecord(objectKey, id, knackData)

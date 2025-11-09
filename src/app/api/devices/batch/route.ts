@@ -39,16 +39,12 @@ export async function POST(request: NextRequest) {
     // Map updates to device DTO format
     const deviceDTO: DeviceDTO = {
       status: validated.updates.status,
+      assignedTo: validated.updates.assignedTo,
       orgId: validated.updates.orgId,
       notes: validated.updates.notes,
     };
 
     const payload = mapDevicePayload(deviceDTO);
-
-    // If assignedTo is provided, add it to payload (adjust field ID)
-    if (validated.updates.assignedTo) {
-      payload.field_147 = [validated.updates.assignedTo]; // Connection field
-    }
 
     // Update all devices in parallel
     const updatePromises = validated.deviceIds.map((id) =>
