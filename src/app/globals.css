@@ -299,6 +299,10 @@ dt {
   --focus-ring: 245 187 45;
 }
 
+.theme-dim {
+  color-scheme: dark;
+}
+
 body { background: var(--bg-app); color: var(--color-text-primary); }
 
 /* Override glass utilities to use tokens */
@@ -329,6 +333,24 @@ body { background: var(--bg-app); color: var(--color-text-primary); }
 .bg-soft-success { background: var(--color-success-soft); }
 .bg-soft-warning { background: var(--color-warning-soft); }
 .bg-soft-danger { background: var(--color-danger-soft); }
+
+/* Accessibility enhancements */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid rgba(var(--focus-ring) / 0.65);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
 .border-accent { border-color: var(--color-accent); }
 .border-success { border-color: var(--color-success); }

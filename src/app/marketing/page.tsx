@@ -5,7 +5,14 @@ import ApplicationFilters from "@/components/marketing/ApplicationFilters";
 import ApplicationGrouping from "@/components/marketing/ApplicationGrouping";
 import ApplicationSearch from "@/components/marketing/ApplicationSearch";
 import { FilterOptions, GroupingOption, Partnership } from "@/types/partnership";
-import { BarChart3, CheckCircle, Clock, Eye, TrendingUp, Users, XCircle, Zap } from "lucide-react";
+import {
+  BarChart3,
+  Megaphone,
+  Rocket,
+  Sparkles,
+  Target,
+  Users,
+} from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
@@ -13,7 +20,7 @@ export default function MarketingPage() {
   const [partnerships, setPartnerships] = useState<Partnership[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedApplication, setSelectedApplication] = useState<Partnership | null>(null);
-  const [groupBy, setGroupBy] = useState<GroupingOption['value']>('status');
+  const [groupBy, setGroupBy] = useState<GroupingOption["value"]>("status");
 
   const [filters, setFilters] = useState<FilterOptions>({
     counties: [],
@@ -22,29 +29,27 @@ export default function MarketingPage() {
     dateRange: { start: null, end: null },
     organizationTypes: [],
     firstTimeOnly: null,
-    searchQuery: ''
+    searchQuery: "",
   });
 
-  // Fetch data
   useEffect(() => {
     setLoading(true);
-    fetch('/api/partnerships?filter=all')
-      .then(r => r.json())
-      .then(data => {
+    fetch("/api/partnerships?filter=all")
+      .then((r) => r.json())
+      .then((data) => {
         setPartnerships(data);
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error loading partnerships:', error);
+      .catch((error) => {
+        console.error("Error loading partnerships:", error);
         setLoading(false);
       });
   }, []);
 
-  // Extract available filter options
   const availableCounties = useMemo(() => {
     const counties = new Set<string>();
-    partnerships.forEach(p => {
-      if (p.county && p.county !== 'Unknown') {
+    partnerships.forEach((p) => {
+      if (p.county && p.county !== "Unknown") {
         counties.add(p.county);
       }
     });
@@ -53,7 +58,7 @@ export default function MarketingPage() {
 
   const availableOrgTypes = useMemo(() => {
     const types = new Set<string>();
-    partnerships.forEach(p => {
+    partnerships.forEach((p) => {
       if (p.organizationType) {
         types.add(p.organizationType);
       }
@@ -61,26 +66,23 @@ export default function MarketingPage() {
     return Array.from(types);
   }, [partnerships]);
 
-  // Apply filters and search
   const filteredApplications = useMemo(() => {
-    return partnerships.filter(app => {
-      // Status filter
+    return partnerships.filter((app) => {
       if (filters.statuses.length > 0 && !filters.statuses.includes(app.status)) {
         return false;
       }
 
-      // County filter
       if (filters.counties.length > 0 && !filters.counties.includes(app.county)) {
         return false;
       }
 
-      // Chromebooks range filter
-      if (app.chromebooksNeeded < filters.chromebooksRange.min ||
-          app.chromebooksNeeded > filters.chromebooksRange.max) {
+      if (
+        app.chromebooksNeeded < filters.chromebooksRange.min ||
+        app.chromebooksNeeded > filters.chromebooksRange.max
+      ) {
         return false;
       }
 
-      // Date range filter
       if (filters.dateRange.start || filters.dateRange.end) {
         const appDate = new Date(app.timestamp);
         if (filters.dateRange.start && appDate < filters.dateRange.start) {
@@ -91,18 +93,17 @@ export default function MarketingPage() {
         }
       }
 
-      // Organization type filter
-      if (filters.organizationTypes.length > 0 &&
-          !filters.organizationTypes.includes(app.organizationType || '')) {
+      if (
+        filters.organizationTypes.length > 0 &&
+        !filters.organizationTypes.includes(app.organizationType || "")
+      ) {
         return false;
       }
 
-      // First-time filter
       if (filters.firstTimeOnly !== null && app.firstTime !== filters.firstTimeOnly) {
         return false;
       }
 
-      // Search query
       if (filters.searchQuery) {
         const query = filters.searchQuery.toLowerCase();
         const searchableFields = [
@@ -114,8 +115,10 @@ export default function MarketingPage() {
           app.positiveImpact,
           app.clientGoals,
           ...(app.workssWith || []),
-          ...(app.clientStruggles || [])
-        ].join(' ').toLowerCase();
+          ...(app.clientStruggles || []),
+        ]
+          .join(" ")
+          .toLowerCase();
 
         if (!searchableFields.includes(query)) {
           return false;
@@ -126,206 +129,297 @@ export default function MarketingPage() {
     });
   }, [partnerships, filters]);
 
-  // Calculate statistics
   const stats = useMemo(() => {
     const total = filteredApplications.length;
-    const pending = filteredApplications.filter(a => a.status === 'Pending').length;
-    const approved = filteredApplications.filter(a => a.status === 'Approved').length;
-    const inReview = filteredApplications.filter(a => a.status === 'In Review').length;
-    const rejected = filteredApplications.filter(a => a.status === 'Rejected').length;
-    const totalChromebooks = filteredApplications.reduce((sum, a) => sum + a.chromebooksNeeded, 0);
+    const pending = filteredApplications.filter((a) => a.status === "Pending").length;
+    const approved = filteredApplications.filter((a) => a.status === "Approved").length;
+    const inReview = filteredApplications.filter((a) => a.status === "In Review").length;
+    const rejected = filteredApplications.filter((a) => a.status === "Rejected").length;
+    const totalChromebooks = filteredApplications.reduce(
+      (sum, a) => sum + a.chromebooksNeeded,
+      0,
+    );
 
     return { total, pending, approved, inReview, rejected, totalChromebooks };
   }, [filteredApplications]);
 
+  const heroStats = [
+    {
+      label: "Active Storytellers",
+      value: stats.total,
+      description: "Organizations currently sharing HTI impact stories.",
+    },
+    {
+      label: "Chromebooks Requested",
+      value: stats.totalChromebooks,
+      description: "Keeps the mission roadmapped and resourced.",
+    },
+    {
+      label: "Ready to Spotlight",
+      value: stats.approved,
+      description: "Approved partners awaiting marketing uplift.",
+    },
+  ];
+
+  const journeyMoments = [
+    {
+      title: "Capture the Need",
+      description: "See who needs Chromebooks and what stories they want to tell.",
+      icon: Sparkles,
+    },
+    {
+      title: "Shape the Story",
+      description: "Highlight impact, quotes, and community goals in seconds.",
+      icon: Megaphone,
+    },
+    {
+      title: "Launch the Moment",
+      description: "Spin up quote cards or spotlight sequences directly from the hub.",
+      icon: Rocket,
+    },
+    {
+      title: "Track the Ripple",
+      description: "Watch approvals, pipeline stages, and community reach at a glance.",
+      icon: Users,
+    },
+  ];
+
+  const spotlightApplications = useMemo(() => {
+    return filteredApplications.slice(0, 3);
+  }, [filteredApplications]);
+
   const handleAction = (action: string, applicationId: string) => {
     console.log(`Action: ${action} for application ${applicationId}`);
-    // TODO: Implement action handlers
     switch (action) {
-      case 'approve':
+      case "approve":
         alert(`Approve application ${applicationId}`);
         break;
-      case 'request-info':
+      case "request-info":
         alert(`Request more info for ${applicationId}`);
         break;
-      case 'schedule':
+      case "schedule":
         alert(`Schedule delivery for ${applicationId}`);
         break;
-      case 'contact':
+      case "contact":
         alert(`Mark ${applicationId} as contacted`);
         break;
-      case 'quote-card':
+      case "quote-card":
         alert(`Generate quote card for ${applicationId}`);
         break;
-      case 'export':
+      case "export":
         alert(`Export ${applicationId} to PDF`);
         break;
     }
   };
 
   return (
-    <div className="min-h-screen bg-app">
-      {/* Header */}
-      <header className="accent-gradient text-white shadow-xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-4xl font-bold mb-2">Marketing HUB</h1>
-              <p className="text-white/90 text-lg">
-                Partnership application management for HTI's marketing team
-              </p>
-            </div>
-            <Link
-              href="/"
-              className="px-6 py-3 bg-white/20 hover:bg-white/30 rounded-lg transition-colors text-sm font-semibold"
-            >
-              ← Back to HUB
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      {/* Statistics Dashboard with Pizzazz */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-primary mb-2">Application Pipeline</h2>
-          <p className="text-secondary">Real-time overview of partnership applications</p>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {/* Total Card */}
-          <div className="group bg-surface rounded-2xl shadow-xl p-6 border border-default hover:border-strong transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <BarChart3 className="w-8 h-8 text-accent" />
-                <Zap className="w-4 h-4 text-accent/80 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <div className="text-sm font-medium text-secondary mb-1">Total Applications</div>
-              <div className="text-4xl font-bold text-primary">{stats.total}</div>
-              <div className="text-xs text-muted mt-2">All statuses</div>
-            </div>
-          </div>
-
-          {/* Pending Card */}
-          <div className="group bg-surface rounded-2xl shadow-xl p-6 border border-default hover:border-strong transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <Clock className="w-8 h-8 text-warning" />
-                <TrendingUp className="w-4 h-4 text-warning opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <div className="text-sm font-medium text-secondary mb-1">Pending Review</div>
-              <div className="text-4xl font-bold text-primary">{stats.pending}</div>
-              <div className="text-xs text-muted mt-2">{stats.pending > 0 ? 'Action needed' : 'All reviewed'}</div>
-            </div>
-          </div>
-
-          {/* In Review Card */}
-          <div className="group bg-surface rounded-2xl shadow-xl p-6 border border-default hover:border-strong transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <Eye className="w-8 h-8 text-accent" />
-              </div>
-              <div className="text-sm font-medium text-secondary mb-1">Under Review</div>
-              <div className="text-4xl font-bold text-primary">{stats.inReview}</div>
-              <div className="text-xs text-muted mt-2">Being evaluated</div>
-            </div>
-          </div>
-
-          {/* Approved Card */}
-          <div className="group bg-surface rounded-2xl shadow-xl p-6 border border-default hover:border-strong transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <CheckCircle className="w-8 h-8 text-success" />
-              </div>
-              <div className="text-sm font-medium text-secondary mb-1">Approved</div>
-              <div className="text-4xl font-bold text-primary">{stats.approved}</div>
-              <div className="text-xs text-muted mt-2">Ready to deliver</div>
-            </div>
-          </div>
-
-          {/* Rejected Card */}
-          <div className="group bg-surface rounded-2xl shadow-xl p-6 border border-default hover:border-strong transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <XCircle className="w-8 h-8 text-danger" />
-              </div>
-              <div className="text-sm font-medium text-secondary mb-1">Rejected</div>
-              <div className="text-4xl font-bold text-primary">{stats.rejected}</div>
-              <div className="text-xs text-muted mt-2">Ineligible</div>
-            </div>
-          </div>
-
-          {/* Chromebooks Card */}
-          <div className="group bg-surface rounded-2xl shadow-xl p-6 border border-default hover:border-strong transition-all duration-300 hover:-translate-y-1 overflow-hidden relative">
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-4">
-                <Users className="w-8 h-8 text-accent" />
-              </div>
-              <div className="text-sm font-medium text-secondary mb-1">Chromebooks Needed</div>
-              <div className="text-4xl font-bold text-primary">{stats.totalChromebooks}</div>
-              <div className="text-xs text-muted mt-2">Total requested</div>
-            </div>
-          </div>
-        </div>
+    <div className="relative min-h-screen bg-app">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-accent/20 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-64 w-64 translate-x-1/3 translate-y-1/3 rounded-full bg-hti-yellow/30 blur-3xl" />
       </div>
 
-      {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-primary mb-2">Browse Applications</h2>
-          <p className="text-secondary">Use filters and search to find applications. Click any card to view full details.</p>
-        </div>
-
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Sidebar - Filters */}
-          <aside className="lg:w-80 shrink-0">
-            <div className="sticky top-20 space-y-6">
-              <div className="bg-surface rounded-2xl shadow-lg p-6 border-l-4 border-accent">
-                <h3 className="text-lg font-bold text-primary mb-4 flex items-center gap-2">
-                  <div className="w-2 h-2 bg-accent rounded-full" />
-                  Filter Applications
-                </h3>
-                <ApplicationFilters
-                  filters={filters}
-                  onFiltersChange={setFilters}
-                  availableCounties={availableCounties}
-                  availableOrgTypes={availableOrgTypes}
-                />
+      <main className="relative">
+        <header className="border-b border-default bg-gradient-to-br from-hti-navy via-hti-navy-dark to-hti-navy text-white">
+          <div className="mx-auto flex max-w-7xl flex-col gap-12 px-4 py-16 sm:px-6 lg:flex-row lg:items-center lg:gap-16 lg:px-8">
+            <div className="flex-1">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white/80">
+                <Sparkles className="h-3.5 w-3.5" />
+                Marketing Mission Control
+              </div>
+              <h1 className="text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+                Let’s turn every application into a story people feel.
+              </h1>
+              <p className="mt-5 max-w-2xl text-lg text-white/80">
+                Welcome to the storyteller’s cockpit. Prioritize new partnerships, surface quotes,
+                and launch campaigns celebrating the communities we serve.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <Link
+                  href="/"
+                  className="flex items-center gap-2 rounded-xl bg-white/20 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                >
+                  ← Return to HUB
+                </Link>
+                <div className="inline-flex items-center gap-2 rounded-full bg-black/20 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white/70">
+                  <Target className="h-4 w-4" />
+                  Crafted for HTI storytellers
+                </div>
               </div>
             </div>
-          </aside>
-
-          {/* Main Content - Search and Applications */}
-          <div className="flex-1 space-y-6">
-            {/* Search Bar */}
-            <ApplicationSearch
-              searchQuery={filters.searchQuery}
-              onSearchChange={(query) => setFilters({ ...filters, searchQuery: query })}
-              resultCount={filteredApplications.length}
-              totalCount={partnerships.length}
-            />
-
-            {/* Loading State */}
-            {loading ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-surface border border-default rounded-xl h-64 animate-pulse shadow" />
+            <div className="relative flex-1">
+              <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-3xl" />
+              <div className="relative grid gap-4 sm:grid-cols-2">
+                {heroStats.map((stat) => (
+                  <article
+                    key={stat.label}
+                    className="group rounded-2xl border border-white/20 bg-white/10 p-6 shadow-lg backdrop-blur transition-transform duration-300 hover:-translate-y-1"
+                  >
+                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-white/70">
+                      <span className="h-2 w-2 rounded-full bg-hti-gold" />
+                      {stat.label}
+                    </div>
+                    <p className="mt-3 text-4xl font-bold text-white">{stat.value}</p>
+                    <p className="mt-3 text-sm text-white/80">{stat.description}</p>
+                  </article>
                 ))}
               </div>
-            ) : (
-              /* Applications Grid/List */
-              <ApplicationGrouping
-                applications={filteredApplications}
-                groupBy={groupBy}
-                onGroupByChange={setGroupBy}
-                onApplicationClick={setSelectedApplication}
-              />
-            )}
+            </div>
           </div>
-        </div>
+        </header>
+
+        <section className="border-b border-default bg-surface-alt/60">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-accent">
+                  From inbox to impact
+                </p>
+                <h2 className="mt-2 text-3xl font-bold text-primary md:text-4xl">
+                  A joyful, fast marketing journey for every applicant
+                </h2>
+                <p className="mt-3 max-w-3xl text-secondary">
+                  Use these moment cards to spot the right stories, highlight community need, and
+                  launch campaigns at the pace our partners deserve.
+                </p>
+              </div>
+              <div className="flex items-center gap-3 rounded-full bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wide text-primary shadow-md">
+                <BarChart3 className="h-4 w-4 text-accent" />
+                Live data fuel
+              </div>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {journeyMoments.map((moment) => (
+                <article
+                  key={moment.title}
+                  className="group relative overflow-hidden rounded-2xl border border-default bg-surface p-6 shadow-lg transition duration-300 hover:-translate-y-1 hover:border-strong hover:shadow-xl"
+                >
+                  <div className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-accent/10 transition group-hover:scale-125" />
+                  <div className="relative flex h-full flex-col">
+                    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-soft-accent text-accent shadow-sm">
+                      <moment.icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-primary">{moment.title}</h3>
+                    <p className="mt-2 text-sm text-secondary">{moment.description}</p>
+                    <div className="mt-auto pt-4 text-xs font-semibold uppercase tracking-wide text-accent/80">
+                      Story booster
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-accent">
+                Command Center
+              </p>
+              <h2 className="mt-2 text-3xl font-bold text-primary md:text-4xl">
+                Dive into applications, filters, and quotable gems
+              </h2>
+              <p className="mt-3 max-w-3xl text-secondary">
+                Filter by region, status, or storytelling potential. Every row is ready for a quote
+                card, social highlight, or partner follow-up.
+              </p>
+            </div>
+            <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-wide text-muted">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-success" />
+              {loading ? "Syncing partnership data…" : "Live sync enabled"}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-8 lg:flex-row">
+            <aside className="lg:w-[360px]">
+              <div className="sticky top-24 space-y-6">
+                <div className="rounded-3xl border border-default bg-surface p-6 shadow-xl">
+                  <div className="mb-6 flex items-center justify-between">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+                        Filters
+                      </p>
+                      <h3 className="mt-2 text-xl font-semibold text-primary">
+                        Fine-tune the story mix
+                      </h3>
+                    </div>
+                    <Target className="h-8 w-8 text-accent" />
+                  </div>
+                  <ApplicationFilters
+                    filters={filters}
+                    onFiltersChange={setFilters}
+                    availableCounties={availableCounties}
+                    availableOrgTypes={availableOrgTypes}
+                  />
+                </div>
+
+                {spotlightApplications.length > 0 && (
+                  <div className="rounded-3xl border border-default bg-surface-alt p-6 shadow-lg">
+                    <div className="mb-4 flex items-center gap-3">
+                      <div className="rounded-full bg-soft-accent p-2 text-accent">
+                        <Megaphone className="h-4 w-4" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+                          Quick Spotlight
+                        </p>
+                        <h4 className="text-sm font-semibold text-primary">Hot story starters</h4>
+                      </div>
+                    </div>
+                    <ul className="space-y-4">
+                      {spotlightApplications.map((application) => (
+                        <li key={application.id} className="rounded-2xl border border-default bg-surface p-4 transition hover:border-strong">
+                          <p className="text-sm font-semibold text-primary">
+                            {application.organizationName}
+                          </p>
+                          <p className="mt-1 text-xs uppercase tracking-wide text-muted">
+                            {application.county || "Unknown County"} •{" "}
+                            {application.chromebooksNeeded} requested
+                          </p>
+                          {application.quote && (
+                            <p className="mt-2 text-sm text-secondary line-clamp-2">
+                              “{application.quote}”
+                            </p>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </aside>
+
+            <div className="flex-1 space-y-6">
+              <ApplicationSearch
+                searchQuery={filters.searchQuery}
+                onSearchChange={(query) => setFilters({ ...filters, searchQuery: query })}
+                resultCount={filteredApplications.length}
+                totalCount={partnerships.length}
+              />
+
+              {loading ? (
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className="h-64 rounded-2xl border border-default bg-surface animate-pulse"
+                    />
+                  ))}
+                </div>
+              ) : (
+                <ApplicationGrouping
+                  applications={filteredApplications}
+                  groupBy={groupBy}
+                  onGroupByChange={setGroupBy}
+                  onApplicationClick={setSelectedApplication}
+                />
+              )}
+            </div>
+          </div>
+        </section>
       </main>
 
-      {/* Detail Panel Modal */}
       {selectedApplication && (
         <ApplicationDetailPanel
           application={selectedApplication}
