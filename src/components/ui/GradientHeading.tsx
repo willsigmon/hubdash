@@ -9,15 +9,16 @@ interface GradientHeadingProps {
     as?: React.ElementType;
     className?: string;
     variant?: GradientVariant;
+    style?: React.CSSProperties;
 }
 
-const variantMap: Record<GradientVariant, string> = {
-    accent: "from-accent to-accent-alt",
-    navy: "from-hti-navy to-hti-navy-light",
-    emerald: "from-[#34D399] to-[#10B981]",
-    neutral: "from-text-secondary to-text-primary",
-    warning: "from-hti-amber to-hti-yellow",
-    white: "from-white to-white/90",
+const gradientMap: Record<GradientVariant, string> = {
+    accent: "linear-gradient(90deg, var(--color-accent), var(--color-accent-alt))",
+    navy: "linear-gradient(90deg, #1B365D, #2A4A7C)",
+    emerald: "linear-gradient(90deg, #34D399, #10B981)",
+    neutral: "linear-gradient(90deg, var(--color-text-secondary), var(--color-text-primary))",
+    warning: "linear-gradient(90deg, var(--hti-amber), var(--hti-gold))",
+    white: "linear-gradient(90deg, #ffffff, #f5f5f5)",
 };
 
 export default function GradientHeading({
@@ -25,9 +26,11 @@ export default function GradientHeading({
     as: Tag = "h2",
     className,
     variant = "accent",
+    style,
 }: GradientHeadingProps) {
     // For white variant, don't use text-transparent (it's already white)
     const isWhiteVariant = variant === "white";
+    const gradientStyle = isWhiteVariant ? style : { backgroundImage: gradientMap[variant], ...style };
 
     return (
         <Tag
@@ -35,9 +38,10 @@ export default function GradientHeading({
                 "font-bold tracking-tight inline-block",
                 isWhiteVariant
                     ? "text-white"
-                    : clsx("bg-gradient-to-r text-transparent bg-clip-text", variantMap[variant]),
+                    : "text-transparent bg-clip-text",
                 className
             )}
+            style={gradientStyle}
         >
             {children}
         </Tag>

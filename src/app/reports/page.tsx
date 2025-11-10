@@ -44,8 +44,8 @@ export default function ReportsPage() {
   // Calculate training hours and participants from training sessions
   // Use actual hours field from training sessions, or default to 2 hours per session
   const totalTrainingHours = training.reduce((sum: number, t: any) => {
-    const hours = t.hours ? parseFloat(String(t.hours)) : 2; // Default to 2 if not specified
-    return sum + hours;
+    const hours = t?.hours ? parseFloat(String(t.hours)) : 0; // Treat missing hours as 0
+    return sum + (isNaN(hours) ? 0 : hours);
   }, 0);
   const totalParticipants = training.reduce((sum: number, t: any) => {
     return sum + (parseInt(String(t.attendees || 0), 10) || 0);
