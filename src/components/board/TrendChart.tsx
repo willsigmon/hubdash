@@ -81,63 +81,63 @@ export default function TrendChart() {
       >
         <ResponsiveContainer width="100%" height={320}>
           <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-          <defs>
-            <linearGradient id="collectedGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#1B365D" stopOpacity={0.3}/>
-              <stop offset="95%" stopColor="#1B365D" stopOpacity={0.05}/>
-            </linearGradient>
-            <linearGradient id="distributedGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#F5BB2D" stopOpacity={0.3}/>
-              <stop offset="95%" stopColor="#F5BB2D" stopOpacity={0.05}/>
-            </linearGradient>
-          </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" opacity={0.3} />
-          <XAxis
-            dataKey="month"
-            stroke="var(--color-text-muted)"
-            style={{ fontSize: '13px', fontWeight: 600 }}
-            tick={{ fill: 'var(--color-text-muted)' }}
-          />
-          <YAxis
-            stroke="var(--color-text-muted)"
-            style={{ fontSize: '13px', fontWeight: 600 }}
-            tick={{ fill: 'var(--color-text-muted)' }}
-          />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: 'var(--bg-surface)',
-              border: '1px solid var(--color-border)',
-              borderRadius: '12px',
-              padding: '12px 16px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-            }}
-            labelStyle={{ color: 'var(--color-text-primary)', fontWeight: 'bold', marginBottom: '4px' }}
-            itemStyle={{ color: 'var(--color-text-secondary)', fontSize: '14px' }}
-          />
-          <Legend
-            wrapperStyle={{ fontSize: '14px', fontWeight: 600 }}
-            iconType="circle"
-          />
-          <Area
-            type="monotone"
-            dataKey="collected"
-            stroke="var(--color-accent)"
-            strokeWidth={3}
-            fill="url(#collectedGradient)"
-            name="Laptops Collected"
-            dot={{ fill: 'var(--color-accent)', r: 4, strokeWidth: 2, stroke: '#fff' }}
-            activeDot={{ r: 6, strokeWidth: 2 }}
-          />
-          <Area
-            type="monotone"
-            dataKey="distributed"
-            stroke="var(--color-accent-alt)"
-            strokeWidth={3}
-            fill="url(#distributedGradient)"
-            name="Chromebooks Distributed"
-            dot={{ fill: 'var(--color-accent-alt)', r: 4, strokeWidth: 2, stroke: '#fff' }}
-            activeDot={{ r: 6, strokeWidth: 2 }}
-          />
+            <defs>
+              <linearGradient id="collectedGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#1B365D" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#1B365D" stopOpacity={0.05} />
+              </linearGradient>
+              <linearGradient id="distributedGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#F5BB2D" stopOpacity={0.3} />
+                <stop offset="95%" stopColor="#F5BB2D" stopOpacity={0.05} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" opacity={0.3} />
+            <XAxis
+              dataKey="month"
+              stroke="var(--color-text-muted)"
+              style={{ fontSize: '13px', fontWeight: 600 }}
+              tick={{ fill: 'var(--color-text-muted)' }}
+            />
+            <YAxis
+              stroke="var(--color-text-muted)"
+              style={{ fontSize: '13px', fontWeight: 600 }}
+              tick={{ fill: 'var(--color-text-muted)' }}
+            />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: 'var(--bg-surface)',
+                border: '1px solid var(--color-border)',
+                borderRadius: '12px',
+                padding: '12px 16px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+              }}
+              labelStyle={{ color: 'var(--color-text-primary)', fontWeight: 'bold', marginBottom: '4px' }}
+              itemStyle={{ color: 'var(--color-text-secondary)', fontSize: '14px' }}
+            />
+            <Legend
+              wrapperStyle={{ fontSize: '14px', fontWeight: 600 }}
+              iconType="circle"
+            />
+            <Area
+              type="monotone"
+              dataKey="collected"
+              stroke="var(--color-accent)"
+              strokeWidth={3}
+              fill="url(#collectedGradient)"
+              name="Laptops Collected"
+              dot={{ fill: 'var(--color-accent)', r: 4, strokeWidth: 2, stroke: '#fff' }}
+              activeDot={{ r: 6, strokeWidth: 2 }}
+            />
+            <Area
+              type="monotone"
+              dataKey="distributed"
+              stroke="var(--color-accent-alt)"
+              strokeWidth={3}
+              fill="url(#distributedGradient)"
+              name="Chromebooks Distributed"
+              dot={{ fill: 'var(--color-accent-alt)', r: 4, strokeWidth: 2, stroke: '#fff' }}
+              activeDot={{ r: 6, strokeWidth: 2 }}
+            />
           </AreaChart>
         </ResponsiveContainer>
       </motion.div>

@@ -357,10 +357,12 @@ export default function ApplicationGrouping({
 
               {/* Group Content */}
               {!isCollapsed && (
-                <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                  {groupApps.map(app => (
-                    <ApplicationCard key={app.id} app={app} />
-                  ))}
+                <div className="p-4 sm:p-6 flex justify-center">
+                  <div className="w-full max-w-[1600px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+                    {groupApps.map(app => (
+                      <ApplicationCard key={app.id} app={app} />
+                    ))}
+                  </div>
                 </div>
               )}
             </div>

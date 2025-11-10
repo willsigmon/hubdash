@@ -270,7 +270,7 @@ export default function AssignedDevicesPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredDevices.map((device: AssignedDevice) => {
+                  {filteredDevices.map((device: any) => {
                     const progress = getProgressPercentage(device);
                     const isComplete = progress === 100;
 
@@ -290,7 +290,7 @@ export default function AssignedDevicesPage() {
                         <td className="p-3">
                           <div className="flex items-center gap-2 text-sm text-secondary">
                             <Calendar className="w-4 h-4 text-muted" />
-                              {(device as any).received_date || device.assignedDate ? new Date((device as any).received_date || device.assignedDate).toLocaleDateString() : "—"}
+                            {(device as any).received_date || device.assignedDate ? new Date((device as any).received_date || device.assignedDate).toLocaleDateString() : "—"}
                           </div>
                         </td>
                         <td className="p-3">
@@ -304,8 +304,8 @@ export default function AssignedDevicesPage() {
                             <div className="w-full h-2 bg-surface-alt rounded-full overflow-hidden">
                               <div
                                 className={`h-full transition-all duration-300 ${isComplete
-                                    ? "bg-gradient-to-r from-emerald-500 to-emerald-600"
-                                    : "accent-gradient"
+                                  ? "bg-gradient-to-r from-emerald-500 to-emerald-600"
+                                  : "accent-gradient"
                                   }`}
                                 style={{ width: `${progress}%` }}
                               />
@@ -315,7 +315,7 @@ export default function AssignedDevicesPage() {
                         <td className="p-3 text-center">
                           <input
                             type="checkbox"
-                            checked={device.status === 'Data Wipe' || device.status === 'Refurbishing' || device.status === 'QA Testing'}
+                            checked={(device as any).status === 'Data Wipe' || (device as any).status === 'Refurbishing' || (device as any).status === 'QA Testing'}
                             disabled
                             className="w-5 h-5 rounded border-default text-accent focus-ring cursor-not-allowed opacity-50"
                           />
@@ -323,7 +323,7 @@ export default function AssignedDevicesPage() {
                         <td className="p-3 text-center">
                           <input
                             type="checkbox"
-                            checked={device.status === 'Refurbishing' || device.status === 'QA Testing'}
+                            checked={(device as any).status === 'Refurbishing' || (device as any).status === 'QA Testing'}
                             disabled
                             className="w-5 h-5 rounded border-default text-accent focus-ring cursor-not-allowed opacity-50"
                           />
@@ -331,7 +331,7 @@ export default function AssignedDevicesPage() {
                         <td className="p-3 text-center">
                           <input
                             type="checkbox"
-                            checked={device.status === 'QA Testing'}
+                            checked={(device as any).status === 'QA Testing'}
                             disabled
                             className="w-5 h-5 rounded border-default text-accent focus-ring cursor-not-allowed opacity-50"
                           />
