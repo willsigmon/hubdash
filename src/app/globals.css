@@ -1,0 +1,382 @@
+@import "tailwindcss";
+
+:root {
+  /* HTI Brand Colors */
+  --hti-orange: #E67E50;
+  --hti-amber: #F19E3E;
+  --hti-gold: #F5BB2D;
+  --hti-yellow: #F9D71C;
+  --hti-navy: #1B365D;
+  --hti-white: #FFFFFF;
+  --hti-navy-light: #2A4A7C;
+  --hti-navy-dark: #0F1F3D;
+  --hti-gray: #6B7280;
+  --hti-gray-light: #F3F4F6;
+}
+
+body {
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* ========================================
+   GLASS + ELEVATION UTILITIES (brand aligned)
+   ======================================== */
+
+/* Use as utility classes alongside Tailwind */
+.glass {
+  background: linear-gradient(to bottom right,
+      rgba(255, 255, 255, 0.70),
+      rgba(255, 255, 255, 0.50));
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  border: 1px solid rgba(27, 54, 93, 0.14);
+  /* navy-tinted */
+}
+
+.glass-strong {
+  background: linear-gradient(to bottom right,
+      rgba(255, 255, 255, 0.80),
+      rgba(255, 255, 255, 0.58));
+  backdrop-filter: saturate(150%) blur(18px);
+  -webkit-backdrop-filter: saturate(150%) blur(18px);
+  border: 1px solid rgba(27, 54, 93, 0.20);
+}
+
+.glass-on-dark {
+  background: linear-gradient(135deg,
+      rgba(27, 54, 93, 0.35),
+      rgba(42, 74, 124, 0.35));
+  backdrop-filter: saturate(150%) blur(16px);
+  -webkit-backdrop-filter: saturate(150%) blur(16px);
+  border: 1px solid rgba(245, 187, 45, 0.20);
+  /* gold tint on dark */
+}
+
+.elevation-lg {
+  box-shadow:
+    0 24px 48px -12px rgba(27, 54, 93, 0.20),
+    0 0 0 1px rgba(27, 54, 93, 0.08);
+}
+
+/* ========================================
+   CONFETTI ANIMATION
+   ======================================== */
+
+@keyframes confetti {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.animate-confetti {
+  animation: confetti 3s ease-in forwards;
+}
+
+.elevation-md {
+  box-shadow: 0 8px 18px rgba(27, 54, 93, 0.14), 0 1px 4px rgba(27, 54, 93, 0.06);
+}
+
+.no-black-border {
+  border-color: rgba(27, 54, 93, 0.12) !important;
+}
+
+/* Reports Page Utility Classes */
+
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--hti-orange), var(--hti-amber));
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.btn-secondary {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid rgba(16, 36, 59, 0.15);
+  color: var(--hti-navy);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: rgba(16, 36, 59, 0.06);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 0.5rem;
+  background: rgba(238, 230, 223, 0.7);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--hti-ember), var(--hti-gold));
+  transition: width 0.5s ease-out;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--hti-navy);
+  margin-bottom: 1rem;
+}
+
+/* ========================================
+   BRAND-ALIGNED SURFACE + BORDER SYSTEM
+   ======================================== */
+
+/* Harmonize legacy gray utilities with HTI neutrals */
+.border-gray-200,
+.border-gray-300,
+.border-gray-400,
+.border-gray-500,
+.divide-gray-200,
+.divide-gray-300 {
+  border-color: rgba(67, 61, 88, 0.18) !important;
+}
+
+.bg-gray-50 {
+  background-color: rgba(238, 230, 223, 0.65) !important;
+}
+
+.text-gray-700,
+.text-gray-600 {
+  color: var(--hti-gray) !important;
+}
+
+.text-gray-500 {
+  color: rgba(117, 122, 135, 0.85) !important;
+}
+
+/* Input surfaces */
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  border-radius: 0.75rem;
+  border-color: rgba(67, 61, 88, 0.18);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--hti-ember);
+  box-shadow: 0 0 0 3px rgba(226, 168, 53, 0.25);
+}
+
+/* ========================================
+   CONTRAST & VISIBILITY FIXES
+   ======================================== */
+
+/* Fix invisible dividers - minimum 40% opacity for dividers */
+[class*="divide-hti-yellow"] {
+  border-color: var(--hti-yellow) !important;
+  opacity: 1 !important;
+}
+
+/* Remove excessive low-opacity borders */
+.border-hti-yellow\/10,
+.border-hti-yellow\/20 {
+  border-color: var(--hti-yellow) !important;
+}
+
+/* Fix border visibility - increase opacity to at least 50% */
+.border-hti-orange\/20,
+.border-hti-orange\/30,
+.border-hti-red\/20 {
+  border-color: var(--hti-orange) !important;
+}
+
+/* Ensure dividers are visible */
+.divide-hti-yellow\/10 {
+  border-color: var(--hti-yellow) !important;
+  opacity: 0.4;
+}
+
+.divide-hti-yellow\/20,
+.divide-hti-yellow\/30 {
+  border-color: var(--hti-yellow) !important;
+  opacity: 0.5;
+}
+
+.divide-gray-700 {
+  border-color: rgba(55, 65, 81, 1) !important;
+}
+
+/* Fix low-contrast text on semi-transparent backgrounds */
+.text-hti-navy,
+.text-hti-gray {
+  font-weight: 500 !important;
+}
+
+/* Ensure buttons and badges have proper contrast */
+.text-white {
+  text-shadow: none;
+}
+
+/* Reduce excessive border styling globally */
+.border-2 {
+  border-width: 1px !important;
+}
+
+/* Make sure label text is readable */
+dt {
+  font-weight: 600 !important;
+  color: var(--hti-navy) !important;
+}
+
+/* ========================================
+   THEME TOKENS (Light + Dim) AUGMENTATION
+   ======================================== */
+
+:root {
+  --bg-app: #f4f7fb;
+  --bg-app-alt: #e9eff7;
+  --bg-surface: #ffffff;
+  --bg-surface-alt: #f1f5fb;
+  --bg-surface-elevated: #ffffff;
+  --bg-surface-muted: #e4ecf6;
+  --bg-glass: rgba(255, 255, 255, 0.78);
+  --bg-glass-alt: rgba(255, 255, 255, 0.6);
+  --color-text-primary: #10243B;
+  --color-text-secondary: #314A68;
+  --color-text-muted: #5F738D;
+  --color-border: rgba(16, 36, 59, 0.12);
+  --color-border-strong: rgba(16, 36, 59, 0.26);
+  --color-accent: var(--hti-orange);
+  --color-accent-alt: var(--hti-amber);
+  --color-accent-soft: rgba(230, 126, 80, 0.12);
+  --color-highlight: var(--hti-amber);
+  --color-highlight-soft: rgba(241, 158, 62, 0.18);
+  --color-danger: #C53030;
+  --color-danger-soft: rgba(197, 48, 48, 0.14);
+  --color-success: #0F7B57;
+  --color-success-soft: rgba(15, 123, 87, 0.16);
+  --color-warning: var(--hti-amber);
+  --color-warning-soft: rgba(241, 158, 62, 0.20);
+  --shadow-color: 16 36 59;
+  --focus-ring: 241 158 62;
+}
+
+.theme-dim {
+  --bg-app: #0F172A;
+  --bg-app-alt: #16243D;
+  --bg-surface: #152238;
+  --bg-surface-alt: #1C2F46;
+  --bg-surface-elevated: #213654;
+  --bg-surface-muted: #1B2C44;
+  --bg-glass: rgba(21, 35, 56, 0.78);
+  --bg-glass-alt: rgba(21, 35, 56, 0.58);
+  --color-text-primary: #F4F8FF;
+  --color-text-secondary: #D0DCF8;
+  --color-text-muted: #7F94B8;
+  --color-border: rgba(176, 202, 232, 0.18);
+  --color-border-strong: rgba(176, 202, 232, 0.35);
+  --color-accent: var(--hti-amber);
+  --color-accent-alt: var(--hti-gold);
+  --color-accent-soft: rgba(241, 158, 62, 0.22);
+  --color-highlight: var(--hti-amber);
+  --color-highlight-soft: rgba(241, 158, 62, 0.24);
+  --color-danger: #F87171;
+  --color-danger-soft: rgba(248, 113, 113, 0.24);
+  --color-success: #34D399;
+  --color-success-soft: rgba(52, 211, 153, 0.24);
+  --color-warning: #FDE047;
+  --color-warning-soft: rgba(253, 224, 71, 0.28);
+  --shadow-color: 8 16 28;
+  --focus-ring: 241 158 62;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg-app);
+  color: var(--color-text-primary);
+}
+
+/* Override glass utilities to use tokens */
+.glass { background: linear-gradient(to bottom right, var(--bg-glass), var(--bg-glass-alt)); border: 1px solid var(--color-border); }
+.glass-strong { background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.62)); border: 1px solid var(--color-border-strong); }
+.glass-on-dark { background: linear-gradient(135deg, rgba(21, 35, 56, 0.55), rgba(47, 69, 102, 0.42)); border: 1px solid var(--color-border-strong); }
+
+/* Utility classes */
+.bg-app { background: var(--bg-app); }
+.bg-surface { background: var(--bg-surface); }
+.bg-surface-alt { background: var(--bg-surface-alt); }
+.bg-surface-elevated { background: var(--bg-surface-elevated); }
+.bg-surface-muted { background: var(--bg-surface-muted); }
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-muted { color: var(--color-text-muted); }
+.text-highlight { color: var(--color-highlight); }
+.border-default { border-color: var(--color-border); }
+.border-strong { border-color: var(--color-border-strong); }
+.border-highlight { border-color: rgba(241, 158, 62, 0.45); }
+.accent-gradient { background: linear-gradient(135deg, var(--color-accent), var(--color-accent-alt)); }
+.highlight-gradient { background: linear-gradient(135deg, var(--color-highlight), var(--hti-gold)); }
+.focus-ring { box-shadow: 0 0 0 3px rgba(var(--focus-ring) / 0.35); }
+
+/* Semantic color utilities backed by tokens */
+.text-accent { color: var(--color-accent); }
+.text-accent-alt { color: var(--color-accent-alt); }
+.text-success { color: var(--color-success); }
+.text-warning { color: var(--color-warning); }
+.text-danger { color: var(--color-danger); }
+
+.bg-soft-accent { background: rgba(230, 126, 80, 0.12); }
+.bg-soft-success { background: rgba(15, 123, 87, 0.16); }
+.bg-soft-warning { background: rgba(241, 158, 62, 0.18); }
+.bg-soft-danger { background: rgba(197, 48, 48, 0.14); }
+.bg-soft-highlight { background: var(--color-highlight-soft); }
+.bg-highlight { background: var(--color-highlight); color: #10243B; }
+.bg-accent { background: var(--color-accent); }
+.text-on-accent { color: #ffffff; }
+
+.theme-dim .bg-soft-accent { background: rgba(241, 158, 62, 0.24); }
+.theme-dim .bg-soft-success { background: rgba(52, 211, 153, 0.24); }
+.theme-dim .bg-soft-warning { background: rgba(253, 224, 71, 0.26); color: #1f2937; }
+.theme-dim .bg-soft-danger { background: rgba(248, 113, 113, 0.26); }
+.theme-dim .bg-soft-highlight { background: rgba(241, 158, 62, 0.26); }
+.theme-dim .bg-highlight { color: #0B172E; }
+
+/* Accessibility enhancements */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid rgba(var(--focus-ring) / 0.65);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.border-accent { border-color: var(--color-accent); }
+.border-success { border-color: var(--color-success); }
+.border-warning { border-color: var(--color-warning); }
+.border-danger { border-color: var(--color-danger); }

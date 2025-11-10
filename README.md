@@ -1,411 +1,424 @@
-# 🧠 HTI Dashboard Intelligence Suite
+# HubDash - HTI Dashboard System
 
-**HUBZone Technology Initiative** Grant Compliance & Device Tracking Dashboard
+**Real-time operational dashboards for the HUBZone Technology Initiative**
 
-> *Secure. Simple. Socially Good.*
-
-![HTI Colors](https://img.shields.io/badge/Navy-0E2240-0E2240)
-![HTI Colors](https://img.shields.io/badge/Blue-6FC3DF-6FC3DF)
-![Next.js](https://img.shields.io/badge/Next.js-14-black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue)
+*Securely Repurposing Technology. Expanding Digital Opportunity.*
 
 ---
 
-## 🎯 Purpose
+## Getting Started
 
-This dashboard suite empowers HTI to act as a **data-driven strategist, engineer, and compliance analyst** — seamlessly integrating **Knack**, **Vercel**, and **grant reporting** into one intelligent workflow.
+### For First-Time Users
 
-HTI transforms donated laptops into secure **HTI Chromebooks** and delivers them with **digital literacy training** to residents and organizations in underserved HUBZone communities across 15 counties in North Carolina and southern Virginia.
+Welcome to HubDash! Here's what you need to know:
 
-### Grant Framework
+**HubDash has two dashboards:**
 
-**Supported by:** NC Department of Information Technology Digital Champion Grant
-**Funded by:** American Rescue Plan Act (ARPA)
-**Grant Period:** 2024-2026
+1. **Board Dashboard** - For board members, donors, and stakeholders
+   - View: `https://hubdash.hubzonetech.org/board`
+   - Shows: Impact metrics, growth trends, county distribution
+   - Audience: Executives who want high-level overview
 
-**Core Commitments:**
-- Acquire **3,500+ donated laptops** by end of 2026
-- Convert **2,500 into functional HTI Chromebooks**
-- Deliver **156+ hours** of digital literacy instruction
-- Maintain transparency through quarterly progress reports
+2. **Operations Hub** - For HTI staff managing day-to-day operations
+   - View: `https://hubdash.hubzonetech.org/ops`
+   - Shows: Device pipeline, inventory, donations, activity feed
+   - Audience: Operations team tracking devices and coordinating pickups
 
----
-
-## 🏛️ Organizational Context
-
-### Mission
-Bridge the digital divide by pairing **technology access** (refurbished laptops) with **digital literacy** training.
-
-### Service Area (15 Counties)
-Wake, Durham, Vance, Franklin, Granville, Halifax, Wilson, Edgecombe, Martin, Hertford, Greene, Warren, Northampton, Person, Nash
-
-### 2026 Business Development Goals
-- Source laptops from **10+ unique organizations**
-- Secure **6+ recurring donors** committing 50+ laptops annually
-- Generate **$65,000 in grant-matched funding**
-- Onboard **2 corporate sponsors**
+**No login needed** - Dashboards are currently open access.
 
 ---
 
-## 🧩 Core Technical Skills
+## How to Use
 
-This suite implements **12 specialized skills** for Knack API integration:
+### Viewing the Board Dashboard
 
-### 1. **knack_reader** - Data Extraction
-REST-based access to Knack Objects and Views for data retrieval
+1. Go to `https://hubdash.hubzonetech.org/board`
+2. See live impact metrics:
+   - Laptops collected
+   - Chromebooks distributed
+   - Counties served
+   - People trained
+   - E-waste diverted
+   - Partner organizations
 
-### 2. **knack_auth** - Authentication
-Handles API key and user token authentication with auto-refresh
-
-### 3. **knack_pagination** - Full Data Retrieval
-Manages pagination respecting Knack's 1,000-record limit
-
-### 4. **knack_filter_sort** - Dynamic Filtering
-Query optimization for dashboards with complex filtering
-
-### 5. **knack_realtime** - Live Updates
-Simulates real-time sync between Knack and Vercel dashboards
-
-### 6. **knack_cache_optimizer** - Performance
-Caches results and enforces 10-requests-per-second rate limit
-
-### 7. **knack_dashboard_ai** - Insights
-Generates metrics and visual summaries from operational data
-
-### 8. **knack_reporting_sync** - Grant Compliance
-Automates quarterly reporting for NCDIT and internal use
-
-### 9. **knack_data_cleaner** - Quality Assurance
-Ensures data accuracy for compliance dashboards
-
-### 10. **knack_exporter** - Report Generation
-Creates shareable reports in PDF, CSV, HTML, and Markdown
-
-### 11. **knack_goal_tracker** - Progress Monitoring
-Tracks HTI's performance against grant and business goals
-
-### 12. **knack_devops** - Infrastructure
-Manages automated builds, environment sync, and monitoring
+**For board meetings**: Screenshot or share this URL with board members.
 
 ---
 
-## 🚀 Quick Start
+### Viewing the Operations Hub
 
-### Prerequisites
-- Node.js 18+
-- Knack account with API credentials
-- Vercel account (optional, for deployment)
+1. Go to `https://hubdash.hubzonetech.org/ops`
+2. See operational data:
+   - Quick performance stats (top-right)
+   - 7-stage device pipeline (center)
+   - Pending donation requests
+   - Full device inventory (searchable)
+   - Real-time activity feed
 
-### Installation
+**For daily operations**: Check this hub each morning to see device status and pending pickups.
+
+---
+
+### Using the Operations Hub Tools
+
+**Search inventory**:
+- Type in the search box to find devices by:
+  - Serial number
+  - Device model
+  - Manufacturer
+  - Status (ready, refurbishing, etc.)
+
+**Check activity feed**:
+- Auto-updates every 10 seconds
+- Shows recent device movements
+- Shows new donations added
+- Shows distribution completions
+
+**Monitor the device pipeline**:
+- See how many devices are at each stage
+- Identify bottlenecks (which stage has most devices)
+- Track overall completion rate
+
+---
+
+## Documentation by Role
+
+Choose the guide that matches your role:
+
+### For Operations Team
+**Start here**: [MAINTENANCE.md](./MAINTENANCE.md)
+- How to update metrics manually
+- How to trigger data syncs from Knack
+- How to troubleshoot problems
+- Daily health checks
+
+### For Deploying to Production
+**Start here**: [DEPLOYMENT.md](./DEPLOYMENT.md)
+- Step-by-step Vercel deployment
+- Environment variable setup
+- Custom domain configuration (hubdash.hubzonetech.org)
+- Monitoring and logging
+
+### For Developers / Extending Features
+**Start here**: [CLAUDE.md](./CLAUDE.md)
+- Project architecture
+- How components are structured
+- HTI brand guidelines
+- Development workflow
+
+### For Backend Setup
+**Start here**: [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) (5-minute setup)
+- Create PostgreSQL database
+- Run database migrations
+- Seed sample data
+- Verify everything works
+
+### For Knack Integration
+**Start here**: [KNACK_SETUP.md](./KNACK_SETUP.md)
+- Get Knack API credentials
+- Configure data sync
+- Map Knack fields to dashboard
+- Trigger manual or automatic syncs
+
+---
+
+## Quick Reference
+
+**Production URLs**:
+- Board: `https://hubdash.hubzonetech.org/board`
+- Ops Hub: `https://hubdash.hubzonetech.org/ops`
+- Admin: `https://hubdash.hubzonetech.org/admin` (sync controls)
+
+**For development**:
+- Local: `http://localhost:3000`
+- Runs at: `npm run dev`
+- Build: `npm run build`
+
+**Data is updated**:
+- Automatically every 1 hour (if automatic sync enabled)
+- Manually via `/admin` "Trigger Full Sync" button
+- Or when staff adds data in Knack
+
+---
+
+## Architecture Overview
+
+```
+Knack (Your Data Source)
+    ↓
+Sync Process (Manual or Automatic)
+    ↓
+Supabase Database (PostgreSQL)
+    ↓
+HubDash API Routes
+    ↓
+React Components
+    ↓
+Your Browser
+    ↓
+Live Dashboards!
+```
+
+**In plain English**: Your data lives in Knack. HubDash copies it to a fast database (Supabase), then displays it on dashboards. When you sync, all changes appear automatically.
+
+---
+
+## What's Inside
+
+### Database Tables (5 total)
+
+| Table | Purpose | Example Data |
+|-------|---------|--------------|
+| `devices` | Device tracking | Serial numbers, status, location |
+| `donations` | Donation requests | Company, device count, pickup date |
+| `partners` | Organizations | School names, counties served |
+| `training_sessions` | Digital literacy | Training dates, attendee counts |
+| `activity_log` | Change tracking | What happened and when |
+
+### Components (9 total)
+
+**Board Dashboard**:
+- ImpactMetrics - Animated counters
+- TrendChart - Growth trends
+- CountyMap - County distribution
+- RecentActivity - Latest updates
+
+**Operations Hub**:
+- QuickStats - Key performance numbers
+- DevicePipeline - 7-stage workflow
+- DonationRequests - Pending pickups
+- InventoryOverview - Device table
+- ActivityFeed - Real-time updates
+
+---
+
+## Development
+
+### For Local Development
 
 ```bash
-# Clone the repository
-git clone https://github.com/your-org/hubdash.git
-cd hubdash
-
-# Install dependencies
+# 1. Install dependencies
 npm install
 
-# Configure environment
-cp .env.example .env
-# Edit .env with your Knack credentials
-```
+# 2. Set up Supabase
+# Follow: SUPABASE_SETUP.md (5 minutes)
 
-### Environment Variables
+# 3. Set up Knack integration (optional)
+# Follow: KNACK_SETUP.md
 
-Create a `.env` file:
-
-```env
-KNACK_APP_ID=your_app_id_here
-KNACK_API_KEY=your_api_key_here
-KNACK_API_BASE_URL=https://api.knack.com/v1
-```
-
-### Development
-
-```bash
-# Start development server
+# 4. Start dev server
 npm run dev
 
-# Open http://localhost:3000
+# 5. Open browser
+# http://localhost:3000
 ```
 
-### Production Build
+### Technology Stack
+
+- **Framework**: Next.js 16 (React)
+- **Language**: TypeScript
+- **Database**: Supabase (PostgreSQL)
+- **Styling**: Tailwind CSS 4.1
+- **Charts**: Recharts
+- **Deployment**: Vercel
+- **Hosting**: Vercel edge network
+
+### Build for Production
 
 ```bash
-# Build for production
-npm run build
-
-# Start production server
-npm start
+npm run build   # Creates optimized bundle
+npm start       # Runs production version locally
 ```
 
----
-
-## 📁 Project Structure
-
-```
-hubdash/
-├── app/                      # Next.js App Router
-│   ├── layout.tsx           # Main layout with HTI branding
-│   ├── page.tsx             # Home page with goal overview
-│   ├── dashboard/           # Grant compliance dashboard
-│   └── reports/             # Report generator
-├── components/              # React components
-│   ├── GoalProgressCard.tsx
-│   ├── QuickStats.tsx
-│   ├── DeviceStatusChart.tsx
-│   ├── CountyDistribution.tsx
-│   └── TrainingMetrics.tsx
-├── lib/                     # Core logic
-│   └── knack/              # 12 Core Skills
-│       ├── types.ts         # TypeScript definitions
-│       ├── auth.ts          # Skill 2: Authentication
-│       ├── reader.ts        # Skill 1: Data reading
-│       ├── pagination.ts    # Skill 3: Pagination
-│       ├── filter.ts        # Skill 4: Filtering/sorting
-│       ├── cache.ts         # Skill 6: Caching
-│       ├── goal-tracker.ts  # Skill 11: Goal tracking
-│       ├── reporting.ts     # Skill 8: Report generation
-│       ├── data-cleaner.ts  # Skill 9: Data quality
-│       ├── exporter.ts      # Skill 10: Export formats
-│       ├── client.ts        # Unified client
-│       └── index.ts         # Main export
-└── public/                  # Static assets
-```
+**Vercel auto-deploys** when you push to GitHub.
 
 ---
 
-## 🎨 Brand Guidelines
+## Troubleshooting
 
-### Colors
-- **Navy Blue:** `#0E2240` - Primary brand color
-- **Light Blue:** `#6FC3DF` - Accent color
-- **White:** `#FFFFFF` - Background
+**Dashboard shows "Loading..." forever?**
+- Check internet connection
+- Hard refresh: Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)
+- See [MAINTENANCE.md](./MAINTENANCE.md) for more
 
-### Tone
-Clear, factual, and empowering with emphasis on measurable community benefit
+**Data not updating?**
+- Go to `/admin` and click "Trigger Full Sync"
+- Check Supabase has data (see SUPABASE_SETUP.md)
+- See [MAINTENANCE.md](./MAINTENANCE.md) troubleshooting section
 
-### Voice
-Mission-driven but approachable, highlighting local stories of access and empowerment
-
----
-
-## 📊 Dashboard Features
-
-### Home Dashboard
-- **Quick Stats:** Real-time device and training metrics
-- **Goal Progress:** Visual tracking of 2026 grant commitments
-- **Service Area Map:** 15-county coverage visualization
-
-### Grant Compliance Dashboard
-- **Device Status Overview:** Acquired, converted, ready, presented, discarded
-- **County Distribution:** Geographic breakdown of impact
-- **Training Metrics:** Hours, participants, topics
-- **Alerts & Recommendations:** AI-powered insights
-
-### Report Generator
-- **Quarterly Reports:** NCDIT-compliant accountability reports
-- **Export Formats:** PDF, CSV, HTML, Markdown
-- **Branded Templates:** HTI visual identity
-- **Historical Analysis:** Quarter-over-quarter comparisons
+**Can't find something?**
+- Check the relevant guide listed above
+- Email: will@hubzonetech.org
 
 ---
 
-## 🔧 Knack API Integration
+## Change History
 
-### Basic Usage
+See [CHANGELOG.md](./CHANGELOG.md) for complete development history.
 
-```typescript
-import { getKnackClient } from '@/lib/knack';
+**Current Version**: 1.0 (November 4, 2025)
+**Status**: Production Ready with Full Backend
 
-const client = getKnackClient();
-
-// Fetch all device records with caching
-const devices = await client.fetchAllWithCache(
-  'object_1', // Your Knack object key
-  'devices',  // Cache key
-  300         // TTL in seconds
-);
-
-// Get goal progress
-const progress = await client.getGoalProgress({
-  laptopsAcquired: 1500,
-  laptopsConverted: 1000,
-  trainingHours: 75,
-  uniqueDonors: 8,
-  recurringDonors: 4,
-  grantMatching: 30000,
-  privateDonations: 12,
-  corporateSponsors: 1,
-});
-
-// Generate quarterly report
-const report = await client.generateQuarterlyReport(
-  'Q2 2025',
-  '2025-04-01',
-  '2025-06-30'
-);
-```
-
-### Advanced Filtering
-
-```typescript
-import { KnackFilterSort } from '@/lib/knack';
-
-// Filter by HTI counties
-const countyFilter = KnackFilterSort.createCountyFilter([
-  'Wake', 'Durham', 'Halifax'
-]);
-
-// Filter by device status
-const statusFilter = KnackFilterSort.createStatusFilter([
-  'converted', 'ready'
-]);
-
-// Date range filter
-const dateFilter = KnackFilterSort.createDateRangeFilter(
-  'acquisition_date',
-  '2025-04-01',
-  '2025-06-30'
-);
-```
+**What was built**:
+- Complete PostgreSQL database
+- 6 REST API endpoints
+- 9 React components with real data
+- Knack data synchronization
+- Vercel deployment ready
 
 ---
 
-## 📈 Grant Compliance & Reporting
+## FAQ - Frequently Asked Questions
 
-### Quarterly Accountability Reports (QAR)
+### General Questions
 
-Generate NCDIT-compliant reports:
+**Q: Do I need a login to use HubDash?**
+A: Not yet. Currently, both dashboards are open access. Login and role-based permissions are coming in a future version.
 
-```typescript
-import { KnackReportingSync } from '@/lib/knack';
+**Q: How often is the data updated?**
+A: Automatically every 1 hour (if enabled). You can manually trigger a sync anytime via the `/admin` page.
 
-const reporting = new KnackReportingSync();
+**Q: What happens if Knack goes down?**
+A: HubDash keeps working with the last synced data. It's a copy/cache, so outages don't affect the dashboards.
 
-const report = reporting.generateQuarterlyReport(
-  'Q2 2025',
-  '2025-04-01',
-  '2025-06-30',
-  devices,
-  training,
-  goals
-);
-
-// Export as NCDIT-compliant HTML
-const html = reporting.generateNCDITReport(report);
-```
-
-### Goal Tracking
-
-```typescript
-import { KnackGoalTracker, HTI_2026_GOALS } from '@/lib/knack';
-
-const tracker = new KnackGoalTracker(HTI_2026_GOALS);
-
-const report = tracker.checkProgress({
-  laptopsAcquired: 1500,
-  laptopsConverted: 1000,
-  trainingHours: 75,
-  uniqueDonors: 8,
-  recurringDonors: 4,
-  grantMatching: 30000,
-  privateDonations: 12,
-  corporateSponsors: 1,
-});
-
-// Generate dashboard summary
-const summary = tracker.generateDashboardSummary(report);
-```
+**Q: Can I export the data?**
+A: Not yet. That's a planned feature. For now, you can screenshot dashboards or query the Supabase database directly.
 
 ---
 
-## 🔐 Security & Compliance
+### Operations Questions
 
-- **API Keys:** Never commit `.env` files
-- **Rate Limiting:** Automatic 10 req/s limit enforcement
-- **Data Validation:** All inputs sanitized
-- **ARPA Compliance:** Audit-ready data retention
-- **NCDIT Standards:** Quarterly reporting alignment
+**Q: How do I add a new device?**
+A: Add it in Knack, then go to `/admin` and click "Trigger Full Sync". It appears on HubDash within seconds.
 
----
+**Q: Why does my data show old information?**
+A: Sync hasn't happened recently. Go to `/admin` and click "Trigger Full Sync" to update immediately.
 
-## 🚢 Deployment
+**Q: How do I see who donated devices?**
+A: Check the Donations section in the Operations Hub. Shows company name, contact info, and pickup status.
 
-### Vercel (Recommended)
-
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-
-# Set environment variables in Vercel dashboard
-```
-
-### Docker
-
-```bash
-# Build image
-docker build -t hti-dashboard .
-
-# Run container
-docker run -p 3000:3000 --env-file .env hti-dashboard
-```
+**Q: Can I edit data in HubDash?**
+A: Not yet. HubDash is read-only for now. Edit data in Knack, then sync to HubDash.
 
 ---
 
-## 🤝 Contributing
+### Technical Questions
 
-This is an internal HTI project. For questions or support:
+**Q: What if I see an error?**
+A: Take a screenshot (press F12 for browser console errors), note the error message, and email will@hubzonetech.org.
 
-1. **Internal Team:** Contact the HTI technical lead
-2. **Issues:** Report bugs via GitHub Issues
-3. **Features:** Submit feature requests with business justification
+**Q: Is my data secure?**
+A: Yes. All data is encrypted in transit (HTTPS) and at rest (Supabase). Row-Level Security is enabled on all tables.
 
----
+**Q: Where is the data stored?**
+A: Supabase (PostgreSQL database) hosted on Amazon Web Services (AWS).
 
-## 📜 License
-
-Proprietary - HUBZone Technology Initiative
-
----
-
-## 🎯 Roadmap
-
-### Phase 1 (Current)
-- [x] Core Knack API integration (12 skills)
-- [x] Dashboard UI with HTI branding
-- [x] Goal tracking and progress visualization
-- [x] Basic report generation
-
-### Phase 2 (Next)
-- [ ] Real-time webhook integration
-- [ ] Advanced analytics and forecasting
-- [ ] Mobile-responsive optimizations
-- [ ] Automated NCDIT report submission
-
-### Phase 3 (Future)
-- [ ] Donor portal integration
-- [ ] Training session scheduling
-- [ ] Inventory management system
-- [ ] Multi-language support
+**Q: Can I download the source code?**
+A: Yes, it's on GitHub. See CLAUDE.md for the repository location.
 
 ---
 
-## 📞 Support
+### Feature Requests
 
-**HUBZone Technology Initiative**
-Website: [Your HTI Website]
-Email: [Your Contact Email]
-
-**Technical Support:**
-For dashboard-related issues, contact the development team.
+**Q: Can you add feature X?**
+A: Yes, probably! Email your request to will@hubzonetech.org with:
+- What problem does it solve?
+- Who needs it?
+- When do you need it?
 
 ---
 
-**Built with ❤️ for the communities we serve**
+## Device Pipeline Stages Explained
 
-*Every dataset tells a story — this one tells the story of access, empowerment, and community progress.*
+HubDash shows devices flowing through 7 stages:
+
+1. **Donated** - Device arrives from donor
+2. **Received** - Staff logged it into system
+3. **Data Wipe** - Securely wiped (NIST standard)
+4. **Refurbishing** - Installed ChromeOS Flex
+5. **QA Testing** - Tested to ensure it works
+6. **Ready** - Ready to distribute
+7. **Distributed** - Delivered to recipient
+
+Each stage shows how many devices are there. A high number at one stage = bottleneck.
+
+---
+
+## Impact Metrics Explained
+
+**Board Dashboard shows**:
+
+- **Laptops Collected** - Total devices donated to HTI
+- **Chromebooks Distributed** - Devices successfully given to recipients
+- **Counties Served** - How many North Carolina counties HTI reached
+- **People Trained** - Attendees in digital literacy training
+- **E-Waste Diverted** - Tons of waste kept from landfills (calculated)
+- **Partners** - Schools, libraries, nonprofits we work with
+
+---
+
+## Support & Help
+
+### Quick Help
+
+| Issue | Solution |
+|-------|----------|
+| Dashboard won't load | Hard refresh: Ctrl+Shift+R (Win) or Cmd+Shift+R (Mac) |
+| Data is old | Go to `/admin`, click "Trigger Full Sync" |
+| Search not working | Try searching by exact serial number |
+| Can't find a device | Check it was synced (check activity feed) |
+| Need help with a feature | See the guide at top of this document |
+
+### Get More Help
+
+- **Day-to-day operations**: See [MAINTENANCE.md](./MAINTENANCE.md)
+- **Deploying to production**: See [DEPLOYMENT.md](./DEPLOYMENT.md)
+- **Setting up backend**: See [SUPABASE_SETUP.md](./SUPABASE_SETUP.md)
+- **Syncing Knack data**: See [KNACK_SETUP.md](./KNACK_SETUP.md)
+- **Everything else**: Email will@hubzonetech.org
+
+---
+
+## Future Roadmap
+
+**Coming Soon (Next 3 months)**:
+- User login and role-based permissions
+- Email notifications (new donations, device ready)
+- PDF report generation
+
+**This Year**:
+- WebSocket real-time updates
+- Interactive county map
+- Training calendar
+- Bulk import/export
+
+---
+
+## About HTI
+
+**HUBZone Technology Initiative** is a North Carolina-based nonprofit dedicated to:
+
+- **Collecting** donated laptops from businesses and individuals
+- **Refurbishing** them securely with ChromeOS Flex
+- **Training** recipients in digital literacy
+- **Distributing** to underserved communities across North Carolina
+
+**Current Impact**:
+- 3,500+ laptops collected
+- 2,500+ Chromebooks distributed
+- 15 counties served
+- 450+ people trained
+- 50+ partner organizations
+
+**Learn more**: [hubzonetech.org](https://hubzonetech.org)
+
+---
+
+## Version & Status
+
+**Current Version**: 1.0 (November 4, 2025)
+**Status**: Production Ready
+**Last Updated**: November 4, 2025
+
+**Built for HTI by Claude Code**
+**Questions?** Email will@hubzonetech.org

@@ -1,11 +1,16 @@
 {
-  "framework": "nextjs",
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
-  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "regions": ["iad1"],
   "env": {
-    "KNACK_APP_ID": "@knack_app_id",
-    "KNACK_API_KEY": "@knack_api_key"
-  }
+    "NEXT_PUBLIC_APP_NAME": "HubDash"
+  },
+  "crons": [
+    {
+      "path": "/api/sync",
+      "schedule": "0 * * * *"
+    }
+  ]
 }

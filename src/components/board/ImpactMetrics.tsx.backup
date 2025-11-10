@@ -1,0 +1,5 @@
+// Deprecated backup of ImpactMetrics component.
+// The implementation has been migrated to tokenized theming.
+// This backup file is intentionally left minimal to avoid confusion and
+// references to legacy classes. If you need the previous version,
+// retrieve it from git history.
