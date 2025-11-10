@@ -111,30 +111,31 @@ export default function SocialMediaFeed() {
           <div className="p-5 space-y-4">
             {postsByPlatform.instagram.length > 0 ? (
               postsByPlatform.instagram.slice(0, 2).map((post) => (
-                <a
-                  key={post.id}
-                  href={post.postUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block group"
-                >
+                <div key={post.id} className="space-y-3">
+                  <p className="text-lg md:text-xl font-bold text-primary leading-relaxed">
+                    {post.text}
+                  </p>
                   {post.imageUrl && (
-                    <div className="rounded-xl overflow-hidden mb-3 aspect-square bg-surface-alt">
+                    <a
+                      href={post.postUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block group rounded-xl overflow-hidden bg-surface-alt hover:opacity-90 transition-opacity"
+                    >
                       <img
                         src={post.imageUrl}
                         alt="Instagram post"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        className="w-full h-32 object-cover group-hover:scale-105 transition-transform"
                       />
-                    </div>
+                    </a>
                   )}
-                  <p className="text-base font-semibold text-primary line-clamp-2 mb-2 leading-relaxed">
-                    {post.text}
-                  </p>
                   <div className="flex items-center justify-between text-sm font-medium text-secondary">
-                    <span>{formatTimeAgo(post.timestamp)}</span>
+                    <a href={post.postUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+                      {formatTimeAgo(post.timestamp)}
+                    </a>
                     {post.likes && <span className="font-bold">❤️ {post.likes.toLocaleString()}</span>}
                   </div>
-                </a>
+                </div>
               ))
             ) : (
               <div className="text-center py-12 text-secondary text-base">
@@ -154,30 +155,31 @@ export default function SocialMediaFeed() {
           <div className="p-5 space-y-4">
             {postsByPlatform.linkedin.length > 0 ? (
               postsByPlatform.linkedin.slice(0, 2).map((post) => (
-                <a
-                  key={post.id}
-                  href={post.postUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block group"
-                >
+                <div key={post.id} className="space-y-3">
+                  <p className="text-lg md:text-xl font-bold text-primary leading-relaxed">
+                    {post.text}
+                  </p>
                   {post.imageUrl && (
-                    <div className="rounded-xl overflow-hidden mb-3 aspect-video bg-surface-alt">
+                    <a
+                      href={post.postUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block group rounded-xl overflow-hidden bg-surface-alt hover:opacity-90 transition-opacity"
+                    >
                       <img
                         src={post.imageUrl}
                         alt="LinkedIn post"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        className="w-full h-32 object-cover group-hover:scale-105 transition-transform"
                       />
-                    </div>
+                    </a>
                   )}
-                  <p className="text-base font-semibold text-primary line-clamp-2 mb-2 leading-relaxed">
-                    {post.text}
-                  </p>
                   <div className="flex items-center justify-between text-sm font-medium text-secondary">
-                    <span>{formatTimeAgo(post.timestamp)}</span>
+                    <a href={post.postUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+                      {formatTimeAgo(post.timestamp)}
+                    </a>
                     {post.likes && <span className="font-bold">👍 {post.likes.toLocaleString()}</span>}
                   </div>
-                </a>
+                </div>
               ))
             ) : (
               <div className="text-center py-12 text-secondary text-base">
@@ -197,30 +199,31 @@ export default function SocialMediaFeed() {
           <div className="p-5 space-y-4">
             {postsByPlatform.tiktok.length > 0 ? (
               postsByPlatform.tiktok.slice(0, 2).map((post) => (
-                <a
-                  key={post.id}
-                  href={post.postUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block group"
-                >
+                <div key={post.id} className="space-y-3">
+                  <p className="text-lg md:text-xl font-bold text-primary leading-relaxed">
+                    {post.text}
+                  </p>
                   {post.imageUrl && (
-                    <div className="rounded-xl overflow-hidden mb-3 aspect-[9/16] bg-surface-alt">
+                    <a
+                      href={post.postUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block group rounded-xl overflow-hidden bg-surface-alt hover:opacity-90 transition-opacity"
+                    >
                       <img
                         src={post.imageUrl}
                         alt="TikTok post"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        className="w-full h-32 object-cover group-hover:scale-105 transition-transform"
                       />
-                    </div>
+                    </a>
                   )}
-                  <p className="text-base font-semibold text-primary line-clamp-2 mb-2 leading-relaxed">
-                    {post.text}
-                  </p>
                   <div className="flex items-center justify-between text-sm font-medium text-secondary">
-                    <span>{formatTimeAgo(post.timestamp)}</span>
+                    <a href={post.postUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+                      {formatTimeAgo(post.timestamp)}
+                    </a>
                     {post.likes && <span className="font-bold">❤️ {post.likes.toLocaleString()}</span>}
                   </div>
-                </a>
+                </div>
               ))
             ) : (
               <div className="text-center py-12 text-secondary text-base">
@@ -240,30 +243,31 @@ export default function SocialMediaFeed() {
           <div className="p-5 space-y-4">
             {postsByPlatform.facebook.length > 0 ? (
               postsByPlatform.facebook.slice(0, 2).map((post) => (
-                <a
-                  key={post.id}
-                  href={post.postUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block group"
-                >
+                <div key={post.id} className="space-y-3">
+                  <p className="text-lg md:text-xl font-bold text-primary leading-relaxed">
+                    {post.text}
+                  </p>
                   {post.imageUrl && (
-                    <div className="rounded-xl overflow-hidden mb-3 aspect-video bg-surface-alt">
+                    <a
+                      href={post.postUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block group rounded-xl overflow-hidden bg-surface-alt hover:opacity-90 transition-opacity"
+                    >
                       <img
                         src={post.imageUrl}
                         alt="Facebook post"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        className="w-full h-32 object-cover group-hover:scale-105 transition-transform"
                       />
-                    </div>
+                    </a>
                   )}
-                  <p className="text-base font-semibold text-primary line-clamp-2 mb-2 leading-relaxed">
-                    {post.text}
-                  </p>
                   <div className="flex items-center justify-between text-sm font-medium text-secondary">
-                    <span>{formatTimeAgo(post.timestamp)}</span>
+                    <a href={post.postUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+                      {formatTimeAgo(post.timestamp)}
+                    </a>
                     {post.likes && <span className="font-bold">👍 {post.likes.toLocaleString()}</span>}
                   </div>
-                </a>
+                </div>
               ))
             ) : (
               <div className="text-center py-12 text-secondary text-base">

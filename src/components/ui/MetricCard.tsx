@@ -67,8 +67,8 @@ export default function MetricCard({
                     )}
                 </div>
                 <div className="flex items-end gap-2">
-                    <div className={clsx("font-black", highlight ? "text-5xl md:text-6xl" : "text-4xl md:text-5xl", "text-primary")}>{typeof value === 'number' ? value.toLocaleString() : value}</div>
-                    {suffix && <div className={clsx("font-black", highlight ? "text-2xl md:text-3xl" : "text-xl md:text-2xl", "text-accent")}>{suffix}</div>}
+                    <div className={clsx("font-black", highlight ? "text-5xl md:text-6xl" : "text-2xl md:text-3xl", "text-primary")}>{typeof value === 'number' ? value.toLocaleString() : value}</div>
+                    {suffix && <div className={clsx("font-black", highlight ? "text-2xl md:text-3xl" : "text-sm md:text-base", "text-accent")}>{suffix}</div>}
                 </div>
                 {typeof progress === "number" && progress >= 0 && progress <= 100 && (
                     <div className="space-y-2 mt-2">

@@ -20,6 +20,12 @@ import { useState } from "react";
 import { DeviceJourneyTimeline } from "../shared/DeviceJourneyTimeline";
 import GlassCard from "../ui/GlassCard";
 import GradientHeading from "../ui/GradientHeading";
+import { BulkActions } from "../ui/BulkActions";
+import { TableSkeleton } from "../ui/Skeleton";
+import { ExportWizard, ExportFormat, DateRange } from "../ui/ExportWizard";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Trash2 as Trash2Icon, Edit, Download as DownloadIcon } from "lucide-react";
 
 interface Device {
   id: string;
@@ -32,30 +38,43 @@ interface Device {
 }
 
 const DEVICE_TYPES = ["Laptop", "Desktop", "Tablet", "Chromebook", "Monitor", "Other"];
-const DEVICE_STATUSES = ["Received", "Testing", "Cleaning", "Ready", "Deployed", "Retired"];
+// Actual Knack statuses from field_56
+const DEVICE_STATUSES = ["Donated", "Received", "Data Wipe", "Refurbishing", "QA Testing", "Ready", "Completed-Presented"];
 
-export function DeviceManagementTable() {
+interface DeviceManagementTableProps {
+  defaultStatusFilter?: string;
+}
+
+export function DeviceManagementTable({ defaultStatusFilter }: DeviceManagementTableProps = {}) {
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
   const [limit] = useState(50);
   const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [statusFilter, setStatusFilter] = useState<string>(defaultStatusFilter || "all");
   const [typeFilter, setTypeFilter] = useState<string>("all");
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<Device>>({});
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [createForm, setCreateForm] = useState<Partial<Device>>({});
   const [journeyDevice, setJourneyDevice] = useState<Device | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [showExportWizard, setShowExportWizard] = useState(false);
 
-  const { data, isLoading, error } = useQuery<{ devices: Device[]; total: number; page: number }>({
+  const { data, isLoading, error } = useQuery<{ data: Device[]; total?: number; page?: number }>({
     queryKey: queryKeys.devicesPaginated(page, limit, statusFilter !== "all" ? statusFilter : undefined),
     queryFn: async () => {
       let url = `/api/devices?page=${page}&limit=${limit}`;
-      if (statusFilter !== "all") url += `&status=${statusFilter}`;
+      if (statusFilter !== "all") url += `&status=${encodeURIComponent(statusFilter)}`;
 
       const res = await fetch(url);
       if (!res.ok) throw new Error("Failed to fetch devices");
-      return res.json();
+      const result = await res.json();
+      // Handle both response formats
+      return {
+        data: result.data || result.devices || [],
+        total: result.total || result.pagination?.total || (result.data?.length || 0),
+        page: result.page || page,
+      };
     },
   });
 
@@ -117,8 +136,8 @@ export function DeviceManagementTable() {
     },
   });
 
-  const devices = data?.devices || [];
-  const filteredDevices = devices.filter(d => {
+  const devices = data?.data || [];
+  const filteredDevices = devices.filter((d: Device) => {
     const matchesSearch = !searchQuery ||
       d.serial_number?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       d.device_type?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -139,7 +158,7 @@ export function DeviceManagementTable() {
 
   const exportToCSV = () => {
     const headers = ["Serial Number", "Type", "Status", "Date Received", "Date Deployed", "Organization"];
-    const rows = filteredDevices.map(d => [
+    const rows = filteredDevices.map((d: Device) => [
       d.serial_number || "",
       d.device_type || "",
       d.status || "",
@@ -150,7 +169,7 @@ export function DeviceManagementTable() {
 
     const csv = [
       headers.join(","),
-      ...rows.map(row => row.map(cell => `"${cell}"`).join(","))
+      ...rows.map((row: string[]) => row.map((cell: string) => `"${cell}"`).join(","))
     ].join("\n");
 
     const blob = new Blob([csv], { type: "text/csv" });
@@ -204,11 +223,11 @@ export function DeviceManagementTable() {
         </div>
         <div className="flex gap-2">
           <button
-            onClick={exportToCSV}
-            className="px-4 py-2 bg-surface-alt border border-default rounded-lg hover:bg-surface transition-colors flex items-center gap-2 text-primary"
+            onClick={() => setShowExportWizard(true)}
+            className="px-4 py-2 bg-surface-alt border border-default rounded-lg hover:bg-surface transition-all hover:scale-105 flex items-center gap-2 text-primary font-semibold"
           >
             <Download className="w-4 h-4" />
-            Export CSV
+            Export
           </button>
           <button
             onClick={() => setShowCreateForm(true)}
@@ -344,11 +363,7 @@ export function DeviceManagementTable() {
       {/* Devices Table */}
       <GlassCard>
         {isLoading ? (
-          <div className="space-y-2">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="bg-surface-alt rounded-lg p-4 animate-pulse h-16" />
-            ))}
-          </div>
+          <TableSkeleton rows={10} />
         ) : error ? (
           <div className="text-center py-12 text-danger">
             Error loading devices. Please try again.
@@ -380,7 +395,7 @@ export function DeviceManagementTable() {
               <div className="mt-6 pt-6 border-t border-default">
                 <p className="text-xs text-secondary mb-3">Showing {devices.length} total devices in system</p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-left">
-                  {devices.slice(0, 4).map((device) => (
+                  {devices.slice(0, 4).map((device: Device) => (
                     <div key={device.id} className="p-3 bg-surface-alt rounded-lg border border-default">
                       <div className="text-xs font-semibold text-secondary mb-1">Serial</div>
                       <div className="text-sm font-mono text-primary">{device.serial_number || "N/A"}</div>
@@ -396,6 +411,20 @@ export function DeviceManagementTable() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-default">
+                  <th className="text-left p-4 text-xs font-semibold tracking-wide text-secondary uppercase w-12">
+                    <input
+                      type="checkbox"
+                      checked={selectedIds.size === filteredDevices.length && filteredDevices.length > 0}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedIds(new Set(filteredDevices.map((d: Device) => d.id)));
+                        } else {
+                          setSelectedIds(new Set());
+                        }
+                      }}
+                      className="w-4 h-4 rounded border-default cursor-pointer"
+                    />
+                  </th>
                   <th className="text-left p-4 text-xs font-semibold tracking-wide text-secondary uppercase">Serial #</th>
                   <th className="text-left p-4 text-xs font-semibold tracking-wide text-secondary uppercase">Type</th>
                   <th className="text-left p-4 text-xs font-semibold tracking-wide text-secondary uppercase">Status</th>
@@ -405,11 +434,33 @@ export function DeviceManagementTable() {
                 </tr>
               </thead>
               <tbody>
-                {filteredDevices.map(device => (
-                  <tr
+                {filteredDevices.map((device, index) => (
+                  <motion.tr
                     key={device.id}
-                    className="border-b border-default hover:bg-surface-alt transition-colors"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.02 }}
+                    className={cn(
+                      "border-b border-default hover:bg-surface-alt transition-all",
+                      selectedIds.has(device.id) && "bg-soft-accent"
+                    )}
                   >
+                    <td className="p-4">
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.has(device.id)}
+                        onChange={(e) => {
+                          const newSet = new Set(selectedIds);
+                          if (e.target.checked) {
+                            newSet.add(device.id);
+                          } else {
+                            newSet.delete(device.id);
+                          }
+                          setSelectedIds(newSet);
+                        }}
+                        className="w-4 h-4 rounded border-default cursor-pointer"
+                      />
+                    </td>
                     {editingId === device.id ? (
                       <>
                         <td className="p-4">
@@ -526,15 +577,81 @@ export function DeviceManagementTable() {
                         </td>
                       </>
                     )}
-                  </tr>
+                  </motion.tr>
                 ))}
               </tbody>
             </table>
           </div>
         )}
 
+        {/* Bulk Actions */}
+        <BulkActions
+          selectedIds={Array.from(selectedIds)}
+          actions={[
+            {
+              id: "delete",
+              label: "Delete",
+              icon: <Trash2Icon className="w-4 h-4" />,
+              variant: "danger",
+              requiresConfirmation: true,
+              confirmationMessage: `Are you sure you want to delete ${selectedIds.size} device(s)? This action cannot be undone.`,
+              action: async (ids) => {
+                await Promise.all(ids.map(id => deleteMutation.mutateAsync(id)));
+                setSelectedIds(new Set());
+              },
+            },
+            {
+              id: "export",
+              label: "Export Selected",
+              icon: <DownloadIcon className="w-4 h-4" />,
+              action: async (ids) => {
+                setShowExportWizard(true);
+              },
+            },
+          ]}
+          onClearSelection={() => setSelectedIds(new Set())}
+          totalCount={filteredDevices.length}
+        />
+
+        {/* Export Wizard */}
+        <ExportWizard
+          isOpen={showExportWizard}
+          onClose={() => setShowExportWizard(false)}
+          onExport={async (format: ExportFormat, dateRange: DateRange, customDates) => {
+            const devicesToExport = filteredDevices.filter((d: Device) =>
+              selectedIds.size === 0 || selectedIds.has(d.id)
+            );
+
+            if (format === "csv") {
+              const headers = ["Serial Number", "Type", "Status", "Date Received", "Date Deployed", "Organization"];
+              const rows = devicesToExport.map((d: Device) => [
+                d.serial_number || "",
+                d.device_type || "",
+                d.status || "",
+                d.date_received || "",
+                d.date_deployed || "",
+                d.organization || "",
+              ]);
+              const csv = [
+                headers.join(","),
+                ...rows.map((row: string[]) => row.map((cell: string) => `"${cell}"`).join(","))
+              ].join("\n");
+              const blob = new Blob([csv], { type: "text/csv" });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = `devices-${new Date().toISOString().split("T")[0]}.csv`;
+              a.click();
+            } else {
+              // Handle other formats
+              console.log("Exporting", format, dateRange, devicesToExport.length);
+            }
+          }}
+          title="Export Devices"
+        />
+
         {/* Pagination */}
-        {data && data.total > limit && (
+        {data && data.total && data.total > limit && (
           <div className="flex items-center justify-between pt-4 border-t border-default mt-4">
             <div className="text-sm text-secondary">
               Page {page} of {Math.ceil(data.total / limit)}
@@ -549,7 +666,7 @@ export function DeviceManagementTable() {
               </button>
               <button
                 onClick={() => setPage(p => p + 1)}
-                disabled={page >= Math.ceil(data.total / limit)}
+                disabled={data.total ? page >= Math.ceil(data.total / limit) : true}
                 className="p-2 border border-default rounded-lg hover:bg-surface-alt transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <ChevronRight className="w-4 h-4" />

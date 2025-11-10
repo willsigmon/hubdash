@@ -53,9 +53,9 @@ export default function BoardDashboard() {
           <div className="absolute -left-24 top-1/3 h-40 w-40 rounded-full bg-highlight opacity-30 blur-3xl" />
           <div className="absolute right-0 top-0 h-32 w-32 translate-x-1/3 -translate-y-1/3 rounded-full bg-accent opacity-25 blur-3xl" />
         </div>
-        <div className="relative mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-6 sm:px-6 lg:px-8">
+          <div className="relative mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-6 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 flex-1 min-w-0">
-            <GradientHeading as="h1" variant="accent" className="text-2xl sm:text-3xl theme-dim:text-white">
+            <GradientHeading as="h1" variant="accent" className="text-2xl sm:text-3xl text-primary theme-dim:text-white">
               HTI Board Dashboard
             </GradientHeading>
             <div className="hidden md:flex items-center gap-2 ml-4">
@@ -128,66 +128,31 @@ export default function BoardDashboard() {
           </div>
         </section>
 
-        {/* Executive Signals & Quick Links - Horizontal Row */}
+        {/* Executive Signals - Full Width */}
         <section>
-          <div className="grid gap-6 lg:grid-cols-[1fr,1fr]">
-            {/* Executive Signals - Enhanced */}
-            <div className="rounded-2xl border-2 border-default bg-gradient-to-br from-surface via-surface to-surface-alt p-6 shadow-xl">
-              <div className="mb-4">
-                <h3 className="text-2xl md:text-3xl font-black text-primary mb-2">Executive Signals</h3>
-                <p className="text-sm font-semibold text-secondary">
-                  Curated highlights surfaced automatically each morning
-                </p>
-              </div>
-              <ul className="space-y-3">
-                {momentumPulses.map((pulse) => (
-                  <li
-                    key={pulse.title}
-                    className={`group rounded-xl border-2 px-4 py-3 shadow-md transition-all hover:shadow-lg ${pulse.tone === "positive"
-                      ? "border-success/50 bg-gradient-to-br from-soft-success to-surface"
-                      : pulse.tone === "accent"
-                        ? "border-accent/50 bg-gradient-to-br from-soft-accent to-surface"
-                        : "border-highlight/50 bg-gradient-to-br from-soft-highlight to-surface"
-                      }`}
-                  >
-                    <p className="font-black text-sm md:text-base text-primary mb-1">{pulse.title}</p>
-                    <p className="text-xs md:text-sm font-semibold text-secondary leading-relaxed">{pulse.detail}</p>
-                  </li>
-                ))}
-              </ul>
+          <div className="rounded-2xl border-2 border-default bg-gradient-to-br from-surface via-surface to-surface-alt p-6 shadow-xl">
+            <div className="mb-4">
+              <h3 className="text-2xl md:text-3xl font-black text-primary mb-2">Executive Signals</h3>
+              <p className="text-sm font-semibold text-secondary">
+                Curated highlights surfaced automatically each morning
+              </p>
             </div>
-
-            {/* Quick Links - Enhanced */}
-            <div className="rounded-2xl border-2 border-default bg-surface-alt p-6 shadow-xl">
-              <h4 className="text-lg md:text-xl font-black uppercase tracking-wider text-primary mb-4">
-                Quick Links
-              </h4>
-              <div className="grid grid-cols-2 gap-3">
-                <Link
-                  href="/ops"
-                  className="group rounded-xl border-2 border-accent/50 bg-soft-accent px-4 py-3 text-center text-sm font-black text-accent transition-all hover:border-accent hover:bg-accent hover:text-on-accent hover:shadow-lg"
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {momentumPulses.map((pulse) => (
+                <div
+                  key={pulse.title}
+                  className={`group rounded-xl border-2 px-5 py-4 shadow-lg transition-all hover:shadow-xl hover:-translate-y-1 ${
+                    pulse.tone === "positive"
+                      ? "border-success/50 bg-gradient-to-br from-soft-success to-surface hover:border-success"
+                      : pulse.tone === "accent"
+                        ? "border-accent/50 bg-gradient-to-br from-soft-accent to-surface hover:border-accent"
+                        : "border-highlight/50 bg-gradient-to-br from-soft-highlight to-surface hover:border-highlight"
+                  }`}
                 >
-                  Operations
-                </Link>
-                <Link
-                  href="/reports"
-                  className="group rounded-xl border-2 border-highlight/50 bg-soft-highlight px-4 py-3 text-center text-sm font-black text-highlight transition-all hover:border-highlight hover:bg-highlight hover:text-on-highlight hover:shadow-lg"
-                >
-                  Reports
-                </Link>
-                <Link
-                  href="/board"
-                  className="group rounded-xl border-2 border-success/50 bg-soft-success px-4 py-3 text-center text-sm font-black text-success transition-all hover:border-success hover:bg-success hover:text-on-success hover:shadow-lg"
-                >
-                  Board
-                </Link>
-                <Link
-                  href="/marketing"
-                  className="group rounded-xl border-2 border-accent/50 bg-soft-accent px-4 py-3 text-center text-sm font-black text-accent transition-all hover:border-accent hover:bg-accent hover:text-on-accent hover:shadow-lg"
-                >
-                  Marketing
-                </Link>
-              </div>
+                  <p className="font-black text-base md:text-lg text-primary mb-2">{pulse.title}</p>
+                  <p className="text-sm font-semibold text-secondary leading-relaxed">{pulse.detail}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -210,39 +175,15 @@ export default function BoardDashboard() {
               </div>
             </div>
 
-            {/* Right: County Map & What's Next - Perfectly Stacked */}
-            <div className="flex flex-col gap-6">
-              {/* Regional Reach - Enhanced */}
-              <div className="rounded-2xl border-2 border-default bg-surface p-6 shadow-xl">
-                <div className="mb-4">
-                  <h3 className="text-2xl md:text-3xl font-black text-primary mb-2">Regional Reach</h3>
-                  <p className="text-sm font-semibold text-secondary">
-                    Distribution footprint across served counties highlighting growth corridors
-                  </p>
-                </div>
-                <CountyMap />
+            {/* Right: Regional Reach - Enhanced */}
+            <div className="rounded-2xl border-2 border-default bg-gradient-to-br from-surface via-surface-alt to-surface p-6 shadow-xl">
+              <div className="mb-4">
+                <h3 className="text-2xl md:text-3xl font-black text-primary mb-2">Regional Reach</h3>
+                <p className="text-sm font-semibold text-secondary">
+                  Distribution footprint across served counties highlighting growth corridors
+                </p>
               </div>
-
-              {/* What's Next - Enhanced */}
-              <div className="rounded-2xl border-2 border-default bg-gradient-to-br from-surface-alt to-surface p-6 shadow-xl">
-                <h4 className="text-lg md:text-xl font-black uppercase tracking-wider text-primary mb-4">
-                  What's Next
-                </h4>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <span className="text-success font-black mt-0.5 text-lg">✓</span>
-                    <span className="text-base font-semibold text-secondary">Supabase integration prep for real-time board packets</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-success font-black mt-0.5 text-lg">✓</span>
-                    <span className="text-base font-semibold text-secondary">Partner pipeline automation in progress</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-accent font-black mt-0.5 text-lg">▢</span>
-                    <span className="text-base font-semibold text-secondary">Launch county deep-dive briefing cards</span>
-                  </li>
-                </ul>
-              </div>
+              <CountyMap />
             </div>
           </div>
         </section>

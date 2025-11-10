@@ -1,6 +1,7 @@
 import AppNav from "@/components/layout/AppNav";
 import QueryProvider from "@/components/providers/QueryProvider";
 import ThemeProvider from "@/components/providers/ThemeProvider";
+import { CommandPalette } from "@/components/ui/CommandPalette";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -26,6 +27,7 @@ export default function RootLayout({
         <ThemeProvider>
           <QueryProvider>
             <AppNav />
+            <CommandPalette />
             {children}
           </QueryProvider>
         </ThemeProvider>

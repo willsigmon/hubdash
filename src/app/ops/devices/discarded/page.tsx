@@ -6,12 +6,22 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/query-client";
 
 export default function DiscardedDevicesPage() {
+    // Check if discarded status exists in Knack - if not, show empty state
     const { data } = useQuery({
         queryKey: queryKeys.devicesPaginated(1, 50, "Discarded"),
         queryFn: async () => {
+            // Try to fetch discarded devices - if status doesn't exist, return empty
             const res = await fetch(`/api/devices?page=1&limit=50&status=Discarded`);
-            if (!res.ok) throw new Error("Failed to fetch devices");
-            return res.json();
+            if (!res.ok) {
+                // If status doesn't exist, return empty array
+                return { data: [], total: 0 };
+            }
+            const result = await res.json();
+            // If no data, return empty
+            if (!result.data || result.data.length === 0) {
+                return { data: [], total: 0 };
+            }
+            return result;
         },
     });
 
@@ -37,7 +47,14 @@ export default function DiscardedDevicesPage() {
             </header>
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <DeviceManagementTable />
+                {data?.data && data.data.length > 0 ? (
+                    <DeviceManagementTable defaultStatusFilter="Discarded" />
+                ) : (
+                    <div className="text-center py-16 bg-surface rounded-2xl border-2 border-default">
+                        <p className="text-xl font-bold text-primary mb-2">No Discarded Devices</p>
+                        <p className="text-secondary">This status category is not currently used in Knack. Devices marked for eCycling would appear here.</p>
+                    </div>
+                )}
             </main>
         </div>
     );

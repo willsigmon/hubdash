@@ -145,7 +145,7 @@ export default function ReportsPage() {
       <header className="sticky top-0 z-40 border-b border-default bg-gradient-to-br from-surface via-surface-alt to-surface shadow-lg theme-dim:from-hti-navy theme-dim:via-hti-navy-dark theme-dim:to-hti-navy">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex-1 min-w-0">
-            <GradientHeading as="h1" variant="accent" className="text-2xl md:text-3xl mb-1 theme-dim:text-white">Grant Reports</GradientHeading>
+            <GradientHeading as="h1" variant="accent" className="text-2xl md:text-3xl mb-1 text-primary theme-dim:text-white">Grant Reports</GradientHeading>
             <p className="text-secondary theme-dim:text-white/80 text-xs md:text-sm max-w-2xl hidden md:block">NCDIT Digital Champion Grant tracking and compliance reporting</p>
           </div>
           <Link

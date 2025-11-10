@@ -205,7 +205,7 @@ export default function ApplicationGrouping({
                   <div className="text-xs text-secondary">{app.phone}</div>
                 )}
               </div>
-              
+
               <span className="text-[10px] sm:text-xs text-muted font-bold uppercase tracking-wider">Location:</span>
               <div className="space-y-1">
                 <div className="text-sm sm:text-base text-primary font-semibold break-words">

@@ -4,6 +4,7 @@ import GlassCard from '@/components/ui/GlassCard';
 import GradientHeading from '@/components/ui/GradientHeading';
 import { useEffect, useState } from 'react';
 import { Area, AreaChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { motion } from 'framer-motion';
 
 interface TrendData {
   month: string;
@@ -73,8 +74,13 @@ export default function TrendChart() {
         </p>
       </div>
 
-      <ResponsiveContainer width="100%" height={320}>
-        <AreaChart data={data}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <ResponsiveContainer width="100%" height={320}>
+          <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="collectedGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#1B365D" stopOpacity={0.3}/>
@@ -132,8 +138,9 @@ export default function TrendChart() {
             dot={{ fill: 'var(--color-accent-alt)', r: 4, strokeWidth: 2, stroke: '#fff' }}
             activeDot={{ r: 6, strokeWidth: 2 }}
           />
-        </AreaChart>
-      </ResponsiveContainer>
+          </AreaChart>
+        </ResponsiveContainer>
+      </motion.div>
 
       <div className="mt-8 grid grid-cols-2 gap-6">
         <div className="p-5 rounded-xl border-2 border-default bg-gradient-to-br from-soft-accent to-surface shadow-lg">

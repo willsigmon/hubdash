@@ -7,9 +7,9 @@ import { queryKeys } from "@/lib/query-client";
 
 export default function ConvertedDevicesPage() {
     const { data } = useQuery({
-        queryKey: queryKeys.devicesPaginated(1, 50, "Ready to Ship"),
+        queryKey: queryKeys.devicesPaginated(1, 50, "QA Testing"),
         queryFn: async () => {
-            const res = await fetch(`/api/devices?page=1&limit=50&status=Ready to Ship`);
+            const res = await fetch(`/api/devices?page=1&limit=50&status=QA Testing`);
             if (!res.ok) throw new Error("Failed to fetch devices");
             return res.json();
         },
@@ -37,7 +37,7 @@ export default function ConvertedDevicesPage() {
             </header>
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <DeviceManagementTable />
+                <DeviceManagementTable defaultStatusFilter="QA Testing" />
             </main>
         </div>
     );

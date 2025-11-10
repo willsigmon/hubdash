@@ -5,12 +5,18 @@ import DonationRequests from "@/components/ops/DonationRequests";
 import EquipmentInventory from "@/components/ops/EquipmentInventory";
 import QuickStats from "@/components/ops/QuickStats";
 import LowStockAlert from "@/components/ops/LowStockAlert";
+import { PredictiveAnalytics } from "@/components/analytics/PredictiveAnalytics";
+import { SmartAlerts } from "@/components/ui/SmartAlerts";
+import { useRealtimeUpdates } from "@/hooks/useRealtimeUpdates";
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function OpsPage() {
+  // Enable real-time updates
+  useRealtimeUpdates({ interval: 30000, enabled: true });
+
   const [commandSignals, setCommandSignals] = useState([
     { label: "Devices in pipeline", value: "—", status: "processing" as const },
     { label: "QA queue", value: "—", status: "attention" as const },
@@ -97,6 +103,9 @@ export default function OpsPage() {
       {/* Low Stock Alert - Top Right */}
       <LowStockAlert />
 
+      {/* Smart Alerts */}
+      <SmartAlerts />
+
       {/* Main Content */}
       <main className="mx-auto max-w-[1600px] space-y-6 px-4 py-8 sm:px-6 lg:px-8">
         <ErrorBoundary>
@@ -131,6 +140,11 @@ export default function OpsPage() {
             <section className="rounded-2xl border border-default bg-surface p-6 shadow-lg">
               <EquipmentInventory />
             </section>
+          </SectionErrorBoundary>
+
+          {/* Predictive Analytics */}
+          <SectionErrorBoundary section="Predictive Analytics">
+            <PredictiveAnalytics />
           </SectionErrorBoundary>
         </ErrorBoundary>
       </main>

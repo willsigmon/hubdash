@@ -5,15 +5,15 @@ import GradientHeading from "@/components/ui/GradientHeading";
 import { queryKeys } from "@/lib/query-client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-    ArrowLeft,
-    Calendar,
-    Check,
-    ChevronLeft,
-    ChevronRight,
-    RotateCcw,
-    Search,
-    UserCircle,
-    Wrench
+  ArrowLeft,
+  Calendar,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  RotateCcw,
+  Search,
+  UserCircle,
+  Wrench
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -41,11 +41,18 @@ export default function AssignedDevicesPage() {
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
-    queryKey: queryKeys.devicesPaginated(page, limit, "Assigned"),
+    queryKey: queryKeys.devicesPaginated(page, limit, "Refurbishing"),
     queryFn: async () => {
-      const res = await fetch(`/api/devices?page=${page}&limit=${limit}&status=Assigned`);
-      if (!res.ok) throw new Error("Failed to fetch devices");
-      return res.json();
+      // Fetch devices with Refurbishing or Data Wipe status (assigned devices)
+      const res1 = await fetch(`/api/devices?page=${page}&limit=${limit}&status=Refurbishing`);
+      const res2 = await fetch(`/api/devices?page=${page}&limit=${limit}&status=Data Wipe`);
+      if (!res1.ok || !res2.ok) throw new Error("Failed to fetch devices");
+      const data1 = await res1.json();
+      const data2 = await res2.json();
+      return {
+        data: [...(data1.data || []), ...(data2.data || [])],
+        total: (data1.data?.length || 0) + (data2.data?.length || 0),
+      };
     },
   });
 
@@ -119,7 +126,7 @@ export default function AssignedDevicesPage() {
     },
   });
 
-  const devices = data?.records || [];
+  const devices = data?.data || [];
   const totalPages = Math.ceil((data?.total || 0) / limit);
 
   // Mock technicians for filter (would come from API)
@@ -131,13 +138,13 @@ export default function AssignedDevicesPage() {
     "Amara Williams",
   ];
 
-  const filteredDevices = devices.filter((d: AssignedDevice) => {
+  const filteredDevices = devices.filter((d: any) => {
     const matchesSearch =
-      d.serial?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      d.type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      d.assignedTo?.toLowerCase().includes(searchTerm.toLowerCase());
+      (d.serial_number || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (d.device_type || d.model || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (d.assigned_to || "").toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesTech = techFilter === "all" || d.assignedTo === techFilter;
+    const matchesTech = techFilter === "all" || (d.assigned_to || "") === techFilter;
 
     return matchesSearch && matchesTech;
   });
@@ -152,10 +159,12 @@ export default function AssignedDevicesPage() {
     }
   };
 
-  const getProgressPercentage = (device: AssignedDevice) => {
-    const steps = [device.driveWiped, device.osLoaded, device.tested];
-    const completed = steps.filter(Boolean).length;
-    return (completed / steps.length) * 100;
+  const getProgressPercentage = (device: any) => {
+    // For now, use status to determine progress
+    if (device.status === 'QA Testing') return 100;
+    if (device.status === 'Refurbishing') return 66;
+    if (device.status === 'Data Wipe') return 33;
+    return 0;
   };
 
   return (
@@ -167,10 +176,10 @@ export default function AssignedDevicesPage() {
           Back to Operations
         </Link>
 
-          <GradientHeading
-            className="text-3xl mb-2"
-            variant="navy"
-          >
+        <GradientHeading
+          className="text-3xl mb-2"
+          variant="navy"
+        >
           Assigned Devices
         </GradientHeading>
         <p className="text-secondary mt-2">
@@ -270,18 +279,18 @@ export default function AssignedDevicesPage() {
                         key={device.id}
                         className="border-b border-default hover:bg-surface-alt transition-colors"
                       >
-                        <td className="p-3 font-mono text-sm text-primary">{device.serial}</td>
-                        <td className="p-3 text-sm text-secondary">{device.type}</td>
+                        <td className="p-3 font-mono text-sm text-primary">{(device as any).serial_number || "—"}</td>
+                        <td className="p-3 text-sm text-secondary">{(device as any).device_type || (device as any).model || "—"}</td>
                         <td className="p-3">
                           <div className="flex items-center gap-2">
                             <UserCircle className="w-4 h-4 text-accent" />
-                            <span className="text-sm text-secondary">{device.assignedTo}</span>
+                            <span className="text-sm text-secondary">{(device as any).assigned_to || device.assignedTo || "Unassigned"}</span>
                           </div>
                         </td>
                         <td className="p-3">
                           <div className="flex items-center gap-2 text-sm text-secondary">
                             <Calendar className="w-4 h-4 text-muted" />
-                            {device.pickupDate || "—"}
+                              {(device as any).received_date || device.assignedDate ? new Date((device as any).received_date || device.assignedDate).toLocaleDateString() : "—"}
                           </div>
                         </td>
                         <td className="p-3">
@@ -294,11 +303,10 @@ export default function AssignedDevicesPage() {
                             </div>
                             <div className="w-full h-2 bg-surface-alt rounded-full overflow-hidden">
                               <div
-                                className={`h-full transition-all duration-300 ${
-                                  isComplete
+                                className={`h-full transition-all duration-300 ${isComplete
                                     ? "bg-gradient-to-r from-emerald-500 to-emerald-600"
                                     : "accent-gradient"
-                                }`}
+                                  }`}
                                 style={{ width: `${progress}%` }}
                               />
                             </div>
@@ -307,25 +315,25 @@ export default function AssignedDevicesPage() {
                         <td className="p-3 text-center">
                           <input
                             type="checkbox"
-                            checked={device.driveWiped}
-                            onChange={() => handleCheckbox(device.id, "driveWiped", device.driveWiped)}
-                            className="w-5 h-5 rounded border-default text-accent focus-ring cursor-pointer"
+                            checked={device.status === 'Data Wipe' || device.status === 'Refurbishing' || device.status === 'QA Testing'}
+                            disabled
+                            className="w-5 h-5 rounded border-default text-accent focus-ring cursor-not-allowed opacity-50"
                           />
                         </td>
                         <td className="p-3 text-center">
                           <input
                             type="checkbox"
-                            checked={device.osLoaded}
-                            onChange={() => handleCheckbox(device.id, "osLoaded", device.osLoaded)}
-                            className="w-5 h-5 rounded border-default text-accent focus-ring cursor-pointer"
+                            checked={device.status === 'Refurbishing' || device.status === 'QA Testing'}
+                            disabled
+                            className="w-5 h-5 rounded border-default text-accent focus-ring cursor-not-allowed opacity-50"
                           />
                         </td>
                         <td className="p-3 text-center">
                           <input
                             type="checkbox"
-                            checked={device.tested}
-                            onChange={() => handleCheckbox(device.id, "tested", device.tested)}
-                            className="w-5 h-5 rounded border-default text-accent focus-ring cursor-pointer"
+                            checked={device.status === 'QA Testing'}
+                            disabled
+                            className="w-5 h-5 rounded border-default text-accent focus-ring cursor-not-allowed opacity-50"
                           />
                         </td>
                         <td className="p-3">

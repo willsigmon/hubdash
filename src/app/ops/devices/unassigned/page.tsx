@@ -53,11 +53,18 @@ export default function UnassignedDevicesPage() {
   const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
-    queryKey: queryKeys.devicesPaginated(page, limit, "Ready"),
+    queryKey: queryKeys.devicesPaginated(page, limit, "Received"),
     queryFn: async () => {
-      const res = await fetch(`/api/devices?page=${page}&limit=${limit}&status=Ready`);
-      if (!res.ok) throw new Error("Failed to fetch devices");
-      return res.json();
+      // Fetch devices with Received or Ready status (unassigned devices)
+      const res1 = await fetch(`/api/devices?page=${page}&limit=${limit}&status=Received`);
+      const res2 = await fetch(`/api/devices?page=${page}&limit=${limit}&status=Ready`);
+      if (!res1.ok || !res2.ok) throw new Error("Failed to fetch devices");
+      const data1 = await res1.json();
+      const data2 = await res2.json();
+      return {
+        data: [...(data1.data || []), ...(data2.data || [])],
+        total: (data1.data?.length || 0) + (data2.data?.length || 0),
+      };
     },
   });
 
@@ -112,13 +119,13 @@ export default function UnassignedDevicesPage() {
     setSelectedDevices(newSet);
   };
 
-  const devices = data?.records || [];
+  const devices = data?.data || [];
   const totalPages = Math.ceil((data?.total || 0) / limit);
 
-  const filteredDevices = devices.filter((d: Device) =>
-    d.serial?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    d.type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    d.donor?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredDevices = devices.filter((d: any) =>
+    (d.serial_number || d.serial || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (d.device_type || d.model || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (d.organization || "").toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -231,16 +238,18 @@ export default function UnassignedDevicesPage() {
                           className="w-4 h-4 rounded border-default"
                         />
                       </td>
-                      <td className="p-3 font-mono text-sm text-primary">{device.serial}</td>
-                      <td className="p-3 text-sm text-secondary">{device.type}</td>
-                      <td className="p-3 text-sm text-secondary">{device.dateReceived}</td>
-                      <td className="p-3 text-sm text-secondary">{device.donor || "—"}</td>
+                      <td className="p-3 font-mono text-sm text-primary">{device.serial_number || device.serial || "—"}</td>
+                      <td className="p-3 text-sm text-secondary">{device.device_type || device.model || "—"}</td>
+                      <td className="p-3 text-sm text-secondary">
+                        {device.received_date ? new Date(device.received_date).toLocaleDateString() : "—"}
+                      </td>
+                      <td className="p-3 text-sm text-secondary">{device.organization || "—"}</td>
                       <td className="p-3">
                         <span className="inline-flex px-2 py-1 bg-soft-accent text-accent rounded text-xs font-medium">
-                          {device.condition}
+                          {device.status || "Unknown"}
                         </span>
                       </td>
-                      <td className="p-3 text-xs text-muted">{device.specs || "—"}</td>
+                      <td className="p-3 text-xs text-muted">{device.manufacturer || "—"}</td>
                     </tr>
                   ))}
                 </tbody>

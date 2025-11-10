@@ -104,21 +104,20 @@ export default function DevicePipelineFlow() {
 
         devices.forEach((device: any) => {
           total++;
-          const status = device.status?.toLowerCase() || 'unknown';
+          const status = device.status || 'Unknown';
 
-          // Map statuses to pipeline stages
-          if (status.includes('unassigned') || status.includes('ready') || status.includes('donated') || status.includes('received')) {
+          // Map actual Knack statuses to pipeline stages
+          // Actual Knack statuses: 'Donated', 'Received', 'Data Wipe', 'Refurbishing', 'QA Testing', 'Ready', 'Completed-Presented'
+          if (status === 'Received' || status === 'Donated' || status === 'Ready') {
             statusCounts.unassigned = (statusCounts.unassigned || 0) + 1;
-          } else if (status.includes('assigned') || status.includes('in process') || status.includes('refurbishing')) {
+          } else if (status === 'Refurbishing' || status === 'Data Wipe') {
             statusCounts.assigned = (statusCounts.assigned || 0) + 1;
-          } else if (status.includes('converted') || status.includes('ready to ship') || status.includes('qa testing')) {
+          } else if (status === 'QA Testing') {
             statusCounts.converted = (statusCounts.converted || 0) + 1;
-          } else if (status.includes('presented') || status.includes('distributed') || status.includes('completed')) {
+          } else if (status === 'Completed-Presented') {
             statusCounts.presented = (statusCounts.presented || 0) + 1;
-          } else if (status.includes('discarded') || status.includes('recycled') || status.includes('ecle')) {
-            statusCounts.discarded = (statusCounts.discarded || 0) + 1;
           } else {
-            // Default to unassigned for unknown statuses
+            // Unknown statuses default to unassigned
             statusCounts.unassigned = (statusCounts.unassigned || 0) + 1;
           }
         });
@@ -190,45 +189,45 @@ export default function DevicePipelineFlow() {
 
                 <Popover
                   trigger={
-                    <div
-                      className={`group relative cursor-pointer transition-all duration-300 ${
-                        isSelected ? 'scale-105' : 'hover:scale-105'
-                      }`}
-                      onMouseEnter={() => setSelectedStage(stage.key)}
-                      onMouseLeave={() => setSelectedStage(null)}
-                    >
-                      {/* Glow effect */}
-                      <div className={`absolute inset-0 ${stage.color} rounded-xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity`} />
+                  <div
+                    className={`group relative cursor-pointer transition-all duration-300 ${
+                      isSelected ? 'scale-105' : 'hover:scale-105'
+                    }`}
+                    onMouseEnter={() => setSelectedStage(stage.key)}
+                    onMouseLeave={() => setSelectedStage(null)}
+                  >
+                    {/* Glow effect */}
+                    <div className={`absolute inset-0 ${stage.color} rounded-xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity`} />
 
-                      {/* Card */}
-                      <div className={`relative bg-surface rounded-xl p-4 border-2 ${stage.borderColor} ${stage.bgColor} transition-all shadow-sm group-hover:shadow-xl`}>
-                        {/* Icon */}
-                        <div className={`w-12 h-12 rounded-lg ${stage.color} flex items-center justify-center mb-3 shadow-lg`}>
+                    {/* Card */}
+                    <div className={`relative bg-surface rounded-xl p-4 border-2 ${stage.borderColor} ${stage.bgColor} transition-all shadow-sm group-hover:shadow-xl`}>
+                      {/* Icon */}
+                      <div className={`w-12 h-12 rounded-lg ${stage.color} flex items-center justify-center mb-3 shadow-lg`}>
                           <Icon className="w-6 h-6 text-on-accent" />
-                        </div>
+                      </div>
 
-                        {/* Count */}
-                        <div className="text-3xl font-bold text-primary mb-1">
-                          {typeof count === 'number' ? count.toLocaleString() : '—'}
-                        </div>
+                      {/* Count */}
+                      <div className="text-3xl font-bold text-primary mb-1">
+                        {typeof count === 'number' ? count.toLocaleString() : '—'}
+                      </div>
 
-                        {/* Label */}
-                        <div className={`font-semibold ${stage.textColor} text-sm mb-1`}>
-                          {stage.label}
-                        </div>
+                      {/* Label */}
+                      <div className={`font-semibold ${stage.textColor} text-sm mb-1`}>
+                        {stage.label}
+                      </div>
 
-                        {/* Description */}
-                        <div className="text-xs text-muted">
-                          {stage.description}
-                        </div>
+                      {/* Description */}
+                      <div className="text-xs text-muted">
+                        {stage.description}
+                      </div>
 
-                        {/* Hover indicator */}
-                        <div className="mt-3 flex items-center gap-1 text-xs text-secondary group-hover:text-primary transition-colors">
-                          <span>View details</span>
-                          <ChevronRight className="w-3 h-3" />
-                        </div>
+                      {/* Hover indicator */}
+                      <div className="mt-3 flex items-center gap-1 text-xs text-secondary group-hover:text-primary transition-colors">
+                        <span>View details</span>
+                        <ChevronRight className="w-3 h-3" />
                       </div>
                     </div>
+                  </div>
                   }
                   title={`${stage.label} - ${count} Devices`}
                   size="lg"
@@ -250,7 +249,7 @@ export default function DevicePipelineFlow() {
                       className="block accent-gradient text-on-accent px-6 py-3 rounded-xl text-center font-black hover:shadow-lg transition-all"
                     >
                       View All {stage.label} Devices →
-                    </Link>
+                </Link>
                   </div>
                 </Popover>
               </div>
