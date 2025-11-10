@@ -279,18 +279,18 @@ export default function AssignedDevicesPage() {
                         key={device.id}
                         className="border-b border-default hover:bg-surface-alt transition-colors"
                       >
-                        <td className="p-3 font-mono text-sm text-primary">{(device as any).serial_number || "—"}</td>
-                        <td className="p-3 text-sm text-secondary">{(device as any).device_type || (device as any).model || "—"}</td>
+                        <td className="p-3 font-mono text-sm text-primary">{device.serial_number || "—"}</td>
+                        <td className="p-3 text-sm text-secondary">{device.device_type || device.model || "—"}</td>
                         <td className="p-3">
                           <div className="flex items-center gap-2">
                             <UserCircle className="w-4 h-4 text-accent" />
-                            <span className="text-sm text-secondary">{(device as any).assigned_to || device.assignedTo || "Unassigned"}</span>
+                            <span className="text-sm text-secondary">{device.assigned_to || device.assignedTo || "Unassigned"}</span>
                           </div>
                         </td>
                         <td className="p-3">
                           <div className="flex items-center gap-2 text-sm text-secondary">
                             <Calendar className="w-4 h-4 text-muted" />
-                            {(device as any).received_date || device.assignedDate ? new Date((device as any).received_date || device.assignedDate).toLocaleDateString() : "—"}
+                            {device.received_date || device.assignedDate ? new Date(device.received_date || device.assignedDate).toLocaleDateString() : "—"}
                           </div>
                         </td>
                         <td className="p-3">
@@ -315,7 +315,7 @@ export default function AssignedDevicesPage() {
                         <td className="p-3 text-center">
                           <input
                             type="checkbox"
-                            checked={(device as any).status === 'Data Wipe' || (device as any).status === 'Refurbishing' || (device as any).status === 'QA Testing'}
+                            checked={device.status === 'Data Wipe' || device.status === 'Refurbishing' || device.status === 'QA Testing'}
                             disabled
                             className="w-5 h-5 rounded border-default text-accent focus-ring cursor-not-allowed opacity-50"
                           />
@@ -323,7 +323,7 @@ export default function AssignedDevicesPage() {
                         <td className="p-3 text-center">
                           <input
                             type="checkbox"
-                            checked={(device as any).status === 'Refurbishing' || (device as any).status === 'QA Testing'}
+                            checked={device.status === 'Refurbishing' || device.status === 'QA Testing'}
                             disabled
                             className="w-5 h-5 rounded border-default text-accent focus-ring cursor-not-allowed opacity-50"
                           />
@@ -331,7 +331,7 @@ export default function AssignedDevicesPage() {
                         <td className="p-3 text-center">
                           <input
                             type="checkbox"
-                            checked={(device as any).status === 'QA Testing'}
+                            checked={device.status === 'QA Testing'}
                             disabled
                             className="w-5 h-5 rounded border-default text-accent focus-ring cursor-not-allowed opacity-50"
                           />
@@ -398,7 +398,7 @@ export default function AssignedDevicesPage() {
           <GlassCard>
             <div className="text-center">
               <div className="text-3xl font-bold text-primary mb-1">
-                {filteredDevices.filter((d: AssignedDevice) => getProgressPercentage(d) === 100).length}
+                {filteredDevices.filter((d: any) => getProgressPercentage(d) === 100).length}
               </div>
               <div className="text-xs text-secondary uppercase tracking-wider">Ready to Convert</div>
             </div>
@@ -406,7 +406,7 @@ export default function AssignedDevicesPage() {
           <GlassCard>
             <div className="text-center">
               <div className="text-3xl font-bold text-accent mb-1">
-                {filteredDevices.filter((d: AssignedDevice) => getProgressPercentage(d) > 0 && getProgressPercentage(d) < 100).length}
+                {filteredDevices.filter((d: any) => getProgressPercentage(d) > 0 && getProgressPercentage(d) < 100).length}
               </div>
               <div className="text-xs text-secondary uppercase tracking-wider">In Progress</div>
             </div>
@@ -414,7 +414,7 @@ export default function AssignedDevicesPage() {
           <GlassCard>
             <div className="text-center">
               <div className="text-3xl font-bold text-blue-600 mb-1">
-                {filteredDevices.filter((d: AssignedDevice) => getProgressPercentage(d) === 0).length}
+                {filteredDevices.filter((d: any) => getProgressPercentage(d) === 0).length}
               </div>
               <div className="text-xs text-secondary uppercase tracking-wider">Not Started</div>
             </div>
@@ -423,7 +423,7 @@ export default function AssignedDevicesPage() {
             <div className="text-center">
               <div className="text-3xl font-bold text-hti-gold mb-1">
                 {filteredDevices.length > 0
-                  ? (filteredDevices.reduce((sum: number, d: AssignedDevice) => sum + getProgressPercentage(d), 0) / filteredDevices.length).toFixed(0)
+                  ? (filteredDevices.reduce((sum: number, d: any) => sum + getProgressPercentage(d), 0) / filteredDevices.length).toFixed(0)
                   : 0}%
               </div>
               <div className="text-xs text-secondary uppercase tracking-wider">Avg Progress</div>

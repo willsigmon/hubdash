@@ -5,13 +5,13 @@ import GradientHeading from "@/components/ui/GradientHeading";
 import { queryKeys } from "@/lib/query-client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-    ArrowLeft,
-    Calendar,
-    ChevronLeft,
-    ChevronRight,
-    Package,
-    Search,
-    UserPlus
+  ArrowLeft,
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
+  Package,
+  Search,
+  UserPlus
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -137,10 +137,10 @@ export default function UnassignedDevicesPage() {
           Back to Operations
         </Link>
 
-          <GradientHeading
-            className="text-3xl mb-2"
-            variant="navy"
-          >
+        <GradientHeading
+          className="text-3xl mb-2"
+          variant="navy"
+        >
           Unassigned Devices
         </GradientHeading>
         <p className="text-secondary mt-2">
@@ -170,11 +170,10 @@ export default function UnassignedDevicesPage() {
             <button
               onClick={() => setShowAssignModal(true)}
               disabled={selectedDevices.size === 0}
-              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
-                selectedDevices.size > 0
+              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${selectedDevices.size > 0
                   ? "accent-gradient text-white hover:shadow"
                   : "bg-surface text-muted cursor-not-allowed border border-default"
-              }`}
+                }`}
             >
               <UserPlus className="w-5 h-5" />
               Assign {selectedDevices.size > 0 ? `(${selectedDevices.size})` : ""}
@@ -208,7 +207,7 @@ export default function UnassignedDevicesPage() {
                           if (selectedDevices.size === filteredDevices.length) {
                             setSelectedDevices(new Set());
                           } else {
-                            setSelectedDevices(new Set(filteredDevices.map((d: Device) => d.id)));
+                            setSelectedDevices(new Set(filteredDevices.map((d: any) => d.id)));
                           }
                         }}
                         className="w-4 h-4 rounded border-default"
@@ -223,12 +222,11 @@ export default function UnassignedDevicesPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredDevices.map((device: Device, index: number) => (
+                  {filteredDevices.map((device: any, index: number) => (
                     <tr
                       key={device.id}
-                      className={`border-b border-default/60 hover:bg-surface-alt transition-colors ${
-                        selectedDevices.has(device.id) ? "bg-soft-accent" : ""
-                      }`}
+                      className={`border-b border-default/60 hover:bg-surface-alt transition-colors ${selectedDevices.has(device.id) ? "bg-soft-accent" : ""
+                        }`}
                     >
                       <td className="p-3">
                         <input
@@ -307,11 +305,10 @@ export default function UnassignedDevicesPage() {
                   {MOCK_TECHNICIANS.map((tech) => (
                     <label
                       key={tech.id}
-                      className={`flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                        selectedTechId === tech.id
+                      className={`flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition-all ${selectedTechId === tech.id
                           ? "border-accent bg-soft-accent"
                           : "border-default hover:border-accent/50"
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center gap-3">
                         <input
